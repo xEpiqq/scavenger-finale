@@ -1,6 +1,39 @@
+"use client";
 import Link from "next/link";
+import { useState } from 'react'
+import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, } from "firebase/auth";
+import { app } from '../../components/initializeFirebase'
+import { useDocument } from 'react-firebase-hooks/firestore';
+import { useAuthState } from "react-firebase-hooks/auth";
+import { getFirestore, doc } from 'firebase/firestore';
+import { useRouter } from 'next/navigation';
+const provider = new GoogleAuthProvider();
+const auth = getAuth(app);
 
 const SignupPage = () => {
+  const router = useRouter();
+  const [user, loading, error] = useAuthState(auth);
+  if (user) {
+    router.push('/contact')
+  }
+
+  async function googleLogin() {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      // check if firestore user
+      await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          uid: user.uid,
+          displayname: user.displayName,
+          email: user.email
+        })
+      })
+    }
+
   return (
     <>
       <section className="relative z-10 overflow-hidden pt-36 pb-16 md:pb-20 lg:pt-[180px] lg:pb-28">
@@ -12,9 +45,9 @@ const SignupPage = () => {
                   Create your account
                 </h3>
                 <p className="mb-11 text-center text-base font-medium text-body-color">
-                  It’s totally free and super easy
+                  Its totally free and super easy
                 </p>
-                <button className="mb-6 flex w-full items-center justify-center rounded-md bg-white p-3 text-base font-medium text-body-color shadow-one hover:text-primary dark:bg-[#242B51] dark:text-body-color dark:shadow-signUp dark:hover:text-white">
+                <button onClick={googleLogin} className="mb-6 flex w-full items-center justify-center rounded-md bg-white p-3 text-base font-medium text-body-color shadow-one hover:text-primary dark:bg-[#242B51] dark:text-body-color dark:shadow-signUp dark:hover:text-white">
                   <span className="mr-3">
                     <svg
                       width="20"

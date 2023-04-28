@@ -4,9 +4,21 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import ThemeToggler from "./ThemeToggler";
 import menuData from "./menuData";
+import { getAuth } from "firebase/auth";
+import { app } from '../../components/initializeFirebase'
+import { useDocument } from 'react-firebase-hooks/firestore';
+import { useAuthState } from "react-firebase-hooks/auth";
+import { getFirestore, doc } from 'firebase/firestore';
+const auth = getAuth(app);
+const db = getFirestore(app);
+
 
 const Header = () => {
+  const [user, loading, error] = useAuthState(auth);
+  const [userDataRaw, loading2, error2] = useDocument(doc(db, `users/${user?.uid}`));
+  const userData = userDataRaw?.data()
   // Navbar toggle
+
   const [navbarOpen, setNavbarOpen] = useState(false);
   const navbarToggleHandler = () => {
     setNavbarOpen(!navbarOpen);
@@ -75,17 +87,12 @@ const Header = () => {
                 
               </div>
               <div className="flex items-center justify-end pr-16 lg:pr-0">
-                <button
-                onClick={() => {
-                  const element = document.getElementById("signupform");
-                  if (element) {
-                    element.scrollIntoView({ behavior: "smooth" });
-                  }
-                }}
-                className="ease-in-up hidden rounded-md bg-black px-8 py-3 text-base font-bold text-white transition duration-300 hover:bg-opacity-90 hover:shadow-signUp md:block md:px-9 lg:px-6 xl:px-9 hover:bg-white hover:text-black"
-                >
-                  Sign Up
-                </button>
+                {user ? ( <img src={user?.photoURL} alt="User Photo" className='rounded-full w-16 h-16 hover:cursor-pointer'></img> ) : (
+                <Link href='/signup' className="ease-in-up hidden rounded-md bg-black px-8 py-3 text-base font-bold text-white transition duration-300 hover:bg-opacity-90 hover:shadow-signUp md:block md:px-9 lg:px-6 xl:px-9 hover:bg-white hover:text-black">
+                Sign Up
+                </Link>
+                )}
+
                 <div>
                 </div>
               </div>
