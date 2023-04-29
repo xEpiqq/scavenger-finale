@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useState } from 'react'
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, } from "firebase/auth";
-import { app } from '../../components/initializeFirebase'
+import { app } from '../../../components/initializeFirebase'
 import { useDocument } from 'react-firebase-hooks/firestore';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { getFirestore, doc } from 'firebase/firestore';

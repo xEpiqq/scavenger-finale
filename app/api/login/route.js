@@ -7,6 +7,7 @@ const db = getFirestore(app);
 export async function POST(request) {    
     const body = await request.json();
     const { uid, displayname, email } = body;
+
     try {
         const userRef = doc(db, "users", uid);
         const userDoc = await getDoc(userRef);
