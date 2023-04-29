@@ -1,24 +1,30 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome, faUser, faCog } from "@fortawesome/free-solid-svg-icons";
+import { faHome, faUser, faCog, faFileLines } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
+import Image from "next/image";
 
 function Navbar() {
   return (
-    <div className="flex flex-col w-12 h-screen bg-gray-800 bg-dark sticky gap-2 p-2 top-0">
+    <div className="flex flex-col justify-start items-center w-12 h-screen bg-gray-800 bg-gray-2 sticky gap-2 p-2 top-0">
       <Link href="/" className="">
         <span>
-          <FontAwesomeIcon icon={faHome} />
+          <Image src="/images/logo/crow.png" width={50} height={50} alt="Logo" />
         </span>
       </Link>
       <Link href="/profile">
-        <span>
-          <FontAwesomeIcon icon={faUser} />
-        </span>
+        <div>
+          <FontAwesomeIcon icon={faUser} className="w-6 h-6 hover:text-primary transition-all duration-300" />
+        </div>
       </Link>
       <Link href="/settings">
-        <span>
-          <FontAwesomeIcon icon={faCog} />
-        </span>
+        <div>
+          <FontAwesomeIcon icon={faCog} className="w-6 h-6 hover:text-primary transition-all duration-300" />
+        </div>
+      </Link>
+      <Link href="/sheets">
+        <div>
+          <FontAwesomeIcon icon={faFileLines} className="w-6 h-6 hover:text-primary transition-all duration-300" />
+        </div>
       </Link>
     </div>
   );
