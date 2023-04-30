@@ -29,11 +29,6 @@ function Page() {
 
   const { data, error } = useSWR("/api/sheet-list", fetcher);
 
-  if (error) return <div>failed to load</div>;
-  if (!data) return <div>loading...</div>;
-  if (loading) return <div>loading...</div>;
-  if (user_error) return <div>error</div>;
-
   return (
     <div className="flex flex-col justify-between">
       <PageName name="Sheets" />
