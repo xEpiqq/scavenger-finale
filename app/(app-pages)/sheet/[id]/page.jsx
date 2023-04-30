@@ -20,6 +20,7 @@ function Page({ params }) {
       phoneNumber: "(123)456-7890",
       email: "john.doe@example.com",
       address: "123 Place Street, City, State, 12345",
+      screenshot: "/images/placeholder1.png",
     },
     {
       name: "John Doe",
@@ -27,6 +28,7 @@ function Page({ params }) {
       phoneNumber: "(123)456-7890",
       email: "john.doe@example.com",
       address: "123 Place Street, City, State, 12345",
+      screenshot: "/images/placeholder2.png",
     },
     {
       name: "John Doe",
@@ -34,6 +36,7 @@ function Page({ params }) {
       phoneNumber: "(123)456-7890",
       email: "john.doe@example.com",
       address: "123 Place Street, City, State, 12345",
+      screenshot: "/images/placeholder.png",
     },
     {
       name: "John Doe",
@@ -41,6 +44,7 @@ function Page({ params }) {
       phoneNumber: "(123)456-7890",
       email: "john.doe@example.com",
       address: "123 Place Street, City, State, 12345",
+      screenshot: "/images/placeholder.png",
     },
     {
       name: "John Doe",
@@ -48,6 +52,7 @@ function Page({ params }) {
       phoneNumber: "(123)456-7890",
       email: "john.doe@example.com",
       address: "123 Place Street, City, State, 12345",
+      screenshot: "/images/placeholder.png",
     },
   ]);
 
@@ -64,6 +69,7 @@ function Page({ params }) {
               phoneNumber={item.phoneNumber}
               email={item.email}
               address={item.address}
+              screenshot={item.screenshot}
             />
           </div>
         ))}
