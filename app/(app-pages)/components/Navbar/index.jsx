@@ -5,7 +5,7 @@ import Image from "next/image";
 
 function Navbar() {
   return (
-    <div className="flex flex-col justify-start items-center w-12 h-screen bg-gray-800 bg-gray-2 sticky gap-2 p-2 top-0">
+    <div className="flex sm:flex-col sm:w-12 sm:h-screen flex-row h-12 w-screen justify-start items-center z-50 bg-gray-800 bg-gray-2 sticky gap-2 p-2 top-0">
       <Link href="/" className="">
         <span>
           <Image src="/images/logo/crow.png" width={50} height={50} alt="Logo" />
