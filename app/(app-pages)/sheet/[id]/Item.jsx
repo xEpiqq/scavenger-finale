@@ -38,7 +38,7 @@ function Item({ id, name, link, phoneNumber, email, address, screenshot }) {
         <img
           src={screenshot}
           alt={`Screenshot of ${name}`}
-          className="pointer-events-none absolute left-0 top-full z-10 h-20 rounded-md object-contain opacity-80 shadow-md"
+          className="pointer-events-none absolute left-0 top-full z-10 h-20 rounded-md object-contain opacity-80 shadow-md sm:block hidden"
         />
       )}
     </div>
