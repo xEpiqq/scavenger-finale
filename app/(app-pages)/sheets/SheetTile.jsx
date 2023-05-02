@@ -19,7 +19,7 @@ const sheet_count_value_colors = [
 ];
 
 function Page({ props }) {
-  const { name, item_count } = props;
+  const { name, item_count, object_id } = props;
   const sheet_count_value = Math.floor(item_count / 21);
   return (
     <div className="flex h-52 w-60 flex-col justify-between rounded-md border border-black bg-offwhite-1 hover:cursor-pointer hover:bg-gray-3">
@@ -41,7 +41,7 @@ function Page({ props }) {
           </div>
           <h4>{name}</h4>
         </div>
-        <SheetTileOptions />
+        <SheetTileOptions object_id={object_id} />
       </div>
     </div>
   );

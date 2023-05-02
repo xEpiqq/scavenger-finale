@@ -23,7 +23,8 @@
     "react-dom": "18.2.0",
     "react-firebase-hooks": "^5.1.1",
     "react-modal-video": "^2.0.0",
-    "swr": "^2.1.5"
+    "swr": "^2.1.5",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/node": "^18.15.11",

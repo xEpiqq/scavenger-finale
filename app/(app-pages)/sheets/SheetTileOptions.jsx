@@ -1,4 +1,17 @@
+
 "use client";
+import react from "react";
+import SheetTile from "./SheetTile";
+import SheetTileNew from "./SheetTileNew";
+import PageName from "../components/PageName";
+import { app } from "../../../components/initializeFirebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { getAuth, signOut } from "firebase/auth";
+import { getFirestore, doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { useDocument } from 'react-firebase-hooks/firestore';
+const auth = getAuth(app);
+const db = getFirestore(app);
+
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import TextPrompt from "../components/TextPrompt";
@@ -9,7 +22,13 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 
-function SheetTileOptions() {
+function SheetTileOptions(props) {
+  const [user, loading, user_error] = useAuthState(auth);
+  const [userDataRaw, loading2, error2] = useDocument(doc(db, `users/${user?.uid}`));
+  const userData = userDataRaw?.data()
+
+
+  const object_id = props.object_id
   const [showSheetOptions, setShowSheetOptions] = useState(false);
   const [showRenamePrompt, setShowRenamePrompt] = useState(false);
   const [showDeletePrompt, setShowDeletePrompt] = useState(false);
@@ -24,6 +43,38 @@ function SheetTileOptions() {
     setShowSheetOptions(false);
   };
 
+// async function renameInDB(newName) {
+//     const userRef = doc(db, `users/${user?.uid}`);
+//     const userSnapshot = await getDoc(userRef);
+//     console.log(userSnapshot)
+//     console.log(newName)
+//   }
+
+  async function renameInDB(newName) {
+    const userRef = doc(db, `users/${user?.uid}`);
+    const userSnapshot = await getDoc(userRef);
+    const listsArray = userSnapshot.data().lists;
+    const targetIndex = listsArray.findIndex(list => list.object_id === object_id);
+    if (targetIndex !== -1) {
+      listsArray[targetIndex].list_name = newName;
+    }
+    await updateDoc(userRef, { lists: listsArray });
+  }
+
+  async function deleteFromDB() {
+    const userRef = doc(db, `users/${user?.uid}`);
+    const userSnapshot = await getDoc(userRef);
+    const listsArray = userSnapshot.data().lists;
+    const targetIndex = listsArray.findIndex(list => list.object_id === object_id);
+
+    if (targetIndex !== -1) {
+      listsArray.splice(targetIndex, 1); // Remove the object at the targetIndex
+      await updateDoc(userRef, { lists: listsArray });
+    }
+
+  }
+  
+
   const dropdownMenu = showSheetOptions ? (
     <div className="absolute z-10 mt-1 w-40 rounded-md bg-white shadow-lg">
       <div className="py-1">
@@ -34,7 +85,7 @@ function SheetTileOptions() {
           }}
         >
           <FontAwesomeIcon className="mr-2" icon={faFileCsv} />
-          Export as CSV
+          Export as CSV 
         </button>
         <button
           className="text-gray-700 hover:bg-gray-100 hover:text-gray-900 flex w-full justify-start px-4 py-2 text-sm hover:bg-black hover:text-white"
@@ -83,6 +134,7 @@ function SheetTileOptions() {
           buttonText="Rename"
           callBack={(input) => {
             setShowRenamePrompt(false);
+            renameInDB(input)
           }}
         />
       )}
@@ -94,6 +146,7 @@ function SheetTileOptions() {
           buttonText="Delete"
           callBack={(input) => {
             setShowDeletePrompt(false);
+            deleteFromDB()
           }}
         />
       )}
