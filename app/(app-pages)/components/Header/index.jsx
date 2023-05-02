@@ -13,7 +13,7 @@ function Header() {
   if (error) return <div>Error: {error}</div>;
   if (!user) return <div>Not logged in</div>;
   return (
-    <div className="sticky top-0 flex h-8 flex-row">
+    <div className="sticky top-0 h-8 flex-row sm:flex hidden">
       <div className="flex items-center justify-end lg:pr-0 w-full">
         <img
           src={user.photoURL}

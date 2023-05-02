@@ -5,7 +5,7 @@ import "../../styles/index.css";
 
 function Layout({ children }) {
   return (
-    <div className="flex flex-row bg-white w-full h-full text-black">
+    <div className="flex sm:flex-row flex-col bg-white w-full h-full text-black">
       <Navbar />
       <section className="w-full h-full">
         <Header />
