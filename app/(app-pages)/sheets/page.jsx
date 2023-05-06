@@ -4,7 +4,7 @@ import SheetTile from "./SheetTile";
 import SheetTileNew from "./SheetTileNew";
 import TextPrompt from "../components/TextPrompt";
 import PageName from "../components/PageName";
-import { app } from "../../../components/initializeFirebase";
+import { app, db } from "../../../components/initializeFirebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { getAuth, signOut } from "firebase/auth";
 import { getFirestore, doc, getDoc, updateDoc, collection, addDoc } from 'firebase/firestore';
@@ -12,13 +12,13 @@ import { useDocument } from 'react-firebase-hooks/firestore';
 import { useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
 const auth = getAuth(app);
-const db = getFirestore(app);
 
 function Page() {
   const [user, loading, user_error] = useAuthState(auth);
   const [userDataRaw, loading2, error2] = useDocument(doc(db, `users/${user?.uid}`));
   const userData = userDataRaw?.data()
   const [createSheet, setCreateSheet] = useState(false);
+  
   async function createSheetDocument(listName) {
     const sheetsRef = collection(db, "sheets");
     const newSheet = {
@@ -60,7 +60,7 @@ function Page() {
         }}
       >
 
-        {userData?.lists?.map((list, index) => ( <SheetTile key={index} props={{ name: list.list_name, item_count: list.list_count, object_id: list.object_id }} /> ))}
+        {userData?.lists?.map((list, index) => ( <SheetTile key={index} props={{ name: list.list_name, item_count: list.list_count, object_id: list.object_id, reference: list.list_ref }} /> ))}
 
         <SheetTileNew />
         <div className="fixed right-4 bottom-4 flex justify-center gap-6">

@@ -45,4 +45,4 @@ function Item({ id, name, link, phoneNumber, email, address, screenshot }) {
   );
 }
 
-export default Item;
+export default Item2;

@@ -2,8 +2,7 @@
 import react from "react";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import Item from "./Item.jsx";
-
+import Item2 from "./Item.jsx";
 import PageName from "../../components/PageName";
 
 function Page({ params }) {

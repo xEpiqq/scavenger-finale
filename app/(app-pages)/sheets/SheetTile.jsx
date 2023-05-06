@@ -1,8 +1,11 @@
 import react from "react";
-
+import Link from 'next/link';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisV, faFileWord } from "@fortawesome/free-solid-svg-icons";
 import SheetTileOptions from "./SheetTileOptions";
+import { app, db } from '../../../components/initializeFirebase'
+import { getFirestore, doc } from 'firebase/firestore';
+import { useDocument } from 'react-firebase-hooks/firestore';
 
 // colors should go from dark blue to dark purple
 const sheet_count_value_colors = [
@@ -19,20 +22,30 @@ const sheet_count_value_colors = [
 ];
 
 function Page({ props }) {
-  const { name, item_count, object_id } = props;
+  
+  const { name, object_id, reference } = props;
+  const [userDataRaw, loading2, error2] = useDocument(doc(db, `sheets/${reference}`))
+  const userData = userDataRaw?.data()
+  const item_count = userData?.lists?.length;
+
   const sheet_count_value = Math.floor(item_count / 21);
+  const sheet_link = `/sheets/${reference}`;
+
+  
   return (
     <div className="flex h-52 w-60 flex-col justify-between rounded-md border border-black bg-offwhite-1 hover:cursor-pointer hover:bg-gray-3">
       <div className="flex h-full w-full items-center justify-center text-center">
-        <div
-          className={`flex aspect-square h-2/3 items-center justify-center rounded-full border-2 bg-black text-center`}
-          style={{
-            borderColor: sheet_count_value_colors[sheet_count_value],
-            color: sheet_count_value_colors[sheet_count_value],
-          }}
-        >
+      
+      <Link href={sheet_link} 
+      className={`flex aspect-square h-2/3 items-center justify-center rounded-full border-2 bg-black text-center`}
+      style={{ borderColor: sheet_count_value_colors[sheet_count_value], }}>
+        <div style={{ color: sheet_count_value_colors[sheet_count_value], }} >
+
           <h4 className="text-lg">{item_count}</h4>
+
         </div>
+        </Link>
+
       </div>
       <div className="m-0 mb-1 flex h-12 w-full items-center justify-between border-t border-black p-0 pl-2 pr-2 text-center">
         <div className="flex h-full flex-row items-center justify-center gap-2 text-center">
@@ -44,6 +57,7 @@ function Page({ props }) {
         <SheetTileOptions object_id={object_id} />
       </div>
     </div>
+
   );
 }
 
