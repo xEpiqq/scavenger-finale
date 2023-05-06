@@ -1,8 +1,11 @@
 import react from "react";
-
+import Link from 'next/link';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisV, faFileWord } from "@fortawesome/free-solid-svg-icons";
 import SheetTileOptions from "./SheetTileOptions";
+import { app, db } from '../../../components/initializeFirebase'
+import { getFirestore, doc } from 'firebase/firestore';
+import { useDocument } from 'react-firebase-hooks/firestore';
 
 // colors should go from dark blue to dark purple
 const sheet_count_value_colors = [
@@ -19,9 +22,18 @@ const sheet_count_value_colors = [
 ];
 
 function Page({ props }) {
-  const { name, item_count, object_id } = props;
+  
+  const { name, object_id, reference } = props;
+  const [userDataRaw, loading2, error2] = useDocument(doc(db, `sheets/${reference}`))
+  const userData = userDataRaw?.data()
+  const item_count = userData?.lists?.length;
+
   const sheet_count_value = Math.floor(item_count / 21);
+  const sheet_link = `/sheets/${reference}`;
+
+  
   return (
+    <Link href={sheet_link} >
     <div className="flex h-52 w-60 flex-col justify-between rounded-md border border-black bg-offwhite-1 hover:cursor-pointer hover:bg-gray-3">
       <div className="flex h-full w-full items-center justify-center text-center">
         <div
@@ -44,6 +56,8 @@ function Page({ props }) {
         <SheetTileOptions object_id={object_id} />
       </div>
     </div>
+    </Link>
+
   );
 }
 

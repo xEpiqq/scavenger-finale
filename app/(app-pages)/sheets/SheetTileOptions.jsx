@@ -4,13 +4,12 @@ import react from "react";
 import SheetTile from "./SheetTile";
 import SheetTileNew from "./SheetTileNew";
 import PageName from "../components/PageName";
-import { app } from "../../../components/initializeFirebase";
+import { app, db } from "../../../components/initializeFirebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { getAuth, signOut } from "firebase/auth";
 import { getFirestore, doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { useDocument } from 'react-firebase-hooks/firestore';
 const auth = getAuth(app);
-const db = getFirestore(app);
 
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -74,7 +73,6 @@ function SheetTileOptions(props) {
 
   }
   
-
   const dropdownMenu = showSheetOptions ? (
     <div className="absolute z-10 mt-1 w-40 rounded-md bg-white shadow-lg">
       <div className="py-1">
