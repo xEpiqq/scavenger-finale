@@ -33,18 +33,19 @@ function Page({ props }) {
 
   
   return (
-    <Link href={sheet_link} >
     <div className="flex h-52 w-60 flex-col justify-between rounded-md border border-black bg-offwhite-1 hover:cursor-pointer hover:bg-gray-3">
       <div className="flex h-full w-full items-center justify-center text-center">
-        <div
-          className={`flex aspect-square h-2/3 items-center justify-center rounded-full border-2 bg-black text-center`}
-          style={{
-            borderColor: sheet_count_value_colors[sheet_count_value],
-            color: sheet_count_value_colors[sheet_count_value],
-          }}
-        >
+      
+      <Link href={sheet_link} 
+      className={`flex aspect-square h-2/3 items-center justify-center rounded-full border-2 bg-black text-center`}
+      style={{ borderColor: sheet_count_value_colors[sheet_count_value], }}>
+        <div style={{ color: sheet_count_value_colors[sheet_count_value], }} >
+
           <h4 className="text-lg">{item_count}</h4>
+
         </div>
+        </Link>
+
       </div>
       <div className="m-0 mb-1 flex h-12 w-full items-center justify-between border-t border-black p-0 pl-2 pr-2 text-center">
         <div className="flex h-full flex-row items-center justify-center gap-2 text-center">
@@ -56,7 +57,6 @@ function Page({ props }) {
         <SheetTileOptions object_id={object_id} />
       </div>
     </div>
-    </Link>
 
   );
 }

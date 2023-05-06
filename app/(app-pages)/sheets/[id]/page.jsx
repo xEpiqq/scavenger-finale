@@ -78,7 +78,7 @@ function Page() {
                         <input value={searchQuery} onChange={(e) => {setSearchQuery(e.target.value)}} className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-white" id="business-search" type="text" placeholder="Enter business name" />
                       </div>
                       <div className="flex justify-end">
-                        <button onClick={sendToLambda} className="bg-black hover:bg-gray-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" >
+                        <button onClick={sendToLambda} className="bg-black hover:bg-gray-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:opacity-75" type="button" >
                           Submit
                         </button>
                         {queryError && <p className="text-red-500 text-xs italic">{queryError}</p> }
@@ -94,7 +94,7 @@ function Page() {
     return (
     <div>
         <h1>List {list_id} not empty</h1>
-        {userData?.lists?.map((list, index) => ( <Item key={index} website={list.website} /> ))}
+        {userData?.lists?.map((list, index) => ( <Item key={index} website={list.website} dscreenshot={list.desktop_screenshot}/> ))}
     </div>
     )
 }
