@@ -10,7 +10,6 @@ import { getAuth, signOut } from "firebase/auth";
 import { getFirestore, doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { useDocument } from 'react-firebase-hooks/firestore';
 const auth = getAuth(app);
-
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import TextPrompt from "../components/TextPrompt";
@@ -61,6 +60,7 @@ function SheetTileOptions(props) {
   }
 
   async function deleteFromDB() {
+    await deleteDoc(doc(db, "sheets", props.reference));
     const userRef = doc(db, `users/${user?.uid}`);
     const userSnapshot = await getDoc(userRef);
     const listsArray = userSnapshot.data().lists;
@@ -70,6 +70,7 @@ function SheetTileOptions(props) {
       listsArray.splice(targetIndex, 1); // Remove the object at the targetIndex
       await updateDoc(userRef, { lists: listsArray });
     }
+
 
   }
   

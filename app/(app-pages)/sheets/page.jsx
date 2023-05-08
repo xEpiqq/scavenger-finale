@@ -11,6 +11,9 @@ import { getFirestore, doc, getDoc, updateDoc, collection, addDoc } from 'fireba
 import { useDocument } from 'react-firebase-hooks/firestore';
 import { useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
+import UpgradePopup from '../../../components/UpgradePopup'
+import Header from '../components/Header/index'
+import Navbar from '../components/Navbar/index'
 const auth = getAuth(app);
 
 function Page() {
@@ -46,6 +49,12 @@ function Page() {
     listsArray.push(newSheet);
     await updateDoc(userRef, { lists: listsArray });
   }
+
+  const handleSignOut = () => {
+    auth.signOut();
+  };
+  
+
   
   return (
     <>
@@ -59,6 +68,8 @@ function Page() {
           gap: "1rem",
         }}
       >
+
+        <button onClick={handleSignOut} className='w-24 bg-black text-white h-10'>Temporary Signout</button>
 
         {userData?.lists?.map((list, index) => ( <SheetTile key={index} props={{ name: list.list_name, item_count: list.list_count, object_id: list.object_id, reference: list.list_ref }} /> ))}
 
@@ -86,7 +97,7 @@ function Page() {
       </div>
     </div>
   </>
-  );
+  )
 }
 
 export default Page;

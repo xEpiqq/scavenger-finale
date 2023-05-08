@@ -87,7 +87,7 @@ const Header = () => {
                 
               </div>
               <div className="flex items-center justify-end pr-16 lg:pr-0">
-                {user ? ( <img src={user?.photoURL} alt="User Photo" className='rounded-full w-16 h-16 hover:cursor-pointer'></img> ) : (
+                {user ? ( <img src={userData?.photo} alt="User Photo" className='rounded-full w-16 h-16 hover:cursor-pointer'></img> ) : (
                 <Link href='/signup' className="ease-in-up hidden rounded-md bg-black px-8 py-3 text-base font-bold text-white transition duration-300 hover:bg-opacity-90 hover:shadow-signUp md:block md:px-9 lg:px-6 xl:px-9 hover:bg-white hover:text-black">
                 Sign Up
                 </Link>

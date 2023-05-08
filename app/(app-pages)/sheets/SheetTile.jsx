@@ -54,7 +54,7 @@ function Page({ props }) {
           </div>
           <h4>{name}</h4>
         </div>
-        <SheetTileOptions object_id={object_id} />
+        <SheetTileOptions object_id={object_id} reference={reference} />
       </div>
     </div>
 

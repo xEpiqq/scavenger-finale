@@ -23,23 +23,6 @@ const SignupPage = () => {
     router.push("/contact");
   }
 
-  async function googleLogin() {
-    const result = await signInWithPopup(auth, provider);
-    const user = result.user;
-    // check if firestore user
-    await fetch("/api/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        uid: user.uid,
-        displayname: user.displayName,
-        email: user.email,
-      }),
-    });
-  }
-
   return (
     <>
       <section className="relative z-10 overflow-hidden pb-16 pt-36 md:pb-20 lg:pb-28 lg:pt-[180px]">
