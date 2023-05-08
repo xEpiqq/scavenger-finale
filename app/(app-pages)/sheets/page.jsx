@@ -35,7 +35,7 @@ function Page() {
     const userRef = doc(db, `users/${user?.uid}`);
     const userSnapshot = await getDoc(userRef);
     const listsArray = userSnapshot.data().lists;
-    const listRef = await createSheetDocument(listName);
+    const listRef = await createSheetDocument(listName);  
     const newSheet = {
       list_contacted: 0,
       list_count: 0,
