@@ -32,8 +32,24 @@ function GoogleLogin() {
         uid: user.uid,
         displayname: user.displayName,
         email: user.email,
+        photo: user.photoURL
       }),
-    });
+    })
+
+    // fetch to /api/stripecreatecustomer
+    await fetch("/api/stripecreatecustomer", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: user.email,
+        name: user.displayName,
+        user_id: user.uid,
+      }),
+    })
+
+    router.push("/sheets");
   }
 
   return (
