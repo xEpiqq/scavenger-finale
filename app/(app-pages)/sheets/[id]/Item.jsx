@@ -8,44 +8,41 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 function Item({ name, link, phoneNumber, email, address, screenshot }) {
-  const [showScreenshot, setShowScreenshot] = useState(false);
-
-  const toggleScreenshot = () => {
-    setShowScreenshot(!showScreenshot);
-  };
-
   return (
-    <div
-      className="relative flex w-full max-w-screen-lg flex-col justify-evenly rounded-md bg-gray-3 p-4 sm:grid sm:grid-flow-row sm:grid-cols-5 sm:gap-4 sm:items-center sm:justify-center sm:shadow-md sm:hover:shadow-lg sm:hover:bg-gray-2 sm:hover:opacity-100 sm:hover:scale-105 sm:z-10 transition-all duration-300"
-      onMouseEnter={toggleScreenshot}
-      onMouseLeave={toggleScreenshot}
-    >
-      {link ? (
-      <Link href={link}>
-        <h3>{name}</h3>
-      </Link>
-      ) : (
-        <h3>{name}</h3>
-      )}
-      <p>{phoneNumber}</p>
-      <p>{email}</p>
-      <p>{address}</p>
-      <div className="h-4 w-4 p-1">
-        <FontAwesomeIcon icon={faCircleArrowRight} />
-      </div>
-      <img
-        src={screenshot}
-        alt={`Screenshot of ${name}`}
-        className="sm:hidden sm:opacity-80 block pointer-events-none rounded-md shadow-md mt-3 z-100"
-      />
-      {showScreenshot && (
+    <tr className="h-12 w-full border-b border-gray-5 transition-all duration-300 sm:hover:bg-gray-6">
+      <td className="">
+        <label className="flex h-4 w-4 items-center justify-center">
+          <input type="checkbox" className="" />
+        </label>
+      </td>
+      <td>
+        <p className="whitespace-nowrap">{name}</p>
+      </td>
+      <td>
+        <p className="whitespace-nowrap">{link}</p>
+      </td>
+      <td>
+        <p className="whitespace-nowrap">{phoneNumber}</p>
+      </td>
+      <td>
+        <p className="whitespace-nowrap">{email}</p>
+      </td>
+      <td>
         <img
           src={screenshot}
           alt={`Screenshot of ${name}`}
-          className="pointer-events-none absolute left-0 top-full z-100 h-20 rounded-md object-contain opacity-80 shadow-md sm:block hidden"
+          className="h-12 w-12"
         />
-      )}
-    </div>
+      </td>
+      <td>
+        <p className="whitespace-nowrap">{address}</p>
+      </td>
+      <td className="sticky right-0 bg-white ">
+        <div className="h-4 w-full flex justify-center items-center ">
+          <FontAwesomeIcon icon={faCircleArrowRight} />
+        </div>
+      </td>
+    </tr>
   );
 }
 

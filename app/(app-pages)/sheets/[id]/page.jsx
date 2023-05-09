@@ -118,19 +118,66 @@ function Page({ params }) {
 
   return (
     <div>
-      <h1>List {list_id} not empty</h1>
-      <div className="flex flex-col items-center justify-center gap-2 p-2">
-        {userData?.lists?.map((list, index) => (
-          <Item
-            key={index}
-            name={list.biz_name}
-            link={list.website}
-            phoneNumber={list.phone}
-            email={list.email}
-            address={list.address}
-            screenshot={list.desktop_screenshot}
-          />
-        ))}
+      <div className="w-full overflow-x-auto">
+        <table className="w-full gap-0">
+          <thead>
+            <tr className="sm:hover:opacity-100l relative h-12 border-separate border-b border-gray-5 transition-all duration-300 sm:hover:bg-gray-6">
+              <th className="relative inline-flex flex-nowrap items-center gap-1 pl-2 pr-2">
+                <label className="flex h-4 w-4 items-center justify-center">
+                  <input type="checkbox" className="" />
+                </label>
+              </th>
+              <th className="max-w-xs">
+                <p className="inline-flex w-full items-center whitespace-nowrap">
+                  Business Name
+                </p>
+              </th>
+              <th className="">
+                <p className="inline-flex w-full items-center whitespace-nowrap">
+                  Website
+                </p>
+              </th>
+              <th className="">
+                <p className="inline-flex w-full items-center whitespace-nowrap">
+                  Phone Number
+                </p>
+              </th>
+              <th className="">
+                <p className="inline-flex w-full items-center whitespace-nowrap">
+                  Email
+                </p>
+              </th>
+              <th className="">
+                <p className="inline-flex w-full items-center whitespace-nowrap">
+                  Screenshot
+                </p>
+              </th>
+              <th className="">
+                <p className="inline-flex w-full items-center whitespace-nowrap">
+                  Address
+                </p>
+              </th>
+              <th className=" right-0 bg-white">
+                <p className="inline-flex w-full items-center whitespace-nowrap">
+                  Actions
+                </p>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {userData?.lists?.slice(0, 10).map((list, index) => (
+              <Item
+                key={index}
+                name={list.biz_name}
+                link={list.website}
+                phoneNumber={list.phone}
+                email={list.email}
+                address={list.address}
+                screenshot={list.desktop_screenshot}
+              />
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

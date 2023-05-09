@@ -49,7 +49,6 @@ function Layout({ children }) {
     <div className="flex sm:flex-row flex-col bg-white w-full h-full text-black">
         <Navbar/>
         <section className="w-full h-full">
-        <Header />
           {children}
         </section>
       </div>

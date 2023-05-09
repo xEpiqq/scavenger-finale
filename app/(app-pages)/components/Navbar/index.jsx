@@ -1,31 +1,46 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome, faUser, faCog, faFileLines } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHome,
+  faUser,
+  faCog,
+  faFileLines,
+} from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import Image from "next/image";
 
 function Navbar() {
   return (
-    <div className="flex sm:flex-col sm:w-12 sm:h-screen flex-row h-12 w-screen justify-start items-center z-4 bg-gray-800 bg-gray-2 sticky gap-2 p-2 top-0">
-      <Link href="/" className="">
-        <span>
-          <Image src="/images/logo/crow.png" width={50} height={50} alt="Logo" />
-        </span>
-      </Link>
-      <Link href="/profile">
-        <div>
-          <FontAwesomeIcon icon={faUser} className="w-6 h-6 hover:text-primary transition-all duration-300" />
-        </div>
-      </Link>
-      <Link href="/settings">
-        <div>
-          <FontAwesomeIcon icon={faCog} className="w-6 h-6 hover:text-primary transition-all duration-300" />
-        </div>
-      </Link>
-      <Link href="/sheets">
-        <div>
-          <FontAwesomeIcon icon={faFileLines} className="w-6 h-6 hover:text-primary transition-all duration-300" />
-        </div>
-      </Link>
+    <div className="z-4 top-0 flex h-12 items-center justify-start gap-2 border-r mr-1 border-gray-5 sm:h-screen sm:flex-col"
+    style={{width: '80px'}}>
+      <div className="aspect-square w-full p-4">
+        <Link href="/" className="p-0">
+          <img src="/images/logo/crow.png" alt="Logo" className=" w-full  " />
+          </Link>
+      </div>
+      <div className="pb-2 pl-6 pr-6 pt-2 w-full">
+        <Link href="/" className="p-0">
+          <FontAwesomeIcon
+            icon={faUser}
+            className="h-full w-full transition-all duration-300 hover:text-primary"
+          />
+        </Link>
+      </div>
+      <div className="pb-2 pl-6 pr-6 pt-2">
+        <Link href="/" className="p-0">
+          <FontAwesomeIcon
+            icon={faCog}
+            className="h-full w-full transition-all duration-300 hover:text-primary"
+          />
+        </Link>
+      </div>
+      <div className="pb-2 pl-6 pr-6 pt-2">
+        <Link href="/" className="p-0">
+          <FontAwesomeIcon
+            icon={faFileLines}
+            className="h-full w-full transition-all duration-300 hover:text-primary"
+          />
+        </Link>
+      </div>
     </div>
   );
 }
