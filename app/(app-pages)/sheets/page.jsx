@@ -11,9 +11,7 @@ import { getFirestore, doc, getDoc, updateDoc, collection, addDoc } from 'fireba
 import { useDocument } from 'react-firebase-hooks/firestore';
 import { useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
-import UpgradePopup from '../../../components/UpgradePopup'
-import Header from '../components/Header/index'
-import Navbar from '../components/Navbar/index'
+
 const auth = getAuth(app);
 
 function Page() {
@@ -21,7 +19,8 @@ function Page() {
   const [userDataRaw, loading2, error2] = useDocument(doc(db, `users/${user?.uid}`));
   const userData = userDataRaw?.data()
   const [createSheet, setCreateSheet] = useState(false);
-  
+  const [statsMenu, setStatsMenu] = useState(true);
+
   async function createSheetDocument(listName) {
     const sheetsRef = collection(db, "sheets");
     const newSheet = {
@@ -57,19 +56,26 @@ function Page() {
 
   
   return (
-    <>
-    <div className="flex flex-col justify-between">
+    <div className="flex h-screen w-full">
+
+    { statsMenu && (
+    <div className="w-64 bg-white sm:h-screen border-t-transparent border-b-0 border-l-transparent border-pblines h-screen " style={{ borderWidth: 1 }} >
+      <div className="w-full h-20 border-t-transparent border-l-transparent border-r-transparent border-pblines" style={{borderWidth: 1}}> </div>
+      <h1 onClick={() => {setStatsMenu(false)}} className="text-md font-bold cursor-pointer">⬅</h1>
+    </div>
+    )
+    }
+
+    <div className="flex flex-col justify-between bg-pbsecondbg h-screen w-full py-8 px-4">
       <PageName name="Sheets" />
       <div
-        className="relative m-4 grid h-full items-center justify-center gap-4"
+        className="relative m-4 grid h-full justify-center gap-4"
         style={{
           gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
           gridAutoRows: "1fr",
           gap: "1rem",
         }}
       >
-
-        <button onClick={handleSignOut} className='w-24 bg-black text-white h-10'>Temporary Signout</button>
 
         {userData?.lists?.map((list, index) => ( <SheetTile key={index} props={{ name: list.list_name, item_count: list.list_count, object_id: list.object_id, reference: list.list_ref }} /> ))}
 
@@ -96,7 +102,7 @@ function Page() {
 
       </div>
     </div>
-  </>
+    </div>
   )
 }
 

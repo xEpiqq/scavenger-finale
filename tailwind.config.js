@@ -53,7 +53,11 @@ module.exports = {
       paymentborder: "#E8E8E8",
       paymentmid: "#FAFAFA",
       paymenttext: "#666666",
-      paymentboxborder: "#EAEAEA"
+      paymentboxborder: "#EAEAEA",
+
+      pblines: "#D7DDE4",
+      pbiconhover: "#E4E9EC",
+      pbsecondbg: "#F8F9FA"
     },
     screens: {
       xs: "450px",

@@ -7,42 +7,103 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
+import { getAuth, signOut } from "firebase/auth";
+import { app } from '../../../../components/initializeFirebase'
+const auth = getAuth(app);
 
-function Navbar() {
+
+function Navbar(props) {
+
+  const [signoutModal, setSignoutModal] = useState(false);
+
+  async function handleSignOut() {
+    await signOut(auth);
+  }
+
   return (
-    <div className="z-4 top-0 flex h-12 items-center justify-start gap-2 border-r mr-1 border-gray-5 sm:h-screen sm:flex-col"
-    style={{width: '80px'}}>
-      <div className="aspect-square w-full p-4">
+    <div className="sm:h-screen border-t-transparent border-b-0 border-l-0 border-pblines"
+    style={{ borderWidth: 1 }}
+    
+    >
+    
+    <div className="h-1/2 z-4 w-18 top-0 flex items-center justify-start gap-4 sm:flex-col p-0.5 bg-white">
+
+      <div className="aspect-square w-22 p-4 mt-1">
         <Link href="/" className="p-0">
-          <img src="/images/logo/crow.png" alt="Logo" className=" w-full  " />
+          <img src="/pblogo.svg" alt="Logo" className=" w-full" />
           </Link>
       </div>
-      <div className="pb-2 pl-6 pr-6 pt-2 w-full">
+      <div className="w-12 mt-1 hover:bg-pbiconhover transition duration-150">
         <Link href="/" className="p-0">
-          <FontAwesomeIcon
-            icon={faUser}
-            className="h-full w-full transition-all duration-300 hover:text-primary"
-          />
+        <img src="/pbdblogo.png" alt="Logo" className=" w-full" />
+
         </Link>
       </div>
-      <div className="pb-2 pl-6 pr-6 pt-2">
+      <div className="w-11 rounded-xl border-2 border-black p-3">
         <Link href="/" className="p-0">
-          <FontAwesomeIcon
-            icon={faCog}
-            className="h-full w-full transition-all duration-300 hover:text-primary"
-          />
+        <img src="/pbbarlogo.svg" alt="Logo" className=" w-full" />
         </Link>
       </div>
-      <div className="pb-2 pl-6 pr-6 pt-2">
+      <div className="w-12">
         <Link href="/" className="p-0">
-          <FontAwesomeIcon
-            icon={faFileLines}
-            className="h-full w-full transition-all duration-300 hover:text-primary"
-          />
+        <img src="/pbsettingslogo.png" alt="Logo" className=" w-full" />
         </Link>
       </div>
     </div>
-  );
+
+    <div className="bg-white flex items-end h-1/2 justify-center pb-4">
+    <img src="/profpic.png" alt="Logo" className="w-12 hover:cursor-pointer" onClick={() => {setSignoutModal(!signoutModal)}} draggable={false}/>
+    
+    {signoutModal && (
+    <div
+        className="fixed inset-0 z-50"
+        onClick={() => setSignoutModal(false)}
+    >
+        <div
+            className="absolute bottom-16 left-4 w-36 rounded-md overflow-hidden border-pblines bg-white mb-1 flex items-center flex-col p-1 shadow-sm duration-300 transition"
+            onClick={(e) => e.stopPropagation()}
+            style={{ borderWidth: 1 }}
+        >
+            <div className="flex items-center justify-start w-full hover:bg-pbiconhover rounded-md p-1 m-1 mt-0 transition duration-150">
+                <img src="/pbmanagesub.png" className="w-4 h-4 ml-2" alt="Manage Subscription" />
+                <div className="w-full">
+                    <button className="py-2 px-4 hover:bg-gray-100 focus:outline-none text-xs text-left">
+                        <div className="flex items-center">
+                            <div>Subscription</div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            <span className="h-px bg-pblines"
+            
+            style={{ width: "97%" }}
+            
+            />
+            <div className="flex items-center justify-start w-full hover:bg-pbiconhover rounded-md p-1 m-1 mb-0 transition duration-150">
+                <img src="/pblogout.png" className="w-4 h-4 ml-2" alt="Logout" />
+                <div className="w-full">
+                    <button
+                        className="py-2 px-4 hover:bg-gray-100 focus:outline-none text-xs text-left"
+                        onClick={() => setSignoutModal(false)}
+                    >
+                        <div className="flex items-center">
+                            <div>Logout</div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+)}
+
+
+
+
+    </div>
+
+  </div>
+);
 }
 
 export default Navbar;
