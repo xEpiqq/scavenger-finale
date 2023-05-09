@@ -35,7 +35,7 @@ function Layout({ children }) {
     return (
       <div className="flex sm:flex-row flex-col bg-white w-full h-full text-black">
         <div className="w-full h-full flex justify-center items-center fixed z-50"> <TrialEndUpgradePopup /> </div>
-        <Navbar />
+        <Navbar/>
         <section className="w-full h-full">
           <Header />
           {children}
@@ -47,7 +47,7 @@ function Layout({ children }) {
   if (userData?.subscription_status === 'active') {
     return (
     <div className="flex sm:flex-row flex-col bg-white w-full h-full text-black">
-        <Navbar/>
+        <Navbar />
         <section className="w-full h-full">
           {children}
         </section>
