@@ -12,10 +12,38 @@ import { useDocument } from 'react-firebase-hooks/firestore';
 import { useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import { useEffect } from "react";
+import { PieChart } from 'react-minimal-pie-chart';
+
 
 const auth = getAuth(app);
 
 function Page() {
+
+  const chart_colors =  
+  [  
+    '#FCA5A5',  
+    '#FDB1A5',  
+    '#FFC2A5',  
+    '#FFCDA5',  
+    '#FFD9A5',  
+    '#FFE5A5',  
+    '#FFF1A5',  
+    '#FFFDAA',  
+    '#FFFEBC',  
+    '#FFFED0',  
+    '#FFFFE0',  
+    '#E0FFDF',  
+    '#D1FFD1',  
+    '#C2FFC2',  
+    '#B2FFB2',  
+    '#A3FFA3',  
+    '#94FF94',  
+    '#85FF85',  
+    '#76FF76',  
+    '#67FF67'
+  ]
+
+
   const [user, loading, user_error] = useAuthState(auth);
   const [userDataRaw, loading2, error2] = useDocument(doc(db, `users/${user?.uid}`));
   const userData = userDataRaw?.data()
@@ -79,14 +107,41 @@ function Page() {
 
     <div className="w-64 bg-white sm:h-screen border-t-transparent border-b-0 border-l-transparent border-pblines h-screen hidden sm:block" style={{ borderWidth: 1 }} >
       <div className="flex items-center justify-center w-full h-20 border-t-transparent border-l-transparent border-r-transparent border-pblines" style={{borderWidth: 1}}> 
-      <h2 className="font-bold text-2xl">Sheets</h2>
+      <h2 className="font-bold text-2xl">Stats</h2>
       </div>
       <div className="flex flex-col items-center gap-3 h-4/5">
-        <h2>Stats</h2>
-        <h2>Total Sheets</h2>
-        <h2>{total_sheets}</h2>
-        <h2>Total Leads</h2>
-        <h2>{totalLeads}</h2>
+        <h2 className="mt-10 text-md">Total Sheets</h2>
+        <h2 className="font-bold">{total_sheets}</h2>
+        <span className="w-28 bg-pblines" style={{height: 1}}/>
+
+        <h2 className="mt-2 text-md">Total Leads</h2>
+        <h2 className="font-bold">{totalLeads}</h2>
+        <span className="w-28 bg-pblines" style={{height: 1}}/>
+        
+        <h2 className="mt-6">First Contact</h2>
+        <h2 className="text-xs text-gray-3">66/{totalLeads}</h2>
+        <div className="w-full h-28">
+        <PieChart
+            data={[
+              { title: 'One', value: 10, color: '#4C9A' },
+              { title: 'Two', value: totalLeads, color: '#2C2C2C' },
+            ]}
+          />
+        </div>
+                
+        <h2 className="mt-6">Second Contact</h2>
+        <h2 className="text-xs text-gray-3">33/{totalLeads}</h2>
+
+        <div className="w-full h-28">
+        <PieChart
+            data={[
+              { title: 'One', value: 10, color: '#C9A' },
+              { title: 'Two', value: 20, color: '#2C2C2C' },
+            ]}
+          />
+        </div>
+        
+
       </div>
     </div>
 
@@ -94,7 +149,7 @@ function Page() {
 
 
     <div className="flex flex-col justify-between bg-pbsecondbg h-screen w-full py-8 px-4">
-      <PageName name="-" />
+      <PageName name="Sheets Overview" />
       <div
         className="relative m-4 grid h-full justify-center gap-4 px-10 pt-4"
         style={{
