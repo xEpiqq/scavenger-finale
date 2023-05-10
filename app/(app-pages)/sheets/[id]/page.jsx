@@ -12,6 +12,7 @@ import {
 import { useDocument } from "react-firebase-hooks/firestore";
 import { useState } from "react";
 import Item from "./Item.jsx";
+import { useEffect } from "react";
 
 function Page({ params }) {
   //////// protect this route so someone with your list id cannot just type it into the url and access your shiz
@@ -27,6 +28,17 @@ function Page({ params }) {
     doc(db, `sheets/${list_id}`)
   );
   const userData = userDataRaw?.data();
+
+  useEffect(() => {
+    updateLastUpdated();
+  }, [userData]);
+
+  async function updateLastUpdated() {
+    const userRef = doc(db, `sheets/${list_id}`);
+    await updateDoc(userRef, {
+      last_updated: new Date(),
+    });
+  }
 
   async function sendToLambda() {
     const query_array = searchQuery.split(" ");

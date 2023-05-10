@@ -24,7 +24,6 @@ function Layout({ children }) {
         <div className="w-full h-full flex justify-center items-center fixed z-50"> <UpgradePopup /> </div>
         <Navbar />
         <section className="w-full h-full">
-          <Header />
           {children}
         </section>
       </div>
@@ -37,7 +36,6 @@ function Layout({ children }) {
         <div className="w-full h-full flex justify-center items-center fixed z-50"> <TrialEndUpgradePopup /> </div>
         <Navbar/>
         <section className="w-full h-full">
-          <Header />
           {children}
         </section>
       </div>
