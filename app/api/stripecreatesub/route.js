@@ -2,17 +2,17 @@ import Stripe from "stripe";
 import { getFirestore, collection, addDoc, setDoc, doc, getDoc, updateDoc } from "firebase/firestore";
 import { app, db } from '../../../components/initializeFirebase'
 
-/////////////////////////STRIPE LIVE MODE/////////////////////////////
-const stripe_secret_key = process.env.STRIPE_REAL_SECRET_KEY; // production mode
-const stripe = Stripe(stripe_secret_key); // production mode
-const basic_price_id = process.env.BASIC_PRICE_ID;
-//////////////////////////////////////////////////////////////////////
+// /////////////////////////STRIPE LIVE MODE/////////////////////////////
+// const stripe_secret_key = process.env.STRIPE_REAL_SECRET_KEY; // production mode
+// const stripe = Stripe(stripe_secret_key); // production mode
+// const basic_price_id = process.env.BASIC_PRICE_ID;
+// //////////////////////////////////////////////////////////////////////
 
-// ///////////////////////////STRIPE TEST MODE/////////////////////////////
-// const stripe_secret_test_key = process.env.STRIPE_SECRET_TEST_KEY; // test mode
-// const stripe = Stripe(stripe_secret_test_key) // test mode
-// const basic_price_id = "price_1MoSC4HpzbXtemiLsVTqsFIG"
-// ////////////////////////////////////////////////////////////////////////
+///////////////////////////STRIPE TEST MODE/////////////////////////////
+const stripe_secret_test_key = process.env.STRIPE_SECRET_TEST_KEY; // test mode
+const stripe = Stripe(stripe_secret_test_key) // test mode
+const basic_price_id = "price_1N5XrWHpzbXtemiLOvrBL1lK" // scavenger premium price id (49 /mo )
+////////////////////////////////////////////////////////////////////////
 
 export async function POST(request) {
 
