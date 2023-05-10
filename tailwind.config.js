@@ -57,7 +57,9 @@ module.exports = {
 
       pblines: "#D7DDE4",
       pbiconhover: "#E4E9EC",
-      pbsecondbg: "#F8F9FA"
+      pbsecondbg: "#F8F9FA",
+      
+      sheettile: "#F4F4F4"
     },
     screens: {
       xs: "450px",

@@ -9,7 +9,7 @@ import {
 
 function Item({ name, link, phoneNumber, email, address, screenshot }) {
   return (
-    <tr className="h-12 w-full border-b border-gray-5 transition-all duration-300 sm:hover:bg-gray-6">
+    <tr className="h-12 w-10 border-b border-gray-5 transition-all duration-300 sm:hover:bg-gray-6">
       <td className="">
         <label className="flex h-4 w-4 items-center justify-center">
           <input type="checkbox" className="" />

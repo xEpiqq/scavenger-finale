@@ -22,7 +22,9 @@ function Navbar(props) {
   }
 
   return (
-    <div className="sm:h-screen border-t-transparent border-b-0 border-l-0 border-pblines"
+
+    <>
+    <div className="sm:h-screen border-t-transparent border-b-0 border-l-0 border-pblines flex flex-row sm:flex-col"
     style={{ borderWidth: 1 }}
     
     >
@@ -30,7 +32,7 @@ function Navbar(props) {
     <div className="h-1/2 z-4 w-18 top-0 flex items-center justify-start gap-4 sm:flex-col p-0.5 bg-white">
 
       <div className="aspect-square w-22 p-4 mt-1">
-        <Link href="/" className="p-0">
+        <Link href="/sheets" className="p-0">
           <img src="/pblogo.svg" alt="Logo" className=" w-full" />
           </Link>
       </div>
@@ -52,7 +54,7 @@ function Navbar(props) {
       </div>
     </div>
 
-    <div className="bg-white flex items-end h-1/2 justify-center pb-4">
+    <div className="flex sm:items-end items-center h-1/2 sm:justify-center pb-4 justify-end flex-center w-full pt-3 pr-5 sm:pr-0">
     <img src="/profpic.png" alt="Logo" className="w-12 hover:cursor-pointer" onClick={() => {setSignoutModal(!signoutModal)}} draggable={false}/>
     
     {signoutModal && (
@@ -95,14 +97,12 @@ function Navbar(props) {
             </div>
         </div>
     </div>
+    
 )}
 
-
-
-
     </div>
-
   </div>
+  </>
 );
 }
 

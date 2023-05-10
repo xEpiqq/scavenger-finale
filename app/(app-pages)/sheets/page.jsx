@@ -11,6 +11,7 @@ import { getFirestore, doc, getDoc, updateDoc, collection, addDoc } from 'fireba
 import { useDocument } from 'react-firebase-hooks/firestore';
 import { useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
+import { useEffect } from "react";
 
 const auth = getAuth(app);
 
@@ -19,11 +20,32 @@ function Page() {
   const [userDataRaw, loading2, error2] = useDocument(doc(db, `users/${user?.uid}`));
   const userData = userDataRaw?.data()
   const [createSheet, setCreateSheet] = useState(false);
-  const [statsMenu, setStatsMenu] = useState(true);
+  const total_sheets = userData?.lists?.length;
+  const [totalLeads, setTotalLeads] = useState(0);
+
+  useEffect(() => {
+    getTotalLeads().then((result) => {
+      setTotalLeads(result)
+    })
+  }, [userData])
+
+    async function getTotalLeads() {
+    let total_leads = 0
+    for (let i = 0; i < total_sheets; i++) {
+      const listRef = userData?.lists[i].list_ref
+      const listDoc = await getDoc(doc(db, `sheets/${listRef}`))
+      const listData = listDoc.data()
+      const listCount = listData?.lists.length
+      total_leads = total_leads + listCount
+    }
+    return total_leads
+  }
+
 
   async function createSheetDocument(listName) {
     const sheetsRef = collection(db, "sheets");
     const newSheet = {
+      last_updated: new Date(),
       list_name: listName,
       owner_id: user?.uid,
       lists: [],
@@ -49,27 +71,32 @@ function Page() {
     await updateDoc(userRef, { lists: listsArray });
   }
 
-  const handleSignOut = () => {
-    auth.signOut();
-  };
-  
-
-  
   return (
     <div className="flex h-screen w-full">
 
-    { statsMenu && (
-    <div className="w-64 bg-white sm:h-screen border-t-transparent border-b-0 border-l-transparent border-pblines h-screen " style={{ borderWidth: 1 }} >
-      <div className="w-full h-20 border-t-transparent border-l-transparent border-r-transparent border-pblines" style={{borderWidth: 1}}> </div>
-      <h1 onClick={() => {setStatsMenu(false)}} className="text-md font-bold cursor-pointer">⬅</h1>
+
+
+
+    <div className="w-64 bg-white sm:h-screen border-t-transparent border-b-0 border-l-transparent border-pblines h-screen hidden sm:block" style={{ borderWidth: 1 }} >
+      <div className="flex items-center justify-center w-full h-20 border-t-transparent border-l-transparent border-r-transparent border-pblines" style={{borderWidth: 1}}> 
+      <h2 className="font-bold text-2xl">Sheets</h2>
+      </div>
+      <div className="flex flex-col items-center gap-3 h-4/5">
+        <h2>Stats</h2>
+        <h2>Total Sheets</h2>
+        <h2>{total_sheets}</h2>
+        <h2>Total Leads</h2>
+        <h2>{totalLeads}</h2>
+      </div>
     </div>
-    )
-    }
+
+
+
 
     <div className="flex flex-col justify-between bg-pbsecondbg h-screen w-full py-8 px-4">
-      <PageName name="Sheets" />
+      <PageName name="-" />
       <div
-        className="relative m-4 grid h-full justify-center gap-4"
+        className="relative m-4 grid h-full justify-center gap-4 px-10 pt-4"
         style={{
           gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
           gridAutoRows: "1fr",
@@ -79,7 +106,15 @@ function Page() {
 
         {userData?.lists?.map((list, index) => ( <SheetTile key={index} props={{ name: list.list_name, item_count: list.list_count, object_id: list.object_id, reference: list.list_ref }} /> ))}
 
-        <SheetTileNew />
+        { 
+          total_sheets === 0 && ( 
+            <SheetTileNew
+            onClick={() => setCreateSheet(true)}
+            />
+          )
+        }
+
+        {/* <SheetTileNew /> */}
         <div className="fixed right-4 bottom-4 flex justify-center gap-6">
         <button className="bg-white border border-black border-1 text-black rounded-md w-36 h-10 right-4 bottom-4 hover:bg-black hover:text-white" >Export to CSV</button>
         <button className="bg-black text-white rounded-md w-48 h-10 right-38 bottom-4 hover:bg-white hover:border hover:border-1 hover:border-black hover:text-black" onClick={() => {setCreateSheet(true)}}>Create New Sheet</button>
