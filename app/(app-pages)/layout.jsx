@@ -27,8 +27,7 @@ function Layout({ children }) {
           <UpgradePopup />{" "}
         </div>
         <Navbar />
-        <section className="h-full w-full">
-          <Header />
+        <section className="w-full h-full">
           {children}
         </section>
       </div>
@@ -37,14 +36,11 @@ function Layout({ children }) {
 
   if (userData?.subscription_status === "cancelled") {
     return (
-      <div className="flex h-full w-full flex-col bg-white text-black sm:flex-row">
-        <div className="fixed z-50 flex h-full w-full items-center justify-center">
-          {" "}
-          <TrialEndUpgradePopup />{" "}
-        </div>
-        <Navbar />
-        <section className="h-full w-full">
-          <Header />
+
+      <div className="flex sm:flex-row flex-col bg-white w-full h-full text-black">
+        <div className="w-full h-full flex justify-center items-center fixed z-50"> <TrialEndUpgradePopup /> </div>
+        <Navbar/>
+        <section className="w-full h-full">
           {children}
         </section>
       </div>
