@@ -7,25 +7,25 @@ import {
   faCircleArrowRight,
 } from "@fortawesome/free-solid-svg-icons";
 
-function Item({ name, link, phoneNumber, email, address, screenshot }) {
+function Item({ name, link, phoneNumber, email, address, screenshot, selected, toggleselected }) {
   return (
-    <tr className="h-12 w-full border-b border-gray-5 transition-all duration-300 sm:hover:bg-gray-6">
-      <td className="">
-        <label className="flex h-4 w-4 items-center justify-center">
-          <input type="checkbox" className="" />
+    <tr>
+      <td>
+        <label className="flex justify-center items-center">
+          <input type="checkbox" className="" checked={selected} onClick={toggleselected} />
         </label>
       </td>
       <td>
-        <p className="whitespace-nowrap">{name}</p>
+        <p>{name}</p>
       </td>
       <td>
-        <p className="whitespace-nowrap">{link}</p>
+        <p>{link}</p>
       </td>
       <td>
-        <p className="whitespace-nowrap">{phoneNumber}</p>
+        <p>{phoneNumber}</p>
       </td>
       <td>
-        <p className="whitespace-nowrap">{email}</p>
+        <p>{email}</p>
       </td>
       <td>
         <img
@@ -35,10 +35,10 @@ function Item({ name, link, phoneNumber, email, address, screenshot }) {
         />
       </td>
       <td>
-        <p className="whitespace-nowrap">{address}</p>
+        <p>{address}</p>
       </td>
-      <td className="sticky right-0 bg-white ">
-        <div className="h-4 w-full flex justify-center items-center ">
+      <td className="sticky right-0 shadow-sticky bg-white hover:cursor-pointer hover:bg-gray-3 transition-all duration-200">
+        <div className="h-4 w-full flex justify-center items-center">
           <FontAwesomeIcon icon={faCircleArrowRight} />
         </div>
       </td>

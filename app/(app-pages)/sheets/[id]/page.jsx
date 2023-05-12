@@ -12,6 +12,7 @@ import {
 import { useDocument } from "react-firebase-hooks/firestore";
 import { useState } from "react";
 import Item from "./Item.jsx";
+import styles from "./page.module.scss";
 
 function Page({ params }) {
   //////// protect this route so someone with your list id cannot just type it into the url and access your shiz
@@ -20,6 +21,8 @@ function Page({ params }) {
 
   const [searchQuery, setSearchQuery] = useState("");
   const [queryError, setQueryError] = useState("");
+
+  const [selectedSheets, setSelectedSheets] = useState([]);
 
   const { id } = params;
   const list_id = id;
@@ -117,68 +120,76 @@ function Page({ params }) {
   }
 
   return (
-    <div>
-      <div className="w-full overflow-x-auto">
-        <table className="w-full gap-0">
-          <thead>
-            <tr className="sm:hover:opacity-100l relative h-12 border-separate border-b border-gray-5 transition-all duration-300 sm:hover:bg-gray-6">
-              <th className="relative inline-flex flex-nowrap items-center gap-1 pl-2 pr-2">
-                <label className="flex h-4 w-4 items-center justify-center">
-                  <input type="checkbox" className="" />
-                </label>
-              </th>
-              <th className="max-w-xs">
-                <p className="inline-flex w-full items-center whitespace-nowrap">
-                  Business Name
-                </p>
-              </th>
-              <th className="">
-                <p className="inline-flex w-full items-center whitespace-nowrap">
-                  Website
-                </p>
-              </th>
-              <th className="">
-                <p className="inline-flex w-full items-center whitespace-nowrap">
-                  Phone Number
-                </p>
-              </th>
-              <th className="">
-                <p className="inline-flex w-full items-center whitespace-nowrap">
-                  Email
-                </p>
-              </th>
-              <th className="">
-                <p className="inline-flex w-full items-center whitespace-nowrap">
-                  Screenshot
-                </p>
-              </th>
-              <th className="">
-                <p className="inline-flex w-full items-center whitespace-nowrap">
-                  Address
-                </p>
-              </th>
-              <th className=" right-0 bg-white">
-                <p className="inline-flex w-full items-center whitespace-nowrap">
-                  Actions
-                </p>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {userData?.lists?.slice(0, 10).map((list, index) => (
-              <Item
-                key={index}
-                name={list.biz_name}
-                link={list.website}
-                phoneNumber={list.phone}
-                email={list.email}
-                address={list.address}
-                screenshot={list.desktop_screenshot}
-              />
-            ))}
-          </tbody>
-        </table>
-      </div>
+    <div className={styles.table_wrapper}>
+      <table>
+        <thead>
+          <tr>
+            <th>
+              <label className="flex items-center justify-center">
+                <input
+                  type="checkbox"
+                  className=""
+                  onClick={(e) => {
+                    if (e.target.checked) {
+                      setSelectedSheets([
+                        ...Array(userData?.lists?.length).keys(),
+                      ]);
+                    } else {
+                      setSelectedSheets([]);
+                    }
+                  }}
+                  checked={
+                    selectedSheets.length === userData?.lists?.length &&
+                    userData?.lists?.length !== 0
+                  }
+                />
+              </label>
+            </th>
+            <th>
+              <p>Business Name</p>
+            </th>
+            <th>
+              <p>Website</p>
+            </th>
+            <th>
+              <p>Phone Number</p>
+            </th>
+            <th>
+              <p>Email</p>
+            </th>
+            <th>
+              <p>Screenshot</p>
+            </th>
+            <th>
+              <p>Address</p>
+            </th>
+            <th className="sticky right-0 bg-white shadow-sticky">
+              <p>Actions</p>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {userData?.lists?.slice(0, 10).map((list, index) => (
+            <Item
+              key={index}
+              name={list.biz_name}
+              link={list.website}
+              phoneNumber={list.phone}
+              email={list.email}
+              address={list.address}
+              screenshot={list.desktop_screenshot}
+              selected={selectedSheets.includes(index)}
+              toggleselected={() => {
+                if (selectedSheets.includes(index)) {
+                  setSelectedSheets(selectedSheets.filter((i) => i !== index));
+                } else {
+                  setSelectedSheets([...selectedSheets, index]);
+                }
+              }}
+            />
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
