@@ -24,7 +24,7 @@ function Navbar(props) {
   return (
 
     <>
-    <div className="sm:h-screen border-t-transparent border-b-0 border-l-0 border-pblines flex flex-row sm:flex-col"
+    <div className="sticky top-0 sm:h-screen border-t-transparent border-b-0 border-l-0 border-pblines flex flex-row sm:flex-col"
     style={{ borderWidth: 1 }}
     
     >

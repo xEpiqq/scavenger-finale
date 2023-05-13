@@ -108,7 +108,7 @@ const TrialEndUpgradePopup = ({ closePopup }) => {
           </div>
 
           <div className="h-22 flex w-full flex-row items-center justify-between bg-transparent p-4">
-            <button className="w-30 h-11 rounded-md border border-paymentboxborder px-4 text-sm font-semibold text-paymenttext">
+            <button className="border-paymentboxborder border rounded-md w-30 px-4 h-11 text-paymenttext font-semibold text-sm opacity-40 cursor-default">
               Cancel
             </button>
             <button className="w-30 h-11 rounded-md bg-black px-4 text-sm font-semibold dark:text-black text-black" style={{color:"white"}}>
