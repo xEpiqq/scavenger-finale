@@ -32,7 +32,7 @@ function CRM({
   return (
     <>
       <div
-        className="fixed left-0 top-0 h-full w-full z-40 bg-black opacity-50 block max-sm:hidden"
+        className={`fixed left-0 top-0 h-full w-full z-40 bg-black opacity-50 block max-sm:hidden ${isShown ? "opacity-50" : "opacity-0"} transition-opacity duration-500 ease-in-out`}
         onClick={() => {
           setIsShown(false);
           // wait for animation to finish
