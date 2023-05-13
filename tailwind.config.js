@@ -58,6 +58,13 @@ module.exports = {
       pblines: "#D7DDE4",
       pbiconhover: "#E4E9EC",
       pbsecondbg: "#F8F9FA",
+      pbgreytext: "#A0A6AC",
+      pbblack: "#16161A",
+      pbslash: "#D5D8DB",
+
+      pbblackbtnhover: "#2C2C30",
+      pbwhitebtnhover: "#EDF0F3",
+      pbsearchselect: "#D7DDE4",
       
       sheettile: "#F4F4F4"
     },
