@@ -41,6 +41,10 @@ function Page({ params }) {
   );
   const userData = userDataRaw?.data();
 
+  console.log(userData)
+
+  // i need the database id of the list to be able to add a new item to it
+
   useEffect(() => {
     updateLastUpdated();
   }, []);
@@ -253,6 +257,8 @@ function Page({ params }) {
                 address={list.address}
                 screenshot={list.desktop_screenshot}
                 selected={selectedSheets.includes(index)}
+                id={list_id}
+                object_id={list.object_id}
                 toggleselected={() => {
                   if (selectedSheets.includes(index)) {
                     setSelectedSheets(
