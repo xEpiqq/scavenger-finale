@@ -14,11 +14,16 @@ import { useState } from "react";
 import Item from "./Item.jsx";
 import styles from "./page.module.scss";
 import { useEffect } from "react";
+import PageName from "../../components/PageName";
 
 function Page({ params }) {
   //////// protect this route so someone with your list id cannot just type it into the url and access your shiz
   //////// Task Complete: not yet
   ////////
+
+  const resultsPerPage = 20;
+
+  const [currentPage, setCurrentPage] = useState(0);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [queryError, setQueryError] = useState("");
@@ -133,6 +138,7 @@ function Page({ params }) {
 
   return (
     <div className={styles.table_wrapper}>
+      <PageName name="List Page" />
       <table>
         <thead>
           <tr>
@@ -181,27 +187,54 @@ function Page({ params }) {
           </tr>
         </thead>
         <tbody>
-          {userData?.lists?.slice(0, 10).map((list, index) => (
-            <Item
-              key={index}
-              name={list.biz_name}
-              link={list.website}
-              phoneNumber={list.phone}
-              email={list.email}
-              address={list.address}
-              screenshot={list.desktop_screenshot}
-              selected={selectedSheets.includes(index)}
-              toggleselected={() => {
-                if (selectedSheets.includes(index)) {
-                  setSelectedSheets(selectedSheets.filter((i) => i !== index));
-                } else {
-                  setSelectedSheets([...selectedSheets, index]);
-                }
-              }}
-            />
-          ))}
+          {userData?.lists
+            ?.slice(
+              currentPage * resultsPerPage,
+              (currentPage + 1) * resultsPerPage
+            )
+            .map((list, index) => (
+              <Item
+                key={index}
+                name={list.biz_name}
+                link={list.website}
+                phoneNumber={list.phone}
+                email={list.email}
+                address={list.address}
+                screenshot={list.desktop_screenshot}
+                selected={selectedSheets.includes(index)}
+                toggleselected={() => {
+                  if (selectedSheets.includes(index)) {
+                    setSelectedSheets(
+                      selectedSheets.filter((i) => i !== index)
+                    );
+                  } else {
+                    setSelectedSheets([...selectedSheets, index]);
+                  }
+                }}
+              />
+            ))}
         </tbody>
       </table>
+      <div className="flex w-full items-center justify-center">
+        <div className="flex w-full max-w-md flex-row justify-between">
+          <button
+            onClick={() => setCurrentPage(currentPage - 1)}
+            disabled={currentPage === 0}
+          >
+            {"< Prev"}
+          </button>
+          Current Page: {currentPage + 1}
+          <button
+            onClick={() => setCurrentPage(currentPage + 1)}
+            disabled={
+              currentPage ===
+              Math.floor(userData?.lists?.length / resultsPerPage)
+            }
+          >
+          {"Next >"}
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
