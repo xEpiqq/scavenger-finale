@@ -39,7 +39,7 @@ function Page({ params }) {
 
   useEffect(() => {
     updateLastUpdated();
-  }, [userData]);
+  }, []);
 
   async function updateLastUpdated() {
     const userRef = doc(db, `sheets/${list_id}`);
