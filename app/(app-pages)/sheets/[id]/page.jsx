@@ -28,7 +28,11 @@ function Page({ params }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [queryError, setQueryError] = useState("");
 
+  const [searchbar, setSearchbar] = useState("");
+
   const [selectedSheets, setSelectedSheets] = useState([]);
+
+  const [displayedSheets, setDisplayedSheets] = useState([]);
 
   const { id } = params;
   const list_id = id;
@@ -37,9 +41,48 @@ function Page({ params }) {
   );
   const userData = userDataRaw?.data();
 
+  console.log(userData)
+
+  // i need the database id of the list to be able to add a new item to it
+
   useEffect(() => {
     updateLastUpdated();
   }, []);
+
+  useEffect(() => {
+    search(searchbar);
+  }, [searchbar]);
+
+  useEffect(() => {
+    setDisplayedSheets(userData?.lists);
+  }, [loading2]);
+
+  async function search(searchkey) {
+    // if (!searchkey) return;
+
+    // Filter the lists by the searchkey and all the fields
+    const filteredLists = userData?.lists?.filter((list) => {
+      const lowerCaseSearchKey = searchkey.toLowerCase();
+      const lowerCaseBizName = list.biz_name.toLowerCase();
+      const lowerCaseWebsite = list.website.toLowerCase();
+      const lowerCasePhone = list.phone.toLowerCase();
+      const lowerCaseEmail = list.email.toLowerCase();
+      const lowerCaseAddress = list.address.toLowerCase();
+
+      return (
+        lowerCaseBizName.includes(lowerCaseSearchKey) ||
+        lowerCaseWebsite.includes(lowerCaseSearchKey) ||
+        lowerCasePhone.includes(lowerCaseSearchKey) ||
+        lowerCaseEmail.includes(lowerCaseSearchKey) ||
+        lowerCaseAddress.includes(lowerCaseSearchKey)
+      );
+    });
+
+    // Update the state to display the filtered lists
+    setDisplayedSheets(filteredLists);
+    setCurrentPage(0);
+    setSelectedSheets([]);
+  }
 
   async function updateLastUpdated() {
     const userRef = doc(db, `sheets/${list_id}`);
@@ -85,6 +128,10 @@ function Page({ params }) {
     });
     const data = await response.json();
     console.log(data);
+  }
+
+  async function searchBarQuery (e) {
+    setSearchbar(e.target.value);
   }
 
   if (loading2) return <h1>Loading...</h1>;
@@ -163,7 +210,12 @@ function Page({ params }) {
 
       <div className="w-full h-16 bg-pbsecondbg flex">
         <input type="text" placeholder="Search" className="w-full h-11 px-7 bg-pbiconhover text-lg mx-7 rounded-3xl outline-none focus:bg-pbsearchselect
-        transition duration-150" />
+        transition duration-150" 
+        value={searchbar}
+        onChange={(e) => {
+          searchBarQuery(e);
+        }} />
+
       </div>
 
       <table>
@@ -174,6 +226,8 @@ function Page({ params }) {
                 <input
                   type="checkbox"
                   className=""
+                  value={searchbar}
+                  onChange={(e) => setSearchbar(e.target.value)}
                   onClick={(e) => {
                     if (e.target.checked) {
                       setSelectedSheets([
@@ -214,16 +268,14 @@ function Page({ params }) {
           </tr>
         </thead>
         <tbody>
-          {/* {userData?.lists
+          
+          {displayedSheets
             ?.slice(
               currentPage * resultsPerPage,
               (currentPage + 1) * resultsPerPage
             )
-            .map((list, index) => ( */}
+            .map((list, index) => ( 
 
-            {userData?.lists
-            ?.slice(0, 3)
-            .map((list, index) => (
               <Item
                 key={index}
                 name={list.biz_name}
@@ -233,6 +285,8 @@ function Page({ params }) {
                 address={list.address}
                 screenshot={list.desktop_screenshot}
                 selected={selectedSheets.includes(index)}
+                id={list_id}
+                object_id={list.object_id}
                 toggleselected={() => {
                   if (selectedSheets.includes(index)) {
                     setSelectedSheets(
@@ -262,7 +316,7 @@ function Page({ params }) {
               Math.floor(userData?.lists?.length / resultsPerPage)
             }
           >
-          {"Next >"}
+            {"Next >"}
           </button>
         </div>
       </div>
@@ -272,3 +326,29 @@ function Page({ params }) {
 }
 
 export default Page;
+
+
+
+// <PageName name="List Page" />
+// {/* need a search bar here */}
+// <div className="flex items-center justify-between">
+//   <input
+//     type="text"
+//     placeholder="Search..."
+//     value={searchbar}
+
+//     onChange={(e) => {
+//       setSearchbar(e.target.value);
+//       search(searchBar)
+//     }}
+
+
+//     className="border-gray-300 mx-2 my-3 flex-grow rounded-md border p-2 text-white"
+//   />
+//   <button
+//     onClick={() => search(searchbar)}
+//     className="border-gray-3 mx-2 my-3 rounded-md border p-2 hover:bg-black hover:text-white"
+//   >
+//     Search
+//   </button>
+// </div>
