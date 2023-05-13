@@ -15,6 +15,8 @@ import Item from "./Item.jsx";
 import styles from "./page.module.scss";
 import { useEffect } from "react";
 import PageName from "../../components/PageName";
+import Skeleton from 'react-loading-skeleton'
+import FillList from "./FillList.jsx";
 
 function Page({ params }) {
   //////// protect this route so someone with your list id cannot just type it into the url and access your shiz
@@ -29,6 +31,7 @@ function Page({ params }) {
   const [queryError, setQueryError] = useState("");
 
   const [searchbar, setSearchbar] = useState("");
+  const [searching, setSearching] = useState(false);
 
   const [selectedSheets, setSelectedSheets] = useState([]);
 
@@ -43,15 +46,13 @@ function Page({ params }) {
 
   console.log(userData)
 
-  // i need the database id of the list to be able to add a new item to it
-
   useEffect(() => {
     updateLastUpdated();
   }, []);
 
   useEffect(() => {
     setDisplayedSheets(userData?.lists);
-  }, [loading2]);
+  }, [userDataRaw]);
 
   async function search(searchkey) {
     if (!searchkey) return;
@@ -88,6 +89,7 @@ function Page({ params }) {
   }
 
   async function sendToLambda() {
+    setSearching(true);
     const query_array = searchQuery.split(" ");
     console.log(query_array);
 
@@ -124,6 +126,8 @@ function Page({ params }) {
     });
     const data = await response.json();
     console.log(data);
+    setDisplayedSheets(userData?.lists);
+
   }
 
   if (loading2) return <h1>Loading...</h1>;
@@ -131,47 +135,7 @@ function Page({ params }) {
 
   if (userData?.lists == 0) {
     return (
-      <>
-        <div className="fixed inset-0 z-10 overflow-y-auto">
-          <div className="flex min-h-screen items-center justify-center px-4 pb-20 pt-4 text-center sm:block sm:p-0">
-            <div className="bg-gray-500 fixed inset-0 bg-opacity-75 transition-opacity"></div>
-            <div className="inline-block transform overflow-hidden rounded-lg bg-white text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:align-middle">
-              <div className="bg-gray-100 px-4 py-5 sm:p-6 sm:pb-4">
-                <div className="mb-4">
-                  <label
-                    className="text-gray-700 mb-2 block font-bold"
-                    htmlFor="business-search"
-                  >
-                    Business Search
-                  </label>
-                  <input
-                    value={searchQuery}
-                    onChange={(e) => {
-                      setSearchQuery(e.target.value);
-                    }}
-                    className="text-gray-700 focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-white focus:outline-none"
-                    id="business-search"
-                    type="text"
-                    placeholder="Enter business name"
-                  />
-                </div>
-                <div className="flex justify-end">
-                  <button
-                    onClick={sendToLambda}
-                    className="hover:bg-gray-900 focus:shadow-outline rounded bg-black px-4 py-2 font-bold text-white hover:opacity-75 focus:outline-none"
-                    type="button"
-                  >
-                    Submit
-                  </button>
-                  {queryError && (
-                    <p className="text-red-500 text-xs italic">{queryError}</p>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </>
+      <FillList sendToLambda={sendToLambda} setSearchQuery={setSearchQuery} searchQuery={searchQuery} queryError={queryError} searching={searching} />
     );
   }
 
