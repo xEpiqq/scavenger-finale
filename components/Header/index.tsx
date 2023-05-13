@@ -99,7 +99,7 @@ const Header = () => {
                     <img
                       src={user?.photoURL || "/images/user.png"}
                       alt="User Photo"
-                      className="h-8 w-8 rounded-full hover:cursor-pointer sm:h-12 sm:w-12"
+                      className="h-8 w-8 rounded-full sm:h-12 sm:w-12"
                     ></img>
                   </div>
                 ) : (
