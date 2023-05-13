@@ -5,18 +5,19 @@ import { useEffect, useState } from "react";
 import ThemeToggler from "./ThemeToggler";
 import menuData from "./menuData";
 import { getAuth } from "firebase/auth";
-import { app } from '../../components/initializeFirebase'
-import { useDocument } from 'react-firebase-hooks/firestore';
+import { app } from "../../components/initializeFirebase";
+import { useDocument } from "react-firebase-hooks/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { getFirestore, doc } from 'firebase/firestore';
+import { getFirestore, doc } from "firebase/firestore";
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-
 const Header = () => {
   const [user, loading, error] = useAuthState(auth);
-  const [userDataRaw, loading2, error2] = useDocument(doc(db, `users/${user?.uid}`));
-  const userData = userDataRaw?.data()
+  const [userDataRaw, loading2, error2] = useDocument(
+    doc(db, `users/${user?.uid}`)
+  );
+  const userData = userDataRaw?.data();
   // Navbar toggle
 
   const [navbarOpen, setNavbarOpen] = useState(false);
@@ -58,10 +59,10 @@ const Header = () => {
       >
         <div className="container">
           <div className="relative -mx-4 flex items-center justify-between">
-            <div className="w-24 ml-16 max-w-full px-4 xl:mr-12">
+            <div className="ml-16 w-24 max-w-full px-4 xl:mr-12">
               <Link
                 href="/"
-                className={`flex flex-row header-logo justify-center items-center w-full ${
+                className={`header-logo flex w-full flex-row items-center justify-center ${
                   sticky ? "py-5 lg:py-2" : "py-8"
                 } `}
               >
@@ -79,22 +80,38 @@ const Header = () => {
                   height={30}
                   className="hidden w-full dark:block"
                 />
-                <h1 className="text-4xl text-white font-bold hidden md:block">Scavenger</h1>
+                <h1 className="hidden text-4xl font-bold text-white md:block">
+                  Scavenger
+                </h1>
               </Link>
             </div>
             <div className="flex w-full items-center justify-between px-4">
-              <div>
-                
-              </div>
+              <div></div>
               <div className="flex items-center justify-end pr-16 lg:pr-0">
-                {user ? ( <img src={userData?.photo} alt="User Photo" className='rounded-full w-16 h-16 hover:cursor-pointer'></img> ) : (
-                <Link href='/signup' className="ease-in-up hidden rounded-md bg-black px-8 py-3 text-base font-bold text-white transition duration-300 hover:bg-opacity-90 hover:shadow-signUp md:block md:px-9 lg:px-6 xl:px-9 hover:bg-white hover:text-black">
-                Sign Up
-                </Link>
+                {user ? (
+                  <div className="flex flex-row justify-center items-center gap-4">
+                    <Link
+                      href="/sheets"
+                      className="bg-primary px-7 py-3 text-base font-bold text-dark hover:opacity-70 dark:text-white rounded-sm"
+                    >
+                      Dashboard
+                    </Link>
+                    <img
+                      src={user?.photoURL || "/images/user.png"}
+                      alt="User Photo"
+                      className="h-8 w-8 rounded-full sm:h-12 sm:w-12"
+                    ></img>
+                  </div>
+                ) : (
+                  <Link
+                    href="/signup"
+                    className="ease-in-up hidden rounded-md bg-black px-8 py-3 text-base font-bold text-white transition duration-300 hover:bg-white hover:bg-opacity-90 hover:text-black hover:shadow-signUp md:block md:px-9 lg:px-6 xl:px-9"
+                  >
+                    Sign Up
+                  </Link>
                 )}
 
-                <div>
-                </div>
+                <div></div>
               </div>
             </div>
           </div>
