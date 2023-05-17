@@ -80,7 +80,6 @@ function Page({ props }) {
           <div className="flex flex-col items-start justify-center">
             <h4 className="text-sm font-semibold">{name}</h4>
             <h4 className="text-xs text-gray-3">{last_updated}</h4>
-
           </div>
         </div>
         <SheetTileOptions object_id={object_id} reference={reference} />

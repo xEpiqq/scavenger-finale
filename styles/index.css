@@ -13,6 +13,7 @@
 @layer components {
   input[type="checkbox"]:checked ~ label span svg {
     @apply inline-flex;
+    @apply bg-black;
   }
 
   .sticky .header-logo {

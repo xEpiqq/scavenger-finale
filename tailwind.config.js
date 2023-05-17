@@ -61,11 +61,10 @@ module.exports = {
       pbgreytext: "#A0A6AC",
       pbblack: "#16161A",
       pbslash: "#D5D8DB",
-
       pbblackbtnhover: "#2C2C30",
       pbwhitebtnhover: "#EDF0F3",
       pbsearchselect: "#D7DDE4",
-      
+      pbcrmopen: "#76869B",
       sheettile: "#F4F4F4"
     },
     screens: {

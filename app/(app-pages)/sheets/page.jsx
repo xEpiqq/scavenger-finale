@@ -185,6 +185,11 @@ function Page() {
             setCreateSheet(false);
             createNewSheet(input)
           }}
+
+          callBackClose={() => {
+            setCreateSheet(false);
+          }}
+          
         />
       )}
 
