@@ -241,6 +241,13 @@ function Page({ params }) {
               </label>
             </th>
 
+            <th>
+              <p>Scrnshot</p>
+            </th>
+
+            <th>
+              <p>SSL</p>
+            </th>
 
             <th>
               <p>Business Name</p>
@@ -276,6 +283,7 @@ function Page({ params }) {
 
               <Item
                 key={index}
+                secured={list.secured}
                 name={list.biz}
                 link={list.site}
                 phoneNumber={list.phone}

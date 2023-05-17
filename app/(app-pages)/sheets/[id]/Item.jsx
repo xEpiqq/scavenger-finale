@@ -12,6 +12,7 @@ import CRM from "./CRM";
 
 
 function Item({
+  secured,
   name,
   link,
   phoneNumber,
@@ -37,6 +38,7 @@ function Item({
     }
   };
 
+  const clickable_link = "http://" + link;
 
   return (
     <>
@@ -52,12 +54,20 @@ function Item({
         </td>
 
         <td>
+          {secured ? ( <> <img src="/securedtrue.png" alt={`Screenshot of ${name}`} className="h-4 w-4" /> </> ) : ( <> <img src="/securedfalse.png" className="h-4 w-4" /> </> )}
+        </td>
+
+        <td>
           <p>{name}</p>
         </td>
+
         <td>
-          <p>{link}</p>
+          <Link href={clickable_link} target="_blank"> 
+          <p className="hover:underline">{link}</p>
+          </Link>
         </td>
         <td>
+          
           <p>{phoneNumber}</p>
         </td>
         <td>
