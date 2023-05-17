@@ -47,7 +47,7 @@ function Layout({ children }) {
     );
   }
 
-  if (userData?.subscription_status === "active") {
+  if (userData?.subscription_status === "active" || userData?.subscription_status === "trialing") {
     return (
       <div className="flex flex-col w-full h-full text-black bg-white sm:flex-row">
         <Navbar />

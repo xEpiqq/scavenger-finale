@@ -26,15 +26,14 @@ export async function POST(request) {
 
   try {
 
-    const subscription = await stripe.subscriptions.create({
-      customer: firestore_user.stripe_customer_id,
-      items: [{ price: basic_price_id }],
-      payment_behavior: "default_incomplete",
-      payment_settings: { save_default_payment_method: "on_subscription" },
-      expand: ["latest_invoice.payment_intent"],
+    const setupIntent = await stripe.setupIntents.create({
+        customer: firestore_user.stripe_customer_id,
+        payment_method_types: ['card'],
     });
 
-    clientSecret = subscription.latest_invoice.payment_intent.client_secret;
+    console.log("The setup intent object is")
+    clientSecret = setupIntent.client_secret;
+    
 
   } catch (error) {
     console.log(error);
