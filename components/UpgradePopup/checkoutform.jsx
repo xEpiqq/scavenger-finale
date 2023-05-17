@@ -78,6 +78,7 @@ function CheckoutForm(props) {
         const result = await stripe.confirmCardPayment( props.client_secret, {
         payment_method: { card: elements.getElement(CardNumberElement), }, 
       }) 
+
       router.refresh();
       if (result.error) {
         setMessage(result.error.message);
@@ -127,7 +128,7 @@ function CheckoutForm(props) {
               </div>
               </div>
           </div>
-          {/* {message && <div className="">{message}</div>} */}
+          {message && <div className="">{message}</div>}
         </div>
 
 

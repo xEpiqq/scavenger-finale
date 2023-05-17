@@ -3,17 +3,15 @@
 import react from "react";
 import { useState } from "react";
 
-function TextPrompt({ title, description, placeholder, buttonText, callBack }) {
+function TextPrompt({ title, description, placeholder, buttonText, callBack, callBackClose }) {
   const [input, setInput] = useState("");
   return (
-    <div className="fixed left-0 top-0 z-50 h-screen w-screen bg-darken-1">
+    <>
+    <div className="fixed left-0 top-0 z-10 h-screen w-screen">
+      <div className="fixed left-0 top-0 z-20 h-screen w-screen bg-darken-1" onClick={() => callBackClose()} />
+      
       <div
-        className="fixed left-1/2 top-1/2 flex w-2/4 max-w-screen-md -translate-x-1/2 -translate-y-1/2 transform flex-col bg-white"
-        style={{
-          boxShadow:
-            "0 0 10px rgba(0, 0, 0, 0.1), 0 0 20px rgba(0, 0, 0, 0.2), 0 0 30px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.4)",
-        }}
-      >
+        className="fixed left-1/2 top-1/2 flex w-2/4 max-w-screen-md -translate-x-1/2 -translate-y-1/2 transform flex-col bg-white shadow-md rounded-md z-30" >
         <div className="flex flex-col justify-between gap-3 p-6">
           <h3 className="text-lg">
             <b>{title}</b>
@@ -40,6 +38,7 @@ function TextPrompt({ title, description, placeholder, buttonText, callBack }) {
         </div>
       </div>
     </div>
+    </>
   );
 }
 

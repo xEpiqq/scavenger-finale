@@ -5,18 +5,17 @@ var getRawBody = require('raw-body')
 import { getFirestore, collection, addDoc, setDoc, doc, getDoc, updateDoc, query, where, getDocs } from "firebase/firestore";
 import { app, db } from '../../components/initializeFirebase'
 
-/////////////////////////STRIPE LIVE MODE/////////////////////////////
-const stripe_secret_key = process.env.STRIPE_REAL_SECRET_KEY; // production mode
-const stripe = Stripe(stripe_secret_key) // production mode
-const endpointSecret = process.env.STRIPE_WEBHOOK_ENDPOINT; // production mode
-//////////////////////////////////////////////////////////////////////
+// /////////////////////////STRIPE LIVE MODE/////////////////////////////
+// const stripe_secret_key = process.env.STRIPE_REAL_SECRET_KEY; // production mode
+// const stripe = Stripe(stripe_secret_key) // production mode
+// const endpointSecret = process.env.STRIPE_WEBHOOK_ENDPOINT; // production mode
+// //////////////////////////////////////////////////////////////////////
 
-// ///////////////////////////STRIPE TEST MODE/////////////////////////////
-// const stripe_secret_test_key = process.env.STRIPE_SECRET_TEST_KEY; // test mode
-// const stripe = Stripe(stripe_secret_test_key) // test mode
-// const endpointSecret = "whsec_8e2ff906dd09de3e52c1c391f3ed020eabc58cf1e305bda9166d52ccddb89e01" // test mode
-// ////////////////////////////////////////////////////////////////////////
-
+///////////////////////////STRIPE TEST MODE/////////////////////////////
+const stripe_secret_test_key = process.env.STRIPE_SECRET_TEST_KEY; // test mode
+const stripe = Stripe(stripe_secret_test_key) // test mode
+const endpointSecret = "whsec_8e2ff906dd09de3e52c1c391f3ed020eabc58cf1e305bda9166d52ccddb89e01" // test mode (webhook signing secret)
+////////////////////////////////////////////////////////////////////////
 
 export const config = {
     api: {

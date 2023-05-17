@@ -25,26 +25,27 @@ function CRM({
     setIsShown(false);
     setTimeout(() => {
       setIsShown(true);
-    }, 500);
+    }, 0);
     console.log("isShown", isShown);
   }, []);
 
   return (
     <>
       <div
-        className={`fixed left-0 top-0 h-full w-full z-40 bg-black opacity-50 block max-sm:hidden ${isShown ? "opacity-50" : "opacity-0"} transition-opacity duration-500 ease-in-out`}
+        className={`fixed left-0 top-0 h-full w-full z-40 bg-pbcrmopen opacity-10 block max-sm:hidden ${isShown ? "opacity-30" : "opacity-0"} transition-opacity duration-500 ease-in-out`}
         onClick={() => {
           setIsShown(false);
           // wait for animation to finish
           setTimeout(() => {
             setOpenCRM(false);
-          }, 500);
+          }, 0);
         }}
       ></div>
+
       <div
         className={`fixed right-0 top-0 z-50 h-full w-1/3 min-w-fit bg-gray-6 ${
-          isShown ? "translate-x-0" : "translate-x-full"
-        } transition-transform duration-500 ease-in-out`}
+          isShown ? "translate-x-150" : "translate-x-full"
+        } transition-transform duration-150 `}
       >
         <div className="flex w-full flex-row items-center justify-between px-8 py-4">
           <h1 className="px-8 py-8 text-lg">
@@ -56,7 +57,7 @@ function CRM({
               // wait for animation to finish
               setTimeout(() => {
                 setOpenCRM(false);
-              }, 500);
+              }, 0);
             }}
             className="hover:bg-gray-900 focus:shadow-outline rounded bg-black px-4 py-2 font-bold text-white hover:opacity-75 focus:outline-none"
             type="button"
