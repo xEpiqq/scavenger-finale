@@ -38,7 +38,7 @@ const UpgradePopup = ({ closePopup }) => {
         return;
       }
 
-      const response = await fetch("/api/stripecreatesub", {
+      const response = await fetch("/api/stripesetupintent", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

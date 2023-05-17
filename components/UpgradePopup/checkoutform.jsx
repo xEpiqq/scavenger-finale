@@ -48,22 +48,23 @@ function CheckoutForm(props) {
       return;
     }
 
-    stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
-      switch (paymentIntent.status) {
+    stripe.retrieveSetupIntent(clientSecret).then(({ setupIntent }) => {
+      switch (setupIntent.status) {
         case "succeeded":
-          setMessage("Payment succeeded!");
+          setMessage("Setup succeeded!");
           break;
         case "processing":
-          setMessage("Your payment is processing.");
+          setMessage("Your setup is processing.");
           break;
         case "requires_payment_method":
-          setMessage("Your payment was not successful, please try again.");
+          setMessage("Your setup requires a payment method.");
           break;
         default:
           setMessage("Something went wrong.");
           break;
       }
     });
+
   }, [stripe]);
 
 
@@ -73,25 +74,24 @@ function CheckoutForm(props) {
       return;
     }
     setIsLoading(true);
-
+  
     try {
-        const result = await stripe.confirmCardPayment( props.client_secret, {
-        payment_method: { card: elements.getElement(CardNumberElement), }, 
-      }) 
-
+      const result = await stripe.confirmCardSetup(props.client_secret, {
+        payment_method: { card: elements.getElement(CardNumberElement) },
+      });
+  
       router.refresh();
       if (result.error) {
         setMessage(result.error.message);
-      }
-      else {
-        setMessage("Payment succeeded!");
+      } else {
+        setMessage("Setup succeeded!");
       }
       props.closePopup();
     } catch (error) {
-        setMessage(error.message);
-      }
-
-      setIsLoading(false);    
+      setMessage(error.message);
+    }
+  
+    setIsLoading(false);
   }
 
   return (

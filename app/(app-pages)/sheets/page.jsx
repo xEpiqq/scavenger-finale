@@ -157,7 +157,7 @@ function Page() {
         }}
       >
 
-        {userData?.lists?.map((list, index) => ( <SheetTile key={index} props={{ name: list.list_name, item_count: list.list_count, object_id: list.object_id, reference: list.list_ref }} /> ))}
+        {userData?.lists?.map((list, index1) => ( <SheetTile key={index1} props={{ name: list.list_name, item_count: list.list_count, object_id: list.object_id, reference: list.list_ref }} /> ))}
 
         { 
           total_sheets === 0 && ( 
