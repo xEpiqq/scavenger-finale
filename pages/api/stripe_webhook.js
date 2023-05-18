@@ -118,10 +118,20 @@ async function subscriptionDeleted(dataObject) {
   const usersRef = collection(db, "users");
   const queryRef = query(usersRef, where("stripe_customer_id", "==", customer_id));
   const querySnap = await getDocs(queryRef);
+  const subscriptionid = querySnap.docs[0].data().subscriptionid;
   const docRef = querySnap.docs[0].ref;
+
+  const subscription = await stripe.subscriptions.retrieve(subscriptionid);
+  let subtype = 'premium';
+
+  if (subscription.trial_end) {
+    subtype = 'trial';
+  }
 
   await updateDoc(docRef, {
     subscription_status: "cancelled",
+    cancelled_on: new Date(),
+    cancelled_subscription_type: subtype
   });
 }
 

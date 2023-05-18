@@ -10,15 +10,19 @@ import Image from "next/image";
 import { useState } from "react";
 import { getAuth, signOut } from "firebase/auth";
 import { app } from '../../../../components/initializeFirebase'
+import { useRouter } from 'next/navigation';
+
 const auth = getAuth(app);
 
 
 function Navbar(props) {
 
   const [signoutModal, setSignoutModal] = useState(false);
+  const router = useRouter();
 
   async function handleSignOut() {
     await signOut(auth);
+    router.push("/signup");
   }
 
   return (
@@ -72,7 +76,9 @@ function Navbar(props) {
                 <div className="w-full">
                     <button className="py-2 px-4 hover:bg-gray-100 focus:outline-none text-xs text-left">
                         <div className="flex items-center">
+                          <Link href="/sheets/sub" onClick={() => {setSignoutModal(false)}}>
                             <div>Subscription</div>
+                          </Link>
                         </div>
                     </button>
                 </div>
@@ -87,7 +93,7 @@ function Navbar(props) {
                 <div className="w-full">
                     <button
                         className="py-2 px-4 hover:bg-gray-100 focus:outline-none text-xs text-left"
-                        onClick={() => setSignoutModal(false)}
+                        onClick={() => {setSignoutModal(false) ; handleSignOut()}}
                     >
                         <div className="flex items-center">
                             <div>Logout</div>

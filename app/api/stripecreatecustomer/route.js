@@ -1,5 +1,5 @@
 import Stripe from "stripe";
-import { getFirestore, collection, addDoc, setDoc, doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { app, db } from '../../../components/initializeFirebase'
 
 // /////////////////////////STRIPE LIVE MODE/////////////////////////////
