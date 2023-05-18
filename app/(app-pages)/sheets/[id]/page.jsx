@@ -22,16 +22,11 @@ function Page({ params }) {
   ////////
 
   const resultsPerPage = 20;
-
   const [currentPage, setCurrentPage] = useState(0);
-
   const [searchQuery, setSearchQuery] = useState("");
   const [queryError, setQueryError] = useState("");
-
   const [searchbar, setSearchbar] = useState("");
-
   const [selectedSheets, setSelectedSheets] = useState([]);
-
   const [displayedSheets, setDisplayedSheets] = useState([]);
 
   const { id } = params;
@@ -41,7 +36,7 @@ function Page({ params }) {
   );
   const userData = userDataRaw?.data();
 
-  console.log(userData)
+  const page_amount = Math.floor(userData?.lists?.length / resultsPerPage) + 1
 
   // i need the database id of the list to be able to add a new item to it
 
@@ -253,21 +248,18 @@ function Page({ params }) {
               <p>Business Name</p>
             </th>
             <th>
-              <p>Website</p>
-            </th>
-            <th>
               <p>Phone Number</p>
             </th>
             <th>
-              <p>Email</p>
+              <p>Email / Contact</p>
             </th>
             <th>
-              <p>Screenshot</p>
+              <p>Social</p>
             </th>
             <th>
               <p>Address</p>
             </th>
-            <th className="sticky right-0 bg-white shadow-sticky">
+            <th className="sticky right-0 shadow-sticky">
               <p>Actions</p>
             </th>
           </tr>
@@ -293,6 +285,12 @@ function Page({ params }) {
                 selected={selectedSheets.includes(index)}
                 id={list_id}
                 object_id={list.object_id}
+                facebook={list.facebook}
+                instagram={list.instagram}
+                twitter={list.twitter}
+                linkedin={list.linkedin}
+                youtube={list.youtube}
+                contact_us={list.contact_us}
                 toggleselected={() => {
                   if (selectedSheets.includes(index)) {
                     setSelectedSheets(
@@ -306,24 +304,17 @@ function Page({ params }) {
             ))}
         </tbody>
       </table>
-      <div className="flex w-full items-center justify-center">
+      <div className="flex w-80 px-6 py-3 items-center justify-end sticky bottom-0 right-0 mt-2">
         <div className="flex w-full max-w-md flex-row justify-between">
-          <button
-            onClick={() => setCurrentPage(currentPage - 1)}
-            disabled={currentPage === 0}
-          >
-            {"< Prev"}
-          </button>
-          Current Page: {currentPage + 1}
-          <button
-            onClick={() => setCurrentPage(currentPage + 1)}
-            disabled={
-              currentPage ===
-              Math.floor(userData?.lists?.length / resultsPerPage)
-            }
-          >
+          
+          <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 0} > {"< Prev"} </button>
+          
+          Current Page: {currentPage + 1} / {page_amount}
+          
+          <button onClick={() => setCurrentPage(currentPage + 1)} disabled={ currentPage === Math.floor(userData?.lists?.length / resultsPerPage)} >
             {"Next >"}
           </button>
+
         </div>
       </div>
     </div>

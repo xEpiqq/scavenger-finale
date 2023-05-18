@@ -23,22 +23,39 @@ function Item({
   toggleselected,
   id,
   object_id,
+  facebook,
+  instagram,
+  twitter,
+  linkedin,
+  youtube,
+  contact_us
 }) {
   const [openCRM, setOpenCRM] = useState(false);
+  const [openCopy, setOpenCopy] = useState(false);
+
+  const clickable_link = "http://" + link;
+  
+  let email_length;
+  
+  if (emails) {
+    email_length = emails.length;
+  } else {
+    email_length = 0;
+  }
+
 
   const clicked = () => {
     setOpenCRM(!openCRM);
   };
 
-  const display_email = () => {
-    if (emails.length > 0) {
-      return emails[0];
-    } else {
-      return "No email";
+  const copyItem = (itemtocopy) => {
+    navigator.clipboard.writeText(itemtocopy);
+    setOpenCopy(true);
+    setTimeout(() => {
+      setOpenCopy(false);
     }
-  };
-
-  const clickable_link = "http://" + link;
+    , 1000);
+  }
 
   return (
     <>
@@ -54,25 +71,67 @@ function Item({
         </td>
 
         <td>
-          {secured ? ( <> <img src="/securedtrue.png" alt={`Screenshot of ${name}`} className="h-4 w-4" /> </> ) : ( <> <img src="/securedfalse.png" className="h-4 w-4" /> </> )}
+          {secured ? ( <> <img src="/securedtrue.svg" alt={`Screenshot of ${name}`} className="h-4 w-4" /> </> ) : ( <> <img src="/securedfalse.svg" className="h-4 w-4" /> </> )}
         </td>
 
         <td>
-          <p>{name}</p>
-        </td>
-
-        <td>
+          { link !== "none" ? (
           <Link href={clickable_link} target="_blank"> 
-          <p className="hover:underline">{link}</p>
-          </Link>
+          <p className="hover:underline">{name}</p>
+          </Link> ) :
+          ( <p>{name}</p> )
+          }
+
         </td>
         <td>
+          <div className="flex gap-3">
+            <p>{phoneNumber}</p>
+            <img src="/copy.svg" className="w-2.5 cursor-pointer hover:opacity-50 transition duration-75 hover:scale-105" onClick={() => {copyItem(phoneNumber)}} draggable={false}/>
+          </div>
+        </td>
+
+        <td>
+
           
-          <p>{phoneNumber}</p>
+            { email_length > 0 ? (
+              <div className="flex gap-3">
+                        <p>{emails[0]}</p>
+                        <img src="/copy.svg" className="w-2.5 cursor-pointer hover:opacity-50 transition duration-75 hover:scale-105" 
+                        onClick={() => {copyItem(emails[0])}} draggable={false}/>
+              </div> ) :
+              ( <div className="flex gap-3">
+                        <p>{contact_us}</p>
+                        { contact_us ? ( <img src="/copy.svg" className="w-2.5 cursor-pointer hover:opacity-50 transition duration-75 hover:scale-105" onClick={() => {copyItem(contact_us)}} draggable={false}/> ) : ( <></> ) }
+              </div> )
+            }
+
         </td>
+
         <td>
-          <p>{display_email}</p>
+          <div className="flex gap-1">
+            { facebook ? (
+              <Link href={facebook} target="_blank" ><img src="/Facebook.svg" alt="facebook link" className="h-5 w-5" />
+              </Link> ) : ( <> <img src="/Facebook.svg" alt="facebook link" className="h-5 w-5 opacity-40" /> </> 
+            )}
+            { instagram ? (
+              <Link href={instagram} target="_blank" ><img src="/Instagram.svg" alt="instagram link" className="h-5 w-5" />
+              </Link> ) : ( <> <img src="/Instagram.svg" alt="instagram link" className="h-5 w-5 opacity-40" /> </> 
+            )}
+            { twitter ? (
+              <Link href={twitter} target="_blank" ><img src="/Twitter.svg" alt="twitter link" className="h-5 w-5" />
+              </Link> ) : ( <> <img src="/Twitter.svg" alt="twitter link" className="h-5 w-5 opacity-40" /> </> 
+            )}
+            { linkedin ? (
+              <Link href={linkedin} target="_blank" ><img src="/LinkedIn.svg" alt="linkedin link" className="h-5 w-5" />
+              </Link> ) : ( <> <img src="/LinkedIn.svg" alt="linkedin link" className="h-5 w-5 opacity-40" /> </> 
+            )}
+            { youtube ? (
+              <Link href={youtube} target="_blank"><img src="/Youtube.svg" alt="youtube link" className="h-5 w-5" />
+              </Link> ) : ( <> <img src="/Youtube.svg" alt="youtube link" className="h-5 w-5 opacity-40" /> </> 
+            )}
+          </div>
         </td>
+
         <td>
           <p>{address}</p>
         </td>
@@ -82,9 +141,19 @@ function Item({
           </div>
         </td>
       </tr>
+
+      {openCopy && (
+        <div className="flex justify-center items-center fixed z-50 w-28 h-9 bottom-0 right-0 mb-5 mr-5 bg-white text-pbblack text-sm font-medium py-1 px-3 rounded-md shadow-md">
+          Copied!
+        </div>
+      )}
+
       {openCRM && (
         <CRM name={name} link={link} phoneNumber={phoneNumber} email={display_email} id={id} object_id={object_id} setOpenCRM={setOpenCRM} />
       )}
+
+
+
     </>
   );
 }
