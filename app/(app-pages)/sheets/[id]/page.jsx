@@ -24,17 +24,12 @@ function Page({ params }) {
   ////////
 
   const resultsPerPage = 20;
-
   const [currentPage, setCurrentPage] = useState(0);
-
   const [searchQuery, setSearchQuery] = useState("");
   const [queryError, setQueryError] = useState("");
-
   const [searchbar, setSearchbar] = useState("");
   const [searching, setSearching] = useState(false);
-
   const [selectedSheets, setSelectedSheets] = useState([]);
-
   const [displayedSheets, setDisplayedSheets] = useState([]);
 
   const { id } = params;
@@ -44,24 +39,28 @@ function Page({ params }) {
   );
   const userData = userDataRaw?.data();
 
-  console.log(userData)
+  const page_amount = Math.floor(userData?.lists?.length / resultsPerPage) + 1
 
   useEffect(() => {
     updateLastUpdated();
   }, []);
 
   useEffect(() => {
+    search(searchbar);
+  }, [searchbar]);
+
+  useEffect(() => {
     setDisplayedSheets(userData?.lists);
   }, [userDataRaw]);
 
   async function search(searchkey) {
-    if (!searchkey) return;
+    // if (!searchkey) return;
 
     // Filter the lists by the searchkey and all the fields
     const filteredLists = userData?.lists?.filter((list) => {
       const lowerCaseSearchKey = searchkey.toLowerCase();
-      const lowerCaseBizName = list.biz_name.toLowerCase();
-      const lowerCaseWebsite = list.website.toLowerCase();
+      const lowerCaseBizName = list.biz.toLowerCase();
+      const lowerCaseWebsite = list.site.toLowerCase();
       const lowerCasePhone = list.phone.toLowerCase();
       const lowerCaseEmail = list.email.toLowerCase();
       const lowerCaseAddress = list.address.toLowerCase();
@@ -128,6 +127,12 @@ function Page({ params }) {
     console.log(data);
     setDisplayedSheets(userData?.lists);
 
+    // const data = await response.json();
+    // console.log(data);
+  }
+
+  async function searchBarQuery (e) {
+    setSearchbar(e.target.value);
   }
 
   if (loading2) return <h1>Loading...</h1>;
@@ -140,32 +145,46 @@ function Page({ params }) {
   }
 
   return (
+    <>
     <div className={styles.table_wrapper}>
-      <PageName name="List Page" />
-      {/* need a search bar here */}
-      <div className="flex items-center justify-between">
-        <input
-          type="text"
-          placeholder="Search..."
-          value={searchbar}
-          onChange={(e) => setSearchbar(e.target.value)}
-          className="border-gray-300 mx-2 my-3 flex-grow rounded-md border p-2 text-white"
-        />
-        <button
-          onClick={() => search(searchbar)}
-          className="border-gray-3 mx-2 my-3 rounded-md border p-2 hover:bg-black hover:text-white"
-        >
-          Search
-        </button>
+      {/* <PageName name="List Page" /> */}
+      
+      <div className="w-full h-24 bg-gray-1 flex">
+        <div className="w-1/2 h-full bg-pbsecondbg flex flex-row items-center px-7 gap-3">
+          <h2 className="text-pbgreytext text-lg">Collections</h2>
+          <h2 className="text-xl text-pbslash"> / </h2>
+          <h2 className="text-pbblack text-lg">users</h2>
+          <img src="/gear.png" className="ml-5 w-5 h-5" />
+          <img src="/refresh.png" className="ml-5 w-5 h-5" />
+        </div>
+
+
+        <div className="w-1/2 h-full bg-pbsecondbg flex flex-row items-center px-7 gap-3 justify-end">
+          <button className="flex items-center justify-center w-36 h-10 rounded-md bg-transparent text-pbblack text-sm font-semibold border-2 border-pbblack hover:bg-pbwhitebtnhover transition duration-150">
+            <img src="/bracket.png" className="w-7 h-7" />
+            API Preview</button>
+          <button className="flex items-center justify-center w-36 h-10 rounded-md bg-pbblack text-white text-sm font-semibold hover:bg-pbblackbtnhover transition duration-150">
+            <img src="/plus.png" className="w-7 h-7 -ml-3" />
+            New record</button>
+        </div>
       </div>
-      <table>
-        <thead>
+
+      <div className="w-full h-16 bg-pbsecondbg flex">
+        <input type="text" placeholder="Search" className="w-full h-11 px-7 bg-pbiconhover text-lg mx-7 rounded-3xl outline-none focus:bg-pbsearchselect
+        transition duration-150" 
+        value={searchbar}
+        onChange={(e) => {
+          searchBarQuery(e);
+        }} />
+
+      </div>
+
+      <table className="">
+        <thead className="">
           <tr>
             <th>
               <label className="flex items-center justify-center">
-                <input
-                  type="checkbox"
-                  className=""
+                <input type="checkbox" className="" value={searchbar} onChange={(e) => setSearchbar(e.target.value)}
                   onClick={(e) => {
                     if (e.target.checked) {
                       setSelectedSheets([
@@ -182,47 +201,62 @@ function Page({ params }) {
                 />
               </label>
             </th>
+
+            <th>
+              <p>Scrnshot</p>
+            </th>
+
+            <th>
+              <p>SSL</p>
+            </th>
+
             <th>
               <p>Business Name</p>
-            </th>
-            <th>
-              <p>Website</p>
             </th>
             <th>
               <p>Phone Number</p>
             </th>
             <th>
-              <p>Email</p>
+              <p>Email / Contact</p>
             </th>
             <th>
-              <p>Screenshot</p>
+              <p>Social</p>
             </th>
             <th>
               <p>Address</p>
             </th>
-            <th className="sticky right-0 bg-white shadow-sticky">
+            <th className="sticky right-0 shadow-sticky">
               <p>Actions</p>
             </th>
           </tr>
         </thead>
         <tbody>
+          
           {displayedSheets
             ?.slice(
               currentPage * resultsPerPage,
               (currentPage + 1) * resultsPerPage
             )
-            .map((list, index) => (
+            .map((list, index) => ( 
+
               <Item
                 key={index}
-                name={list.biz_name}
-                link={list.website}
+                secured={list.secured}
+                name={list.biz}
+                link={list.site}
                 phoneNumber={list.phone}
-                email={list.email}
+                emails={list.emails}
                 address={list.address}
                 screenshot={list.desktop_screenshot}
                 selected={selectedSheets.includes(index)}
                 id={list_id}
                 object_id={list.object_id}
+                facebook={list.facebook}
+                instagram={list.instagram}
+                twitter={list.twitter}
+                linkedin={list.linkedin}
+                youtube={list.youtube}
+                contact_us={list.contact_us}
                 toggleselected={() => {
                   if (selectedSheets.includes(index)) {
                     setSelectedSheets(
@@ -236,28 +270,48 @@ function Page({ params }) {
             ))}
         </tbody>
       </table>
-      <div className="flex w-full items-center justify-center">
+      <div className="flex w-80 px-6 py-3 items-center justify-end sticky bottom-0 right-0 mt-2">
         <div className="flex w-full max-w-md flex-row justify-between">
-          <button
-            onClick={() => setCurrentPage(currentPage - 1)}
-            disabled={currentPage === 0}
-          >
-            {"< Prev"}
-          </button>
-          Current Page: {currentPage + 1}
-          <button
-            onClick={() => setCurrentPage(currentPage + 1)}
-            disabled={
-              currentPage ===
-              Math.floor(userData?.lists?.length / resultsPerPage)
-            }
-          >
+          
+          <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 0} > {"< Prev"} </button>
+          
+          Current Page: {currentPage + 1} / {page_amount}
+          
+          <button onClick={() => setCurrentPage(currentPage + 1)} disabled={ currentPage === Math.floor(userData?.lists?.length / resultsPerPage)} >
             {"Next >"}
           </button>
+
         </div>
       </div>
     </div>
+    </>
   );
 }
 
 export default Page;
+
+
+
+// <PageName name="List Page" />
+// {/* need a search bar here */}
+// <div className="flex items-center justify-between">
+//   <input
+//     type="text"
+//     placeholder="Search..."
+//     value={searchbar}
+
+//     onChange={(e) => {
+//       setSearchbar(e.target.value);
+//       search(searchBar)
+//     }}
+
+
+//     className="border-gray-300 mx-2 my-3 flex-grow rounded-md border p-2 text-white"
+//   />
+//   <button
+//     onClick={() => search(searchbar)}
+//     className="border-gray-3 mx-2 my-3 rounded-md border p-2 hover:bg-black hover:text-white"
+//   >
+//     Search
+//   </button>
+// </div>

@@ -21,7 +21,7 @@ function Layout({ children }) {
 
   if (userData?.subscription_status === "none") {
     return (
-      <div className="flex h-full w-full flex-col bg-white text-black sm:flex-row">
+      <div className="flex h-full w-full flex-col bg-pbsecondbg text-black sm:flex-row">
         <div className="fixed z-50 flex h-full w-full items-center justify-center">
           {" "}
           <UpgradePopup />{" "}
@@ -37,7 +37,7 @@ function Layout({ children }) {
   if (userData?.subscription_status === "cancelled") {
     return (
 
-      <div className="flex sm:flex-row flex-col bg-white w-full h-full text-black">
+      <div className="flex sm:flex-row flex-col bg-pbsecondbg w-full h-full text-black">
         <div className="w-full h-full flex justify-center items-center fixed z-50"> <TrialEndUpgradePopup /> </div>
         <Navbar/>
         <section className="w-full h-full">
@@ -47,9 +47,9 @@ function Layout({ children }) {
     );
   }
 
-  if (userData?.subscription_status === "active") {
+  if (userData?.subscription_status === "active" || userData?.subscription_status === "trialing") {
     return (
-      <div className="flex flex-col w-full h-full text-black bg-white sm:flex-row">
+      <div className="flex flex-col w-full h-full text-black bg-pbsecondbg sm:flex-row">
         <Navbar />
         <section className="w-full overflow-x-clip">{children}</section>
       </div>

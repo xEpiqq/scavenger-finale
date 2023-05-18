@@ -113,7 +113,7 @@ function SheetTileOptions(props) {
   return (
     <div className="relative">
       <div
-        className="mr-2 flex h-2 w-2 items-center justify-center text-gray-1 hover:text-black"
+        className="mr-2 flex h-7 w-4 items-center justify-center text-gray-1 hover:text-black hover:cursor-pointer"
         onClick={(e) => openSheetOptions(e)}
       >
         <FontAwesomeIcon icon={faEllipsisV} />
@@ -135,6 +135,11 @@ function SheetTileOptions(props) {
             setShowRenamePrompt(false);
             renameInDB(input)
           }}
+
+          callBackClose={() => {
+            setShowRenamePrompt(false);
+          }}
+
         />
       )}
       {showDeletePrompt && (
@@ -146,6 +151,10 @@ function SheetTileOptions(props) {
           callBack={(input) => {
             setShowDeletePrompt(false);
             deleteFromDB()
+          }}
+
+          callBackClose={() => {
+            setShowDeletePrompt(false);
           }}
         />
       )}
