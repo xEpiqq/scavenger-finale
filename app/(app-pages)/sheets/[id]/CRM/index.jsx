@@ -21,11 +21,13 @@ function CRM({
   const [tabState, setTabState] = useState(1);
   const [isShown, setIsShown] = useState(false);
 
+  const OPEN_SPEED = 150;
+
   useEffect(() => {
     setIsShown(false);
     setTimeout(() => {
       setIsShown(true);
-    }, 0);
+    }, OPEN_SPEED);
     console.log("isShown", isShown);
   }, []);
 
@@ -38,7 +40,7 @@ function CRM({
           // wait for animation to finish
           setTimeout(() => {
             setOpenCRM(false);
-          }, 0);
+          }, OPEN_SPEED);
         }}
       ></div>
 
@@ -57,7 +59,7 @@ function CRM({
               // wait for animation to finish
               setTimeout(() => {
                 setOpenCRM(false);
-              }, 0);
+              }, OPEN_SPEED);
             }}
             className="hover:bg-gray-900 focus:shadow-outline rounded bg-black px-4 py-2 font-bold text-white hover:opacity-75 focus:outline-none"
             type="button"
