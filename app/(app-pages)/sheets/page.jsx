@@ -57,6 +57,7 @@ function Page() {
     })
   }, [userData])
 
+
     async function getTotalLeads() {
     let total_leads = 0
     for (let i = 0; i < total_sheets; i++) {
@@ -101,10 +102,6 @@ function Page() {
 
   return (
     <div className="flex h-screen w-full">
-
-
-
-
     <div className="w-64 bg-white sm:h-screen border-t-transparent border-b-0 border-l-transparent border-pblines h-screen hidden sm:block" style={{ borderWidth: 1 }} >
       <div className="flex items-center justify-center w-full h-20 border-t-transparent border-l-transparent border-r-transparent border-pblines" style={{borderWidth: 1}}> 
       <h2 className="font-bold text-2xl">Stats</h2>

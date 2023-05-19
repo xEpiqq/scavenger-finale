@@ -128,7 +128,7 @@ function CheckoutForm(props) {
               </div>
               </div>
           </div>
-          {message && <div className="">{message}</div>}
+          {/* {message && <div className="">{message}</div>} */}
         </div>
 
 

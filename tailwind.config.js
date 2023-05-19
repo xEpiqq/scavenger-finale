@@ -65,7 +65,9 @@ module.exports = {
       pbwhitebtnhover: "#EDF0F3",
       pbsearchselect: "#D7DDE4",
       pbcrmopen: "#76869B",
-      sheettile: "#F4F4F4"
+      sheettile: "#F4F4F4",
+      redpill: "#E83826",
+      bluepill: "#3B82F6",
     },
     screens: {
       xs: "450px",

@@ -16,12 +16,13 @@ function GoogleLogin() {
   const router = useRouter();
   const [user, loading, error] = useAuthState(auth);
   if (user) {
-    router.push("/contact");
+    router.push("/sheets");
   }
 
   async function googleLogin() {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
+
     // check if firestore user
     await fetch("/api/login", {
       method: "POST",
@@ -50,6 +51,7 @@ function GoogleLogin() {
     })
 
     router.push("/sheets");
+
   }
 
   return (

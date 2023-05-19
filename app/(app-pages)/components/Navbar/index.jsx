@@ -10,15 +10,19 @@ import Image from "next/image";
 import { useState } from "react";
 import { getAuth, signOut } from "firebase/auth";
 import { app } from '../../../../components/initializeFirebase'
+import { useRouter } from 'next/navigation';
+
 const auth = getAuth(app);
 
 
 function Navbar(props) {
 
   const [signoutModal, setSignoutModal] = useState(false);
+  const router = useRouter();
 
   async function handleSignOut() {
     await signOut(auth);
+    router.push("/signup");
   }
 
   return (
@@ -29,11 +33,11 @@ function Navbar(props) {
     
     >
     
-    <div className="h-1/2 z-4 w-18 top-0 flex items-center justify-start gap-4 sm:flex-col p-0.5 bg-white">
+    <div className="h-1/2 z-4 w-18 top-0 flex items-center justify-start gap-4 sm:flex-col p-1 bg-white">
 
-      <div className="aspect-square w-22 p-4 mt-1">
+      <div className="aspect-square w-16 p-2 mt-1">
         <Link href="/sheets" className="p-0">
-          <img src="/pblogo.svg" alt="Logo" className=" w-full" />
+          <img src="/bird.png" alt="Logo" className="w-full" />
           </Link>
       </div>
       <div className="w-12 mt-1 hover:bg-pbiconhover transition duration-150">
@@ -72,7 +76,9 @@ function Navbar(props) {
                 <div className="w-full">
                     <button className="py-2 px-4 hover:bg-gray-100 focus:outline-none text-xs text-left">
                         <div className="flex items-center">
+                          <Link href="/sheets/sub" onClick={() => {setSignoutModal(false)}}>
                             <div>Subscription</div>
+                          </Link>
                         </div>
                     </button>
                 </div>
@@ -87,7 +93,7 @@ function Navbar(props) {
                 <div className="w-full">
                     <button
                         className="py-2 px-4 hover:bg-gray-100 focus:outline-none text-xs text-left"
-                        onClick={() => setSignoutModal(false)}
+                        onClick={() => {setSignoutModal(false) ; handleSignOut()}}
                     >
                         <div className="flex items-center">
                             <div>Logout</div>
