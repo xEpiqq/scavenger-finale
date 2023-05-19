@@ -30,7 +30,7 @@ const SignupPage = () => {
           <div className="-mx-4 flex flex-wrap">
             <div className="w-full px-4">
               <div className="mx-auto max-w-[500px] rounded-md bg-primary bg-opacity-5 px-6 py-10 dark:bg-opacity-5 dark:bg-primary sm:p-[60px]">
-                <h3 className="mb-3 text-center text-2xl font-bold text-black dark:text-white sm:text-3xl">
+                <h3 className="mb-3 text-center text-2xl font-bold text-white dark:text-white sm:text-3xl">
                   Create your account
                 </h3>
                 <p className="mb-11 text-center text-base font-medium text-body-color">
@@ -39,7 +39,7 @@ const SignupPage = () => {
 
                 <GoogleLogin />
                 <p className="text-center text-base font-medium text-body-color">
-                  Already using Startup?
+                  Already using Scavenger? &nbsp;
                   <Link href="/signin" className="text-primary hover:underline">
                     Sign in
                   </Link>
@@ -65,7 +65,7 @@ const SignupPage = () => {
               width="1440"
               height="969"
             >
-              <rect width="1440" height="969" fill="#090E34" />
+              <rect width="1440" height="969" fill="#" />
             </mask>
             <g mask="url(#mask0_95:1005)">
               <path

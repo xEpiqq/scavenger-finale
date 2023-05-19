@@ -33,11 +33,11 @@ function Navbar(props) {
     
     >
     
-    <div className="h-1/2 z-4 w-18 top-0 flex items-center justify-start gap-4 sm:flex-col p-0.5 bg-white">
+    <div className="h-1/2 z-4 w-18 top-0 flex items-center justify-start gap-4 sm:flex-col p-1 bg-white">
 
-      <div className="aspect-square w-22 p-4 mt-1">
+      <div className="aspect-square w-16 p-2 mt-1">
         <Link href="/sheets" className="p-0">
-          <img src="/pblogo.svg" alt="Logo" className=" w-full" />
+          <img src="/bird.png" alt="Logo" className="w-full" />
           </Link>
       </div>
       <div className="w-12 mt-1 hover:bg-pbiconhover transition duration-150">

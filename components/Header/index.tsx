@@ -71,7 +71,7 @@ const Header = () => {
                   alt="logo"
                   width={1024}
                   height={1024}
-                  className="w-full dark:hidden"
+                  className="w-full dark:hidden mr-2"
                 />
                 <Image
                   src="/images/logo/crow.png"
@@ -80,7 +80,7 @@ const Header = () => {
                   height={30}
                   className="hidden w-full dark:block"
                 />
-                <h1 className="hidden text-4xl font-bold text-white md:block">
+                <h1 className="hidden text-3xl font-bold text-white md:block">
                   Scavenger
                 </h1>
               </Link>
@@ -105,9 +105,9 @@ const Header = () => {
                 ) : (
                   <Link
                     href="/signup"
-                    className="ease-in-up hidden rounded-md bg-black px-8 py-3 text-base font-bold text-white transition duration-300 hover:bg-white hover:bg-opacity-90 hover:text-black hover:shadow-signUp md:block md:px-9 lg:px-6 xl:px-9"
+                    className="ease-in-up hidden rounded-md bg-white px-8 py-3 text-base font-bold text-black transition duration-300 hover:bg-white hover:bg-opacity-90 hover:text-black hover:shadow-signUp md:block md:px-9 lg:px-6 xl:px-9"
                   >
-                    Sign Up
+                    Start Free Trial
                   </Link>
                 )}
 
