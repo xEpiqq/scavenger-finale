@@ -10,13 +10,13 @@ const SingleTestimonial = ({ testimonial }: { testimonial: Testimonial }) => {
   const { star, name, image, content, designation } = testimonial;
 
   let ratingIcons = [];
-  for (let index = 0; index < star; index++) {
-    ratingIcons.push(
-      <span key={index} className="text-yellow">
-        {starIcon}
-      </span>
-    );
-  }
+  // for (let index = 0; index < star; index++) {
+  //   ratingIcons.push(
+  //     <span key={index} className="text-yellow">
+  //       {starIcon}
+  //     </span>
+  //   );
+  // } vercel didnt like this. it aint even on the home page so i just commented it out
 
   return (
     <div className="w-full">
