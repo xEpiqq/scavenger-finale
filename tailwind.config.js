@@ -68,6 +68,7 @@ module.exports = {
       sheettile: "#F4F4F4",
       redpill: "#E83826",
       bluepill: "#3B82F6",
+      deleteicon: "#E34562"
     },
     screens: {
       xs: "450px",

@@ -7,10 +7,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getAuth, signOut } from "firebase/auth";
 import { app } from '../../../../components/initializeFirebase'
 import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 const auth = getAuth(app);
 
@@ -18,12 +19,31 @@ const auth = getAuth(app);
 function Navbar(props) {
 
   const [signoutModal, setSignoutModal] = useState(false);
+  const [currentPage, setCurrentPage] = useState("");
   const router = useRouter();
 
   async function handleSignOut() {
     await signOut(auth);
     router.push("/signup");
   }
+
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const sheetsRegex = /^\/sheets(?:\/([^\/]+))?/;
+    const match = pathname.match(sheetsRegex);
+    if (match && match[1]) {
+      setCurrentPage("list");
+    } else {
+      setCurrentPage("overview");
+    }
+
+    if (pathname === "/sub") {
+      setCurrentPage("sub");
+    }
+
+    console.log(currentPage);
+  }, [pathname]);
 
   return (
 
@@ -37,25 +57,36 @@ function Navbar(props) {
 
       <div className="aspect-square w-16 p-2 mt-1">
         <Link href="/sheets" className="p-0">
-          <img src="/bird.png" alt="Logo" className="w-full" />
+          <img src="/bird.png" alt="Logo" className="w-full" draggable={false}/>
           </Link>
       </div>
-      <div className="w-12 mt-1 hover:bg-pbiconhover transition duration-150">
-        <Link href="/" className="p-0">
-        <img src="/pbdblogo.png" alt="Logo" className=" w-full" />
 
-        </Link>
-      </div>
-      <div className="w-11 rounded-xl border-2 border-black p-3">
-        <Link href="/" className="p-0">
-        <img src="/pbbarlogo.svg" alt="Logo" className=" w-full" />
-        </Link>
-      </div>
-      <div className="w-12">
-        <Link href="/" className="p-0">
-        <img src="/pbsettingslogo.png" alt="Logo" className=" w-full" />
-        </Link>
-      </div>
+      <Link href="/sheets" className="p-0">
+        {currentPage === "overview" ? (
+          <div className="w-11 h-11 rounded-xl mt-1 border-2 border-pbblack transition duration-150 flex items-center justify-center">
+            <img src="/overview2.svg" alt="Logo" className="w-5" draggable={false}/>
+          </div>
+        ) : (
+          <div className="w-11 h-11 rounded-xl mt-1 hover:bg-pbiconhover transition duration-150 flex items-center justify-center">
+            <img src="/overview2.svg" alt="Logo" className="w-5" draggable={false}/>
+          </div>
+        )}
+      </Link>
+
+      {/* <Link href="/" className="p-0"> */}
+      {currentPage === "list" ? (
+          <div className="w-11 h-11 rounded-xl mt-1 transition duration-150 flex items-center justify-center border-2 border-pbblack">
+            <img src="/listalt.svg" alt="Logo" className="w-5" draggable={false}/>
+          </div>
+        ) : (
+          <div className="w-11 h-11 rounded-xl mt-1 transition duration-150 flex items-center justify-center">
+            <img src="/listalt.svg" alt="Logo" className="w-5" draggable={false}/>
+          </div>
+        )}
+
+      {/* </Link> */}
+
+
     </div>
 
     <div className="flex sm:items-end items-center h-1/2 sm:justify-center pb-4 justify-end flex-center w-full pt-3 pr-5 sm:pr-0">
@@ -71,30 +102,28 @@ function Navbar(props) {
             onClick={(e) => e.stopPropagation()}
             style={{ borderWidth: 1 }}
         >
-            <div className="flex items-center justify-start w-full hover:bg-pbiconhover rounded-md p-1 m-1 mt-0 transition duration-150">
-                <img src="/pbmanagesub.png" className="w-4 h-4 ml-2" alt="Manage Subscription" />
-                <div className="w-full">
-                    <button className="py-2 px-4 hover:bg-gray-100 focus:outline-none text-xs text-left">
-                        <div className="flex items-center">
-                          <Link href="/sheets/sub" onClick={() => {setSignoutModal(false)}}>
-                            <div>Subscription</div>
-                          </Link>
-                        </div>
-                    </button>
-                </div>
-            </div>
+            <Link href="/sub" onClick={() => {setSignoutModal(false)}}>
+              <div className="flex items-center justify-start w-full hover:bg-pbiconhover rounded-md p-1 m-1 mt-0 transition duration-150">
+                  <img src="/pbmanagesub.png" className="w-4 h-4 ml-2" alt="Manage Subscription" />
+                  <div className="w-full">
+                      <button className="py-2 px-4 hover:bg-gray-100 focus:outline-none text-xs text-left">
+                          <div className="flex items-center">
+                              <div>Subscription</div>
+                          </div>
+                      </button>
+                  </div>
+              </div>
+            </Link>
             <span className="h-px bg-pblines"
             
             style={{ width: "97%" }}
             
             />
-            <div className="flex items-center justify-start w-full hover:bg-pbiconhover rounded-md p-1 m-1 mb-0 transition duration-150">
+            <div className="flex items-center justify-start w-full hover:bg-pbiconhover rounded-md p-1 m-1 mb-0 transition duration-150 cursor-pointer"
+              onClick={() => {setSignoutModal(false) ; handleSignOut()}} >
                 <img src="/pblogout.png" className="w-4 h-4 ml-2" alt="Logout" />
                 <div className="w-full">
-                    <button
-                        className="py-2 px-4 hover:bg-gray-100 focus:outline-none text-xs text-left"
-                        onClick={() => {setSignoutModal(false) ; handleSignOut()}}
-                    >
+                    <button className="py-2 px-4 hover:bg-gray-100 focus:outline-none text-xs text-left">
                         <div className="flex items-center">
                             <div>Logout</div>
                         </div>

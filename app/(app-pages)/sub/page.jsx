@@ -1,10 +1,10 @@
 "use client";
 import react from "react";
-import PageName from "../../components/PageName";
+import PageName from "../components/PageName";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { getAuth } from "firebase/auth";
 import { useState, useEffect } from "react";
-import { app, db } from "../../../../components/initializeFirebase";
+import { app, db } from "../../../components/initializeFirebase";
 import { doc} from 'firebase/firestore';
 import { useDocument } from 'react-firebase-hooks/firestore';
 import { Tooltip } from 'react-tooltip'
