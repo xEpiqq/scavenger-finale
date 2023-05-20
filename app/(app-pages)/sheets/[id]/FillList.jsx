@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Skeleton from "react-loading-skeleton";
 
 function FillList({
@@ -12,6 +12,19 @@ function FillList({
   location,
   setLocation
 }) {
+
+  const [elapsedTime, setElapsedTime] = useState(0);
+
+  useEffect(() => {
+    let intervalId;
+    if (searching) {
+      intervalId = setInterval(() => {
+        setElapsedTime((prevElapsedTime) => prevElapsedTime + 1);
+      }, 1000);
+    }
+    return () => clearInterval(intervalId);
+  }, [searching]);
+
   return (
     <>
       <div className="w-full  h-full flex justify-center items-center">
@@ -54,7 +67,10 @@ function FillList({
           </div>
           {searching && (
             <div className="mt-5">
-              <Skeleton className="mt-5 flex w-full flex-row rounded-md border border-paymentboxborder bg-white p-3 text-paymenttext" />
+              <h3 className="mt-0 text-sm font-medium text-paymenttext opacity-50">
+                Takes about 22s, refresh and change search if it takes too long — <span className="text-pbblack">{elapsedTime}</span>
+              </h3>
+              <Skeleton className="mt-4 flex w-full flex-row rounded-md border border-paymentboxborder bg-white p-3 text-paymenttext" />
             </div>
           )}
 
