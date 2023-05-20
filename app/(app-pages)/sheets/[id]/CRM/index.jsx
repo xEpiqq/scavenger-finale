@@ -55,6 +55,17 @@ function CRM({
     console.log("isShown", isShown);
   }, []);
 
+    useEffect(() => {
+      const handleKeyDown = (event) => {
+        if (event.keyCode === 27) {
+          setOpenCRM(false);
+        }
+      };
+      document.addEventListener("keydown", handleKeyDown);
+      return () => {
+        document.removeEventListener("keydown", handleKeyDown);
+      };
+    }, [setOpenCRM]);
 
 
   function nameFocus() {
@@ -180,12 +191,13 @@ function CRM({
 
         </div>
         <div className="flex h-full w-full flex-col justify-between">
+
           <div className="flex flex-row justify-around px-3 h-9"> 
             <button
               onClick={() => setTabState(1)}
               className={`${
                 tabState === 1 ? "bg-white text-black" : "bg-transparent border-none text-pbcrmopen"
-              } w-72 max-w-xs rounded-t-md px-6 py-2 transition-all duration-200 hover:bg-pbiconhover h-12
+              } w-80 rounded-t-md px-6 py-2 transition-all duration-200 hover:bg-pbiconhover h-12
                 border-pbiconhover border-r border-t border-l absolute z-10 -mb-0.5 left-0 ml-8 text-sm`}
             > Basic Info
             </button>
@@ -194,7 +206,7 @@ function CRM({
               onClick={() => setTabState(2)}
               className={`${
                 tabState === 2 ? "bg-white text-black" : "bg-transparent border-none text-pbcrmopen"
-              } w-72 max-w-xs rounded-t-md px-6 py-2 transition-all duration-200 hover:bg-pbiconhover h-12
+              } w-80 rounded-t-md px-6 py-2 transition-all duration-200 hover:bg-pbiconhover h-12
                 border-pbiconhover border-r border-t border-l absolute z-10 -mb-0.5 right-0 mr-8 text-sm`}
             > More Metrics
             </button>
@@ -203,9 +215,8 @@ function CRM({
           </div>
 
           <div className="flex h-full w-full flex-col bg-white border-t border-pbiconhover mt-3">
-            {tabState === 1 ? <AccountTab /> : <AuthUsersTab />}
+            {tabState === 1 ? <AccountTab userRef={userRef} id={id} targetIndex={targetIndex} listsArray={listsArray} setOpenCRM={setOpenCRM} /> : <AuthUsersTab />}
           </div>
-
         </div>
         <div className="flex flex-col"></div>
       </div>
@@ -214,18 +225,3 @@ function CRM({
 }
 
 export default CRM;
-
-// { !pencilClicked &&
-//   (<div>
-//     <h1 className="text-lg font-light py-3 flex items-center">
-//       Name: {name}
-//       <img src='/pencil.png' className="ml-4 h-4 hover:opacity-70 cursor-pointer" onClick={nameFocus} />
-//     </h1>
-//   </div>)}
-
-//   <div>
-//     <h1 className="text-lg font-light py-3 flex items-center">
-//       <input value={tempName} ref={inputRef} onChange={(e) => {setTempName(e.target.value)}} className="absolute z-50 bg-pbsecondbg outline-none" />
-//       {pencilClicked && (<div className="w-screen h-screen fixed z-40" onClick={() => {rename()}}/>) }
-//     </h1>
-//   </div>
