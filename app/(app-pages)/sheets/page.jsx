@@ -165,9 +165,9 @@ function Page() {
         }
 
         {/* <SheetTileNew /> */}
-        <div className="fixed right-4 bottom-4 flex justify-center gap-6">
-        <button className="bg-white border border-black border-1 text-black rounded-md w-36 h-10 right-4 bottom-4 hover:bg-black hover:text-white" >Export to CSV</button>
-        <button className="bg-black text-white rounded-md w-48 h-10 right-38 bottom-4 hover:bg-white hover:border hover:border-1 hover:border-black hover:text-black" onClick={() => {setCreateSheet(true)}}>Create New Sheet</button>
+        <div className="fixed right-8 bottom-8 flex justify-center gap-6">
+        <button className="bg-white border border-black border-1 text-black rounded-md w-36 h-10 right-4 bottom-4 opac cursor-default opacity-50" >Export to CSV</button>
+        <button className="bg-black text-white rounded-md w-48 h-10 right-38 bottom-4 hover:bg-white hover:border hover:border-1 hover:border-black hover:text-black transition duration-200" onClick={() => {setCreateSheet(true)}}>Create New Sheet</button>
         </div>
         
         {createSheet && <TextPrompt props={{ title: "Create New Sheet", placeholder: "Sheet Name", action: "Create", actionFunction: () => {console.log("create sheet")}, closeFunction: () => {setCreateSheet(false)}}} />}

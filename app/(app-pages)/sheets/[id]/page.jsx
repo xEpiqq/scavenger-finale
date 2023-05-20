@@ -25,7 +25,8 @@ function Page({ params }) {
 
   const resultsPerPage = 20;
   const [currentPage, setCurrentPage] = useState(0);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [niche, setNiche] = useState("");
+  const [location, setLocation] = useState("");
   const [queryError, setQueryError] = useState("");
   const [searchbar, setSearchbar] = useState("");
   const [searching, setSearching] = useState(false);
@@ -88,30 +89,32 @@ function Page({ params }) {
   }
 
   async function sendToLambda() {
-    setSearching(true);
+    // check if niche or location is empty
+    if (niche === "" || location === "") {
+      setQueryError("Niche or Location is empty");
+      return;
+    }
+
+    let searchQuery = niche + " " + location;
     const query_array = searchQuery.split(" ");
     console.log(query_array);
+    // remove commas from searchquery
+    searchQuery = searchQuery.replace(/,/g, "");
 
-    if (query_array == null) {
-      setQueryError("Query is null");
+
+    if (searchQuery.match(/[^a-zA-Z ]/g)) {
+      setQueryError("Search contains numbers or special characters");
       return;
     }
 
     if (query_array.length < 3) {
-      setQueryError("Query is less than 3 words");
+      setQueryError("Search needs at least 3 words");
       return;
     }
 
-    // if contains alphanumeric characters
-    if (searchQuery.match(/[^a-zA-Z0-9 ]/g)) {
-      setQueryError("Query contains non-alphanumeric characters");
-      return;
-    }
-
-    if (searchQuery.match(/[0-9]/g)) {
-      setQueryError("Query contains numbers");
-      return;
-    }
+    const newSearchQuery = niche + " in " + location;
+    setSearching(true);
+    setQueryError("");
 
     const response = await fetch("/api/lambda", {
       method: "POST",
@@ -119,7 +122,7 @@ function Page({ params }) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        searchQuery: searchQuery,
+        searchQuery: newSearchQuery,
         the_list_id: list_id,
       }),
     });
@@ -127,8 +130,6 @@ function Page({ params }) {
     console.log(data);
     setDisplayedSheets(userData?.lists);
 
-    // const data = await response.json();
-    // console.log(data);
   }
 
   async function searchBarQuery (e) {
@@ -140,7 +141,7 @@ function Page({ params }) {
 
   if (userData?.lists == 0) {
     return (
-      <FillList sendToLambda={sendToLambda} setSearchQuery={setSearchQuery} searchQuery={searchQuery} queryError={queryError} searching={searching} />
+      <FillList sendToLambda={sendToLambda} queryError={queryError} searching={searching} niche={niche} setNiche={setNiche} location={location} setLocation={setLocation}  />
     );
   }
 

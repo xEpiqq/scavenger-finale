@@ -44,7 +44,7 @@ const featuresData: Feature[] = [
     ),
     title: "Site-Specific Data",
     paragraph:
-      "Desktop and mobile screenshots, ssl certification status, what template service they are using, and more. Scavenger gives you an instant overview of potential selling points.",
+      "Desktop and mobile screenshots, ssl certification status, template providor, and more. Scavenger gives you an instant overview of potential selling points.",
   },
   {
     id: 1,

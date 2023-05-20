@@ -9,15 +9,15 @@ const NewsLatterBox = () => {
       data-wow-delay=".2s"
     >
       <h3 className="mb-4 text-2xl font-bold leading-tight text-white">
-        Sign up for a free 14 day trial
+        Try our free 14 day trial
       </h3>
       <p className="mb-11 border-b border-body-color border-opacity-25 pb-11 text-base font-medium leading-relaxed text-body-color dark:border-white dark:border-opacity-25">
-        The free 14 day trial will let you use the full product so you can find clients and sell websites.
+        The free 14 day trial will let you use the full product so you can see if it's the right fit for you.
       </p>
       <form>
 
         <Link href="/signup">
-        <button className="w-full font-bold text-sm hover:bg-gray-5 transition duration-150 h-12 bg-white text-black rounded-md">Start Free 14 Day Trial</button>
+        <button className="w-full font-bold text-sm hover:bg-gray-5 transition duration-150 h-12 bg-white text-black rounded-md">Start Your Free Trial Today</button>
         </Link>
       </form>
       <div className="absolute top-0 left-0 z-[-1]">

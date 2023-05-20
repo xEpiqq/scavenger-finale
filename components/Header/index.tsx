@@ -58,12 +58,13 @@ const Header = () => {
         }`}
       >
         <div className="container">
+          
           <div className="relative -mx-4 flex items-center justify-between">
-            <div className="ml-16 w-24 max-w-full px-4 xl:mr-12">
+            <div className="ml-4 w-24 max-w-full px-2 xl:mr-12">
               <Link
                 href="/"
                 className={`header-logo flex w-full flex-row items-center justify-center ${
-                  sticky ? "py-5 lg:py-2" : "py-8"
+                  sticky ? "py-3 lg:py-2" : "py-4"
                 } `}
               >
                 <Image
@@ -80,7 +81,7 @@ const Header = () => {
                   height={30}
                   className="hidden w-full dark:block"
                 />
-                <h1 className="hidden text-3xl font-bold text-white md:block">
+                <h1 className="hidden text-2xl font-bold text-white md:block">
                   Scavenger
                 </h1>
               </Link>
@@ -92,7 +93,7 @@ const Header = () => {
                   <div className="flex flex-row justify-center items-center gap-4">
                     <Link
                       href="/sheets"
-                      className="bg-primary px-7 py-3 text-base font-bold text-dark hover:opacity-70 dark:text-white rounded-sm"
+                      className="bg-primary px-7 py-3 text-base font-bold text-white border border-white hover:bg-black transition duration-150 rounded-lg"
                     >
                       Dashboard
                     </Link>
@@ -107,7 +108,7 @@ const Header = () => {
                     href="/signup"
                     className="ease-in-up hidden rounded-md bg-white px-8 py-3 text-base font-bold text-black transition duration-300 hover:bg-white hover:bg-opacity-90 hover:text-black hover:shadow-signUp md:block md:px-9 lg:px-6 xl:px-9"
                   >
-                    Start Free Trial
+                    Try For Free
                   </Link>
                 )}
 
