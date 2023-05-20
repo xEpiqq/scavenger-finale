@@ -250,7 +250,7 @@ function Page({ params }) {
                 screenshot={list.desktop_screenshot}
                 selected={selectedSheets.includes(index)}
                 id={list_id}
-                object_id={list.object_id}
+                object_id={list.obj}
                 facebook={list.facebook}
                 instagram={list.instagram}
                 twitter={list.twitter}

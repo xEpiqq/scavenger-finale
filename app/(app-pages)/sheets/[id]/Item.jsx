@@ -4,8 +4,6 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faEllipsisV,
-  faFileWord,
   faCircleArrowRight,
 } from "@fortawesome/free-solid-svg-icons";
 import CRM from "./CRM";
@@ -64,6 +62,7 @@ function Item({
               className="h-4 w-4"
               checked={selected}
               onClick={toggleselected}
+              onChange={() => {}}
             />
           </label>
         </td>

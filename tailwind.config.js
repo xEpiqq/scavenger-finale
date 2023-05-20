@@ -59,6 +59,7 @@ module.exports = {
       pbiconhover: "#E4E9EC",
       pbsecondbg: "#F8F9FA",
       pbgreytext: "#A0A6AC",
+      pbblackhover: "#2D2D30",
       pbblack: "#16161A",
       pbslash: "#D5D8DB",
       pbblackbtnhover: "#2C2C30",
@@ -68,6 +69,7 @@ module.exports = {
       sheettile: "#F4F4F4",
       redpill: "#E83826",
       bluepill: "#3B82F6",
+      deleteicon: "#E34562"
     },
     screens: {
       xs: "450px",
