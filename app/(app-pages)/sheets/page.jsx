@@ -107,7 +107,7 @@ function Page() {
       <h2 className="font-bold text-2xl">Stats</h2>
       </div>
       <div className="flex flex-col items-center gap-3 h-4/5">
-        <h2 className="mt-10 text-md">Total Sheets</h2>
+        <h2 className="mt-10 text-md">Total Lists</h2>
         <h2 className="font-bold">{total_sheets}</h2>
         <span className="w-28 bg-pblines" style={{height: 1}}/>
 
@@ -144,7 +144,7 @@ function Page() {
 
 
     <div className="flex flex-col justify-between bg-pbsecondbg h-screen w-full py-8 px-4">
-      <PageName name="Sheets Overview" />
+      <PageName name="List Overview" />
       <div
         className="relative m-4 grid h-full justify-center gap-4 px-10 pt-4"
         style={{

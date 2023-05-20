@@ -151,9 +151,9 @@ function Page({ params }) {
       
       <div className="w-full h-24 bg-gray-1 flex">
         <div className="w-1/2 h-full bg-pbsecondbg flex flex-row items-center px-7 gap-3">
-          <h2 className="text-pbgreytext text-lg">Collections</h2>
+          <h2 className="text-pbgreytext text-lg">Lists</h2>
           <h2 className="text-xl text-pbslash"> / </h2>
-          <h2 className="text-pbblack text-lg">users</h2>
+          <h2 className="text-pbblack text-lg">{userData?.list_name}</h2>
           <img src="/gear.png" className="ml-5 w-5 h-5" />
           <img src="/refresh.png" className="ml-5 w-5 h-5" />
         </div>
