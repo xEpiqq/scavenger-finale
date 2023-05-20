@@ -5,6 +5,7 @@ import featuresData from "./featuresData";
 import { useState } from "react";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 import { app } from '../../components/initializeFirebase'
+import Link from "next/link";
 
 const db = getFirestore(app);
 
@@ -33,12 +34,13 @@ const Features = () => {
           </div>
         </div>
 
-        <div className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0 m-24" id="signupform" >
-          <input
-          type="email" placeholder="Email" className="rounded-md py-4 px-8 text-base font-semibold text-black duration-300 ease-in-out dark:text-black dark:bg-white border-2 border-primary" />
-          <button className="rounded-md bg-primary py-4 px-8 text-base font-semibold text-white duration-300 ease-in-out hover:bg-black/30 dark:bg-primary dark:text-white dark:hover:bg-white/30">
-            Get Early Access!
+        <div className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0 mt-36 mb-16" id="signupform" >
+          <Link href="/signup">
+          <button className="rounded-md bg-primary py-3 px-4 font-semibold text-white duration-300 ease-in-out hover:bg-black/30 dark:bg-black border-white border-2 dark:text-white dark:hover:bg-white/30 
+                  text-lg sm:text-2xl md:text-2xl lg:text-2xl">
+                    Start Your Free Trial Today
           </button>
+          </Link>
         </div> 
 
       </section>

@@ -1,17 +1,23 @@
 "use client";
 
-import react from "react";
+import react, { useEffect, useRef } from "react";
 import { useState } from "react";
 
 function TextPrompt({ title, description, placeholder, buttonText, callBack, callBackClose }) {
   const [input, setInput] = useState("");
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
+
   return (
     <>
     <div className="fixed left-0 top-0 z-10 h-screen w-screen">
       <div className="fixed left-0 top-0 z-20 h-screen w-screen bg-darken-1" onClick={() => callBackClose()} />
       
       <div
-        className="fixed left-1/2 top-1/2 flex w-2/4 max-w-screen-md -translate-x-1/2 -translate-y-1/2 transform flex-col bg-white shadow-md rounded-md z-30" >
+        className="fixed left-1/2 top-1/2 flex w-2/4 max-w-screen-md -translate-x-1/2 -translate-y-1/2 transform flex-col bg-white shadow-md rounded-md z-30 -mt-10" >
         <div className="flex flex-col justify-between gap-3 p-6">
           <h3 className="text-lg">
             <b>{title}</b>
@@ -21,12 +27,19 @@ function TextPrompt({ title, description, placeholder, buttonText, callBack, cal
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                callBack(input);
+              }
+            }}
             placeholder={placeholder}
-            className="rounded-md border border-gray-3 bg-gray-6 p-2 active:border-gray-2 "
+            className="rounded-md border-0 text-sm border-pblines mt-2 bg-white p-2 focus:outline-none focus:bg-pbsecondbg transition duration-150 ease-in-out"
+            style={{ borderWidth: 1 }}
+            ref={inputRef}
           />
         </div>
-        <div className="flex flex-row items-center justify-between bg-gray-4 p-3 pb-1 pt-1">
-          <p className="text-sm text-gray-2">
+        <div className="flex flex-row items-center justify-between bg-pbwhitebtnhover rounded-br-md rounded-bl-md p-4">
+          <p className="text-sm text-pbblack">
             Please use 32 characters at maximum.
           </p>
           <button

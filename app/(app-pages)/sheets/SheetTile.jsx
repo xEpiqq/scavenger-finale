@@ -77,8 +77,8 @@ function Page({ props }) {
           <div className="flex h-7 w-7 items-center justify-center text-blue">
             <FontAwesomeIcon icon={faFile} size="lg" />
           </div>
-          <div className="flex flex-col items-start justify-center">
-            <h4 className="text-sm font-semibold">{name}</h4>
+          <div className="flex flex-col items-start justify-center mt-1">
+            <h4 className="text-xs font-semibold">{name.length > 23 ? name.slice(0, 23) + "..." : name}</h4>
             <h4 className="text-xs text-gray-3">{last_updated}</h4>
           </div>
         </div>

@@ -107,7 +107,7 @@ function Page() {
       <h2 className="font-bold text-2xl">Stats</h2>
       </div>
       <div className="flex flex-col items-center gap-3 h-4/5">
-        <h2 className="mt-10 text-md">Total Sheets</h2>
+        <h2 className="mt-10 text-md">Total Lists</h2>
         <h2 className="font-bold">{total_sheets}</h2>
         <span className="w-28 bg-pblines" style={{height: 1}}/>
 
@@ -144,7 +144,7 @@ function Page() {
 
 
     <div className="flex flex-col justify-between bg-pbsecondbg h-screen w-full py-8 px-4">
-      <PageName name="Sheets Overview" />
+      <PageName name="List Overview" />
       <div
         className="relative m-4 grid h-full justify-center gap-4 px-10 pt-4"
         style={{
@@ -165,9 +165,9 @@ function Page() {
         }
 
         {/* <SheetTileNew /> */}
-        <div className="fixed right-4 bottom-4 flex justify-center gap-6">
-        <button className="bg-white border border-black border-1 text-black rounded-md w-36 h-10 right-4 bottom-4 hover:bg-black hover:text-white" >Export to CSV</button>
-        <button className="bg-black text-white rounded-md w-48 h-10 right-38 bottom-4 hover:bg-white hover:border hover:border-1 hover:border-black hover:text-black" onClick={() => {setCreateSheet(true)}}>Create New Sheet</button>
+        <div className="fixed right-8 bottom-8 flex justify-center gap-6">
+        <button className="bg-white border border-black border-1 text-black rounded-md w-36 h-10 right-4 bottom-4 opac cursor-default opacity-50" >Export to CSV</button>
+        <button className="bg-black text-white rounded-md w-48 h-10 right-38 bottom-4 hover:bg-white hover:border hover:border-1 hover:border-black hover:text-black transition duration-200" onClick={() => {setCreateSheet(true)}}>Create New Sheet</button>
         </div>
         
         {createSheet && <TextPrompt props={{ title: "Create New Sheet", placeholder: "Sheet Name", action: "Create", actionFunction: () => {console.log("create sheet")}, closeFunction: () => {setCreateSheet(false)}}} />}
