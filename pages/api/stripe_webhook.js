@@ -15,7 +15,7 @@ import { app, db } from '../../components/initializeFirebase'
 ///////////////////////////STRIPE TEST MODE/////////////////////////////
 const stripe_secret_test_key = process.env.STRIPE_SECRET_TEST_KEY; // test mode
 const stripe = Stripe(stripe_secret_test_key) // test mode
-const endpointSecret = "we_1N9zN3HpzbXtemiL4GwIS3Wl" // test mode (webhook signing secret)
+const endpointSecret = "whsec_CyU7vrsmbt5oTG34PxOZCvw8KxfSCcJu"
 const basic_price_id = "price_1N5XrWHpzbXtemiLOvrBL1lK" // scavenger premium price id (49 /mo )
 ////////////////////////////////////////////////////////////////////////
 
