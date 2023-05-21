@@ -15,14 +15,13 @@ import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 
 
-// const stripe_public_key =
-//   "pk_live_51Mn4sZHpzbXtemiLt1PgKGM0Eo9yKpKWABzs3WeLN24ayguAeJPJ6CGKaIcSOSNjtkzFvfDJzhPRSyRcchX1QQ3r007EVzNPJZ";
-// const stripePromise = loadStripe(stripe_public_key);
+const stripe_public_key = "pk_live_51Mn4sZHpzbXtemiLt1PgKGM0Eo9yKpKWABzs3WeLN24ayguAeJPJ6CGKaIcSOSNjtkzFvfDJzhPRSyRcchX1QQ3r007EVzNPJZ";
+const stripePromise = loadStripe(stripe_public_key);
 
-///////////////////////////STRIPE TEST MODE/////////////////////////////
-const stripe_public_key = "pk_test_51Mn4sZHpzbXtemiL0XN5qLTlaBxkoriYCe4gwg8Vq7TQxYs2CLpIC5HZahV7Xyf0EfKlq7JhzcG6GP2TTwjbsi8t00nALOso66" // test mode
-const stripePromise = loadStripe(stripe_public_key) // test mode
-////////////////////////////////////////////////////////////////////////
+// ///////////////////////////STRIPE TEST MODE/////////////////////////////
+// const stripe_public_key = "pk_test_51Mn4sZHpzbXtemiL0XN5qLTlaBxkoriYCe4gwg8Vq7TQxYs2CLpIC5HZahV7Xyf0EfKlq7JhzcG6GP2TTwjbsi8t00nALOso66" // test mode
+// const stripePromise = loadStripe(stripe_public_key) // test mode
+// ////////////////////////////////////////////////////////////////////////
 
 const TrialEndUpgradePopup = ({ closePopup }) => {
   const auth = getAuth();
