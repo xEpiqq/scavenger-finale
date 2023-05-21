@@ -8,14 +8,14 @@ import { app, db } from '../../components/initializeFirebase'
 // /////////////////////////STRIPE LIVE MODE/////////////////////////////
 // const stripe_secret_key = process.env.STRIPE_REAL_SECRET_KEY; // production mode
 // const stripe = Stripe(stripe_secret_key) // production mode
-const endpointSecret = process.env.STRIPE_WEBHOOK_ENDPOINT; // production mode
+// const endpointSecret = process.env.STRIPE_WEBHOOK_ENDPOINT; // production mode
 // const basic_price_id = process.env.BASIC_PRICE_ID;
 // //////////////////////////////////////////////////////////////////////
 
 ///////////////////////////STRIPE TEST MODE/////////////////////////////
 const stripe_secret_test_key = process.env.STRIPE_SECRET_TEST_KEY; // test mode
 const stripe = Stripe(stripe_secret_test_key) // test mode
-// const endpointSecret = "whsec_8e2ff906dd09de3e52c1c391f3ed020eabc58cf1e305bda9166d52ccddb89e01" // test mode (webhook signing secret)
+const endpointSecret = "we_1N9zN3HpzbXtemiL4GwIS3Wl" // test mode (webhook signing secret)
 const basic_price_id = "price_1N5XrWHpzbXtemiLOvrBL1lK" // scavenger premium price id (49 /mo )
 ////////////////////////////////////////////////////////////////////////
 
@@ -37,7 +37,7 @@ export default async function stripe_webhook(req, res) {
         console.log(
           `⚠️  Check the env file and enter the correct webhook secret.`
         );
-        return res.sendStatus(400);
+        return res.status(400);
     }
 
     const dataObject = event.data.object;
