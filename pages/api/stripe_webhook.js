@@ -8,8 +8,7 @@ import { app, db } from '../../components/initializeFirebase'
 /////////////////////////STRIPE LIVE MODE/////////////////////////////
 const stripe_secret_key = process.env.STRIPE_REAL_SECRET_KEY; // production mode
 const stripe = Stripe(stripe_secret_key) // production mode
-// const endpointSecret = process.env.STRIPE_WEBHOOK_ENDPOINT; // production mode
-const endpointSecret = "whsec_5iXmWRv8pBiVI0QgHTRAU3wSMcBThyDL"
+const endpointSecret = process.env.STRIPE_WEBHOOK_ENDPOINT; // production mode
 const basic_price_id = process.env.BASIC_PRICE_ID;
 //////////////////////////////////////////////////////////////////////
 

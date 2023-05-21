@@ -64,9 +64,10 @@ const TrialEndUpgradePopup = ({ closePopup }) => {
       <>
         <div className="absolute z-10 h-full w-full bg-black opacity-20" />
         <div className="fixed z-10 flex h-auto w-full max-w-120 flex-col rounded-md bg-white text-black shadow-xl -mt-36">
-          <div className="h-32 w-full rounded-tl-md rounded-tr-md border-b-2 border-b-paymentborder bg-white p-8">
+        <div className="h-32 w-full flex rounded-tl-md rounded-tr-md border-b-2 border-b-paymentborder bg-white p-8">
             <h1 className="text-3xl font-bold">Upgrade To Pro</h1>
-          </div>
+            <img src="/stripelogo.svg" className="w-16 absolute top-6 right-6" draggable={false}/>
+        </div>
           <div className="flex h-80 w-full flex-col border-b-2 border-b-paymentborder bg-paymentmid p-8">
             <h2>
             Regain premium features with Scavenger Pro at
