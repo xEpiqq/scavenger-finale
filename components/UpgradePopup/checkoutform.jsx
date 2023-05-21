@@ -100,7 +100,10 @@ function CheckoutForm(props) {
     <div className="flex bg-white w-full max-w-120 h-auto fixed z-10 flex-col text-black rounded-md shadow-xl -mt-36">
     <form onSubmit={handleSubmit}>
 
-      <div className="w-full h-32 bg-white rounded-tl-md rounded-tr-md border-b-2 border-b-paymentborder p-8"><h1 className="font-bold text-3xl">Start free 14 day trial</h1></div>
+      <div className="h-32 w-full flex rounded-tl-md rounded-tr-md border-b-2 border-b-paymentborder bg-white p-8">
+            <h1 className="text-3xl font-bold">Start free 14 day trial</h1>
+            <img src="/stripelogo.svg" className="w-16 absolute top-6 right-6" draggable={false}/>
+        </div>
         <div className="bg-paymentmid w-full h-80 flex flex-col p-8 border-b-paymentborder border-b-2">
           <h2>
           Full free trial access, cancel anytime. We will remind you 3 days before your trial ends.
