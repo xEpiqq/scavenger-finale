@@ -80,13 +80,12 @@ function CheckoutForm(props) {
         payment_method: { card: elements.getElement(CardNumberElement) },
       });
   
-      router.refresh();
       if (result.error) {
         setMessage(result.error.message);
       } else {
         setMessage("Setup succeeded!");
       }
-      props.closePopup();
+      // props.closePopup();
     } catch (error) {
       setMessage(error.message);
     }
@@ -131,12 +130,13 @@ function CheckoutForm(props) {
               </div>
               </div>
           </div>
-          {/* {message && <div className="">{message}</div>} */}
+          {message && <div className="">{message}</div>}
         </div>
 
 
         <div className="bg-transparent w-full h-22 flex flex-row items-center p-4 justify-between">
-        <button onClick={props.closePopup} className="border-paymentboxborder border rounded-md w-30 px-4 h-11 text-paymenttext font-semibold text-sm opacity-40 cursor-default" >Cancel</button>
+        {/* <button onClick={props.closePopup} className="border-paymentboxborder border rounded-md w-30 px-4 h-11 text-paymenttext font-semibold text-sm opacity-40 cursor-default" >Cancel</button> */}
+        <div className="w-30" />
         <button disabled={isLoading || !stripe || !elements} id="submit" className="bg-black rounded-md w-30 px-4 h-11 font-semibold text-sm text-white hover:bg-white hover:border hover:border-black hover:text-black transition duration-150" > Start Free Trial </button>
         </div>
         </form>
