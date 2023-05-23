@@ -7,32 +7,6 @@ import { useRouter } from 'next/navigation';
 
 function CheckoutForm(props) {
 
-  const CARD_ELEMENT_OPTIONS = {
-    style: {
-      base: {
-        color: "#32325d",
-        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-        fontSmoothing: "antialiased",
-        fontSize: "16px",
-        "::placeholder": {
-          color: "#aab7c4",
-        },
-      },
-      invalid: {
-        color: "#fa755a",
-        iconColor: "#fa755a",
-      },
-      label: {
-        fontWeight: 'bold',
-        fontSize: '14px',
-        color: '#000',
-        textTransform: 'uppercase',
-      },
-    hidePostalCode: true,
-    },
-  };
-
-
   const stripe = useStripe();
   const elements = useElements();
   const [message, setMessage] = useState(null);
@@ -113,20 +87,20 @@ function CheckoutForm(props) {
           <h3 className="text-paymenttext font-medium text-sm opacity-50 mt-5">Card Number</h3>
           <div className="bg-white text-paymenttext border-paymentboxborder border rounded-md flex flex-row mt-2 p-3 w-full">
           <Image src='/cardicon.png' alt="Image of credit card" width={20} height={15} draggable={false} className="w-8 opacity-70 pointer-events-none"/>
-          <CardNumberElement options={CARD_ELEMENT_OPTIONS} className='ml-4 w-full' />
+          <CardNumberElement className='ml-4 w-full' />
           </div>
 
           <div className="flex flex-row gap-4">
               <div className="w-full">
               <h3 className="text-paymenttext font-medium text-sm opacity-50 mt-5">Expires</h3>
               <div className="bg-white text-paymenttext border-paymentboxborder border rounded-md flex flex-row mt-2 p-3 w-50">
-              <CardExpiryElement options={CARD_ELEMENT_OPTIONS} className='ml-4 w-full' />
+              <CardExpiryElement className='ml-4 w-full' />
               </div>
               </div>
               <div className="w-full">
               <h3 className="text-paymenttext font-medium text-sm opacity-50 mt-5">CVC</h3>
               <div className="bg-white text-paymenttext border-paymentboxborder border rounded-md flex flex-row mt-2 p-3 w-full">
-              <CardCvcElement options={CARD_ELEMENT_OPTIONS} className='ml-4 w-full'/>
+              <CardCvcElement className='ml-4 w-full'/>
               </div>
               </div>
           </div>

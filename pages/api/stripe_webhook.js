@@ -4,6 +4,7 @@ import Stripe from 'stripe';
 var getRawBody = require('raw-body')
 import { getFirestore, collection, addDoc, setDoc, doc, getDoc, updateDoc, query, where, getDocs } from "firebase/firestore";
 import { app, db } from '../../components/initializeFirebase'
+import dayjs from 'dayjs';
 
 /////////////////////////STRIPE LIVE MODE/////////////////////////////
 const stripe_secret_key = process.env.STRIPE_REAL_SECRET_KEY; // production mode
@@ -11,13 +12,6 @@ const stripe = Stripe(stripe_secret_key) // production mode
 const endpointSecret = process.env.STRIPE_WEBHOOK_ENDPOINT; // production mode
 const basic_price_id = process.env.BASIC_PRICE_ID;
 //////////////////////////////////////////////////////////////////////
-
-// ///////////////////////////STRIPE TEST MODE/////////////////////////////
-// const stripe_secret_test_key = process.env.STRIPE_SECRET_TEST_KEY; // test mode
-// const stripe = Stripe(stripe_secret_test_key) // test mode
-// const endpointSecret = "whsec_8e2ff906dd09de3e52c1c391f3ed020eabc58cf1e305bda9166d52ccddb89e01"
-// const basic_price_id = "price_1N5XrWHpzbXtemiLOvrBL1lK" // scavenger premium price id (49 /mo )
-// ////////////////////////////////////////////////////////////////////////
 
 export const config = {
     api: {
@@ -136,14 +130,13 @@ async function subscriptionDeleted(dataObject) {
 }
 
 async function setupIntentSucceeded(dataObject) {
-  console.log("setup intent succeeded!!!")
+  console.log(dataobject)
 
   const customer_id = dataObject.customer
   const paymentMethodId = dataObject.payment_method
 
   const currentDate = new Date();
-  const trialEndDate = new Date(currentDate.getTime() + 14 * 24 * 60 * 60 * 1000);
-  const trialEndTimestamp = Math.floor(trialEndDate.getTime() / 1000);
+  const trialEndTimestamp = dayjs(currentDate).add(7, 'day').unix();
 
   const subscription = await stripe.subscriptions.create({
     customer: customer_id,
@@ -167,6 +160,5 @@ async function setupIntentSucceeded(dataObject) {
     subscription_created: new Date(),
     trial_end: trialEndDate
   });
-
 
 }
