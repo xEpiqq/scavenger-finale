@@ -58,7 +58,7 @@ async function setupIntentSucceeded(dataObject) {
     const paymentMethodId = dataObject.payment_method
   
     const currentDate = new Date();
-    const trialEndTimestamp = dayjs(currentDate).add(7, 'day').unix();
+    const trialEndTimestamp = dayjs(currentDate).add(14, 'day').unix();
   
     const subscription = await stripe.subscriptions.create({
       customer: customer_id,
