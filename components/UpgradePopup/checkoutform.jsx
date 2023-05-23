@@ -58,6 +58,7 @@ function CheckoutForm(props) {
         setMessage(result.error.message);
       } else {
         setMessage("Setup succeeded!");
+        window.location.reload(); // for some reason this works not sure why?
       }
       // props.closePopup();
     } catch (error) {
