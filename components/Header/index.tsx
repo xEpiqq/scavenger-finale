@@ -93,15 +93,15 @@ const Header = () => {
                   <div className="flex flex-row justify-center items-center gap-4">
                     <Link
                       href="/sheets"
-                      className="bg-primary px-7 py-3 text-base font-bold text-white border border-white hover:bg-black transition duration-150 rounded-lg"
+                      className="bg-primary px-5 py-3 text-sm font-semibold text-white border border-white hover:bg-black transition duration-150 rounded-lg"
                     >
                       Dashboard
                     </Link>
-                    <img
+                    {/* <img
                       src={user?.photoURL || "/images/user.png"}
                       alt="User Photo"
                       className="h-8 w-8 rounded-full sm:h-12 sm:w-12"
-                    ></img>
+                    ></img> */}
                   </div>
                 ) : (
                   <Link

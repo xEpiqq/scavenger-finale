@@ -72,7 +72,7 @@ const TrialEndUpgradePopup = ({ closePopup }) => {
             <h2>
             Regain premium features with Scavenger Pro at
 
-            $49 / month
+            $99 / month
             </h2>
 
             <h3 className="mt-5 text-sm font-medium text-paymenttext opacity-50">

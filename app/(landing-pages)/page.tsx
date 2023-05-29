@@ -15,7 +15,7 @@ export default function Home() {
     <>
       <ScrollUp />
       <Hero />
-      <Video />
+      {/* <Video /> */}
       <Brands />
       <Features />
       <Pricing />

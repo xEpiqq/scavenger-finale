@@ -1,9 +1,17 @@
 'use client'
 import Link from "next/link";
-import GoogleLogin from "../GoogleLogin";
+import { useState } from "react";
+import SignupModal from '../../components/Signupmodal/signupmodal'
+
 
 const NewsLatterBox = () => {
+
+  const [signup, setSignup] = useState(false);
+
+
   return (
+    <>
+
     <div
       className="wow fadeInUp relative z-10 rounded-md bg-primary/[3%] p-8 dark:bg-primary/10 sm:p-11 lg:p-8 xl:p-11"
       data-wow-delay=".2s"
@@ -15,10 +23,9 @@ const NewsLatterBox = () => {
         The free 14 day trial will let you use the full product so you can see if it's the right fit for you.
       </p>
       <form>
-
-        <Link href="/signup">
-        <button className="w-full font-bold text-sm hover:bg-gray-5 transition duration-150 h-12 bg-white text-black rounded-md">Start Your Free Trial Today</button>
-        </Link>
+        <button
+        onClick={() => {setSignup(true)}}
+        className="w-full font-bold text-sm hover:bg-gray-5 transition duration-150 h-12 bg-white text-black rounded-md">Start Your Free Trial Today</button>
       </form>
       <div className="absolute top-0 left-0 z-[-1]">
         <svg
@@ -156,6 +163,10 @@ const NewsLatterBox = () => {
         </svg>
       </div>
     </div>
+    {signup && (
+          <SignupModal setSignup={setSignup}/>
+      )}
+    </>
   );
 };
 

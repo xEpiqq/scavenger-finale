@@ -12,17 +12,16 @@ import { useRouter } from "next/navigation";
 const provider = new GoogleAuthProvider();
 const auth = getAuth(app);
 
-function GoogleLogin() {
+function GoogleLogin(props) {
   const router = useRouter();
   const [user, loading, error] = useAuthState(auth);
-  if (user) {
-    router.push("/sheets");
-  }
 
   async function googleLogin() {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
 
+
+    router.push("/sheets");
     // check if firestore user
     await fetch("/api/login", {
       method: "POST",
@@ -50,9 +49,9 @@ function GoogleLogin() {
       }),
     })
 
-    router.push("/sheets");
 
   }
+
 
   return (
     <button
@@ -92,7 +91,7 @@ function GoogleLogin() {
           </defs>
         </svg>
       </span>
-      Sign up with Google
+      {props.method} with Google
     </button>
   );
 }
