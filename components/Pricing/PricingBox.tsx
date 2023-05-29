@@ -1,16 +1,20 @@
+import UpgradePopup from "components/UpgradePopup";
+import Link from "next/link";
+
 const PricingBox = (props: {
   price: string;
   duration: string;
   packageName: string;
   subtitle: string;
+  active: boolean;
   children: React.ReactNode;
 }) => {
-  const { price, duration, packageName, subtitle, children } = props;
+  const { price, duration, packageName, subtitle, children, active } = props;
 
   return (
-    <div className="w-full">
+    <div className={`w-full ${!active ? "opacity-25" : "opacity-100"}`}>
       <div
-        className="wow fadeInUp relative z-10 rounded-md bg-white px-8 py-10 shadow-signUp dark:bg-[#1D2144]"
+        className="wow fadeInUp relative z-10 rounded-md bg-primary/[.03] px-8 py-10 shadow-signUp"
         data-wow-delay=".1s"
       >
         <div className="flex items-center justify-between">
@@ -24,9 +28,11 @@ const PricingBox = (props: {
         </div>
         <p className="mb-7 text-base text-body-color">{subtitle}</p>
         <div className="mb-8 border-b border-body-color border-opacity-10 pb-8 dark:border-white dark:border-opacity-10">
+          <Link href="/signup">
           <button className="flex w-full items-center justify-center rounded-md bg-primary p-3 text-base font-semibold text-white transition duration-300 ease-in-out hover:bg-opacity-80 hover:shadow-signUp">
             Start Free Trial
           </button>
+          </Link>
         </div>
         <div>{children}</div>
         <div className="absolute bottom-0 right-0 z-[-1]">
