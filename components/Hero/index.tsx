@@ -39,7 +39,7 @@ const Hero = () => {
 
 
                 <div className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-                <div className="bg-pbblack p-10 flex items-center justify-center sm:flex-row gap-8 rounded-md mt-16">
+                <div className="bg-pbblack p-10 flex items-center justify-center flex-col gap-8 rounded-md mt-16 sm:flex-col md:flex-row">
                   
                   <div>
                   No committments. Cancel anytime - <span className="font-semibold">100% risk free.</span>
