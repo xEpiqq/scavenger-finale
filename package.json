@@ -16,6 +16,7 @@
     "@next/font": "13.1.6",
     "@stripe/react-stripe-js": "^2.1.0",
     "@stripe/stripe-js": "^1.52.1",
+    "@vercel/analytics": "^1.0.1",
     "aws-sdk": "^2.1373.0",
     "axios": "^1.4.0",
     "dayjs": "^1.11.7",

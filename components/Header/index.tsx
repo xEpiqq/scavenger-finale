@@ -9,10 +9,14 @@ import { app } from "../../components/initializeFirebase";
 import { useDocument } from "react-firebase-hooks/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { getFirestore, doc } from "firebase/firestore";
+import SignupModal from '../../components/Signupmodal/signupmodal'
+
 const auth = getAuth(app);
 const db = getFirestore(app);
 
 const Header = () => {
+const [signup, setSignup] = useState(false);
+
   const [user, loading, error] = useAuthState(auth);
   const [userDataRaw, loading2, error2] = useDocument(
     doc(db, `users/${user?.uid}`)
@@ -50,6 +54,9 @@ const Header = () => {
 
   return (
     <>
+                      {signup && (
+          <SignupModal setSignup={setSignup}/>
+        )}
       <header
         className={`header left-0 top-0 z-40 flex w-full items-center bg-transparent ${
           sticky
@@ -104,12 +111,12 @@ const Header = () => {
                     ></img> */}
                   </div>
                 ) : (
-                  <Link
-                    href="/signup"
-                    className="ease-in-up hidden rounded-md bg-white px-8 py-3 text-base font-bold text-black transition duration-300 hover:bg-white hover:bg-opacity-90 hover:text-black hover:shadow-signUp md:block md:px-9 lg:px-6 xl:px-9"
+                  <button
+                    onClick={() => setSignup(true)}
+                  className="ease-in-up hidden rounded-md bg-white px-8 py-3 text-base font-bold text-black transition duration-300 hover:bg-white hover:bg-opacity-90 hover:text-black hover:shadow-signUp md:block md:px-9 lg:px-6 xl:px-9"
                   >
                     Try For Free
-                  </Link>
+                  </button>
                 )}
 
                 <div></div>

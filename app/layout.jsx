@@ -1,5 +1,5 @@
 import react from "react";
-
+import { Analytics } from '@vercel/analytics/react';
 import { Providers } from "./providers";
 
 function Layout({ children }) {
@@ -12,6 +12,7 @@ function Layout({ children }) {
       <head />
       <body>
         <Providers>{children}</Providers>
+        <Analytics />
       </body>
     </html>
   );
