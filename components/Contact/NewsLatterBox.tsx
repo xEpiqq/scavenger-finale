@@ -22,11 +22,9 @@ const NewsLatterBox = () => {
       <p className="mb-11 border-b border-body-color border-opacity-25 pb-11 text-base font-medium leading-relaxed text-body-color dark:border-white dark:border-opacity-25">
         The free 14 day trial will let you use the full product so you can see if it's the right fit for you.
       </p>
-      <form>
         <button
         onClick={() => {setSignup(true)}}
         className="w-full font-bold text-sm hover:bg-gray-5 transition duration-150 h-12 bg-white text-black rounded-md">Start Your Free Trial Today</button>
-      </form>
       <div className="absolute top-0 left-0 z-[-1]">
         <svg
           width="370"

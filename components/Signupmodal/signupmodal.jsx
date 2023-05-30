@@ -32,7 +32,7 @@ function SignupModal(props) {
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-20 ">
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-80 flex items-center justify-center z-20 " onClick={() => {setSignup(false)}} />
 
-          <div className="bg-pbblack relative rounded-lg p-16 w-1/4 h-1/2 z-30 text-white -mt-48 shadow-lg">
+          <div className="bg-pbblack relative rounded-lg p-8 pt-20 w-11/12 h-1/2 z-30 text-white -mt-48 shadow-lg sm:w-3/4 md:w-1/2 lg:w-4/12 xl:w-3/12">
             <div className="absolute px-2 mt-4 mr-4 top-0 right-0 border border-px border-yellow rounded-md opacity-60 cursor-pointer hover:opacity-100 duration-150 transition-all" onClick={() => {setSignup(false)}}>
               esc 
             </div>
