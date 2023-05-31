@@ -19,9 +19,9 @@ const Features = () => {
 
   return (
     <>
-                  {signup && (
-          <SignupModal setSignup={setSignup}/>
-        )}
+      {signup && (
+        <SignupModal setSignup={setSignup}/>
+      )}
       <section
         id="features"
         className="bg-primary/[.03] py-16 md:py-20 lg:py-28"
