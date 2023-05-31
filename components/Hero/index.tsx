@@ -40,7 +40,7 @@ const Hero = () => {
                 </h1>
 
                 <p className="mb-8 text-lg font-light !leading-relaxed text-pbsecondbg sm:text-xl md:text-2xl ">
-                  Use the scavenger cold outreach machine to get your first client within 28 days... or <span className="font-bold">FULL REFUND</span>, no questions asked.
+                  Use the Scavenger Cold Outreach Machine to get your first client within 28 days... or <span className="font-bold">FULL REFUND</span>, no questions asked.
                   <span className="font-semibold"></span>
                 </p>
 
