@@ -11,11 +11,11 @@ import {
 } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "./checkoutform";
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
-
-const stripe_public_key = "pk_live_51Mn4sZHpzbXtemiLt1PgKGM0Eo9yKpKWABzs3WeLN24ayguAeJPJ6CGKaIcSOSNjtkzFvfDJzhPRSyRcchX1QQ3r007EVzNPJZ";
+const stripe_public_key =
+  "pk_live_51Mn4sZHpzbXtemiLt1PgKGM0Eo9yKpKWABzs3WeLN24ayguAeJPJ6CGKaIcSOSNjtkzFvfDJzhPRSyRcchX1QQ3r007EVzNPJZ";
 const stripePromise = loadStripe(stripe_public_key);
 
 ///////////////////////////STRIPE TEST MODE/////////////////////////////
@@ -63,23 +63,26 @@ const UpgradePopup = ({ closePopup }) => {
     return (
       <>
         <div className="absolute z-10 h-full w-full bg-black opacity-20" />
-        <div className="fixed z-10 flex h-auto w-full max-w-120 flex-col rounded-md bg-white text-black shadow-xl -mt-36">
-        <div className="h-32 w-full flex rounded-tl-md rounded-tr-md border-b-2 border-b-paymentborder bg-white p-8">
+        <div className="fixed z-10 -mt-36 flex h-auto w-full max-w-120 flex-col rounded-md bg-white text-black shadow-xl">
+          <div className="flex h-32 w-full rounded-tl-md rounded-tr-md border-b-2 border-b-paymentborder bg-white p-8">
             <h1 className="text-3xl font-bold">Start free 14 day trial</h1>
-            <img src="/stripelogo.svg" className="w-16 absolute top-6 right-6" draggable={false}/>
-        </div>
+            <img
+              src="/stripelogo.svg"
+              className="absolute right-6 top-6 w-16"
+              draggable={false}
+            />
+          </div>
           <div className="flex h-80 w-full flex-col border-b-2 border-b-paymentborder bg-paymentmid p-8">
             <h2>
-            Full free trial access, cancel anytime. We will remind you 3 days before your trial ends.
-
-            Then $49 / month
+              Full free trial access, cancel anytime. We will remind you 3 days
+              before your trial ends. Then $49 / month
             </h2>
 
             <h3 className="mt-5 text-sm font-medium text-paymenttext opacity-50">
               Card Number
             </h3>
             <Skeleton className="mt-2 flex w-full flex-row rounded-md border border-paymentboxborder bg-white p-3 text-paymenttext" />
-              {/* <Image
+            {/* <Image
                 src="/cardicon.png"
                 alt="Image of credit card"
                 width={20}
@@ -112,7 +115,10 @@ const UpgradePopup = ({ closePopup }) => {
               Cancel
             </button> */}
             <div className="w-30" />
-            <button className="w-30 h-11 rounded-md bg-black px-4 text-sm font-semibold dark:text-black text-black" style={{color:"white"}}>
+            <button
+              className="w-30 h-11 rounded-md bg-black px-4 text-sm font-semibold text-black dark:text-black"
+              style={{ color: "white" }}
+            >
               {" "}
               Start Free Trial{" "}
             </button>
