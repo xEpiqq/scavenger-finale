@@ -20,8 +20,6 @@ function GoogleLogin(props) {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
 
-
-    router.push("/sheets");
     // check if firestore user
     await fetch("/api/login", {
       method: "POST",
@@ -49,6 +47,7 @@ function GoogleLogin(props) {
       }),
     })
 
+    router.push("/sheets");
 
   }
 
