@@ -55,7 +55,7 @@ function GoogleLogin(props) {
   return (
     <button
       onClick={googleLogin}
-      className="mb-6 flex w-full items-center justify-center rounded-md bg-white p-3 text-base font-medium text-body-color shadow-one hover:text-primary dark:bg-[#242B51] dark:text-body-color dark:shadow-signUp dark:hover:text-white"
+      className="mb-6 flex w-full items-center justify-center rounded-md bg-white p-3 text-base font-medium text-body-color shadow-one hover:text-primary"
     >
       <span className="mr-3">
         <svg
