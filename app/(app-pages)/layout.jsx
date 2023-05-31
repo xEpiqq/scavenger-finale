@@ -19,9 +19,11 @@ function Layout({ children }) {
   );
   const userData = userDataRaw?.data();
 
-  const list_count = userData?.lists?.length;
+  // const list_count = userData?.lists?.length;
+  // if (userData?.subscription_status === "none" && list_count >= 2) {
 
-  if (userData?.subscription_status === "none" && list_count >= 2) {
+
+  if (userData?.subscription_status === "none") {
     return (
       <div className="flex h-full w-full flex-col bg-pbsecondbg text-black sm:flex-row">
         <div className="fixed z-50 flex h-full w-full items-center justify-center">
@@ -36,14 +38,14 @@ function Layout({ children }) {
     );
   }
 
-  if (userData?.subscription_status === "none" && list_count < 2) {
-    return (
-      <div className="flex flex-col w-full h-full text-black bg-pbsecondbg sm:flex-row">
-        <Navbar />
-        <section className="w-full overflow-x-clip">{children}</section>
-      </div>
-    );
-  }
+  // if (userData?.subscription_status === "none" && list_count < 2) {
+  //   return (
+  //     <div className="flex flex-col w-full h-full text-black bg-pbsecondbg sm:flex-row">
+  //       <Navbar />
+  //       <section className="w-full overflow-x-clip">{children}</section>
+  //     </div>
+  //   );
+  // }
 
   if (userData?.subscription_status === "cancelled") {
     return (

@@ -62,46 +62,46 @@ const Pricing = () => {
 
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
           <PricingBox
-            packageName="Basic"
-            price={isMonthly ? "50" : "120"}
+            packageName="Solo"
+            price={isMonthly ? "99" : "120"}
             duration={isMonthly ? "mo" : "yr"}
-            subtitle="Lorem ipsum dolor sit amet adiscing elit Mauris egestas enim."
+            subtitle="Designed for freelancers and solo entrepreneurs"
             active={true}
           >
-            <OfferList text="All UI Components" status="active" />
-            <OfferList text="Use with Unlimited Projects" status="active" />
-            <OfferList text="Commercial Use" status="active" />
-            <OfferList text="Email Support" status="active" />
-            <OfferList text="Lifetime Access" status="inactive" />
-            <OfferList text="Free Lifetime Updates" status="inactive" />
+            <OfferList text="Unlimited Leads" status="active" />
+            <OfferList text="Integrated CRM" status="active" />
+            <OfferList text="Phone Numbers" status="active" />
+            <OfferList text="Email / Contact" status="active" />
+            <OfferList text="Social Media Links" status="active" />
+            <OfferList text="Site Data" status="active" />
           </PricingBox>
           <PricingBox
-            packageName="Plus"
+            packageName="Team"
             price={isMonthly ? "399" : "789"}
             duration={isMonthly ? "mo" : "yr"}
-            subtitle="Lorem ipsum dolor sit amet adiscing elit Mauris egestas enim."
+            subtitle="Designed for small teams and agencies."
             active={false}
           >
-            <OfferList text="All UI Components" status="active" />
-            <OfferList text="Use with Unlimited Projects" status="active" />
-            <OfferList text="Commercial Use" status="active" />
-            <OfferList text="Email Support" status="active" />
-            <OfferList text="Lifetime Access" status="active" />
-            <OfferList text="Free Lifetime Updates" status="inactive" />
+            <OfferList text="Unlimited Leads" status="active" />
+            <OfferList text="Integrated CRM" status="active" />
+            <OfferList text="Phone Numbers" status="active" />
+            <OfferList text="Email / Contact" status="active" />
+            <OfferList text="Social Media Links" status="active" />
+            <OfferList text="Site Data" status="active" />
           </PricingBox>
           <PricingBox
-            packageName="Team Suite"
-            price={isMonthly ? "589" : "999"}
+            packageName="Enterprise"
+            price={isMonthly ? "999" : "999"}
             duration={isMonthly ? "mo" : "yr"}
-            subtitle="Lorem ipsum dolor sit amet adiscing elit Mauris egestas enim."
+            subtitle="Designed for enterprise companies."
             active={false}
           >
-            <OfferList text="All UI Components" status="active" />
-            <OfferList text="Use with Unlimited Projects" status="active" />
-            <OfferList text="Commercial Use" status="active" />
-            <OfferList text="Email Support" status="active" />
-            <OfferList text="Lifetime Access" status="active" />
-            <OfferList text="Free Lifetime Updates" status="active" />
+            <OfferList text="Unlimited Leads" status="active" />
+            <OfferList text="Integrated CRM" status="active" />
+            <OfferList text="Phone Numbers" status="active" />
+            <OfferList text="Email / Contact" status="active" />
+            <OfferList text="Social Media Links" status="active" />
+            <OfferList text="Site Data" status="active" />
           </PricingBox>
         </div>
       </div>

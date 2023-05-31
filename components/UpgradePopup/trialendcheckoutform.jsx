@@ -81,7 +81,7 @@ function TrialEndCheckoutForm(props) {
           <h2>
           Regain premium features with Scavenger Pro at
 
-$49 / month
+$99 / month
           </h2>
           
           <h3 className="text-paymenttext font-medium text-sm opacity-50 mt-5">Card Number</h3>

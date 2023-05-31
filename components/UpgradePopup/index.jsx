@@ -74,8 +74,9 @@ const UpgradePopup = ({ closePopup }) => {
           </div>
           <div className="flex h-80 w-full flex-col border-b-2 border-b-paymentborder bg-paymentmid p-8">
             <h2>
-              Full free trial access, cancel anytime. We will remind you 3 days
-              before your trial ends. Then $49 / month
+            Full free trial access, cancel anytime. We will remind you 3 days before your trial ends.
+
+            Then $99 / month
             </h2>
 
             <h3 className="mt-5 text-sm font-medium text-paymenttext opacity-50">

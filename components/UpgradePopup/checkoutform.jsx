@@ -72,8 +72,8 @@ function CheckoutForm(props) {
     } catch (error) {
       setMessage(error.message);
     }
-
-    await new Promise((r) => setTimeout(r, 500));
+  
+    await new Promise(r => setTimeout(r, 1000));
     window.location.reload(); // for some reason this works not sure why?
     setIsLoading(false);
   }
@@ -94,7 +94,7 @@ function CheckoutForm(props) {
           <div className="flex flex-1 sm:h-80 w-full flex-col border-b-2 border-b-paymentborder bg-paymentmid p-8">
             <h2>
               Full free trial access, cancel anytime. We will remind you 3 days
-              before your trial ends. Then $49 / month
+              before your trial ends. Then $99 / month
             </h2>
 
             <h3 className="mt-5 text-sm font-medium text-paymenttext opacity-50">
