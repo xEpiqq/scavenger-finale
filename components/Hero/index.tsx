@@ -32,7 +32,7 @@ const Hero = () => {
                   Struggling to get a constant flow of clients?
                   <span className="font-semibold"></span>
                 </p>
-                <h1 className="mb-2 md:mb-5 text-4xl font-bold leading-tight text-white dark:text-white sm:text-5xl sm:leading-tight md:text-6xl lg:text-7xl md:leading-tight">
+                <h1 className="mb-2 md:mb-5 text-4xl font-bold leading-tight text-white sm:text-5xl sm:leading-tight md:text-6xl lg:text-7xl md:leading-tight">
                   Freelance{" "}
                   <span className="text-stroke text-stroke-black text-primary">
                     Designers,
@@ -48,7 +48,7 @@ const Hero = () => {
                 <div className="flex md:flex-col flex-col-reverse">
 
                 <div className="w-full flex flex-col items-center justify-center mt-12 md:mt-0">
-                <button onClick={() => setSignup(true)} className="rounded-md border-2 border-white bg-primary px-8 py-4 text-base font-semibold text-white duration-300 ease-in-out hover:bg-black/30 dark:bg-black dark:text-white dark:hover:bg-white/30 sm:text-xl md:text-xl lg:text-xl xl:text-2xl shadow-lg flex items-center gap-3">Start Your Free Trial Today<img className="w-4" src='/clicktrial.svg' alt="start trial"/></button>
+                <button onClick={() => setSignup(true)} className="rounded-md border-2 border-white bg-primary px-8 py-4 text-base font-semibold text-white duration-300 ease-in-out hover:bg-black/30 sm:text-xl md:text-xl lg:text-xl xl:text-2xl shadow-lg flex items-center gap-3">Start Your Free Trial Today<img className="w-4" src='/clicktrial.svg' alt="start trial"/></button>
                 <p className="text-pblines mt-2 text-sm">No Contracts • Cancel Anytime</p>
                 </div>
 

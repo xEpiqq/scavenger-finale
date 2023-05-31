@@ -22,14 +22,14 @@ const Footer = () => {
                       alt="logo"
                       width={1024}
                       height={1024}
-                      className="w-full dark:hidden"
+                      className="w-full"
                     />
                     <Image
                       src="/images/logo/crow.png"
                       alt="logo"
                       width={140}
                       height={30}
-                      className="hidden w-full dark:block"
+                      className="hidden w-full"
                     />
                     <h1 className="text-4xl font-bold text-white">Scavenger</h1>
                   </Link>

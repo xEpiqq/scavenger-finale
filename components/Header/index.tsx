@@ -69,7 +69,7 @@ const Header = () => {
                   alt="logo"
                   width={1024}
                   height={1024}
-                  className="mr-2 w-full dark:hidden"
+                  className="mr-2 w-full"
                 />
                 <h1 className="hidden text-2xl font-bold text-white md:block">
                   Scavenger

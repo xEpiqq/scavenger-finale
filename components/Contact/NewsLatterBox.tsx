@@ -13,13 +13,13 @@ const NewsLatterBox = () => {
     <>
 
     <div
-      className="wow fadeInUp relative z-10 rounded-md bg-primary/[3%] p-8 dark:bg-primary/10 sm:p-11 lg:p-8 xl:p-11"
+      className="wow fadeInUp relative z-10 rounded-md bg-primary/[3%] p-8 sm:p-11 lg:p-8 xl:p-11"
       data-wow-delay=".2s"
     >
       <h3 className="mb-4 text-2xl font-bold leading-tight text-white">
         Try our free 14 day trial
       </h3>
-      <p className="mb-11 border-b border-body-color border-opacity-25 pb-11 text-base font-medium leading-relaxed text-body-color dark:border-white dark:border-opacity-25">
+      <p className="mb-11 border-b border-body-color border-opacity-25 pb-11 text-base font-medium leading-relaxed text-body-color">
         The free 14 day trial will let you use the full product so you can see if it's the right fit for you.
       </p>
         <button
