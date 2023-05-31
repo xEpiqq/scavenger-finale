@@ -1,44 +1,54 @@
+'use client'
 import { Testimonial } from "@/types/testimonial";
 import SectionTitle from "../Common/SectionTitle";
 import SingleTestimonial from "./SingleTestimonial";
+import { useState } from "react";
+import SignupModal from "../../components/Signupmodal/signupmodal";
+
 
 const testimonialData: Testimonial[] = [
   {
     id: 1,
-    name: "Musharof Chy",
-    designation: "Founder @TailGrids",
+    name: "David Wing",
+    designation: "Co-founder at Scavenger",
     content:
-      "Our members are so impressed. It's intuitive. It's clean. It's distraction free. If you're building a community.",
-    image: "/images/testimonials/auth-01.png",
+      "I was worried about cold calling to sell websites because I had never done cold calls before so I needed to test it. With this site, and a small amount of help from a friend with experience, I got a $700 job offer in under 2 hours!",    
+      image: "/images/testimonials/auth-01.png",
     star: 5,
   },
   {
     id: 2,
-    name: "Devid Weilium",
-    designation: "Founder @UIdeck",
+    name: "Jayden Crowther",
+    designation: "Founder, Revisitus Web Design",
     content:
-      "Our members are so impressed. It's intuitive. It's clean. It's distraction free. If you're building a community.",
+      "I do web design. I wrote scavenger because in the beginning it was a straight up desert. Soon after using it I landed a deal for $2200, then another for $2600. Honestly, it changed everything.",
     image: "/images/testimonials/auth-02.png",
     star: 5,
   },
   {
     id: 3,
-    name: "Lethium Frenci",
-    designation: "Founder @Lineicons",
+    name: "Isaac Schraedel",
+    designation: "Co-founder at Invictus",
     content:
-      "Our members are so impressed. It's intuitive. It's clean. It's distraction free. If you're building a community.",
+      "I know and have worked with the founder for a while now and watched him build this from the ground up. This product is a game changer. If you are trying to scale and make big moves this is for you!",
     image: "/images/testimonials/auth-03.png",
     star: 5,
   },
 ];
 
 const Testimonials = () => {
+  const [signup, setSignup] = useState(false);
+
+  
   return (
+    <>
+    {signup && <SignupModal setSignup={setSignup} />}
     <section className="relative z-10 bg-primary/[.03] py-16 md:py-20 lg:py-28">
       <div className="container">
         <SectionTitle
-          title="What Our Users Says"
-          paragraph="There are many variations of passages of Lorem Ipsum available but the majority have suffered alteration in some form."
+          title="Is it really that good?"
+          paragraph="‟Scavenger delivers RESULTS—Cold phone calls, email, and social dms are perhaps the most effective ways to charge what you're actually worth—it's a client getting machine.”"
+
           center
         />
 
@@ -176,7 +186,14 @@ const Testimonials = () => {
           </defs>
         </svg>
       </div>
+      <div className="flex flex-col justify-center items-center mt-24">
+      <div className="w-full flex items-center justify-center">
+        <button onClick={() => setSignup(true)} className="rounded-md border-2 border-white bg-primary px-8 py-4 text-base font-semibold text-white duration-300 ease-in-out hover:bg-black/30 dark:bg-black dark:text-white dark:hover:bg-white/30 sm:text-xl md:text-xl lg:text-xl xl:text-2xl shadow-lg flex items-center gap-3">Start Your Free Trial Today<img className="w-4" src='/clicktrial.svg' alt="start trial"/></button>
+        </div>
+        <p className="text-pblines mt-2 text-sm">No Contracts • Cancel Anytime</p>
+      </div>
     </section>
+    </>
   );
 };
 

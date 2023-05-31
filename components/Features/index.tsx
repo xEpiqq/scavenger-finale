@@ -40,14 +40,12 @@ const Features = () => {
           </div>
         </div>
 
-        <div className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0 mt-36 mb-16" id="signupform" >
-          <button
-          onClick={() => {setSignup(true)}}
-          className="rounded-md bg-primary py-3 px-4 font-semibold text-white duration-300 ease-in-out hover:bg-black/30 dark:bg-black border-white border-2 dark:text-white dark:hover:bg-white/30 
-                  text-lg sm:text-2xl md:text-2xl lg:text-2xl">
-                    Start Your Free Trial Today
-          </button>
-        </div> 
+        <div className="flex flex-col justify-center items-center mt-24">
+      <div className="w-full flex items-center justify-center">
+        <button onClick={() => setSignup(true)} className="rounded-md border-2 border-white bg-primary px-8 py-4 text-base font-semibold text-white duration-300 ease-in-out hover:bg-black/30 dark:bg-black dark:text-white dark:hover:bg-white/30 sm:text-xl md:text-xl lg:text-xl xl:text-2xl shadow-lg flex items-center gap-3">Start Your Free Trial Today<img className="w-4" src='/clicktrial.svg' alt="start trial"/></button>
+        </div>
+        <p className="text-pblines mt-2 text-sm">No Contracts • Cancel Anytime</p>
+      </div>
 
       </section>
     </>
