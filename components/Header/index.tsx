@@ -9,13 +9,13 @@ import { app } from "../../components/initializeFirebase";
 import { useDocument } from "react-firebase-hooks/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { getFirestore, doc } from "firebase/firestore";
-import SignupModal from '../../components/Signupmodal/signupmodal'
+import SignupModal from "../../components/Signupmodal/signupmodal";
 
 const auth = getAuth(app);
 const db = getFirestore(app);
 
 const Header = () => {
-const [signup, setSignup] = useState(false);
+  const [signup, setSignup] = useState(false);
 
   const [user, loading, error] = useAuthState(auth);
   const [userDataRaw, loading2, error2] = useDocument(
@@ -54,20 +54,17 @@ const [signup, setSignup] = useState(false);
 
   return (
     <>
-                      {signup && (
-          <SignupModal setSignup={setSignup}/>
-        )}
+      {signup && <SignupModal setSignup={setSignup} />}
       <header
-        className={`header left-0 top-0 z-40 flex w-full items-center bg-transparent ${
+        className={`header  left-0 top-0 !z-[15] h-16 flex w-full items-center bg-transparent ${
           sticky
-            ? "!fixed !z-[9999] !bg-black !bg-opacity-80 shadow-sticky backdrop-blur-sm !transition dark:!bg-black dark:!bg-opacity-20"
+            ? "!fixed !bg-black !bg-opacity-80 shadow-sticky backdrop-blur-sm !transition dark:!bg-black dark:!bg-opacity-20"
             : "absolute"
         }`}
       >
         <div className="container">
-          
           <div className="relative -mx-4 flex items-center justify-between">
-            <div className="ml-4 w-24 max-w-full px-2 xl:mr-12">
+            <div className="ml-4 w-24 max-w-full xl:mr-12">
               <Link
                 href="/"
                 className={`header-logo flex w-full flex-row items-center justify-center ${
@@ -79,28 +76,28 @@ const [signup, setSignup] = useState(false);
                   alt="logo"
                   width={1024}
                   height={1024}
-                  className="w-full dark:hidden mr-2"
+                  className="mr-2 w-full dark:hidden"
                 />
                 <Image
                   src="/images/logo/crow.png"
                   alt="logo"
                   width={140}
                   height={30}
-                  className="hidden w-full dark:block"
+                  className="hidden h-12 w-12 dark:block"
                 />
                 <h1 className="hidden text-2xl font-bold text-white md:block">
                   Scavenger
                 </h1>
               </Link>
             </div>
-            <div className="flex w-full items-center justify-between px-4">
+            <div className="flex w-full items-center justify-end">
               <div></div>
-              <div className="flex items-center justify-end pr-16 lg:pr-0">
+              <div className="flex items-center justify-end pr-6 lg:pr-0">
                 {user ? (
-                  <div className="flex flex-row justify-center items-center gap-4">
+                  <div className="flex flex-row items-center justify-center gap-4">
                     <Link
                       href="/sheets"
-                      className="bg-primary px-5 py-3 text-sm font-semibold text-white border border-white hover:bg-black transition duration-150 rounded-lg"
+                      className="rounded-lg border border-white bg-primary px-5 py-3 text-sm font-semibold text-white transition duration-150 hover:bg-black"
                     >
                       Dashboard
                     </Link>
@@ -113,7 +110,7 @@ const [signup, setSignup] = useState(false);
                 ) : (
                   <button
                     onClick={() => setSignup(true)}
-                  className="ease-in-up hidden rounded-md bg-white px-8 py-3 text-base font-bold text-black transition duration-300 hover:bg-white hover:bg-opacity-90 hover:text-black hover:shadow-signUp md:block md:px-9 lg:px-6 xl:px-9"
+                    className="ease-in-up hidden rounded-md bg-white px-8 py-3 text-base font-bold text-black transition duration-300 hover:bg-white hover:bg-opacity-90 hover:text-black hover:shadow-signUp md:block md:px-9 lg:px-6 xl:px-9"
                   >
                     Try For Free
                   </button>
