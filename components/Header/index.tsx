@@ -55,21 +55,14 @@ const Header = () => {
   return (
     <>
       {signup && <SignupModal setSignup={setSignup} />}
-      <header
-        className={`header  left-0 top-0 !z-[15] h-16 flex w-full items-center bg-transparent ${
-          sticky
-            ? "!fixed !bg-black !bg-opacity-80 shadow-sticky backdrop-blur-sm !transition dark:!bg-black dark:!bg-opacity-20"
-            : "absolute"
-        }`}
-      >
+        <header className="header left-0 top-0 !z-[15] h-28 flex w-full items-center bg-transparent absolute">
+
         <div className="container">
           <div className="relative -mx-4 flex items-center justify-between">
-            <div className="ml-4 w-24 max-w-full xl:mr-12">
+            <div className="ml-16 w-20 md:w-16  max-w-full xl:mr-12">
               <Link
                 href="/"
-                className={`header-logo flex w-full flex-row items-center justify-center ${
-                  sticky ? "py-3 lg:py-2" : "py-4"
-                } `}
+                className="header-logo flex w-full flex-row items-center justify-center -ml-9 md:ml-0 py-4"
               >
                 <Image
                   src="/images/logo/crow.png"
@@ -77,13 +70,6 @@ const Header = () => {
                   width={1024}
                   height={1024}
                   className="mr-2 w-full dark:hidden"
-                />
-                <Image
-                  src="/images/logo/crow.png"
-                  alt="logo"
-                  width={140}
-                  height={30}
-                  className="hidden h-12 w-12 dark:block"
                 />
                 <h1 className="hidden text-2xl font-bold text-white md:block">
                   Scavenger
@@ -102,7 +88,7 @@ const Header = () => {
                       Dashboard
                     </Link>
                     {/* <img
-                      src={user?.photoURL || "/images/user.png"}
+                      src={`${user?.photoURL}`}
                       alt="User Photo"
                       className="h-8 w-8 rounded-full sm:h-12 sm:w-12"
                     ></img> */}

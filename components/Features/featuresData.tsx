@@ -14,7 +14,7 @@ const featuresData: Feature[] = [
     ),
     title: "Crafted for freelancers",
     paragraph:
-      "This tool changed the game for us, and we want to give back. From selling almost no sites to selling predictably, it will do the same for you.",
+      "This tool changed the game for us, and we want to give back. From selling almost no one to selling predictably, it will do the same for you.",
   },
   {
     id: 1,
@@ -72,9 +72,9 @@ const featuresData: Feature[] = [
         <rect width="28" height="28" rx="1" />
       </svg>
     ),
-    title: "Contact Information",
+    title: "Phone, Email, Social",
     paragraph:
-      "Scavenger generates all essential contact information for cold contacting. It finds phone numbers, emails, and all relevant social media links.",
+      "Scavenger generates all essential contact information for cold outreach. It finds phone numbers, emails, and all relevant social media links.",
   },
   {
     id: 1,

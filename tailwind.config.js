@@ -61,6 +61,7 @@ module.exports = {
       pbgreytext: "#A0A6AC",
       pbblackhover: "#2D2D30",
       pbblack: "#16161A",
+      pbblack2: "#30303A",
       pbslash: "#D5D8DB",
       pbblackbtnhover: "#2C2C30",
       pbwhitebtnhover: "#EDF0F3",

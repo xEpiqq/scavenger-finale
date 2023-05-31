@@ -32,13 +32,13 @@ function SignupModal(props) {
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-20 ">
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-80 flex items-center justify-center z-20 " onClick={() => {setSignup(false)}} />
 
-          <div className="bg-pbblack relative rounded-lg p-8 pt-20 w-11/12 h-1/2 z-30 text-white -mt-48 shadow-lg sm:w-3/4 md:w-1/2 lg:w-4/12 xl:w-3/12">
+          <div className="bg-pbblack2 border border-white relative rounded-lg p-8 pt-20 w-11/12 h-1/2 z-30 text-white -mt-48 shadow-lg sm:w-3/4 md:w-1/2 lg:w-4/12 xl:w-3/12">
             <div className="absolute px-2 mt-4 mr-4 top-0 right-0 border border-px border-yellow rounded-md opacity-60 cursor-pointer hover:opacity-100 duration-150 transition-all" onClick={() => {setSignup(false)}}>
               esc 
             </div>
             
 
-            <h2 className="text-2xl font-bold mb-4">Get Early Access</h2>
+            <h2 className="text-2xl font-bold mb-4">Start Your Free Trial Today ⬇</h2>
             {/* <form onSubmit={handleSignup}>
               <div className="mb-4">
                 <label className="block text-gray-700 font-bold mb-2" htmlFor="email">
@@ -77,9 +77,9 @@ function SignupModal(props) {
             </form> */}
             <div className="mt-4">
               <p className="text-sm">
-                Signup with google to get early access to Scavenger.
+                {/* Signup with google to get early access to Scavenger. */}
               </p>
-              <div className="mt-4">
+              <div className="mt-8 -mb-3">
               <GoogleLogin method={googleBtn}/>
 
               </div>
