@@ -1,14 +1,13 @@
-'use client'
+"use client";
 import Link from "next/link";
 import { useState } from "react";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
-import { app } from '../../components/initializeFirebase'
+import { app } from "../../components/initializeFirebase";
 
 const db = getFirestore(app);
 
 const Hero = () => {
-
-  const [signup, setSignup] = useState(true);
+  const [signup, setSignup] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -24,7 +23,7 @@ const Hero = () => {
     <>
       <section
         id="home"
-        className="relative z-10 overflow-hidden pt-[120px] pb-16 md:pt-[150px] md:pb-[120px] xl:pt-[180px] xl:pb-[160px] 2xl:pt-[210px] 2xl:pb-[200px] -mt-10"
+        className="relative z-10 -mt-10 overflow-hidden pb-16 pt-[120px] md:pb-[120px] md:pt-[150px] xl:pb-[160px] xl:pt-[180px] 2xl:pb-[200px] 2xl:pt-[210px]"
       >
         <div className="container">
           <div className="-mx-4 flex flex-wrap">
@@ -33,51 +32,79 @@ const Hero = () => {
                 className="wow fadeInUp mx-auto max-w-[800px] text-center"
                 data-wow-delay=".2s"
               >
-                <h1 className="mb-5 text-4xl sm:text-5xl md:text-6xl font-bold leading-tight text-white dark:text-white sm:leading-tight md:leading-tight">
-                Find Clients. <span className="text-primary text-stroke text-stroke-black" >Sell</span> Websites
+                <h1 className="mb-5 text-4xl font-bold leading-tight text-white dark:text-white sm:text-5xl sm:leading-tight md:text-6xl md:leading-tight">
+                  Find Clients.{" "}
+                  <span className="text-stroke text-stroke-black text-primary">
+                    Sell
+                  </span>{" "}
+                  Websites
                 </h1>
-                <p className="mb-12 text-lg sm:text-xl md:text-2xl font-extralight !leading-relaxed text-pbsecondbg ">
-                  Scavenger generates highly targeted leads with tons of website data. <span className="font-semibold"></span>
+                <p className="mb-12 text-lg font-extralight !leading-relaxed text-pbsecondbg sm:text-xl md:text-2xl ">
+                  Scavenger generates highly targeted leads with tons of website
+                  data. <span className="font-semibold"></span>
                 </p>
 
-                <div className="relative mx-auto md:mx-0 w-full aspect-video"><iframe className="w-full h-full" src="https://player.vimeo.com/video/831300665" frameBorder="0" webkitallowfullscreen="" mozallowfullscreen="" allowFullScreen=""></iframe></div>
-
-
-                <div className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-                <div className="flex items-center justify-center sm:flex-row gap-4">
-                  <button onClick={() => setSignup(true)} className="rounded-md bg-primary py-3 px-4 font-semibold text-white duration-300 ease-in-out hover:bg-black/30 dark:bg-black border-white border-2 dark:text-white dark:hover:bg-white/30
-                    text-base sm:text-xl md:text-xl lg:text-xl">
-                      Start Your Free Trial Today
-                  </button>
+                <div className="relative mx-auto aspect-video w-full md:mx-0">
+                  <iframe
+                    className="h-full w-full"
+                    src="https://player.vimeo.com/video/831300665"
+                    frameBorder="0"
+                    webkitallowfullscreen=""
+                    mozallowfullscreen=""
+                    allowFullScreen=""
+                  ></iframe>
                 </div>
+
+                <div className="flex flex-col items-center justify-center space-y-4 mt-3 sm:flex-row sm:space-x-4 sm:space-y-0">
+                  <div className="flex items-center justify-center gap-4 sm:flex-row">
+                    <button
+                      onClick={() => setSignup(true)}
+                      className="rounded-md border-2 border-white bg-primary px-4 py-3 text-base font-semibold text-white duration-300 ease-in-out hover:bg-black/30 dark:bg-black dark:text-white
+                    dark:hover:bg-white/30 sm:text-xl md:text-xl lg:text-xl"
+                    >
+                      Start Your Free Trial Today
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
         {/* <div className="absolute bottom-0 right-0 z-[-1] opacity-100 lg:opacity-100"> */}
-          {/* drop the forest_svg image at the bottom of the header */}
-          {/* <img src="/images/hero/forest_svg.svg" alt="forest" className="w-full h-full bg-gradient-to-b from-primary to-black/30" />
+        {/* drop the forest_svg image at the bottom of the header */}
+        {/* <img src="/images/hero/forest_svg.svg" alt="forest" className="w-full h-full bg-gradient-to-b from-primary to-black/30" />
         </div>
         <div className="absolute bottom-0 left-0 z-[-1] opacity-30 lg:opacity-100"> */}
-          
-          {/* all the things */}
+
+        {/* all the things */}
         {/* </div> */}
+
+        <div className="absolute bottom-0 left-0 right-0 z-[-1]">
+          <img src="/images/video/shape.svg" alt="shape" className="w-full" />
+        </div>
       </section>
 
       {signup && (
-        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-20 ">
-        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-80 flex items-center justify-center z-20 " onClick={() => {setSignup(false)}} />
+        <div className="fixed left-0 top-0 z-20 flex h-full w-full items-center justify-center ">
+          <div
+            className="fixed left-0 top-0 z-20 flex h-full w-full items-center justify-center bg-black bg-opacity-80 "
+            onClick={() => {
+              setSignup(false);
+            }}
+          />
 
-          <div className="bg-white rounded-lg p-12 z-30 text-pbblack">
-            <h2 className="text-2xl font-bold mb-4">Sign Up</h2>
+          <div className="z-30 rounded-lg bg-white p-12 text-pbblack">
+            <h2 className="mb-4 text-2xl font-bold">Sign Up</h2>
             <form onSubmit={handleSignup}>
               <div className="mb-4">
-                <label className="block text-gray-700 font-bold mb-2" htmlFor="email">
+                <label
+                  className="text-gray-700 mb-2 block font-bold"
+                  htmlFor="email"
+                >
                   Email
                 </label>
                 <input
-                  className="border rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="text-gray-700 focus:shadow-outline rounded-lg border px-3 py-2 leading-tight focus:outline-none"
                   id="email"
                   type="email"
                   placeholder="Email"
@@ -86,11 +113,14 @@ const Hero = () => {
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-gray-700 font-bold mb-2" htmlFor="password">
+                <label
+                  className="text-gray-700 mb-2 block font-bold"
+                  htmlFor="password"
+                >
                   Password
                 </label>
                 <input
-                  className="border rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="text-gray-700 focus:shadow-outline rounded-lg border px-3 py-2 leading-tight focus:outline-none"
                   id="password"
                   type="password"
                   placeholder="Password"
@@ -100,13 +130,13 @@ const Hero = () => {
               </div>
               <div className="flex items-center justify-between">
                 <button
-                  className="bg-primary hover:bg-black/30 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  className="focus:shadow-outline rounded bg-primary px-4 py-2 font-bold text-white hover:bg-black/30 focus:outline-none"
                   type="submit"
                 >
                   Sign Up
                 </button>
                 <button
-                  className="bg-white hover:bg-gray-100 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  className="hover:bg-gray-100 text-gray-800 focus:shadow-outline rounded bg-white px-4 py-2 font-bold focus:outline-none"
                   onClick={() => setSignup(false)}
                   type="button"
                 >
@@ -116,7 +146,7 @@ const Hero = () => {
             </form>
             <div className="mt-4">
               <button
-                className="bg-white hover:bg-gray-100 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="hover:bg-gray-100 text-gray-800 focus:shadow-outline rounded bg-white px-4 py-2 font-bold focus:outline-none"
                 onClick={handleGoogleLogin}
                 type="button"
               >

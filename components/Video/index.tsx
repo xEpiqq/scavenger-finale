@@ -69,9 +69,6 @@ const Video = () => {
                 </Link>
                 </div> 
 
-      <div className="absolute bottom-0 left-0 right-0 z-[-1]">
-        <img src="/images/video/shape.svg" alt="shape" className="w-full" />
-      </div>
     </section>
   );
 };
