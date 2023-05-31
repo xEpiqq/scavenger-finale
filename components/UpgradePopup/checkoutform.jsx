@@ -130,7 +130,7 @@ function CheckoutForm(props) {
                 </div>
               </div>
             </div>
-            {message && <div className="">{message}</div>}
+            {message && <div className="text-pblines text-sm mt-5">{message}</div>}
           </div>
 
           <div className="flex w-full flex-row items-center justify-between bg-transparent p-4 ">

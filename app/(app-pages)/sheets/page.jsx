@@ -77,6 +77,7 @@ function Page() {
       last_updated: new Date(),
       list_name: listName,
       owner_id: user?.uid,
+      owner_email: user?.email,
       lists: [],
     }
     const docRef = await addDoc(sheetsRef, newSheet);
