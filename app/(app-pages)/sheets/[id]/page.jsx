@@ -61,7 +61,7 @@ function Page({ params }) {
     console.log("sheetDataRaw", sheetDataRaw?.data()?.lists);
     setDisplayedSheets(
       sheetDataRaw?.data()?.lists?.map((list) => {
-        return new ListItem({...Object.values(list), idSheet: list_id, userId: user.uid});
+        return new ListItem({...list, idSheet: list_id, userId: user.uid});
       }) ?? [] // if userData?.lists is undefined, set it to an empty array instead of undefined
     );
   }, [sheetDataRaw]);

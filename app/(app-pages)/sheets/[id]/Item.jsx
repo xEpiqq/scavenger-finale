@@ -30,6 +30,7 @@ function Item({
 
   useEffect(() => {
     console.log("item changed", item)
+    console.log(item)
     item.updateIfChanged();
   }, [openCRM]);
 
