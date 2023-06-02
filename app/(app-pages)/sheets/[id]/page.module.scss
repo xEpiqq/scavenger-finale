@@ -29,10 +29,11 @@
       white-space: nowrap;
     }
 
-    th:nth-child(8),
-    td:nth-child(8) {
+    th:nth-child(9),
+    td:nth-child(9) {
       width: 4rem;
       min-width: 4rem;
+      background-color: inherit;
 
       // disable shrink
       flex-shrink: 0;

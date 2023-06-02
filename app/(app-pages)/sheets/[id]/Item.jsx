@@ -1,44 +1,20 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCircleArrowRight,
-} from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import CRM from "./CRM";
 
 function Item({
-  secured,
-  name,
-  link,
-  phoneNumber,
-  emails,
-  address,
-  screenshot,
-  selected,
-  toggleselected,
-  id,
-  object_id,
-  facebook,
-  instagram,
-  twitter,
-  linkedin,
-  youtube,
-  contact_us,
+  userRef,
+  sheetRef,
+  item,
 }) {
   const [openCRM, setOpenCRM] = useState(false);
   const [openCopy, setOpenCopy] = useState(false);
 
-  const clickable_link = "http://" + link;
-
-  let email_length;
-
-  if (emails) {
-    email_length = emails.length;
-  } else {
-    email_length = 0;
-  }
+  const clickable_link = "http://" + item.siteLink;
 
   const clicked = () => {
     setOpenCRM(!openCRM);
@@ -52,6 +28,12 @@ function Item({
     }, 1000);
   };
 
+  useEffect(() => {
+    console.log("item changed", item)
+    console.log(item)
+    item.updateIfChanged();
+  }, [openCRM]);
+
   return (
     <>
       <tr className="text-sm text-pbblack hover:bg-pbiconhover">
@@ -60,20 +42,20 @@ function Item({
             <input
               type="checkbox"
               className="h-4 w-4"
-              checked={selected}
-              onClick={toggleselected}
+              checked={true}
+              onClick={() => console.log("clicked")}
               onChange={() => {}}
             />
           </label>
         </td>
 
         <td>
-          {screenshot ? (
+          {item.desktopScreenshot ? (
             <>
               {" "}
               <img
-                src={screenshot}
-                alt={`Screenshot of ${name}`}
+                src={item.desktopScreenshot}
+                alt={`Screenshot of ${item.name}`}
                 className="h-10 w-16"
               />{" "}
             </>
@@ -86,12 +68,12 @@ function Item({
         </td>
 
         <td>
-          {secured ? (
+          {item.hasSSL ? (
             <>
               {" "}
               <img
                 src="/securedtrue.svg"
-                alt={`Screenshot of ${name}`}
+                alt={`Screenshot of ${item.name}`}
                 className="h-4 w-4"
               />{" "}
             </>
@@ -104,22 +86,22 @@ function Item({
         </td>
 
         <td>
-          {link !== "none" ? (
+          {item.siteLink !== "none" ? (
             <Link href={clickable_link} target="_blank">
-              <p className="hover:underline">{name}</p>
+              <p className="hover:underline">{item.name}</p>
             </Link>
           ) : (
-            <p>{name}</p>
+            <p>{item.name}</p>
           )}
         </td>
         <td>
           <div className="flex gap-3">
-            <p>{phoneNumber}</p>
+            <p>{item.phoneNumber}</p>
             <img
               src="/copy.svg"
               className="w-2.5 cursor-pointer transition duration-75 hover:scale-105 hover:opacity-50"
               onClick={() => {
-                copyItem(phoneNumber);
+                copyItem(item.phoneNumber);
               }}
               draggable={false}
             />
@@ -127,27 +109,27 @@ function Item({
         </td>
 
         <td>
-          {email_length > 0 ? (
+          {item.email ? (
             <div className="flex gap-3">
-              <p>{emails[0]}</p>
+              <p>{item.email}</p>
               <img
                 src="/copy.svg"
                 className="w-2.5 cursor-pointer transition duration-75 hover:scale-105 hover:opacity-50"
                 onClick={() => {
-                  copyItem(emails[0]);
+                  copyItem(item.email);
                 }}
                 draggable={false}
               />
             </div>
           ) : (
             <div className="flex gap-3">
-              <p>{contact_us}</p>
-              {contact_us ? (
+              <p>{item.contactUs}</p>
+              {item.contactUs ? (
                 <img
                   src="/copy.svg"
                   className="w-2.5 cursor-pointer transition duration-75 hover:scale-105 hover:opacity-50"
                   onClick={() => {
-                    copyItem(contact_us);
+                    copyItem(item.contactUs);
                   }}
                   draggable={false}
                 />
@@ -160,8 +142,8 @@ function Item({
 
         <td>
           <div className="flex gap-1">
-            {facebook ? (
-              <Link href={facebook} target="_blank">
+            {item.facebook ? (
+              <Link href={item.facebook} target="_blank">
                 <img
                   src="/Facebook.svg"
                   alt="facebook link"
@@ -178,8 +160,8 @@ function Item({
                 />{" "}
               </>
             )}
-            {instagram ? (
-              <Link href={instagram} target="_blank">
+            {item.instagram ? (
+              <Link href={item.instagram} target="_blank">
                 <img
                   src="/Instagram.svg"
                   alt="instagram link"
@@ -196,8 +178,8 @@ function Item({
                 />{" "}
               </>
             )}
-            {twitter ? (
-              <Link href={twitter} target="_blank">
+            {item.twitter ? (
+              <Link href={item.twitter} target="_blank">
                 <img
                   src="/Twitter.svg"
                   alt="twitter link"
@@ -214,8 +196,8 @@ function Item({
                 />{" "}
               </>
             )}
-            {linkedin ? (
-              <Link href={linkedin} target="_blank">
+            {item.linkedin ? (
+              <Link href={item.linkedin} target="_blank">
                 <img
                   src="/LinkedIn.svg"
                   alt="linkedin link"
@@ -232,8 +214,8 @@ function Item({
                 />{" "}
               </>
             )}
-            {youtube ? (
-              <Link href={youtube} target="_blank">
+            {item.youtube ? (
+              <Link href={item.youtube} target="_blank">
                 <img
                   src="/Youtube.svg"
                   alt="youtube link"
@@ -254,11 +236,11 @@ function Item({
         </td>
 
         <td>
-          <p>{address}</p>
+          <p>{item.address}</p>
         </td>
         <td className="sticky right-0 hover:cursor-pointer" onClick={clicked}>
-          <div className="flex h-4 w-full items-center justify-center">
-            <FontAwesomeIcon icon={faCircleArrowRight} />
+          <div className="flex h-4 w-4 p-5 items-center justify-center rounded-full hover:bg-gray-3">
+            <FontAwesomeIcon icon={faArrowRight} />
           </div>
         </td>
       </tr>
@@ -269,14 +251,10 @@ function Item({
         </div>
       )}
 
+      {/* TOOD: Move CRM vars */}
       {openCRM && (
         <CRM
-          name={name}
-          link={link}
-          phoneNumber={phoneNumber}
-          email={email_length > 0 ? emails[0] : ""}
-          id={id}
-          object_id={object_id}
+          item={item}
           setOpenCRM={setOpenCRM}
         />
       )}
