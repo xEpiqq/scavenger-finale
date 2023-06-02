@@ -50,11 +50,11 @@ function Item({
         </td>
 
         <td>
-          {item.desktopScreenshot ? (
+          {item.thumbnailScreenshot ? (
             <>
               {" "}
               <img
-                src={item.desktopScreenshot}
+                src={item.thumbnailScreenshot}
                 alt={`Screenshot of ${item.name}`}
                 className="h-10 w-16"
               />{" "}

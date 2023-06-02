@@ -25,6 +25,7 @@ class ListItem {
     this.address = params.address || null;
     this.desktopScreenshot = params.desktopScreenshot || null;
     this.mobileScreenshot = params.mobileScreenshot || null;
+    this.thumbnailScreenshot = params.thumbnailScreenshot || null;
     this.hasSSL = params.hasSSL || null;
     this.contactUs = params.contactUs || null;
     this.facebook = params.facebook || null;
@@ -69,6 +70,7 @@ class ListItem {
       address,
       desktopScreenshot,
       mobileScreenshot,
+      thumbnailScreenshot,
       hasSSL,
       contactUs,
       facebook,
@@ -94,6 +96,7 @@ class ListItem {
       address,
       desktopScreenshot,
       mobileScreenshot,
+      thumbnailScreenshot,
       hasSSL,
       contactUs,
       facebook,
