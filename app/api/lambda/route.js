@@ -5,16 +5,16 @@ AWS.config.update({ accessKeyId: process.env.AWS_ACCESS_KEY_IDD, secretAccessKey
 const lambda = new AWS.Lambda({ region: 'us-west-2' });
 
 const function_urls = [
-    'https://sr368zxsgh.execute-api.us-west-2.amazonaws.com/default/gmaps-scrape-0',
-    'https://lsupgg3b3j.execute-api.us-west-2.amazonaws.com/default/gmaps-scrape-1',
-    'https://elh1f5bo4l.execute-api.us-west-2.amazonaws.com/default/gmaps-scrape-2',
-    'https://pg8122kmre.execute-api.us-west-2.amazonaws.com/default/gmaps-scrape-3',
-    'https://mlgrtg05o2.execute-api.us-west-2.amazonaws.com/default/gmaps-scrape-4',
-    'https://mctomgcuh5.execute-api.us-west-2.amazonaws.com/default/gmaps-scrape-5',
-    'https://3mgj5zii0m.execute-api.us-west-2.amazonaws.com/default/gmaps-scrape-6',
-    'https://f8vyvczhu7.execute-api.us-west-2.amazonaws.com/default/gmaps-scrape-7',
-    'https://tf7s9vqu17.execute-api.us-west-2.amazonaws.com/default/gmaps-scrape-8',
-    'https://u4d1n4mhg0.execute-api.us-west-2.amazonaws.com/default/gmaps-scrape-9'
+    'https://jchn5saudh.execute-api.us-west-2.amazonaws.com/default/gmaps-scrape-0',
+    'https://gb62z5bwnk.execute-api.us-west-2.amazonaws.com/default/gmaps-scrape-1',
+    'https://g15ulswi6j.execute-api.us-west-2.amazonaws.com/default/gmaps-scrape-2',
+    'https://zl1898qu49.execute-api.us-west-2.amazonaws.com/default/gmaps-scrape-3',
+    'https://8hci0aecvf.execute-api.us-west-2.amazonaws.com/default/gmaps-scrape-4',
+    'https://80cac96wwf.execute-api.us-west-2.amazonaws.com/default/gmaps-scrape-5',
+    'https://iegb20xr7i.execute-api.us-west-2.amazonaws.com/default/gmaps-scrape-6',
+    'https://vahdfj5dvh.execute-api.us-west-2.amazonaws.com/default/gmaps-scrape-7',
+    'https://nj1ddv6v7i.execute-api.us-west-2.amazonaws.com/default/gmaps-scrape-8',
+    'https://89n3esy7wl.execute-api.us-west-2.amazonaws.com/default/gmaps-scrape-9'
   ];
   
   
