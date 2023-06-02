@@ -4,48 +4,46 @@ import { useState, useEffect, useRef } from "react";
 
 import AccountTab from "./AccountTab";
 import AuthUsersTab from "./AuthUsersTab";
-import { getFirestore, doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
-import {app, db } from '../../../../../components/initializeFirebase'
-import { v4 as uuidv4 } from 'uuid';
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  updateDoc,
+  deleteDoc,
+} from "firebase/firestore";
+import { app, db } from "../../../../../components/initializeFirebase";
+import { v4 as uuidv4 } from "uuid";
 
-function CRM({
-  name,
-  link,
-  phoneNumber,
-  email,
-  address,
-  screenshot,
-  selected,
-  toggleselected,
-  id,
-  object_id,
-  setOpenCRM,
-}) {
+function CRM({ item, setOpenCRM }) {
   const OPEN_SPEED = 150;
 
   const inputRef = useRef(null); // Create a ref for the input element
 
+  const [name, setName] = useState(item.name);
+
+
   const [tabState, setTabState] = useState(1);
+
   const [isShown, setIsShown] = useState(false);
-  const [pencilClicked, setPencilClicked] = useState(false)
-  const [tempName , setTempName] = useState(name)
-  const [hidden, setHidden] = useState("w-0")
+  const [pencilClicked, setPencilClicked] = useState(false);
   const [targetIndex, setTargetIndex] = useState(null);
   const [listsArray, setListsArray] = useState([]);
   const [deleteModal, setDeleteModal] = useState(false);
-  const userRef = doc(db, `sheets/${id}`);
 
-  useEffect(() => {
-    const fetchTargetIndex = async () => {
-      const userSnapshot = await getDoc(userRef);
-      const fetchedListsArray = userSnapshot.data().lists;
-      setListsArray(fetchedListsArray);
-      const index = fetchedListsArray.findIndex(list => list.obj === object_id);
-      setTargetIndex(index);
-    };
-    fetchTargetIndex();
-  }, [id, object_id]);
+  const [changedFlag, setChangedFlag] = useState(false);
 
+  // const userRef = doc(db, `sheets/${id}`);
+
+  // useEffect(() => {
+  //   const fetchTargetIndex = async () => {
+  //     const userSnapshot = await getDoc(userRef);
+  //     const fetchedListsArray = userSnapshot.data().lists;
+  //     setListsArray(fetchedListsArray);
+  //     const index = fetchedListsArray.findIndex(list => list.obj === object_id);
+  //     setTargetIndex(index);
+  //   };
+  //   fetchTargetIndex();
+  // }, [id, object_id]);
 
   useEffect(() => {
     setIsShown(false);
@@ -55,49 +53,37 @@ function CRM({
     console.log("isShown", isShown);
   }, []);
 
-    useEffect(() => {
-      const handleKeyDown = (event) => {
-        if (event.keyCode === 27) {
-          setOpenCRM(false);
-        }
-      };
-      document.addEventListener("keydown", handleKeyDown);
-      return () => {
-        document.removeEventListener("keydown", handleKeyDown);
-      };
-    }, [setOpenCRM]);
-
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.keyCode === 27) {
+        setOpenCRM(false);
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [setOpenCRM]);
 
   function nameFocus() {
-    setHidden("w-96")
-    setPencilClicked(true)
+    setPencilClicked(true);
     inputRef.current.focus();
   }
 
-  async function rename() {
-    setHidden("w-0")
-    setPencilClicked(false)
-    if (targetIndex !== -1) { listsArray[targetIndex].biz = tempName }
-    await updateDoc(userRef, { lists: listsArray })
+  async function renameSubmit() {
+    setPencilClicked(false);
   }
 
   async function deleteItem() {
     setOpenCRM(false);
-    if (targetIndex !== -1) {
-      listsArray.splice(targetIndex, 1); // Remove the object at targetIndex
-      await updateDoc(userRef, { lists: listsArray });
-    }
+    // TODO: delete
+    item.delete();
   }
-  
-  async function duplicate() {
-    setOpenCRM(false);
-    if (targetIndex !== -1) {
-      const duplicateObj = { ...listsArray[targetIndex] };
-      duplicateObj.obj = uuidv4();
-      listsArray.splice(targetIndex + 1, 0, duplicateObj); // Insert duplicated object at targetIndex + 1
-      await updateDoc(userRef, { lists: listsArray });
-    }
-  }
+
+  useEffect(() => {
+    item.name = name;
+    item.changedFlag = true;
+  }, [name]);
 
   return (
     <>
@@ -116,106 +102,163 @@ function CRM({
       ></div>
 
       <div
-        className={`fixed right-0 top-0 z-50 h-full min-w-fit shadow-md bg-gray-6 ${
+        className={`fixed right-0 top-0 z-50 h-full min-w-fit bg-gray-6 shadow-md ${
           isShown ? "translate-x-150" : "translate-x-full"
         } transition-transform duration-150 `}
-        style={{ width: "43.75rem"}}
+        style={{ width: "43.75rem" }}
       >
-      
-      <div className="bg-pbsecondbg flex w-full flex-row items-center justify-between px-8 py-4">
+        <div className="flex w-full flex-row items-center justify-between bg-pbsecondbg px-8 py-4">
+          {!pencilClicked && (
+            <div>
+              <h1 className="text-md flex items-center py-3 font-medium">
+                {name}
+                <img
+                  src="/pencil.png"
+                  className="ml-4 h-4 cursor-pointer hover:opacity-70"
+                  onClick={nameFocus}
+                />
+              </h1>
+            </div>
+          )}
 
-
-      { !pencilClicked &&
-        (<div>
-          <h1 className="text-md font-medium py-3 flex items-center">
-            {name}
-            <img src='/pencil.png' className="ml-4 h-4 hover:opacity-70 cursor-pointer" onClick={nameFocus} />
-          </h1>
-        </div>)}
-
-        <div>
-          <h1 className="text-lg font-light py-3 flex items-center">
-            <input onKeyDown={(e) => { if (e.key === 'Enter') { rename() }}}
-            value={tempName} ref={inputRef} onChange={(e) => {setTempName(e.target.value)}} className={`bg-pbsecondbg outline-none text-lg ${hidden}`} />
-            {pencilClicked && (<div className="w-screen h-screen fixed left-0 bottom-0 z-40" onClick={() => {rename()}}/>) }
-          </h1>
-        </div>
-
+          <div>
+            <h1 className="flex items-center py-3 text-lg font-light">
+              <input
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    renameSubmit();
+                  }
+                }}
+                value={name}
+                ref={inputRef}
+                onChange={(e) => {
+                  setName(e.target.value);
+                }}
+                className={`bg-pbsecondbg text-lg outline-none ${pencilClicked ? "w-96" : "w-0"}`}
+              />
+              {pencilClicked && (
+                <div
+                  className="fixed bottom-0 left-0 z-40 h-screen w-screen"
+                  onClick={() => {
+                    renameSubmit();
+                  }}
+                />
+              )}
+            </h1>
+          </div>
 
           {deleteModal ? (
-                  <div className="flex flex-row items-center gap-0.5 bg-pbwhitebtnhover w-8 h-8 rounded-full justify-center cursor-pointer" onClick={() => {setDeleteModal(false)}}>
-                    <div className="rounded-full w-0.5 h-0.5 bg-pbblack"/>            
-                    <div className="rounded-full w-0.5 h-0.5 bg-pbblack"/>            
-                    <div className="rounded-full w-0.5 h-0.5 bg-pbblack"/>
-                  </div> ) : (
-                    <div className="flex flex-row items-center gap-0.5 hover:bg-pbwhitebtnhover w-8 h-8 rounded-full justify-center cursor-pointer" onClick={() => {setDeleteModal(true)}}>
-                    <div className="rounded-full w-0.5 h-0.5 bg-pbblack"/>            
-                    <div className="rounded-full w-0.5 h-0.5 bg-pbblack"/>            
-                    <div className="rounded-full w-0.5 h-0.5 bg-pbblack"/>
-                  </div>
-                  )
-          }
+            <div
+              className="flex h-8 w-8 cursor-pointer flex-row items-center justify-center gap-0.5 rounded-full bg-pbwhitebtnhover"
+              onClick={() => {
+                setDeleteModal(false);
+              }}
+            >
+              <div className="h-0.5 w-0.5 rounded-full bg-pbblack" />
+              <div className="h-0.5 w-0.5 rounded-full bg-pbblack" />
+              <div className="h-0.5 w-0.5 rounded-full bg-pbblack" />
+            </div>
+          ) : (
+            <div
+              className="flex h-8 w-8 cursor-pointer flex-row items-center justify-center gap-0.5 rounded-full hover:bg-pbwhitebtnhover"
+              onClick={() => {
+                setDeleteModal(true);
+              }}
+            >
+              <div className="h-0.5 w-0.5 rounded-full bg-pbblack" />
+              <div className="h-0.5 w-0.5 rounded-full bg-pbblack" />
+              <div className="h-0.5 w-0.5 rounded-full bg-pbblack" />
+            </div>
+          )}
 
           {deleteModal && (
-            <div className="fixed inset-0 z-50" onClick={() => setDeleteModal(false)} >
-                <div className="absolute top-16 right-4 w-36 rounded-md overflow-hidden border-pblines bg-white mb-1 flex items-center flex-col p-1 shadow-sm duration-300 transition"
-                    onClick={(e) => e.stopPropagation()} style={{ borderWidth: 1 }} >
-                    <div className="flex items-center justify-start w-full hover:bg-pbiconhover rounded-md p-1 m-1 mb-0 transition duration-150" onClick={duplicate}>
-                        <img src="/duplicate.svg" className="w-4 h-4 ml-2" alt="Logout" />
-                        <div className="w-full">
-                            <button className="py-2 px-4 hover:bg-gray-100 focus:outline-none text-xs text-left" onClick={() => {setDeleteModal(false)}} >
-                                <div className="flex items-center">
-                                    <div>Duplicate</div>
-                                </div>
-                            </button>
-                        </div>
-                    </div>
-                    <div className="flex items-center justify-start w-full hover:bg-pbiconhover rounded-md p-1 m-1 mt-0 transition duration-150" onClick={deleteItem}>
-                        <img src="/redtrash.svg" className="w-4 h-4 ml-2" alt="Delete icon"/>
-                        <div className="w-full">
-                            <button className="py-2 px-4 hover:bg-gray-100 focus:outline-none text-xs text-left">
-                                <div className="flex items-center">
-                                    <div className="text-deleteicon">Delete</div>
-                                </div>
-                            </button>
-                        </div>
-                    </div>
+            <div
+              className="fixed inset-0 z-50"
+              onClick={() => setDeleteModal(false)}
+            >
+              <div
+                className="absolute right-4 top-16 mb-1 flex w-36 flex-col items-center overflow-hidden rounded-md border-pblines bg-white p-1 shadow-sm transition duration-300"
+                onClick={(e) => e.stopPropagation()}
+                style={{ borderWidth: 1 }}
+              >
+                <div
+                  className="m-1 mb-0 flex w-full items-center justify-start rounded-md p-1 transition duration-150 hover:bg-pbiconhover"
+                  onClick={duplicate}
+                >
+                  <img
+                    src="/duplicate.svg"
+                    className="ml-2 h-4 w-4"
+                    alt="Logout"
+                  />
+                  <div className="w-full">
+                    <button
+                      className="hover:bg-gray-100 px-4 py-2 text-left text-xs focus:outline-none"
+                      onClick={() => {
+                        setDeleteModal(false);
+                      }}
+                    >
+                      <div className="flex items-center">
+                        <div>Duplicate</div>
+                      </div>
+                    </button>
+                  </div>
                 </div>
+                <div
+                  className="m-1 mt-0 flex w-full items-center justify-start rounded-md p-1 transition duration-150 hover:bg-pbiconhover"
+                  onClick={deleteItem}
+                >
+                  <img
+                    src="/redtrash.svg"
+                    className="ml-2 h-4 w-4"
+                    alt="Delete icon"
+                  />
+                  <div className="w-full">
+                    <button className="hover:bg-gray-100 px-4 py-2 text-left text-xs focus:outline-none">
+                      <div className="flex items-center">
+                        <div className="text-deleteicon">Delete</div>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
-        )}
-
-
-
-
-
-
+          )}
         </div>
         <div className="flex h-full w-full flex-col justify-between">
-
-          <div className="flex flex-row justify-around px-3 h-9"> 
+          <div className="flex h-9 flex-row justify-around px-3">
             <button
               onClick={() => setTabState(1)}
               className={`${
-                tabState === 1 ? "bg-white text-black" : "bg-transparent border-none text-pbcrmopen"
-              } w-80 rounded-t-md px-6 py-2 transition-all duration-200 hover:bg-pbiconhover h-12
-                border-pbiconhover border-r border-t border-l absolute z-10 -mb-0.5 left-0 ml-8 text-sm`}
-            > Basic Info
+                tabState === 1
+                  ? "bg-white text-black"
+                  : "border-none bg-transparent text-pbcrmopen"
+              } absolute left-0 z-10 -mb-0.5 ml-8 h-12 w-80 rounded-t-md
+                border-l border-r border-t border-pbiconhover px-6 py-2 text-sm transition-all duration-200 hover:bg-pbiconhover`}
+            >
+              {" "}
+              Basic Info
             </button>
 
             <button
               onClick={() => setTabState(2)}
               className={`${
-                tabState === 2 ? "bg-white text-black" : "bg-transparent border-none text-pbcrmopen"
-              } w-80 rounded-t-md px-6 py-2 transition-all duration-200 hover:bg-pbiconhover h-12
-                border-pbiconhover border-r border-t border-l absolute z-10 -mb-0.5 right-0 mr-8 text-sm`}
-            > More Metrics
+                tabState === 2
+                  ? "bg-white text-black"
+                  : "border-none bg-transparent text-pbcrmopen"
+              } absolute right-0 z-10 -mb-0.5 mr-8 h-12 w-80 rounded-t-md
+                border-l border-r border-t border-pbiconhover px-6 py-2 text-sm transition-all duration-200 hover:bg-pbiconhover`}
+            >
+              {" "}
+              More Metrics
             </button>
-
-
           </div>
 
-          <div className="flex h-full w-full flex-col bg-white border-t border-pbiconhover mt-3">
-            {tabState === 1 ? <AccountTab userRef={userRef} id={id} targetIndex={targetIndex} listsArray={listsArray} setOpenCRM={setOpenCRM} /> : <AuthUsersTab />}
+          <div className="mt-3 flex h-full w-full flex-col border-t border-pbiconhover bg-white">
+            {tabState === 1 ? (
+              <AccountTab item={item} setOpenCRM={setOpenCRM} />
+            ) : (
+              <AuthUsersTab />
+            )}
           </div>
         </div>
         <div className="flex flex-col"></div>
