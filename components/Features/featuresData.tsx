@@ -17,7 +17,7 @@ const featuresData: Feature[] = [
       "This tool changed the game for us, and we want to give back. From selling almost no one to selling predictably, it will do the same for you.",
   },
   {
-    id: 1,
+    id: 2,
     icon: (
       <svg width="40" height="40" viewBox="0 0 40 40" className="fill-current">
         <path
@@ -32,7 +32,7 @@ const featuresData: Feature[] = [
       "No need to worry about lead quotas. Generate as many leads as necessary for you to begin securing clients—and then generate more.",
   },
   {
-    id: 1,
+    id: 3,
     icon: (
       <svg width="40" height="40" viewBox="0 0 40 40" className="fill-current">
         <path
@@ -47,7 +47,7 @@ const featuresData: Feature[] = [
       "Desktop and mobile screenshots, ssl certification status, template providor, and more. Scavenger gives you an instant overview of potential selling points.",
   },
   {
-    id: 1,
+    id: 4,
     icon: (
       <svg width="40" height="42" viewBox="0 0 40 42" className="fill-current">
         <path
@@ -62,7 +62,7 @@ const featuresData: Feature[] = [
       "Our built in CRM allows you manage your leads without the headache of using external software. Scavenger is the all in one solution for selling websites.",
   },
   {
-    id: 1,
+    id: 5,
     icon: (
       <svg width="40" height="40" viewBox="0 0 40 40" className="fill-current">
         <path
@@ -77,7 +77,7 @@ const featuresData: Feature[] = [
       "Scavenger generates all essential contact information for cold outreach. It finds phone numbers, emails, and all relevant social media links.",
   },
   {
-    id: 1,
+    id: 6,
     icon: (
       <svg width="40" height="45" viewBox="0 0 40 45" className="fill-current">
         <path
