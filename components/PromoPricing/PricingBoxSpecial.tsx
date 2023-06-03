@@ -1,6 +1,5 @@
 'use client'
 import React from "react";
-import UpgradePopup from "components/UpgradePopup";
 import Link from "next/link";
 import SignupModal from '../Signupmodal/signupmodal'
 import { useState, useEffect } from "react";
