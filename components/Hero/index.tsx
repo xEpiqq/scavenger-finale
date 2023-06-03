@@ -12,7 +12,6 @@ const auth = getAuth();
 
 const Hero = () => {
   const [signup, setSignup] = useState(false);
-  
 
   return (
     <>
@@ -27,8 +26,7 @@ const Hero = () => {
                 className="wow fadeInUp mx-auto max-w-[800px] text-center"
                 data-wow-delay=".2s"
               >
-
-              <p className="italic font-extralight !leading-relaxed text-pbsecondbg sm:text-xl md:text-2xl ">
+                <p className="font-extralight italic !leading-relaxed text-pbsecondbg sm:text-xl md:text-2xl ">
                   Struggling to get a constant flow of clients?
                   <span className="font-semibold"></span>
                 </p>
@@ -40,7 +38,10 @@ const Hero = () => {
                 </h1>
 
                 <p className="mb-8 text-lg font-light !leading-relaxed text-pbsecondbg sm:text-xl md:text-2xl ">
-                  Use the Scavenger Cold Outreach Machine to get your first client within 28 days... or <span className="font-bold">FULL REFUND</span>, no questions asked.
+                  Use the Scavenger Cold Outreach Machine to get your first
+                  client within 28 days... or{" "}
+                  <span className="font-bold">FULL REFUND</span>, no questions
+                  asked.
                   <span className="font-semibold"></span>
                 </p>
 
@@ -71,6 +72,12 @@ const Hero = () => {
                   <div className="mt-3 flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
                     <div className="flex items-center justify-center gap-4 sm:flex-row">
                     </div>
+                  </div>
+                </div>
+
+                <div className="mt-3 flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
+                  <div className="mt-3 flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
+                    <div className="flex items-center justify-center gap-4 sm:flex-row"></div>
                   </div>
                 </div>
               </div>
