@@ -27,9 +27,9 @@ function FillList({
 
   return (
     <>
-      <div className="w-full  h-full flex justify-center items-center">
-      <div className="bg-black opacity-20" />
-      <div className="fixed z-10 flex h-auto w-full max-w-120 flex-col rounded-md bg-white text-black shadow-2xl -mt-36">
+      <div className="w-full h-full flex justify-center items-center">
+      <div className="bg-black opacity-20 pointer-events-none" />
+      <div className="fixed z-10 flex h-auto w-full max-w-120 flex-col rounded-md bg-white text-black shadow-2xl mt-[600px] sm:mt-[800px]">
         <div className="h-36 w-full rounded-tl-md rounded-tr-md border-b-2 border-b-paymentborder bg-white p-8">
           <h1 className="text-3xl font-bold">Start Lead Search</h1>
           <h2 className="text-sm font-medium text-paymenttext opacity-50 mt-3">City + State works best <br/> # of leads depends on industry and location size</h2>

@@ -1,5 +1,5 @@
 
-function PageName({name, daysLeft}) {
+function PageName({name, daysLeft, subStatus}) {
 
   const realDaysLeft = 14 - daysLeft
   let textColor = "text-yellow"
@@ -15,7 +15,7 @@ function PageName({name, daysLeft}) {
       break;
     case 1:
       textColor = "text-sRed"
-      text = `${realDaysLeft} days left`
+      text = `${realDaysLeft} day left`
       break;
     case 0:
       textColor = "text-sRed"
@@ -27,14 +27,27 @@ function PageName({name, daysLeft}) {
   }
   
   return (
-    <div className="boder-1 border-b border-pblines mt-6 flex">
-      {name}
-      { realDaysLeft < 4 &&
-      (
-        <div className="absolute top-4 right-4 flex gap-1">Trial: <div className={`flex justify-between  ${textColor}`}> {text} </div></div>
-      )}
-    </div>
+    <>
+    { subStatus === "active" ? (
+
+<div className="border-1 border-b border-pblines mt-6 flex">
+  {name}
+</div> ) : (
+
+<div className="border-1 border-b border-pblines mt-6 flex">
+{name}
+{ realDaysLeft < 4 &&
+(
+  <div className="flex absolute top-24 sm:top-4 right-4 gap-1">Trial: <div className={`flex justify-between  ${textColor}`}> {text} </div></div>
+)}
+</div>
+)
+    }
+
+    </>
   );
+
+  
 }
 
 export default PageName;
