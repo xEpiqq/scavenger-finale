@@ -14,7 +14,7 @@ import {
   signOut,
   signInWithEmailLink,
 } from "firebase/auth";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";0
 const provider = new EmailAuthProvider();
 const auth = getAuth(app);
 
