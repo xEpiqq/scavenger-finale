@@ -54,8 +54,10 @@ const Header = () => {
 
   return (
     <>
+    
+
       {signup && <SignupModal setSignup={setSignup} />}
-        <header className="header left-0 top-0 !z-[15] h-28 flex w-full items-center bg-transparent absolute">
+        <header className="header left-0 top-7 !z-[15] h-28 flex w-full items-center bg-transparent absolute">
 
         <div className="container">
           <div className="relative -mx-4 flex items-center justify-between">
