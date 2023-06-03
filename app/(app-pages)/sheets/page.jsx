@@ -13,7 +13,8 @@ import { useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import { useEffect } from "react";
 import { PieChart } from 'react-minimal-pie-chart';
-
+import Link from "next/link";
+import dayjs from "dayjs";
 
 const auth = getAuth(app);
 
@@ -50,6 +51,16 @@ function Page() {
   const [createSheet, setCreateSheet] = useState(false);
   const total_sheets = userData?.lists?.length;
   const [totalLeads, setTotalLeads] = useState(0);
+  const subscriptionStatus = userData?.subscription_status
+  
+  // how many days have elapsed
+  const userCreated = userData?.created
+  const userCreatedDate = userCreated ? userCreated.toDate() : null;
+  const userCreatedFormatted = userCreatedDate ? dayjs(userCreatedDate).format("YYYY-MM-DD") : null;
+  const today = dayjs().format("YYYY-MM-DD");
+  const daysSinceCreated = dayjs(today).diff(userCreatedFormatted, "day");
+  console.log(daysSinceCreated)
+
 
   useEffect(() => {
     getTotalLeads().then((result) => {
@@ -143,9 +154,8 @@ function Page() {
       </div>
     </div>
 
-
     <div className="flex flex-col justify-between bg-pbsecondbg h-screen w-full py-8 px-4">
-      <PageName name="List Overview" />
+      <PageName name="List Overview" daysLeft={daysSinceCreated}/>
       <div
         className="relative m-4 grid h-full justify-center gap-4 px-10 pt-4"
         style={{
@@ -165,12 +175,20 @@ function Page() {
           )
         }
 
+
         {/* <SheetTileNew /> */}
         <div className="fixed right-8 bottom-8 flex justify-center gap-6">
         <button className="bg-white border border-black border-1 text-black rounded-md w-36 h-10 right-4 bottom-4 opac cursor-default opacity-50" >Export to CSV</button>
         <button className="bg-black text-white rounded-md w-48 h-10 right-38 bottom-4 hover:bg-white hover:border hover:border-1 hover:border-black hover:text-black transition duration-200" onClick={() => {setCreateSheet(true)}}>Create New Sheet</button>
         </div>
-        
+
+        {subscriptionStatus !== "active" && (
+                    <div className="h-14 w-[780px] rounded-md bg-promobox border-[1px] fixed bottom-7 left-[480px] flex items-center justify-center text-sm">
+                    <span className="font-semibold mr-2">🎁 Limited Lifetime deal</span>Lock in at <span className="ml-1"> $49 /month for life before price doubles</span>
+                      <Link href='/specialpromo'><button className="bg-black text-white text-xs w-auto h-8 px-5 py-1 rounded-md hover:bg-white hover:border-[1px] hover:text-pbblack transition duration-150 ml-3">Grab this lifetime deal</button></Link>
+                  </div>    
+        )}
+
         {createSheet && <TextPrompt props={{ title: "Create New Sheet", placeholder: "Sheet Name", action: "Create", actionFunction: () => {console.log("create sheet")}, closeFunction: () => {setCreateSheet(false)}}} />}
 
         {createSheet && (

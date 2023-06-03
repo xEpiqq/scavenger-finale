@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import ScrollToTop from "@/components/ScrollToTop";
 import "node_modules/react-modal-video/css/modal-video.css";
 import "../../styles/index.css";
+import Link from "next/link";
 
 export default function Layout({
   children,
@@ -17,6 +18,13 @@ export default function Layout({
         <head /> will contain the components returned by the nearest parent
         head.js. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
       */}
+
+
+        <div className="bg-primary text-center py-3 sticky top-0 z-50">
+          <p className="text-sm font-bold text-white">
+            Act fast!  <Link href="/specialpromo" className="underline hover:text-pbblack transition duration-150"> Lock in at $49 / month for life.</Link>
+          </p>
+        </div>
 
         <Header />
         {children}

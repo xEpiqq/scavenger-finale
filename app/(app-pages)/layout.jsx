@@ -2,7 +2,6 @@
 import react from "react";
 import Navbar from "./components/Navbar";
 import "../../styles/index.css";
-import UpgradePopup from "../../components/UpgradePopup/index";
 import TrialEndUpgradePopup from "../../components/UpgradePopup/trialendindex";
 import Header from "./components/Header/index";
 import { app, db } from "../../components/initializeFirebase";
@@ -10,6 +9,8 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { getAuth } from "firebase/auth";
 import { doc } from "firebase/firestore";
 import { useDocument } from "react-firebase-hooks/firestore";
+import { useEffect } from "react";
+import dayjs from "dayjs";
 const auth = getAuth(app);
 
 function Layout({ children }) {
@@ -18,34 +19,34 @@ function Layout({ children }) {
     doc(db, `users/${user?.uid}`)
   );
   const userData = userDataRaw?.data();
+  const userCreated = userData?.created
+  const userCreatedDate = userCreated ? userCreated.toDate() : null;
+  const userCreatedFormatted = userCreatedDate ? dayjs(userCreatedDate).format("YYYY-MM-DD") : null;
+  const today = dayjs().format("YYYY-MM-DD");
+  const daysSinceCreated = dayjs(today).diff(userCreatedFormatted, "day");
 
-  // const list_count = userData?.lists?.length;
-  // if (userData?.subscription_status === "none" && list_count >= 2) {
-
-
-  if (userData?.subscription_status === "none") {
+  if (userData?.subscription_status === "none" && daysSinceCreated <= 14) {
     return (
-      <div className="flex h-full w-full flex-col bg-pbsecondbg text-black sm:flex-row">
-        <div className="fixed z-50 flex h-full w-full items-center justify-center">
-          {" "}
-          <UpgradePopup />{" "}
-        </div>
+      <div className="flex h-full w-full flex-col bg-pbsecondbg text-black sm:flex-row">        
         <Navbar />
         <section className="w-full h-full">
           {children}
         </section>
       </div>
     );
-  }
+  } 
 
-  // if (userData?.subscription_status === "none" && list_count < 2) {
-  //   return (
-  //     <div className="flex flex-col w-full h-full text-black bg-pbsecondbg sm:flex-row">
-  //       <Navbar />
-  //       <section className="w-full overflow-x-clip">{children}</section>
-  //     </div>
-  //   );
-  // }
+  if (userData?.subscription_status === "none" && daysSinceCreated > 14) {
+    return (
+      <div className="flex h-full w-full flex-col bg-pbsecondbg text-black sm:flex-row">        
+        <Navbar />
+        <div className="w-full h-full flex justify-center items-center fixed z-50"> <TrialEndUpgradePopup /> </div>
+        <section className="w-full h-full">
+          {children}
+        </section>
+      </div>
+    );
+  } 
 
   if (userData?.subscription_status === "cancelled") {
     return (
