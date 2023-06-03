@@ -112,6 +112,13 @@ function Page() {
     await updateDoc(userRef, { lists: listsArray });
   }
 
+  const [screenWidth, setScreenWidth] = useState(0);
+  useEffect(() => {
+    setScreenWidth(window.innerWidth);
+  }, []);
+
+  console.log(screenWidth)
+
   return (
     <div className="flex h-screen w-full">
     <div className="w-64 bg-white sm:h-screen border-t-transparent border-b-0 border-l-transparent border-pblines h-screen hidden sm:block" style={{ borderWidth: 1 }} >
@@ -155,9 +162,9 @@ function Page() {
     </div>
 
     <div className="flex flex-col justify-between bg-pbsecondbg h-screen w-full py-8 px-4">
-      <PageName name="List Overview" daysLeft={daysSinceCreated}/>
+      <PageName name="List Overview" daysLeft={daysSinceCreated} subStatus={userData?.subscription_status}/>
       <div
-        className="relative m-4 grid h-full justify-center gap-4 px-10 pt-4"
+        className="relative m-4 grid  h-full justify-center gap-4 px-10 pt-4"
         style={{
           gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
           gridAutoRows: "1fr",
@@ -177,17 +184,37 @@ function Page() {
 
 
         {/* <SheetTileNew /> */}
-        <div className="fixed right-8 bottom-8 flex justify-center gap-6">
-        <button className="bg-white border border-black border-1 text-black rounded-md w-36 h-10 right-4 bottom-4 opac cursor-default opacity-50" >Export to CSV</button>
+        <div className="fixed right-28 bottom-28 2xl:right-8 2xl:bottom-8 flex justify-center gap-6 z-50">
+        
+        {screenWidth > 1680 && (
+        <button className="bg-white border border-black border-1 text-black rounded-md w-36 h-10 right-4 bottom-4 opac cursor-default opacity-50 pointer-events-none" >Export to CSV</button>
+        )}
+        
+        
         <button className="bg-black text-white rounded-md w-48 h-10 right-38 bottom-4 hover:bg-white hover:border hover:border-1 hover:border-black hover:text-black transition duration-200" onClick={() => {setCreateSheet(true)}}>Create New Sheet</button>
         </div>
 
-        {subscriptionStatus !== "active" && (
-                    <div className="h-14 w-[780px] rounded-md bg-promobox border-[1px] fixed bottom-7 left-[480px] flex items-center justify-center text-sm">
+        {subscriptionStatus !== "active" && screenWidth > 575 && (
+                    <div className="h-14 z-40 bottom-0 left-0 lg:bottom-7 w-full lg:w-[700px] xl:w-[740px] lg:left-[300px] xl:left-[430px] 2xl:left-[500px] 2xl:w-[780px] rounded-md bg-promobox border-[1px] fixed flex items-center justify-center text-sm">
                     <span className="font-semibold mr-2">🎁 Limited Lifetime deal</span>Lock in at <span className="ml-1"> $49 /month for life before price doubles</span>
                       <Link href='/specialpromo'><button className="bg-black text-white text-xs w-auto h-8 px-5 py-1 rounded-md hover:bg-white hover:border-[1px] hover:text-pbblack transition duration-150 ml-3">Grab this lifetime deal</button></Link>
                   </div>    
         )}
+
+        {subscriptionStatus !== "active" && screenWidth <= 575 && screenWidth > 349 && (
+                    <div className="h-14 z-40 bottom-0 left-0 lg:bottom-7 w-full lg:w-[700px] xl:w-[740px] lg:left-[330px] xl:left-[430px] 2xl:left-[500px] w-[780px] rounded-md bg-promobox border-[1px] fixed flex items-center justify-center text-sm">
+                    <span className="font-semibold mr-2">🎁 Limited deal</span><span className="ml-1"> $49 /month for life </span>
+                      <Link href='/specialpromo'><button className="bg-black text-white text-xs w-auto h-8 px-5 py-1 rounded-md hover:bg-white hover:border-[1px] hover:text-pbblack transition duration-150 ml-3 xs:text-[10px] sm:text-sm">Grab deal</button></Link>
+                  </div>   
+        )}
+
+        {subscriptionStatus !== "active" && screenWidth <= 349 && (
+                    <div className="h-14 z-40 bottom-0 left-0 lg:bottom-7 w-full lg:w-[700px] xl:w-[740px] lg:left-[330px] xl:left-[430px] 2xl:left-[500px] w-[780px] rounded-md bg-promobox border-[1px] fixed flex items-center justify-center text-sm">
+                    <span className="font-semibold mr-1">🎁 Limited!</span><span className="ml-1"> $49 /month for life </span>
+                      <Link href='/specialpromo'><button className="bg-black text-white text-xs w-auto h-8 px-5 py-1 rounded-md hover:bg-white hover:border-[1px] hover:text-pbblack transition duration-150 ml-1 ">Grab deal</button></Link>
+                  </div>   
+        )}
+
 
         {createSheet && <TextPrompt props={{ title: "Create New Sheet", placeholder: "Sheet Name", action: "Create", actionFunction: () => {console.log("create sheet")}, closeFunction: () => {setCreateSheet(false)}}} />}
 

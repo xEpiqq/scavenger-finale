@@ -13,7 +13,7 @@ const Pricing = () => {
 
       <div className="container">
 
-        <div className="flex pt-28">
+        <div className="flex lg:pt-0 pt-16">
         <SectionTitle
           title="Lock in at $49 / month for life."
           paragraph="Our special lifetime launch deal, act fast before price increase."

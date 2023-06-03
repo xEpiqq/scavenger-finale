@@ -6,9 +6,11 @@ import { app, db } from '../../components/initializeFirebase'
 
 export default async function handler(req, res) {
   const user_id = req.body.user_id;
+  console.log(user_id)
   const userRef = doc(db, "users", user_id)
   const userDoc = await getDoc(userRef)
   const firestore_user = userDoc.data()
+  console.log(firestore_user)
 
   if (req.method === 'POST') {
     try {
@@ -25,10 +27,10 @@ export default async function handler(req, res) {
         success_url: `${req.headers.origin}/?success=true`,
         cancel_url: `${req.headers.origin}/?canceled=true`,
         customer: firestore_user.stripe_customer_id,
-        automatic_tax: {enabled: true},
-        customer_update: {
-          address: 'auto',
-        },
+        // automatic_tax: {enabled: true},
+        // customer_update: {
+        //   address: 'auto',
+        // },
       });
       res.redirect(303, session.url);
     } catch (err) {
