@@ -10,13 +10,17 @@ const Pricing = () => {
 
   return (
     <section id="pricing" className="relative z-10 py-16 md:py-20 lg:py-28">
+
       <div className="container">
+
+        <div className="flex pt-28">
         <SectionTitle
           title="Lock in at $49 / month for life."
           paragraph="Our special lifetime launch deal, act fast before price increase."
           center
           width="665px"
         />
+        </div>
 
         {/* <div className="w-full">
           <div

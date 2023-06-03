@@ -12,6 +12,7 @@ export default async function handler(req, res) {
 
   if (req.method === 'POST') {
     try {
+        // Update the customer object with address information
         const session = await stripe.checkout.sessions.create({
         line_items: [
           {
@@ -25,6 +26,9 @@ export default async function handler(req, res) {
         cancel_url: `${req.headers.origin}/?canceled=true`,
         customer: firestore_user.stripe_customer_id,
         automatic_tax: {enabled: true},
+        customer_update: {
+          address: 'auto',
+        },
       });
       res.redirect(303, session.url);
     } catch (err) {
