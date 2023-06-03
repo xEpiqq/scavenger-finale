@@ -61,6 +61,28 @@ function Page() {
   const daysSinceCreated = dayjs(today).diff(userCreatedFormatted, "day");
   console.log(daysSinceCreated)
 
+  // on page load fetch /api/stripe_sub_verification
+
+  useEffect(() => {
+    if (user) {
+      console.log("Use effect ran, post sent")
+      fetch("/api/stripe_sub_verification", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          uid: user?.uid
+        })
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data)
+      })
+    }
+  }, [user])
+  
+
 
   useEffect(() => {
     getTotalLeads().then((result) => {
