@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from "react";
 import GoogleLogin from "../GoogleLogin";
+import EmailLogin from "../EmailLogin";
 
 function SignupModal(props) {
 
@@ -79,6 +80,10 @@ function SignupModal(props) {
               <p className="text-sm">
                 {/* Signup with google to get early access to Scavenger. */}
               </p>
+              <div className="mt-8 -mb-3">
+              <EmailLogin method={googleBtn}/>
+
+              </div>
               <div className="mt-8 -mb-3">
               <GoogleLogin method={googleBtn}/>
 
