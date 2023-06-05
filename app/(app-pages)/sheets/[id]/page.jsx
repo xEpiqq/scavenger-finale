@@ -40,6 +40,7 @@ function Page({ params }) {
   const [displayedSheets, setDisplayedSheets] = useState([]);
 
   const [user, loading, user_error] = useAuthState(auth);
+
   const { id } = params;
   const list_id = id;
   const [sheetDataRaw, loading2, error2] = useDocument(
@@ -72,7 +73,7 @@ function Page({ params }) {
     setDisplayedSheets(
       displayedSheets.map((list) => {
         return new ListItem({
-          ...Object.values(list),
+          ...list,
           idSheet: list_id,
           userId: user.uid,
         });

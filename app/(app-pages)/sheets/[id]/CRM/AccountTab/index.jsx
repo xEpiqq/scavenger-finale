@@ -15,19 +15,11 @@ function AccountTab({ item }) {
     setIsActive(!isActive);
   };
 
-  const [followUpDate, setFollowUpDate] = useState("");
-  const [gatekeeper, setGatekeeper] = useState("");
-  const [decisionMaker, setDecisionMaker] = useState("");
-  const [title, setTitle] = useState("");
-  const [notes, setNotes] = useState("");
-
-  useEffect(() => {
-    setFollowUpDate(item.followUpDate);
-    setGatekeeper(item.gatekeeperName);
-    setDecisionMaker(item.ownerName);
-    setTitle(item.name);
-    setNotes(item.notes);
-  }, []);
+  const [followUpDate, setFollowUpDate] = useState(item.followUpDate);
+  const [gatekeeper, setGatekeeper] = useState(item.gatekeeperName);
+  const [decisionMaker, setDecisionMaker] = useState(item.ownerName);
+  const [title, setTitle] = useState(item.name);
+  const [notes, setNotes] = useState(item.notes);
 
   useEffect(() => {
     item.followUpDate = followUpDate;
