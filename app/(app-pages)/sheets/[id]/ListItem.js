@@ -48,6 +48,8 @@ class ListItem {
     this.changedFlag = false;
 
     // need all of the fields in params to be added to this object
+
+
     this.obj = params.obj;
   }
 
@@ -62,6 +64,7 @@ class ListItem {
 
   // This function will not check if the data needs to be updated then update it in the database
   async updateSheet() {
+    console.log(this.sheetItemId)
     const {
       name,
       siteLink,
@@ -80,6 +83,7 @@ class ListItem {
       youtube,
       idSheet,
       crmItemId,
+      sheetItemId,
       gatekeeperName,
       ownerName,
       notes,
@@ -106,23 +110,22 @@ class ListItem {
       youtube,
       crmItemId,
       gatekeeperName,
+      sheetItemId,
       ownerName,
       notes,
       followUpDate,
     };
-    console.log("dfafdsafdsa", followUpDate)
-    const sheetItemId = this.obj;
-
     const userRef = await doc(db, "users", userId);
     const sheetRef = await doc(db, `sheets/${idSheet}`);
 
     // inside of the sheet ref there is an array of items. I need to to update the item with the id of this object
     if (idSheet) {
       const sheetArray = await getDoc(sheetRef).then((doc) => doc.data().lists);
-      console.log(sheetRef)
-      const sheetIndex = sheetArray.findIndex(
+      console.log(this.sheetItemId)
+      let sheetIndex = sheetArray.findIndex(
         (item) => item.sheetItemId === sheetItemId
       );
+      console.log(sheetItemId)
       sheetArray[sheetIndex] = data;
       console.log("SHEET ARRAY: ", sheetArray)
       await updateDoc(sheetRef, { lists: sheetArray });

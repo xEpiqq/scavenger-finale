@@ -6,11 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import CRM from "./CRM";
 
-function Item({
-  userRef,
-  sheetRef,
-  item,
-}) {
+function Item({ userRef, sheetRef, item }) {
   const [openCRM, setOpenCRM] = useState(false);
   const [openCopy, setOpenCopy] = useState(false);
 
@@ -29,28 +25,20 @@ function Item({
   };
 
   useEffect(() => {
-    console.log("item changed", item)
-    console.log(item)
+    console.log("item changed", item);
+    console.log(item);
     item.updateIfChanged();
   }, [openCRM]);
+
+  const screenshot = item.thumbnailScreenshot
+    ? item.thumbnailScreenshot
+    : item.desktopScreenshot;
 
   return (
     <>
       <tr className="text-sm text-pbblack hover:bg-pbiconhover">
         <td>
-          <label className="flex items-center justify-center px-7">
-            <input
-              type="checkbox"
-              className="h-4 w-4"
-              checked={true}
-              onClick={() => console.log("clicked")}
-              onChange={() => {}}
-            />
-          </label>
-        </td>
-
-        <td>
-          {item.thumbnailScreenshot ? (
+          {screenshot ? (
             <>
               {" "}
               <img
@@ -96,7 +84,6 @@ function Item({
         </td>
         <td>
           <div className="flex gap-3">
-            <p>{item.phoneNumber}</p>
             <img
               src="/copy.svg"
               className="w-2.5 cursor-pointer transition duration-75 hover:scale-105 hover:opacity-50"
@@ -105,13 +92,13 @@ function Item({
               }}
               draggable={false}
             />
+            <p>{item.phoneNumber}</p>
           </div>
         </td>
 
         <td>
           {item.email ? (
             <div className="flex gap-3">
-              <p>{item.email}</p>
               <img
                 src="/copy.svg"
                 className="w-2.5 cursor-pointer transition duration-75 hover:scale-105 hover:opacity-50"
@@ -120,6 +107,7 @@ function Item({
                 }}
                 draggable={false}
               />
+              <p>{item.email}</p>
             </div>
           ) : (
             <div className="flex gap-3">
@@ -239,7 +227,7 @@ function Item({
           <p>{item.address}</p>
         </td>
         <td className="sticky right-0 hover:cursor-pointer" onClick={clicked}>
-          <div className="flex h-4 w-4 p-5 items-center justify-center rounded-full hover:bg-gray-3">
+          <div className="flex h-4 w-4 items-center justify-center rounded-full p-5 hover:bg-gray-3">
             <FontAwesomeIcon icon={faArrowRight} />
           </div>
         </td>
@@ -252,12 +240,7 @@ function Item({
       )}
 
       {/* TOOD: Move CRM vars */}
-      {openCRM && (
-        <CRM
-          item={item}
-          setOpenCRM={setOpenCRM}
-        />
-      )}
+      {openCRM && <CRM item={item} setOpenCRM={setOpenCRM} />}
     </>
   );
 }

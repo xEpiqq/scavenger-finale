@@ -52,7 +52,7 @@ function Page({ props }) {
   return (
     <div className="flex h-52 w-60 flex-col justify-between rounded-md border border-black bg-offwhite-1 transition duration-150">
       <Link href={sheet_link} 
-      className={`flex items-center justify-center w-full h-full bg-sheettile rounded-tr-md rounded-tl-md transition duration-150 hover:bg-sheettile-hover`}
+      className={`flex items-center justify-center w-full h-full bg-sheettile hover:bg-gray-4 rounded-tr-md rounded-tl-md transition duration-150 hover:bg-sheettile-hover`}
       >
       <div className="w-16 h-16 items-center justify-center text-center rounded-full
       

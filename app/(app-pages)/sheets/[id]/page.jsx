@@ -18,6 +18,7 @@ import { useEffect } from "react";
 import PageName from "../../components/PageName";
 import Skeleton from "react-loading-skeleton";
 import FillList from "./FillList.jsx";
+import Link from "next/link";
 
 import ListItem from "./ListItem.js";
 
@@ -38,8 +39,8 @@ function Page({ params }) {
   const [selectedSheets, setSelectedSheets] = useState([]);
   const [displayedSheets, setDisplayedSheets] = useState([]);
 
-  
   const [user, loading, user_error] = useAuthState(auth);
+
   const { id } = params;
   const list_id = id;
   const [sheetDataRaw, loading2, error2] = useDocument(
@@ -61,7 +62,7 @@ function Page({ params }) {
     console.log("sheetDataRaw", sheetDataRaw?.data()?.lists);
     setDisplayedSheets(
       sheetDataRaw?.data()?.lists?.map((list) => {
-        return new ListItem({...list, idSheet: list_id, userId: user.uid});
+        return new ListItem({ ...list, idSheet: list_id, userId: user.uid });
       }) ?? [] // if userData?.lists is undefined, set it to an empty array instead of undefined
     );
   }, [sheetDataRaw]);
@@ -71,7 +72,11 @@ function Page({ params }) {
     // need to update the user id in the list items
     setDisplayedSheets(
       displayedSheets.map((list) => {
-        return new ListItem({...Object.values(list), idSheet: list_id, userId: user.uid});
+        return new ListItem({
+          ...list,
+          idSheet: list_id,
+          userId: user.uid,
+        });
       })
     );
   }, [user]);
@@ -80,11 +85,11 @@ function Page({ params }) {
     // if (!searchkey) return;
 
     // Filter the lists by the searchkey and all the fields
-    const filteredLists = displayedSheets?.lists?.filter((list) => {
+    const filteredLists = sheetDataRaw?.data().lists?.filter((list) => {
       const lowerCaseSearchKey = searchkey.toLowerCase();
-      const lowerCaseBizName = list.biz.toLowerCase();
-      const lowerCaseWebsite = list.site.toLowerCase();
-      const lowerCasePhone = list.phone.toLowerCase();
+      const lowerCaseBizName = list.name.toLowerCase();
+      const lowerCaseWebsite = list.siteLink.toLowerCase();
+      const lowerCasePhone = list.phoneNumber.toLowerCase();
       const lowerCaseEmail = list.email.toLowerCase();
       const lowerCaseAddress = list.address.toLowerCase();
 
@@ -178,16 +183,18 @@ function Page({ params }) {
       <div className={styles.table_wrapper}>
         {/* <PageName name="List Page" /> */}
 
-        <div className="flex h-24 w-full bg-gray-1">
+        <div className="flex h-24 w-full bg-pbsecondbg">
           <div className="flex h-full w-1/2 flex-row items-center gap-3 bg-pbsecondbg px-7">
-            <h2 className="text-lg text-pbgreytext">Lists</h2>
+            <Link href="/sheets">
+              <h2 className="text-lg text-pbgreytext">Lists</h2>{" "}
+            </Link>
             <h2 className="text-xl text-pbslash"> / </h2>
             <h2 className="text-lg text-pbblack">{sheetData?.list_name}</h2>
-            <img src="/gear.png" className="ml-5 h-5 w-5" />
-            <img src="/refresh.png" className="ml-5 h-5 w-5" />
+            {/* <img src="/gear.png" className="ml-5 h-5 w-5" />
+            <img src="/refresh.png" className="ml-5 h-5 w-5" /> */}
           </div>
 
-          <div className="flex h-full w-1/2 flex-row items-center justify-end gap-3 bg-pbsecondbg px-7">
+          {/* <div className="flex h-full w-1/2 flex-row items-center justify-end gap-3 bg-pbsecondbg px-7">
             <button className="flex h-10 w-36 items-center justify-center rounded-md border-2 border-pbblack bg-transparent text-sm font-semibold text-pbblack transition duration-150 hover:bg-pbwhitebtnhover">
               <img src="/bracket.png" className="h-7 w-7" />
               API Preview
@@ -196,7 +203,7 @@ function Page({ params }) {
               <img src="/plus.png" className="-ml-3 h-7 w-7" />
               New record
             </button>
-          </div>
+          </div> */}
         </div>
 
         <div className="flex h-16 w-full bg-pbsecondbg">
@@ -215,30 +222,6 @@ function Page({ params }) {
         <table className="">
           <thead className="">
             <tr>
-              <th>
-                <label className="flex items-center justify-center">
-                  <input
-                    type="checkbox"
-                    className=""
-                    value={searchbar}
-                    onChange={(e) => setSearchbar(e.target.value)}
-                    onClick={(e) => {
-                      if (e.target.checked) {
-                        setSelectedSheets([
-                          ...Array(sheetData?.lists?.length).keys(),
-                        ]);
-                      } else {
-                        setSelectedSheets([]);
-                      }
-                    }}
-                    checked={
-                      selectedSheets.length === sheetData?.lists?.length &&
-                      sheetData?.lists?.length !== 0
-                    }
-                  />
-                </label>
-              </th>
-
               <th>
                 <p>Scrnshot</p>
               </th>
