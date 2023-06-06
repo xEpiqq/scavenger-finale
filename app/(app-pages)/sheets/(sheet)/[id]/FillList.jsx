@@ -99,30 +99,3 @@ function FillList({
 }
 
 export default FillList;
-
-
-
-
-
-
-{/* <>
-<input 
-className="text-gray-700 focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight
-text-white focus:outline-none" id="business-search" type="text" placeholder="Enter business name" />
-
-{queryError && (
-  <p className="text-red-500 text-xs italic">
-    {queryError}
-  </p>
-)}
-{searching ? (
-  <Skeleton className="rounded bg-black px-4 py-2" containerClassName="w-52 h-10" >
-    Submit 
-  </Skeleton>
-) : (
-  <button
-    className="hover:bg-gray-900 focus:shadow-outline rounded bg-black px-4 py-2 font-bold text-white hover:opacity-75 focus:outline-none w-52 h-10"
-    type="button" > Submit
-  </button>
-)}
-</> */}
