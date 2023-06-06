@@ -36,7 +36,12 @@ function Item({ userRef, sheetRef, item }) {
 
   return (
     <>
-      <tr className="text-sm text-pbblack hover:bg-pbiconhover">
+      <tr
+        className={`text-sm text-pbblack hover:bg-pbiconhover ${
+          item.favorite ? "text-primary" : ""
+        }  
+    }`}
+      >
         <td>
           {screenshot ? (
             <>
@@ -76,7 +81,7 @@ function Item({ userRef, sheetRef, item }) {
         <td>
           {item.siteLink !== "none" ? (
             <Link href={clickable_link} target="_blank">
-              <p className="hover:underline">{item.name}</p>
+              <p className={`hover:underline`}>{item.name}</p>
             </Link>
           ) : (
             <p>{item.name}</p>

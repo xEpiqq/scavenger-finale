@@ -33,6 +33,7 @@ class ListItem {
     this.twitter = params.twitter || null;
     this.linkedin = params.linkedin || null;
     this.youtube = params.youtube || null;
+    this.favorite = params.favorite || null;
 
     // CRM fields
     this.gatekeeperName = params.gatekeeperName || null;
@@ -49,7 +50,6 @@ class ListItem {
 
     // need all of the fields in params to be added to this object
 
-
     this.obj = params.obj;
   }
 
@@ -64,7 +64,7 @@ class ListItem {
 
   // This function will not check if the data needs to be updated then update it in the database
   async updateSheet() {
-    console.log(this.sheetItemId)
+    console.log(this.sheetItemId);
     const {
       name,
       siteLink,
@@ -85,6 +85,7 @@ class ListItem {
       crmItemId,
       sheetItemId,
       gatekeeperName,
+      favorite,
       ownerName,
       notes,
       followUpDate,
@@ -112,6 +113,7 @@ class ListItem {
       gatekeeperName,
       sheetItemId,
       ownerName,
+      favorite,
       notes,
       followUpDate,
     };
@@ -121,27 +123,38 @@ class ListItem {
     // inside of the sheet ref there is an array of items. I need to to update the item with the id of this object
     if (idSheet) {
       const sheetArray = await getDoc(sheetRef).then((doc) => doc.data().lists);
-      console.log(this.sheetItemId)
+      console.log(this.sheetItemId);
       let sheetIndex = sheetArray.findIndex(
         (item) => item.sheetItemId === sheetItemId
       );
-      console.log(sheetItemId)
+      console.log(sheetItemId);
       sheetArray[sheetIndex] = data;
-      console.log("SHEET ARRAY: ", sheetArray)
+      console.log("SHEET ARRAY: ", sheetArray);
       await updateDoc(sheetRef, { lists: sheetArray });
     }
 
     // I need to update the CRM database with the data in this object
-    if (crmItemId) {
-      const crmRef = await doc(userRef, "CRM");
+    if (favorite) {
+      const crmArray = await getDoc(userRef).then((doc) => doc.data().crm);
+      console.log(crmArray);
+      if (!crmArray) {
+        await updateDoc(userRef, { crm: [data] });
+      }
+      console.log(crmArray);
+      // we need to create a new item in the CRM database
       // need to update this item onto the array called lists in the CRM database
-      const crmArray = await getDoc(crmRef).then((doc) => doc.data().lists);
       if (crmArray === undefined) {
-        await updateDoc(crmRef, { lists: [data] });
+        await updateDoc(userRef, { crm: crmArray });
       } else {
-        const crmIndex = crmArray.findIndex((item) => item.crmItemId === crmItemId);
-        crmArray[crmIndex] = data;
-        await updateDoc(crmRef, { lists: crmArray });
+        const crmIndex = crmArray.findIndex(
+          (item) => item.sheetItemId === sheetItemId
+        );
+        if (crmIndex === -1) {
+          crmArray.push(data);
+        } else {
+          crmArray[crmIndex] = data;
+        }
+        await updateDoc(userRef, { crm: crmArray });
       }
     }
   }

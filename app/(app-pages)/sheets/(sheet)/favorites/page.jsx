@@ -1,5 +1,5 @@
 "use client";
-import { app, db } from "../../../../components/initializeFirebase";
+import { app, db } from "../../../../../components/initializeFirebase";
 import { getAuth, signOut } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import {
@@ -12,80 +12,62 @@ import {
 } from "firebase/firestore";
 import { useDocument } from "react-firebase-hooks/firestore";
 import { useState } from "react";
-import Item from "./Item.jsx";
-import styles from "./page.module.scss";
+import Item from "../Item.jsx";
+import styles from "../page.module.scss";
 import { useEffect } from "react";
-import PageName from "../../components/PageName";
+import PageName from "../../../components/PageName";
 import Skeleton from "react-loading-skeleton";
-import FillList from "./FillList.jsx";
 import Link from "next/link";
 
-import ListItem from "./ListItem.js";
+import ListItem from "../ListItem.js";
 
 const auth = getAuth(app);
 
-function Page({ params }) {
+function Page() {
   //////// protect this route so someone with your list id cannot just type it into the url and access your shiz
   //////// Task Complete: not yet
   ////////
 
   const resultsPerPage = 20;
   const [currentPage, setCurrentPage] = useState(0);
-  const [niche, setNiche] = useState("");
-  const [location, setLocation] = useState("");
-  const [queryError, setQueryError] = useState("");
   const [searchbar, setSearchbar] = useState("");
-  const [searching, setSearching] = useState(false);
   const [selectedSheets, setSelectedSheets] = useState([]);
   const [displayedSheets, setDisplayedSheets] = useState([]);
 
   const [user, loading, user_error] = useAuthState(auth);
+  const [sheetDataRaw, setSheetDataRaw] = useState(null);
 
-  const { id } = params;
-  const list_id = id;
-  const [sheetDataRaw, loading2, error2] = useDocument(
-    doc(db, `sheets/${list_id}`)
-  );
-  const sheetData = sheetDataRaw?.data();
-
-  const page_amount = Math.floor(sheetData?.lists?.length / resultsPerPage) + 1;
-
-  useEffect(() => {
-    updateLastUpdated();
-  }, []);
+  const page_amount =
+    Math.floor(sheetDataRaw?.crm?.length / resultsPerPage) + 1;
 
   useEffect(() => {
     search(searchbar);
   }, [searchbar]);
 
   useEffect(() => {
-    console.log("sheetDataRaw", sheetDataRaw?.data()?.lists);
-    setDisplayedSheets(
-      sheetDataRaw?.data()?.lists?.map((list) => {
-        return new ListItem({ ...list, idSheet: list_id, userId: user.uid });
-      }) ?? [] // if userData?.lists is undefined, set it to an empty array instead of undefined
-    );
-  }, [sheetDataRaw]);
+    const func = async () => {
+      // we need to get the user document from the database
+      const userRef = doc(db, `users/${user?.uid}`);
+      const userDoc = await getDoc(userRef);
 
-  useEffect(() => {
-    console.log("ERHEHREHRHERHERHREH", user.uid);
-    // need to update the user id in the list items
-    setDisplayedSheets(
-      displayedSheets.map((list) => {
-        return new ListItem({
-          ...list,
-          idSheet: list_id,
-          userId: user.uid,
-        });
-      })
-    );
+      setSheetDataRaw(userDoc.data().crm);
+      console.log(userDoc.data().crm);
+      const sheetData = userDoc.data().crm;
+      setDisplayedSheets(
+        sheetData?.map((list) => {
+          return new ListItem({ ...list, userId: user.uid });
+        }) ?? [] // if userData?.lists is undefined, set it to an empty array instead of undefined
+      );
+    };
+
+    func();
   }, [user]);
 
   async function search(searchkey) {
     // if (!searchkey) return;
 
     // Filter the lists by the searchkey and all the fields
-    const filteredLists = sheetDataRaw?.data().lists?.filter((list) => {
+    const filteredLists = sheetDataRaw?.filter((list) => {
       const lowerCaseSearchKey = searchkey.toLowerCase();
       const lowerCaseBizName = list.name.toLowerCase();
       const lowerCaseWebsite = list.siteLink.toLowerCase();
@@ -108,74 +90,8 @@ function Page({ params }) {
     setSelectedSheets([]);
   }
 
-  async function updateLastUpdated() {
-    const userRef = doc(db, `sheets/${list_id}`);
-    await updateDoc(userRef, {
-      last_updated: new Date(),
-    });
-  }
-
-  async function sendToLambda() {
-    // check if niche or location is empty
-    if (niche === "" || location === "") {
-      setQueryError("Niche or Location is empty");
-      return;
-    }
-
-    let searchQuery = niche + " " + location;
-    const query_array = searchQuery.split(" ");
-    console.log(query_array);
-    // remove commas from searchquery
-    searchQuery = searchQuery.replace(/,/g, "");
-
-    if (searchQuery.match(/[^a-zA-Z ]/g)) {
-      setQueryError("Search contains numbers or special characters");
-      return;
-    }
-
-    if (query_array.length < 3) {
-      setQueryError("Search needs at least 3 words");
-      return;
-    }
-
-    const newSearchQuery = niche + " in " + location;
-    setSearching(true);
-    setQueryError("");
-
-    const response = await fetch("/api/lambda", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        searchQuery: newSearchQuery,
-        the_list_id: list_id,
-      }),
-    });
-    const data = await response.json();
-    console.log(data);
-    setDisplayedSheets(displayedSheets?.lists);
-  }
-
   async function searchBarQuery(e) {
     setSearchbar(e.target.value);
-  }
-
-  if (loading2) return <h1>Loading...</h1>;
-  if (error2) return <h1>Error: {error2}</h1>;
-
-  if (sheetData?.lists == 0) {
-    return (
-      <FillList
-        sendToLambda={sendToLambda}
-        queryError={queryError}
-        searching={searching}
-        niche={niche}
-        setNiche={setNiche}
-        location={location}
-        setLocation={setLocation}
-      />
-    );
   }
 
   return (
@@ -189,7 +105,7 @@ function Page({ params }) {
               <h2 className="text-lg text-pbgreytext">Lists</h2>{" "}
             </Link>
             <h2 className="text-xl text-pbslash"> / </h2>
-            <h2 className="text-lg text-pbblack">{sheetData?.list_name}</h2>
+            <h2 className="text-lg text-pbblack">Favorites</h2>
             {/* <img src="/gear.png" className="ml-5 h-5 w-5" />
             <img src="/refresh.png" className="ml-5 h-5 w-5" /> */}
           </div>
@@ -286,7 +202,7 @@ function Page({ params }) {
               onClick={() => setCurrentPage(currentPage + 1)}
               disabled={
                 currentPage ===
-                Math.floor(sheetData?.lists?.length / resultsPerPage)
+                Math.floor(sheetDataRaw?.crm?.length / resultsPerPage)
               }
             >
               {"Next >"}
