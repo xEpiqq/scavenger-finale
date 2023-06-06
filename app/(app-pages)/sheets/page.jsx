@@ -69,6 +69,27 @@ function Page() {
   const daysSinceCreated = dayjs(today).diff(userCreatedFormatted, "day");
   console.log(daysSinceCreated);
 
+  // on page load fetch /api/stripe_sub_verification
+
+  useEffect(() => {
+    if (user) {
+      console.log("Use effect ran, post sent");
+      fetch("/api/stripe_sub_verification", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          uid: user?.uid,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+        });
+    }
+  }, [user]);
+
   useEffect(() => {
     getTotalLeads().then((result) => {
       setTotalLeads(result);
@@ -117,6 +138,13 @@ function Page() {
     await updateDoc(userRef, { lists: listsArray });
   }
 
+  const [screenWidth, setScreenWidth] = useState(0);
+  useEffect(() => {
+    setScreenWidth(window.innerWidth);
+  }, []);
+
+  console.log(screenWidth);
+
   return (
     <div className="flex h-screen w-full">
       <div
@@ -164,9 +192,13 @@ function Page() {
       </div>
 
       <div className="flex h-screen w-full flex-col justify-between bg-pbsecondbg px-4 py-8">
-        <PageName name="List Overview" daysLeft={daysSinceCreated} />
+        <PageName
+          name="List Overview"
+          daysLeft={daysSinceCreated}
+          subStatus={userData?.subscription_status}
+        />
         <div
-          className="relative m-4 grid h-full justify-center gap-4 px-10 pt-4"
+          className="relative m-4 grid  h-full justify-center gap-4 px-10 pt-4"
           style={{
             gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
             gridAutoRows: "1fr",
@@ -190,10 +222,13 @@ function Page() {
           )}
 
           {/* <SheetTileNew /> */}
-          <div className="fixed bottom-8 right-8 flex justify-center gap-6">
-            <button className="border-1 opac bottom-4 right-4 h-10 w-36 cursor-default rounded-md border border-black bg-white text-black opacity-50">
-              Export to CSV
-            </button>
+          <div className="fixed bottom-28 right-28 z-50 flex justify-center gap-6 2xl:bottom-8 2xl:right-8">
+            {screenWidth > 1680 && (
+              <button className="border-1 opac pointer-events-none bottom-4 right-4 h-10 w-36 cursor-default rounded-md border border-black bg-white text-black opacity-50">
+                Export to CSV
+              </button>
+            )}
+
             <button
               className="right-38 hover:border-1 bottom-4 h-10 w-48 rounded-md bg-black text-white transition duration-200 hover:border hover:border-black hover:bg-white hover:text-black"
               onClick={() => {
@@ -203,56 +238,7 @@ function Page() {
               Create New Sheet
             </button>
           </div>
-
-          {subscriptionStatus !== "active" && (
-            <div className="fixed bottom-7 left-[480px] flex h-14 w-[780px] items-center justify-center rounded-md border-[1px] bg-promobox text-sm">
-              <span className="mr-2 font-semibold">
-                🎁 Limited Lifetime deal
-              </span>
-              Lock in at{" "}
-              <span className="ml-1">
-                {" "}
-                $49 /month for life before price doubles
-              </span>
-              <Link href="/specialpromo">
-                <button className="ml-3 h-8 w-auto rounded-md bg-black px-5 py-1 text-xs text-white transition duration-150 hover:border-[1px] hover:bg-white hover:text-pbblack">
-                  Grab this lifetime deal
-                </button>
-              </Link>
-            </div>
-          )}
-
-          {createSheet && (
-            <TextPrompt
-              props={{
-                title: "Create New Sheet",
-                placeholder: "Sheet Name",
-                action: "Create",
-                actionFunction: () => {
-                  console.log("create sheet");
-                },
-                closeFunction: () => {
-                  setCreateSheet(false);
-                },
-              }}
-            />
-          )}
-
-          {createSheet && (
-            <TextPrompt
-              title="Create New Sheet"
-              description="Please enter a new name for the sheet."
-              placeholder="New Sheet Name"
-              buttonText="Create"
-              callBack={(input) => {
-                setCreateSheet(false);
-                createNewSheet(input);
-              }}
-              callBackClose={() => {
-                setCreateSheet(false);
-              }}
-            />
-          )}
+          
         </div>
       </div>
     </div>

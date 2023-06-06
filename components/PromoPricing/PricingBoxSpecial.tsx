@@ -29,8 +29,9 @@ const PricingBoxSpecial = (props: {
   const [sessionLoading, setSessionLoading] = useState(false);
   const auth = getAuth();
   const [user, loading] = useAuthState(auth);
+  const [userIdToken, setUserIdToken] = useState(null);
   const uid = user?.uid;
-
+  
   React.useEffect(() => {
     const query = new URLSearchParams(window.location.search);
     if (query.get('success')) {

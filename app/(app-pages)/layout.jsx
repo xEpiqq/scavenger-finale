@@ -41,7 +41,7 @@ function Layout({ children }) {
       <div className="flex h-full w-full flex-col bg-pbsecondbg text-black sm:flex-row">        
         <Navbar />
         <div className="w-full h-full flex justify-center items-center fixed z-50"> <TrialEndUpgradePopup /> </div>
-        <section className="w-full h-full">
+        <section className="w-full h-full bg-white">
           {children}
         </section>
       </div>
