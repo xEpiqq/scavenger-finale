@@ -84,7 +84,7 @@ export default function Settings() {
 
   return (
     <>
-      <div className="px-6">
+      <div className="px-6 min-h-screen">
         <PageName name="Manage Subscription" />
         <div className="my-6 flex flex-col">
           <div className="flex items-center justify-center gap-6">
@@ -149,7 +149,7 @@ export default function Settings() {
                   <div className="bg-gray-500 absolute inset-0 opacity-75"></div>
                 </div>
                 <span
-                  className="hidden sm:inline-block sm:h-screen sm:align-middle"
+                  className="hidden sm:inline-block sm:align-middle"
                   aria-hidden="true"
                 >
                   &#8203;

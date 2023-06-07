@@ -29,7 +29,7 @@ function Layout({ children }) {
     return (
       <div className="flex h-full w-full flex-col bg-pbsecondbg text-black sm:flex-row">        
         <Navbar />
-        <section className="w-full h-full">
+        <section className="w-full h-full bg-pbsecondbg">
           {children}
         </section>
       </div>
@@ -41,7 +41,7 @@ function Layout({ children }) {
       <div className="flex h-full w-full flex-col bg-pbsecondbg text-black sm:flex-row">        
         <Navbar />
         <div className="w-full h-full flex justify-center items-center fixed z-50"> <TrialEndUpgradePopup /> </div>
-        <section className="w-full h-full bg-white">
+        <section className="w-full h-full  bg-pbsecondbg">
           {children}
         </section>
       </div>
@@ -54,7 +54,7 @@ function Layout({ children }) {
       <div className="flex sm:flex-row flex-col bg-pbsecondbg w-full h-full text-black">
         <div className="w-full h-full flex justify-center items-center fixed z-50"> <TrialEndUpgradePopup /> </div>
         <Navbar/>
-        <section className="w-full h-full">
+        <section className="w-full h-full bg-pbsecondbg">
           {children}
         </section>
       </div>
@@ -66,7 +66,7 @@ function Layout({ children }) {
     return (
       <div className="flex flex-col w-full h-full text-black bg-pbsecondbg sm:flex-row">
         <Navbar />
-        <section className="w-full overflow-x-clip">{children}</section>
+        <section className="w-full overflow-x-clip bg-pbsecondbg">{children}</section>
       </div>
     );
     }
