@@ -146,9 +146,9 @@ function Page() {
   console.log(screenWidth);
 
   return (
-    <div className="flex h-screen w-full">
+    <div className="flex w-full">
       <div
-        className="hidden h-screen w-64 border-b-0 border-pblines border-l-transparent border-t-transparent bg-white sm:block sm:h-screen"
+        className="hidden w-64 border-b-0 border-pblines border-l-transparent border-t-transparent bg-white sm:block sm:h-screen"
         style={{ borderWidth: 1 }}
       >
         <div
@@ -191,7 +191,7 @@ function Page() {
         </div>
       </div>
 
-      <div className="flex h-screen w-full flex-col justify-between bg-pbsecondbg px-4 py-8">
+      <div className="flex w-full flex-col justify-between bg-pbsecondbg px-4 py-8">
         <PageName
           name="List Overview"
           daysLeft={daysSinceCreated}
