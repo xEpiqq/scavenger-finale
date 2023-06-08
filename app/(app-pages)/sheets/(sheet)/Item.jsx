@@ -134,7 +134,7 @@ function Item({ userRef, sheetRef, item }) {
         </td>
 
         <td>
-          <div className="flex gap-1">
+          <div className="flex gap-1 w-full">
             {item.facebook ? (
               <Link href={item.facebook} target="_blank">
                 <img
@@ -145,12 +145,7 @@ function Item({ userRef, sheetRef, item }) {
               </Link>
             ) : (
               <>
-                {" "}
-                <img
-                  src="/Facebook.svg"
-                  alt="facebook link"
-                  className="h-5 w-5 opacity-40"
-                />{" "}
+                
               </>
             )}
             {item.instagram ? (
@@ -163,12 +158,6 @@ function Item({ userRef, sheetRef, item }) {
               </Link>
             ) : (
               <>
-                {" "}
-                <img
-                  src="/Instagram.svg"
-                  alt="instagram link"
-                  className="h-5 w-5 opacity-40"
-                />{" "}
               </>
             )}
             {item.twitter ? (
@@ -181,12 +170,7 @@ function Item({ userRef, sheetRef, item }) {
               </Link>
             ) : (
               <>
-                {" "}
-                <img
-                  src="/Twitter.svg"
-                  alt="twitter link"
-                  className="h-5 w-5 opacity-40"
-                />{" "}
+                
               </>
             )}
             {item.linkedin ? (
@@ -199,12 +183,7 @@ function Item({ userRef, sheetRef, item }) {
               </Link>
             ) : (
               <>
-                {" "}
-                <img
-                  src="/LinkedIn.svg"
-                  alt="linkedin link"
-                  className="h-5 w-5 opacity-40"
-                />{" "}
+                
               </>
             )}
             {item.youtube ? (
@@ -217,12 +196,7 @@ function Item({ userRef, sheetRef, item }) {
               </Link>
             ) : (
               <>
-                {" "}
-                <img
-                  src="/Youtube.svg"
-                  alt="youtube link"
-                  className="h-5 w-5 opacity-40"
-                />{" "}
+                
               </>
             )}
           </div>
