@@ -1,46 +1,50 @@
-'use client'
+"use client";
 import { useState, useEffect } from "react";
 import GoogleLogin from "../GoogleLogin";
 import EmailLogin from "../EmailLogin";
 
 function SignupModal(props) {
-
   const { setSignup } = props;
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [googleBtn, setGoogleBtn] = useState("Signup");
-  const [message, setMessage] = useState(null);
 
-    const handleEscape = (e) => {
+  const handleEscape = (e) => {
     if (e.key === "Escape") {
-        setSignup(false);
+      setSignup(false);
     }
-    };
+  };
 
-    useEffect(() => {
+  useEffect(() => {
     document.addEventListener("keydown", handleEscape);
     return () => {
-        document.removeEventListener("keydown", handleEscape);
+      document.removeEventListener("keydown", handleEscape);
     };
-    }, []);
-
+  }, []);
 
   return (
     <>
+      <div className="fixed left-0 top-0 z-20 flex h-full w-full items-center justify-center ">
+        <div
+          className="fixed left-0 top-0 z-20 flex h-full w-full items-center justify-center bg-black bg-opacity-80 "
+          onClick={() => {
+            setSignup(false);
+          }}
+        />
 
+        <div className="relative z-30 w-11/12 rounded-lg border border-white bg-pbblack2 p-8 py-20 pt-20 text-white shadow-lg max-w-sm">
+          <div
+            className="border-px absolute right-0 top-0 mr-4 mt-4 cursor-pointer rounded-md border border-yellow px-2 opacity-60 transition-all duration-150 hover:opacity-100"
+            onClick={() => {
+              setSignup(false);
+            }}
+          >
+            esc
+          </div>
 
-        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-20 ">
-        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-80 flex items-center justify-center z-20 " onClick={() => {setSignup(false)}} />
-
-          <div className="bg-pbblack2 border border-white relative rounded-lg p-8 pt-20 w-11/12 h-1/2 z-30 text-white -mt-48 shadow-lg sm:w-3/4 md:w-1/2 lg:w-4/12 xl:w-3/12">
-            <div className="absolute px-2 mt-4 mr-4 top-0 right-0 border border-px border-yellow rounded-md opacity-60 cursor-pointer hover:opacity-100 duration-150 transition-all" onClick={() => {setSignup(false)}}>
-              esc 
-            </div>
-            
-
-            <h2 className="text-2xl font-bold mb-4">Start Your Free Trial Today ⬇</h2>
-            {/* <form onSubmit={handleSignup}>
+          <h2 className="mb-4 text-2xl font-bold">
+            Signup to try Scavenger for free now!
+          </h2>
+          {/* <form onSubmit={handleSignup}>
               <div className="mb-4">
                 <label className="block text-gray-700 font-bold mb-2" htmlFor="email">
                   Email
@@ -76,45 +80,43 @@ function SignupModal(props) {
                 </button>
               </div>
             </form> */}
-            <div className="mt-4">
-              <p className="text-sm">
-                {/* Signup with google to get early access to Scavenger. */}
-              </p>
-              <div className="mt-8 -mb-3">
-              <EmailLogin method={googleBtn}/>
+          <div className="mt-4">
+            <p className="text-sm">
+              {/* Signup with google to get early access to Scavenger. */}
+            </p>
+            <div className="-mb-3 mt-8">
+              <EmailLogin method={googleBtn} />
+            </div>
+            <div className="-mb-3 mt-8">
+              <GoogleLogin method={googleBtn} />
+            </div>
 
-              </div>
-              <div className="mt-8 -mb-3">
-              <GoogleLogin method={googleBtn}/>
-
-              </div>
-
-              {googleBtn === "Signup" ? (
+            {googleBtn === "Signup" ? (
               <p className="text-sm">
                 Already have an account?{" "}
                 <a
-                  className="text-primary font-semibold cursor-pointer"
+                  className="cursor-pointer font-semibold text-primary"
                   onClick={() => setGoogleBtn("Login")}
                 >
                   Log in
                 </a>
-              </p>) : (
+              </p>
+            ) : (
               <p className="text-sm">
                 Don't have an account?{" "}
                 <a
-                  className="text-primary font-semibold cursor-pointer"
+                  className="cursor-pointer font-semibold text-primary"
                   onClick={() => setGoogleBtn("Signup")}
                 >
                   Sign up
                 </a>
               </p>
-              )}
-            </div>
+            )}
           </div>
         </div>
-
+      </div>
     </>
   );
-  }
+}
 
 export default SignupModal;
