@@ -166,7 +166,7 @@ function Page() {
           <h2 className="font-bold">{totalLeads}</h2>
           <span className="w-28 bg-pblines" style={{ height: 1 }} />
 
-          <h2 className="mt-6">First Contact</h2>
+          {/* <h2 className="mt-6">First Contact</h2>
           <h2 className="text-xs text-gray-3">66/{totalLeads}</h2>
           <div className="h-28 w-full">
             <PieChart
@@ -175,9 +175,9 @@ function Page() {
                 { title: "Two", value: totalLeads, color: "#2C2C2C" },
               ]}
             />
-          </div>
+          </div> */}
 
-          <h2 className="mt-6">Second Contact</h2>
+          {/* <h2 className="mt-6">Second Contact</h2>
           <h2 className="text-xs text-gray-3">33/{totalLeads}</h2>
 
           <div className="h-28 w-full">
@@ -187,7 +187,7 @@ function Page() {
                 { title: "Two", value: 20, color: "#2C2C2C" },
               ]}
             />
-          </div>
+          </div> */}
         </div>
       </div>
 
