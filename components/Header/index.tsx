@@ -89,6 +89,12 @@ const Header = () => {
                     >
                       Dashboard
                     </Link>
+                    <button
+                      className="rounded-lg border  border-primary bg-black px-5 py-3 text-sm font-semibold text-primary transition duration-150 hover:bg-white hover:text-black"
+                      onClick={() => auth.signOut()}
+                    >
+                      Logout
+                    </button>
                     {/* <img
                       src={`${user?.photoURL}`}
                       alt="User Photo"
