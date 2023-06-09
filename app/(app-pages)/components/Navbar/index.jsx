@@ -1,3 +1,4 @@
+'use client';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHome,
@@ -9,9 +10,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { getAuth, signOut } from "firebase/auth";
-import { app } from "../../../../components/initializeFirebase";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { app } from "../../../../components/initializeFirebase";
 
 const auth = getAuth(app);
 
@@ -19,6 +21,7 @@ function Navbar(props) {
   const [signoutModal, setSignoutModal] = useState(false);
   const [currentPage, setCurrentPage] = useState("");
   const router = useRouter();
+  const [user, loading, error] = useAuthState(auth);
 
   async function handleSignOut() {
     await signOut(auth);
@@ -134,9 +137,9 @@ function Navbar(props) {
 
         <div className="mb:0 flex-center mr-10 flex h-1/2 w-full items-center justify-end bg-white pb-4 pr-5 pt-3 sm:mb-16 sm:mr-0 sm:items-end sm:justify-center sm:pr-0 lg:mb-0">
           <img
-            src="/profpic.png"
+            src={user?.photoURL}
             alt="Logo"
-            className="w-12 hover:cursor-pointer"
+            className="w-12 hover:cursor-pointer rounded-full transition duration-150"
             onClick={() => {
               setSignoutModal(!signoutModal);
             }}
@@ -159,7 +162,7 @@ function Navbar(props) {
                     setSignoutModal(false);
                   }}
                 >
-                  <div className="m-1 mt-0 flex w-full items-center justify-start rounded-md p-1 transition duration-150 hover:bg-pbiconhover">
+                  <div className="mt-0 flex w-full items-center justify-start rounded-md p-1 transition duration-150 hover:bg-pbiconhover">
                     <img
                       src="/pbmanagesub.png"
                       className="ml-2 h-4 w-4"
@@ -169,6 +172,28 @@ function Navbar(props) {
                       <button className="hover:bg-gray-100 px-4 py-2 text-left text-xs focus:outline-none">
                         <div className="flex items-center">
                           <div>Subscription</div>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                </Link>
+                <Link
+                  href="/"
+                  className="w-full"
+                  onClick={() => {
+                    setSignoutModal(false);
+                  }}
+                >
+                  <div className="mt-0 mb-1 flex w-full items-center justify-start rounded-md p-1 transition duration-150 hover:bg-pbiconhover">
+                    <img
+                      src="/home_icon.png"
+                      className="ml-2 h-4 w-4"
+                      alt="Manage Subscription"
+                    />
+                    <div className="w-full">
+                      <button className="hover:bg-gray-100 px-4 py-2 text-left text-xs focus:outline-none">
+                        <div className="flex items-center">
+                          <div>Home</div>
                         </div>
                       </button>
                     </div>
