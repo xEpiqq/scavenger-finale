@@ -1,3 +1,4 @@
+'use client';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHome,
@@ -9,18 +10,18 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { getAuth, signOut } from "firebase/auth";
-import { app } from '../../../../components/initializeFirebase'
-import { useRouter } from 'next/navigation';
-import { usePathname } from 'next/navigation';
+import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { app } from "../../../../components/initializeFirebase";
 
 const auth = getAuth(app);
 
-
 function Navbar(props) {
-
   const [signoutModal, setSignoutModal] = useState(false);
   const [currentPage, setCurrentPage] = useState("");
   const router = useRouter();
+  const [user, loading, error] = useAuthState(auth);
 
   async function handleSignOut() {
     await signOut(auth);
@@ -33,7 +34,11 @@ function Navbar(props) {
     const sheetsRegex = /^\/sheets(?:\/([^\/]+))?/;
     const match = pathname.match(sheetsRegex);
     if (match && match[1]) {
-      setCurrentPage("list");
+      if (match[1] === "favorites") {
+        setCurrentPage("favorites");
+      } else {
+        setCurrentPage("list");
+      }
     } else {
       setCurrentPage("overview");
     }
@@ -46,99 +51,182 @@ function Navbar(props) {
   }, [pathname]);
 
   return (
-
     <>
-    <div className="sticky top-0 sm:h-screen border-t-transparent border-b-0 border-l-0 border-pblines flex flex-row sm:flex-col bg-white"
-    style={{ borderWidth: 1 }}
-    
-    >
-    
-    <div className="h-1/2 z-4 w-18 top-0 flex items-center justify-start gap-4 sm:flex-col p-1 bg-white">
-
-      <div className="aspect-square w-16 p-2 mt-1">
-        <Link href="/sheets" className="p-0">
-          <img src="/bird.png" alt="Logo" className="w-full" draggable={false}/>
-          </Link>
-      </div>
-
-      <Link href="/sheets" className="p-0">
-        {currentPage === "overview" ? (
-          <div className="w-11 h-11 rounded-xl mt-1 border-2 border-pbblack transition duration-150 flex items-center justify-center">
-            <img src="/overview2.svg" alt="Logo" className="w-5" draggable={false}/>
-          </div>
-        ) : (
-          <div className="w-11 h-11 rounded-xl mt-1 hover:bg-pbiconhover transition duration-150 flex items-center justify-center">
-            <img src="/overview2.svg" alt="Logo" className="w-5" draggable={false}/>
-          </div>
-        )}
-      </Link>
-
-      {/* <Link href="/" className="p-0"> */}
-      {currentPage === "list" ? (
-          <div className="w-11 h-11 rounded-xl mt-1 transition duration-150 flex items-center justify-center border-2 border-pbblack">
-            <img src="/listalt.svg" alt="Logo" className="w-5" draggable={false}/>
-          </div>
-        ) : (
-          <div className="w-11 h-11 rounded-xl mt-1 transition duration-150 flex items-center justify-center">
-            <img src="/listalt.svg" alt="Logo" className="w-5" draggable={false}/>
-          </div>
-        )}
-
-      {/* </Link> */}
-
-
-    </div>
-
-    <div className="flex mb:0 mr-10 sm:mr-0 sm:mb-16 lg:mb-0 sm:items-end items-center h-1/2 sm:justify-center pb-4 justify-end flex-center w-full pt-3 pr-5 sm:pr-0 bg-white">
-    <img src="/profpic.png" alt="Logo" className="w-12 hover:cursor-pointer" onClick={() => {setSignoutModal(!signoutModal)}} draggable={false}/>
-    
-    {signoutModal && (
-    <div
-        className="fixed inset-0 z-50"
-        onClick={() => setSignoutModal(false)}
-    >
-        <div
-            className="absolute bottom-16 left-4 w-36 rounded-md overflow-hidden border-pblines bg-white mb-1 flex items-center flex-col p-1 shadow-sm duration-300 transition"
-            onClick={(e) => e.stopPropagation()}
-            style={{ borderWidth: 1 }}
-        >
-            <Link href="/sub" onClick={() => {setSignoutModal(false)}}>
-              <div className="flex items-center justify-start w-full hover:bg-pbiconhover rounded-md p-1 m-1 mt-0 transition duration-150">
-                  <img src="/pbmanagesub.png" className="w-4 h-4 ml-2" alt="Manage Subscription" />
-                  <div className="w-full">
-                      <button className="py-2 px-4 hover:bg-gray-100 focus:outline-none text-xs text-left">
-                          <div className="flex items-center">
-                              <div>Subscription</div>
-                          </div>
-                      </button>
-                  </div>
-              </div>
+      <div
+        className="sticky top-0 flex flex-row border-b-0 border-l-0 border-pblines border-t-transparent bg-white sm:h-screen sm:flex-col"
+        style={{ borderWidth: 1 }}
+      >
+        <div className="z-4 w-18 top-0 flex h-1/2 items-center justify-start gap-4 bg-white p-1 sm:flex-col">
+          <div className="mt-1 aspect-square w-16 p-2">
+            <Link href="/sheets" className="p-0">
+              <img
+                src="/bird.png"
+                alt="Logo"
+                className="w-full"
+                draggable={false}
+              />
             </Link>
-            <span className="h-px bg-pblines"
-            
-            style={{ width: "97%" }}
-            
-            />
-            <div className="flex items-center justify-start w-full hover:bg-pbiconhover rounded-md p-1 m-1 mb-0 transition duration-150 cursor-pointer"
-              onClick={() => {setSignoutModal(false) ; handleSignOut()}} >
-                <img src="/pblogout.png" className="w-4 h-4 ml-2" alt="Logout" />
-                <div className="w-full">
-                    <button className="py-2 px-4 hover:bg-gray-100 focus:outline-none text-xs text-left">
-                        <div className="flex items-center">
-                            <div>Logout</div>
-                        </div>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-)}
+          </div>
 
-    </div>
-  </div>
-  </>
-);
+          <Link href="/sheets" className="p-0">
+            {currentPage === "overview" ? (
+              <div className="mt-1 flex h-11 w-11 items-center justify-center rounded-xl border-2 border-pbblack transition duration-150">
+                <img
+                  src="/overview2.svg"
+                  alt="Logo"
+                  className="w-5"
+                  draggable={false}
+                />
+              </div>
+            ) : (
+              <div className="mt-1 flex h-11 w-11 items-center justify-center rounded-xl transition duration-150 hover:bg-pbiconhover">
+                <img
+                  src="/overview2.svg"
+                  alt="Logo"
+                  className="w-5"
+                  draggable={false}
+                />
+              </div>
+            )}
+          </Link>
+          <Link href="/sheets/favorites" className="p-0">
+            {currentPage === "favorites" ? (
+              <div className="mt-1 flex h-11 w-11 items-center justify-center rounded-xl border-2 border-pbblack transition duration-150">
+                <img
+                  src="/favoritesicon.svg"
+                  alt="Logo"
+                  className="w-5"
+                  draggable={false}
+                />
+              </div>
+            ) : (
+              <div className="mt-1 flex h-11 w-11 items-center justify-center rounded-xl transition duration-150 hover:bg-pbiconhover">
+                <img
+                  src="/favoritesicon.svg"
+                  alt="Logo"
+                  className="w-5"
+                  draggable={false}
+                />
+              </div>
+            )}
+          </Link>
+
+          {/* <Link href="/" className="p-0"> */}
+          {currentPage === "list" ? (
+            <div className="mt-1 flex h-11 w-11 items-center justify-center rounded-xl border-2 border-pbblack transition duration-150">
+              <img
+                src="/listalt.svg"
+                alt="Logo"
+                className="w-5"
+                draggable={false}
+              />
+            </div>
+          ) : (
+            <div className="mt-1 flex h-11 w-11 items-center justify-center rounded-xl transition duration-150">
+              <img
+                src="/listalt.svg"
+                alt="Logo"
+                className="w-5"
+                draggable={false}
+              />
+            </div>
+          )}
+
+          {/* </Link> */}
+        </div>
+
+        <div className="mb:0 flex-center mr-10 flex h-1/2 w-full items-center justify-end bg-white pb-4 pr-5 pt-3 sm:mb-16 sm:mr-0 sm:items-end sm:justify-center sm:pr-0 lg:mb-0">
+          <img
+            src={user?.photoURL}
+            alt="Logo"
+            className="w-12 hover:cursor-pointer rounded-full transition duration-150"
+            onClick={() => {
+              setSignoutModal(!signoutModal);
+            }}
+            draggable={false}
+          />
+
+          {signoutModal && (
+            <div
+              className="fixed inset-0 z-50"
+              onClick={() => setSignoutModal(false)}
+            >
+              <div
+                className="absolute bottom-16 left-4 mb-1 flex w-36 flex-col items-center overflow-hidden rounded-md border-pblines bg-white p-1 shadow-sm transition duration-300"
+                onClick={(e) => e.stopPropagation()}
+                style={{ borderWidth: 1 }}
+              >
+                <Link
+                  href="/sub"
+                  onClick={() => {
+                    setSignoutModal(false);
+                  }}
+                >
+                  <div className="mt-0 flex w-full items-center justify-start rounded-md p-1 transition duration-150 hover:bg-pbiconhover">
+                    <img
+                      src="/pbmanagesub.png"
+                      className="ml-2 h-4 w-4"
+                      alt="Manage Subscription"
+                    />
+                    <div className="w-full">
+                      <button className="hover:bg-gray-100 px-4 py-2 text-left text-xs focus:outline-none">
+                        <div className="flex items-center">
+                          <div>Subscription</div>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                </Link>
+                <Link
+                  href="/"
+                  className="w-full"
+                  onClick={() => {
+                    setSignoutModal(false);
+                  }}
+                >
+                  <div className="mt-0 mb-1 flex w-full items-center justify-start rounded-md p-1 transition duration-150 hover:bg-pbiconhover">
+                    <img
+                      src="/home_icon.png"
+                      className="ml-2 h-4 w-4"
+                      alt="Manage Subscription"
+                    />
+                    <div className="w-full">
+                      <button className="hover:bg-gray-100 px-4 py-2 text-left text-xs focus:outline-none">
+                        <div className="flex items-center">
+                          <div>Home</div>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                </Link>
+                <span className="h-px bg-pblines" style={{ width: "97%" }} />
+                <div
+                  className="m-1 mb-0 flex w-full cursor-pointer items-center justify-start rounded-md p-1 transition duration-150 hover:bg-pbiconhover"
+                  onClick={() => {
+                    setSignoutModal(false);
+                    handleSignOut();
+                  }}
+                >
+                  <img
+                    src="/pblogout.png"
+                    className="ml-2 h-4 w-4"
+                    alt="Logout"
+                  />
+                  <div className="w-full">
+                    <button className="hover:bg-gray-100 px-4 py-2 text-left text-xs focus:outline-none">
+                      <div className="flex items-center">
+                        <div>Logout</div>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </>
+  );
 }
 
 export default Navbar;
