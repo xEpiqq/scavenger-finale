@@ -181,50 +181,49 @@ function Page({ params }) {
 
   return (
     <>
+      <div className="flex h-24 bg-pbsecondbg">
+        <div className="flex h-full w-1/2 flex-row items-center gap-3 bg-pbsecondbg px-7">
+          <Link href="/sheets">
+            <h2 className="text-lg text-pbgreytext">Lists</h2>{" "}
+          </Link>
+          <h2 className="text-xl text-pbslash"> / </h2>
+          <h2 className="text-lg text-pbblack">{sheetData?.list_name}</h2>
+          {/* <img src="/gear.png" className="ml-5 h-5 w-5" />
+        <img src="/refresh.png" className="ml-5 h-5 w-5" /> */}
+        </div>
+
+        {/* <div className="flex h-full w-1/2 flex-row items-center justify-end gap-3 bg-pbsecondbg px-7">
+        <button className="flex h-10 w-36 items-center justify-center rounded-md border-2 border-pbblack bg-transparent text-sm font-semibold text-pbblack transition duration-150 hover:bg-pbwhitebtnhover">
+          <img src="/bracket.png" className="h-7 w-7" />
+          API Preview
+        </button>
+        <button className="flex h-10 w-36 items-center justify-center rounded-md bg-pbblack text-sm font-semibold text-white transition duration-150 hover:bg-pbblackbtnhover">
+          <img src="/plus.png" className="-ml-3 h-7 w-7" />
+          New record
+        </button>
+      </div> */}
+      </div>
+
+      <div className="flex h-16 bg-pbsecondbg">
+        <input
+          type="text"
+          placeholder="Search"
+          className="mx-7 h-11 w-full rounded-3xl bg-pbiconhover px-7 text-lg outline-none transition
+    duration-150 focus:bg-pbsearchselect"
+          value={searchbar}
+          onChange={(e) => {
+            searchBarQuery(e);
+          }}
+        />
+      </div>
       <div className={styles.table_wrapper}>
         {/* <PageName name="List Page" /> */}
-
-        <div className="flex h-24 w-full bg-pbsecondbg">
-          <div className="flex h-full w-1/2 flex-row items-center gap-3 bg-pbsecondbg px-7">
-            <Link href="/sheets">
-              <h2 className="text-lg text-pbgreytext">Lists</h2>{" "}
-            </Link>
-            <h2 className="text-xl text-pbslash"> / </h2>
-            <h2 className="text-lg text-pbblack">{sheetData?.list_name}</h2>
-            {/* <img src="/gear.png" className="ml-5 h-5 w-5" />
-            <img src="/refresh.png" className="ml-5 h-5 w-5" /> */}
-          </div>
-
-          {/* <div className="flex h-full w-1/2 flex-row items-center justify-end gap-3 bg-pbsecondbg px-7">
-            <button className="flex h-10 w-36 items-center justify-center rounded-md border-2 border-pbblack bg-transparent text-sm font-semibold text-pbblack transition duration-150 hover:bg-pbwhitebtnhover">
-              <img src="/bracket.png" className="h-7 w-7" />
-              API Preview
-            </button>
-            <button className="flex h-10 w-36 items-center justify-center rounded-md bg-pbblack text-sm font-semibold text-white transition duration-150 hover:bg-pbblackbtnhover">
-              <img src="/plus.png" className="-ml-3 h-7 w-7" />
-              New record
-            </button>
-          </div> */}
-        </div>
-
-        <div className="flex h-16 w-full bg-pbsecondbg">
-          <input
-            type="text"
-            placeholder="Search"
-            className="mx-7 h-11 w-full rounded-3xl bg-pbiconhover px-7 text-lg outline-none transition
-        duration-150 focus:bg-pbsearchselect"
-            value={searchbar}
-            onChange={(e) => {
-              searchBarQuery(e);
-            }}
-          />
-        </div>
 
         <table className="">
           <thead className="">
             <tr>
               <th>
-                <p>Scrnshot</p>
+                <p>Screenshot</p>
               </th>
 
               <th>
