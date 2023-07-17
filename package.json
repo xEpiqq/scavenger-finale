@@ -36,6 +36,7 @@
     "react-minimal-pie-chart": "^8.4.0",
     "react-modal-video": "^2.0.0",
     "react-tooltip": "^5.13.0",
+    "sass": "^1.63.6",
     "scss": "^0.2.4",
     "stripe": "^12.4.0",
     "swr": "^2.1.5",
