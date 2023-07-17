@@ -31,9 +31,9 @@ const Hero = () => {
                   <span className="font-semibold"></span>
                 </p>
                 <h1 className="mb-2 md:mb-5 text-4xl font-bold leading-tight text-white sm:text-5xl sm:leading-tight md:text-6xl lg:text-7xl md:leading-tight">
-                  Freelance{" "}
+                  SMMA{" "}
                   <span className="text-stroke text-stroke-black text-primary">
-                    Designers,
+                    Owners,
                   </span>{" "}
                 </h1>
 
