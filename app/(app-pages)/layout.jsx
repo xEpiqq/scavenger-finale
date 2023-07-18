@@ -15,52 +15,71 @@ const auth = getAuth(app);
 
 function Layout({ children }) {
   const [user, loading, user_error] = useAuthState(auth);
-  const [userDataRaw, loading2, error2] = useDocument(
-    doc(db, `users/${user?.uid}`)
-  );
+  const [userDataRaw, loading2, error2] = useDocument(doc(db, `users/${user?.uid}`));
   const userData = userDataRaw?.data();
   const userCreated = userData?.created
   const userCreatedDate = userCreated ? userCreated.toDate() : null;
   const userCreatedFormatted = userCreatedDate ? dayjs(userCreatedDate).format("YYYY-MM-DD") : null;
   const today = dayjs().format("YYYY-MM-DD");
   const daysSinceCreated = dayjs(today).diff(userCreatedFormatted, "day");
+  
+  const user_id = user?.uid; 
 
-  if (userData?.subscription_status === "none" && daysSinceCreated <= 14) {
-    return (
-      <div className="flex h-full w-full flex-col bg-pbsecondbg text-black sm:flex-row">        
-        <Navbar />
-        <section className="w-full h-full bg-pbsecondbg">
-          {children}
-        </section>
-      </div>
-    );
-  } 
-
-  if (userData?.subscription_status === "none" && daysSinceCreated > 14) {
-    return (
-      <div className="flex h-full w-full flex-col bg-pbsecondbg text-black sm:flex-row">        
-        <Navbar />
-        <div className="w-full h-full flex justify-center items-center fixed z-50"> <TrialEndUpgradePopup /> </div>
-        <section className="w-full h-full  bg-pbsecondbg">
-          {children}
-        </section>
-      </div>
-    );
-  } 
-
-  if (userData?.subscription_status === "cancelled") {
-    return (
-      <>
-      <div className="flex sm:flex-row flex-col bg-pbsecondbg w-full h-full text-black">
-        <div className="w-full h-full flex justify-center items-center fixed z-50"> <TrialEndUpgradePopup /> </div>
-        <Navbar/>
-        <section className="w-full h-full bg-pbsecondbg">
-          {children}
-        </section>
-      </div>
-      </>
-    );
+  async function stripeSubVerification() {
+    const response = await fetch ("/api/stripe_sub_verification", {
+      method: "POST",
+      body: JSON.stringify({
+        uid: user_id,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   }
+
+  async function stripeCheckoutTrial() {
+    const response = await fetch ("/api/stripecheckout_trial", {
+      method: "POST",
+      body: JSON.stringify({
+        user_id: user_id,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const json = await response.json();
+    const url = json.url;    
+    window.location.href = url;    
+  }
+
+
+  async function stripeCheckoutPremium() {
+    const response = await fetch ("/api/stripecheckout", {
+      method: "POST",
+      body: JSON.stringify({
+        user_id: user_id,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const json = await response.json();
+    const url = json.url;    
+    window.location.href = url;    
+  }
+
+  useEffect(() => {
+    // stripeSubVerification(); FOR NOW NOT INCLUDED JUST IN CASE IT SLOWS THINGS DOWN
+    // IDEALLY WEBHOOKS WILL JUST WORK 100% WITHOUT FAIL
+
+    if (userData?.subscription_status === "none") {
+      stripeCheckoutTrial();
+    }
+    if (userData?.subscription_status === "canceled") {
+      stripeCheckoutPremium();
+    }
+  }, [userData?.subscription_status]);
+
 
   if (userData?.subscription_status === "active" || userData?.subscription_status === "trialing") {
     return (

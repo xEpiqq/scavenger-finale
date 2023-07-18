@@ -23,6 +23,8 @@ function Navbar(props) {
   const router = useRouter();
   const [user, loading, error] = useAuthState(auth);
 
+  const uid = user?.uid;
+
   async function handleSignOut() {
     await signOut(auth);
     router.push("/signup");
@@ -156,12 +158,6 @@ function Navbar(props) {
                 onClick={(e) => e.stopPropagation()}
                 style={{ borderWidth: 1 }}
               >
-                <Link
-                  href="/sub"
-                  onClick={() => {
-                    setSignoutModal(false);
-                  }}
-                >
                   <div className="mt-0 flex w-full items-center justify-start rounded-md p-1 transition duration-150 hover:bg-pbiconhover">
                     <img
                       src="/pbmanagesub.png"
@@ -169,14 +165,18 @@ function Navbar(props) {
                       alt="Manage Subscription"
                     />
                     <div className="w-full">
-                      <button className="hover:bg-gray-100 px-4 py-2 text-left text-xs focus:outline-none">
-                        <div className="flex items-center">
-                          <div>Subscription</div>
-                        </div>
-                      </button>
+                      <form method="POST" action="/api/stripebilling">
+                        <input type="hidden" name="user_id" value={uid} />      
+                        <button type="submit" role="link" className="hover:bg-gray-100 px-4 py-2 text-left text-xs focus:outline-none">
+                          <div className="flex items-center">
+                            <div>Subscription</div>
+                          </div>
+                        </button>
+                      </form>
+
+
                     </div>
                   </div>
-                </Link>
                 <Link
                   href="/"
                   className="w-full"

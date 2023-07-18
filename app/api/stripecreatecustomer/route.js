@@ -39,7 +39,6 @@ export async function POST(request) {
       },
     });    
     customer_id = customer.id;
-
   }
 
   await updateDoc(userRef, {

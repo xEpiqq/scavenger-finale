@@ -22,9 +22,9 @@ export async function POST(request) {
         subscriptionStatus.push(subscriptions.data[i].status);
     }
 
-    if (subscriptionStatus.includes("cancelled")) {
+    if (subscriptionStatus.includes("canceled")) {
         await updateDoc(userRef, {
-            subscription_status: "cancelled"
+            subscription_status: "canceled"
         })
     }
     

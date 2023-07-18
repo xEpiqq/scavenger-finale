@@ -1,7 +1,8 @@
 import react from "react";
-
+import { doc, getDoc } from "firebase/firestore";
+import { useDocument } from "react-firebase-hooks/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { app } from "../initializeFirebase";
+import { app, db } from "../initializeFirebase";
 import {
   getAuth,
   signInWithPopup,
@@ -12,15 +13,17 @@ import { useRouter } from "next/navigation";
 const provider = new GoogleAuthProvider();
 const auth = getAuth(app);
 
-
 function GoogleLogin(props) {
   const router = useRouter();
   const [user, loading, error] = useAuthState(auth);
+  const [userDataRaw, loading2, error2] = useDocument(doc(db, `users/${user?.uid}`));
+  const userData = userDataRaw?.data();
 
+  // if user and sub status is active or trialing then redirect to sheets
+  // if (user) {
+  //   router.push("/sheets");
+  // }
 
-  if (user) {
-    router.push("/sheets");
-  }
   async function googleLogin() {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
@@ -52,8 +55,20 @@ function GoogleLogin(props) {
       }),
     })
 
-    router.push("/sheets");
+    let userRef, userDoc, firestore_user, subscription_status;
+    try {
+      userRef = doc(db, "users", user.uid)
+      userDoc = await getDoc(userRef)
+      firestore_user = userDoc.data()
+      subscription_status = firestore_user.subscription_status
+      if (subscription_status === "none") {
+        router.push("/freetrial");
+      }
+    } catch {
+      console.log("failed to get user data")
+    }
 
+    // router.push("/sheets");
   }
 
 

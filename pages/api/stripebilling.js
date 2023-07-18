@@ -10,27 +10,15 @@ export default async function handler(req, res) {
   const userRef = doc(db, "users", user_id)
   const userDoc = await getDoc(userRef)
   const firestore_user = userDoc.data()
+  console.log(firestore_user)
 
   if (req.method === 'POST') {
     try {
-        const session = await stripe.checkout.sessions.create({
-        line_items: [
-          {
-            price: process.env.PRO_PRICE_ID,
-            quantity: 1,
-          },
-        ],
-        mode: 'subscription',
-        success_url: `${req.headers.origin}/thankyoupro/?success=true`,
-        cancel_url: `${req.headers.origin}/?canceled=true`,
-        customer: firestore_user.stripe_customer_id,
-        // automatic_tax: {enabled: true},
-        // customer_update: {
-        //   address: 'auto',
-        // },
-        // 14 day trial
-      });
-      res.status(200).json({ url: session.url });
+          const session = await stripe.billingPortal.sessions.create({
+            customer: firestore_user.stripe_customer_id,
+            return_url: `${req.headers.origin}/sheets`,
+          });
+      res.redirect(303, session.url);
     } catch (err) {
       res.status(err.statusCode || 500).json(err.message);
     }
