@@ -16,12 +16,12 @@ export default async function handler(req, res) {
         const session = await stripe.checkout.sessions.create({
         line_items: [
           {
-            price: process.env.PRO_PRICE_ID,
+            price: process.env.TRIAL_PRICE_ID,
             quantity: 1,
           },
         ],
         mode: 'subscription',
-        success_url: `${req.headers.origin}/?success=true`,
+        success_url: `${req.headers.origin}/thankyou/?success=true`,
         cancel_url: `${req.headers.origin}/?canceled=true`,
         customer: firestore_user.stripe_customer_id,
         // automatic_tax: {enabled: true},
@@ -29,6 +29,10 @@ export default async function handler(req, res) {
         //   address: 'auto',
         // },
         // 14 day trial
+        subscription_data: {
+          trial_period_days: 14,
+        }, 
+
       });
       res.status(200).json({ url: session.url });
     } catch (err) {

@@ -35,8 +35,8 @@ const Footer = () => {
                   </Link>
                 </div>
                 <p className="mb-9 text-base font-medium leading-relaxed text-body-color">
-                  Our objective is to help freelance web developers find clients
-                  and sell websites.
+                  Our objective is to help social media marketing agencies find clients
+                  
                 </p>
                 <div className="flex items-center">
                   <a
