@@ -19,6 +19,8 @@ function GoogleLogin(props) {
   const [userDataRaw, loading2, error2] = useDocument(doc(db, `users/${user?.uid}`));
   const userData = userDataRaw?.data();
 
+  const [loggingIn, setLoggingIn] = react.useState(false);
+
   // if user and sub status is active or trialing then redirect to sheets
   // if (user) {
   //   router.push("/sheets");
@@ -27,6 +29,8 @@ function GoogleLogin(props) {
   async function googleLogin() {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
+
+    setLoggingIn(true);
 
     // check if firestore user
     await fetch("/api/login", {
@@ -63,7 +67,11 @@ function GoogleLogin(props) {
       subscription_status = firestore_user.subscription_status
       if (subscription_status === "none") {
         router.push("/freetrial");
+      } else {
+        router.push("/sheets");
       }
+      // setLoggingIn(false); // perhaps never set it false
+
     } catch {
       console.log("failed to get user data")
     }
@@ -73,6 +81,31 @@ function GoogleLogin(props) {
 
 
   return (
+    <>
+    {loggingIn && (
+      <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50 flex items-center justify-center">
+        <div className="bg-white rounded-md shadow-lg p-6">
+          <div className="flex items-center justify-center">
+            <svg
+              
+              className="animate-spin -ml-1 mr-3 h-5 w-5 text-primary"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                  stroke-width="4">
+                </circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+            </svg>
+            <p className="text-body-color">Logging in...</p>
+          </div>
+        </div>
+      </div>
+    )}
+
     <button
       onClick={googleLogin}
       className="mb-6 flex w-full items-center justify-center rounded-md bg-white p-3 text-base font-medium text-body-color shadow-one hover:text-primary"
@@ -112,6 +145,7 @@ function GoogleLogin(props) {
       </span>
       {props.method} with Google
     </button>
+    </>
   );
 }
 
