@@ -69,7 +69,8 @@ function Layout({ children }) {
   }
 
   useEffect(() => {
-    stripeSubVerification();
+    // stripeSubVerification(); FOR NOW NOT INCLUDED JUST IN CASE IT SLOWS THINGS DOWN
+    // IDEALLY WEBHOOKS WILL JUST WORK 100% WITHOUT FAIL
 
     if (userData?.subscription_status === "none") {
       stripeCheckoutTrial();
