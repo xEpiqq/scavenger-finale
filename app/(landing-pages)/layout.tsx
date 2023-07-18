@@ -20,11 +20,11 @@ export default function Layout({
       */}
 
 
-        <div className="bg-primary text-center py-3 sticky top-0 z-50">
+        {/* <div className="bg-primary text-center py-3 sticky top-0 z-50">
           <p className="text-sm font-bold text-white">
             Act fast!  <Link href="/specialpromo" className="underline hover:text-pbblack transition duration-150"> Lock in at $49 / month for life.</Link>
           </p>
-        </div>
+        </div> */}
 
         <Header />
         {children}
