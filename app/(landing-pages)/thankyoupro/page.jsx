@@ -2,14 +2,31 @@
 import Link from "next/link";
 import { useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'
+import { useAuthState } from "react-firebase-hooks/auth";
+import { getAuth } from "firebase/auth";
+import { app, db } from "../../../components/initializeFirebase";
+
+const auth = getAuth(app);
 
 const ThankYou = () => {
+  const [user, loading, user_error] = useAuthState(auth);
+  const user_id = user?.uid; 
 
-  const searchParams = useSearchParams();
+  async function stripeSubVerification() {
+    const response = await fetch ("/api/stripe_sub_verification", {
+      method: "POST",
+      body: JSON.stringify({
+        uid: user_id,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
+
   useEffect(() => {
-    const search = searchParams.get('success');
-    console.log(search);
-  }, []);
+    stripeSubVerification();
+  }, [user_id]);
 
   return (
     <>
