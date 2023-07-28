@@ -9,7 +9,7 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 
-function AccountTab({ item }) {
+function AccountTab({ item, closeCRM }) {
   const [isActive, setIsActive] = useState(false);
   const handleToggle = () => {
     setIsActive(!isActive);
@@ -132,7 +132,7 @@ function AccountTab({ item }) {
         <button
           className="h-10 w-24 rounded-md bg-white text-sm font-semibold text-pbblack transition duration-75 hover:bg-pbiconhover"
           onClick={() => {
-            setOpenCRM(false);
+            closeCRM();
           }}
         >
           Cancel
@@ -140,7 +140,7 @@ function AccountTab({ item }) {
         <button
           className="h-10 w-36 rounded-md bg-pbblack text-sm font-semibold text-white transition duration-75 hover:bg-pbblackhover"
           onClick={() => {
-            throw new Error("Not implemented");
+            closeCRM();
           }}
         >
           Save and Close

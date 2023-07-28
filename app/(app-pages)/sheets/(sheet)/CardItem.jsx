@@ -1,0 +1,210 @@
+import React from "react";
+import Link from "next/link";
+import { getLinkPreview, getPreviewFromContent } from "link-preview-js";
+import { useState, useEffect } from "react";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import CRM from "./CRM";
+
+function CardItem({ item }) {
+  const [openCopy, setOpenCopy] = useState(false);
+
+  const copyItem = (itemtocopy) => {
+    navigator.clipboard.writeText(itemtocopy);
+    setOpenCopy(true);
+    setTimeout(() => {
+      setOpenCopy(false);
+    }, 1000);
+  };
+
+  const screenshot = item.thumbnailScreenshot
+    ? item.thumbnailScreenshot
+    : item.desktopScreenshot;
+
+  const [openEmail, setOpenEmail] = useState(false);
+  const clickable_link = "http://" + item.siteLink;
+  const address_split = item.address.split(",");
+  const address = address_split[0];
+  const city = address_split[1];
+  const pre_state = address_split[2];
+  // remove the zip code from state
+  // if pre_state contains numbers
+  let state = pre_state;
+  if (/\d/.test(pre_state)) {
+    state = pre_state.replace(/[0-9]/g, "");
+  }
+  //
+  function openEmails() {
+    setOpenEmail(true);
+  }
+
+  return (
+    <>
+      <div className="card-body">
+        <div className="card w-96 gap-2 bg-gray-7 p-6 text-black shadow-xl">
+          <div className="flex items-start justify-start space-x-3">
+            <div className="flex flex-row justify-between w-full">
+              <div className="avatar">
+                <div className="mask mask-squircle h-12 w-12">
+                  <img
+                    src="/pixelprof.png"
+                    alt="Avatar Tailwind CSS Component"
+                  />
+                </div>
+              </div>
+              <div>
+                {city ? (
+                  <span className="badge badge-ghost badge-md">
+                    {city}, {state}
+                  </span>
+                ) : (
+                  <span className="badge badge-ghost badge-md w-24"></span>
+                )}
+              </div>
+            </div>
+          </div>{" "}
+          <div>
+            <div className="flex flex-row font-bold">
+              <p>
+                {item.name.length > 46
+                  ? item.name.slice(0, 43) + "..."
+                  : item.name}
+              </p>
+            </div>
+            <div className="text-sm opacity-50">
+              {item.siteLink !== "none" ? (
+                <Link href={clickable_link} target="_blank">
+                  <p className={`hover:underline`}>{item.siteLink}</p>
+                </Link>
+              ) : (
+                <p>{item.siteLink}</p>
+              )}
+            </div>
+          </div>
+          <div>
+            {address == "none" ? <p>...</p> : <p>{address}</p>}
+            {/* <span className="badge badge-ghost badge-sm">{city}, {state}</span> */}
+          </div>
+          <div
+            className=" flex gap-3 px-1 py-[1px] hover:cursor-pointer hover:bg-pbsearchselect"
+            onClick={() => {
+              copyItem(item.phoneNumber);
+            }}
+          >
+            <p>{item.phoneNumber}</p>
+          </div>
+          {!item.hasSSL && (
+            <div className="flex flex-row items-center justify-center gap-5">
+              <img
+                src="/securedfalse.svg"
+                className="h-4 w-4"
+                alt="Screenshot of site"
+              />
+              <p className="text-redpill">No SSL</p>
+            </div>
+          )}
+          {item.template !== "none" && <p>Template: {item.template}</p>}
+          {item.emails?.map((email, index) => (
+            <>
+              <div className="flex w-full justify-between gap-4">
+                <p key={index}>{email}</p>
+                <div
+                  className="flex flex-row items-center gap-[2px]"
+                  onClick={() => {
+                    copyItem(email);
+                  }}
+                >
+                  <img
+                    src="/copy.svg"
+                    draggable="false"
+                    className="h-4 w-4 opacity-20 duration-75 hover:cursor-pointer hover:opacity-100"
+                    alt="Screenshot of site"
+                  />
+                </div>
+              </div>
+            </>
+          ))}
+          <div className="flex flex-grow flex-row items-center gap-[2px]">
+            {item.facebook ? (
+              <Link href={item.facebook} target="_blank" className="h-5 w-5">
+                <img
+                  src="/Facebook.svg"
+                  alt="facebook link"
+                  className="h-5 w-5"
+                />
+              </Link>
+            ) : (
+              <img
+                src="/Facebook.svg"
+                alt="facebook link"
+                className="h-5 w-5 opacity-20"
+              />
+            )}
+            {item.instagram ? (
+              <Link href={item.instagram} target="_blank" className="h-5 w-5">
+                <img
+                  src="/Instagram.svg"
+                  alt="facebook link"
+                  className="h-5 w-5"
+                />
+              </Link>
+            ) : (
+              <img
+                src="/Instagram.svg"
+                alt="facebook link"
+                className="h-5 w-5 opacity-20"
+              />
+            )}
+            {item.twitter ? (
+              <Link href={item.twitter} target="_blank" className="h-5 w-5">
+                <img
+                  src="/Twitter.svg"
+                  alt="facebook link"
+                  className="h-5 w-5"
+                />
+              </Link>
+            ) : (
+              <img
+                src="/Twitter.svg"
+                alt="facebook link"
+                className="h-5 w-5 opacity-20"
+              />
+            )}
+            {item.linkedin ? (
+              <Link href={item.linkedin} target="_blank" className="h-5 w-5">
+                <img
+                  src="/LinkedIn.svg"
+                  alt="facebook link"
+                  className="h-5 w-5"
+                />
+              </Link>
+            ) : (
+              <img
+                src="/LinkedIn.svg"
+                alt="facebook link"
+                className="h-5 w-5 opacity-20"
+              />
+            )}
+            {item.youtube ? (
+              <Link href={item.youtube} target="_blank" className="">
+                <img
+                  src="/Youtube.svg"
+                  alt="facebook link"
+                  className="h-5 w-5"
+                />
+              </Link>
+            ) : (
+              <img
+                src="/Youtube.svg"
+                alt="facebook link"
+                className="h-5 w-5 opacity-20"
+              />
+            )}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default CardItem;

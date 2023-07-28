@@ -14,7 +14,7 @@ import {
 import { app, db } from "../../../../../components/initializeFirebase";
 import { v4 as uuidv4 } from "uuid";
 
-function CRM({ item, setOpenCRM }) {
+function CRM({ item, closeCRM }) {
   const OPEN_SPEED = 150;
 
   const inputRef = useRef(null); // Create a ref for the input element
@@ -31,6 +31,8 @@ function CRM({ item, setOpenCRM }) {
   const [deleteModal, setDeleteModal] = useState(false);
 
   const [changedFlag, setChangedFlag] = useState(false);
+
+  console.log("closeCRM", closeCRM);
 
   // const userRef = doc(db, `sheets/${id}`);
 
@@ -56,14 +58,14 @@ function CRM({ item, setOpenCRM }) {
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.keyCode === 27) {
-        setOpenCRM(false);
+        closeCRM();
       }
     };
     document.addEventListener("keydown", handleKeyDown);
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [setOpenCRM]);
+  }, [closeCRM]);
 
   function nameFocus() {
     setPencilClicked(true);
@@ -75,7 +77,7 @@ function CRM({ item, setOpenCRM }) {
   }
 
   async function deleteItem() {
-    setOpenCRM(false);
+    closeCRM();
     // TODO: delete
     item.delete();
   }
@@ -96,7 +98,7 @@ function CRM({ item, setOpenCRM }) {
           setIsShown(false);
           // wait for animation to finish
           setTimeout(() => {
-            setOpenCRM(false);
+            closeCRM();
           }, OPEN_SPEED);
         }}
       ></div>
@@ -255,7 +257,7 @@ function CRM({ item, setOpenCRM }) {
 
           <div className="mt-3 flex h-full w-full flex-col border-t border-pbiconhover bg-white">
             {tabState === 1 ? (
-              <AccountTab item={item} setOpenCRM={setOpenCRM} />
+              <AccountTab item={item} closeCRM={closeCRM} />
             ) : (
               <AuthUsersTab />
             )}
