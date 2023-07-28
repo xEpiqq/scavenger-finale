@@ -75,7 +75,7 @@ const Hero = () => {
                           Discover How In The Video Below
                         </p>
                       </div>
-                      <div className="relative aspect-video w-full bg-black xl:w-[1100px]">
+                      <div className="relative aspect-video w-full bg-black">
                         <iframe
                           src="https://player.vimeo.com/video/831300665?h=f6e885212b&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
                           allow="autoplay; fullscreen; picture-in-picture"
