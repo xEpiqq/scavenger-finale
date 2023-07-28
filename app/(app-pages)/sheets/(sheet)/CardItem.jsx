@@ -7,12 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CRM from "./CRM";
 
 function CardItem({ item }) {
-  const [openCRM, setOpenCRM] = useState(false);
   const [openCopy, setOpenCopy] = useState(false);
-
-  const clicked = () => {
-    setOpenCRM(!openCRM);
-  };
 
   const copyItem = (itemtocopy) => {
     navigator.clipboard.writeText(itemtocopy);
@@ -21,12 +16,6 @@ function CardItem({ item }) {
       setOpenCopy(false);
     }, 1000);
   };
-
-  useEffect(() => {
-    console.log("item changed", item);
-    console.log(item);
-    //   item.updateIfChanged();
-  }, [openCRM]);
 
   const screenshot = item.thumbnailScreenshot
     ? item.thumbnailScreenshot

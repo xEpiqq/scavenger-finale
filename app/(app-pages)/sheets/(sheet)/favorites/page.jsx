@@ -188,6 +188,31 @@ function Page() {
               ))}
           </tbody>
         </table>
+
+        <div className="flex w-full flex-col items-center justify-center gap-1 pt-3 sm:hidden">
+          {displayedSheets
+            ?.slice(
+              currentPage * resultsPerPage,
+              (currentPage + 1) * resultsPerPage
+            )
+            .map((list, index) => (
+              <>
+                <CardItem
+                  item={list}
+                  toggleselected={() => {
+                    if (selectedSheets.includes(index)) {
+                      setSelectedSheets(
+                        selectedSheets.filter((i) => i !== index)
+                      );
+                    } else {
+                      setSelectedSheets([...selectedSheets, index]);
+                    }
+                  }}
+                />
+              </>
+            ))}
+        </div>
+
         <div className="sticky bottom-0 right-0 mt-2 flex w-80 items-center justify-end px-6 py-3">
           <div className="flex w-full max-w-md flex-row justify-between">
             <button

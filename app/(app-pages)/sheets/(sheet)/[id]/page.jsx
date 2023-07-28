@@ -39,6 +39,7 @@ function Page({ params }) {
   const [searching, setSearching] = useState(false);
   const [selectedSheets, setSelectedSheets] = useState([]);
   const [displayedSheets, setDisplayedSheets] = useState([]);
+  const [openedCRM, setOpenedCRM] = useState(-1);
 
   const [user, loading, user_error] = useAuthState(auth);
 
@@ -229,6 +230,9 @@ function Page({ params }) {
               .map((list, index) => (
                 <>
                   <Item2
+                    openCRM={() => setOpenedCRM(index)}
+                    closeCRM={() => setOpenedCRM(-1)}
+                    isCRMOpen={openedCRM === index}
                     item={list}
                     toggleselected={() => {
                       if (selectedSheets.includes(index)) {
@@ -255,7 +259,7 @@ function Page({ params }) {
           </table>
         </div>
 
-        <div className="flex w-full justify-center items-center gap-1 pt-3 flex-col sm:hidden">
+        <div className="flex w-full flex-col items-center justify-center gap-1 pt-3 sm:hidden">
           {displayedSheets
             ?.slice(
               currentPage * resultsPerPage,
@@ -264,6 +268,9 @@ function Page({ params }) {
             .map((list, index) => (
               <>
                 <CardItem
+                    openCRM={() => setOpenedCRM(index)}
+                    closeCRM={() => setOpenedCRM(-1)}
+                    isCRMOpen={openedCRM === index}
                   item={list}
                   toggleselected={() => {
                     if (selectedSheets.includes(index)) {

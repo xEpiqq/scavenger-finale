@@ -6,13 +6,8 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CRM from "./CRM";
 
-function Item2({ item }) {
-  const [openCRM, setOpenCRM] = useState(false);
+function Item2({ item, openCRM, closeCRM, isCRMOpen }) {
   const [openCopy, setOpenCopy] = useState(false);
-
-  const clicked = () => {
-    setOpenCRM(!openCRM);
-  };
 
   const copyItem = (itemtocopy) => {
     navigator.clipboard.writeText(itemtocopy);
@@ -21,12 +16,6 @@ function Item2({ item }) {
       setOpenCopy(false);
     }, 1000);
   };
-
-  useEffect(() => {
-    console.log("item changed", item);
-    console.log(item);
-    //   item.updateIfChanged();
-  }, [openCRM]);
 
   const screenshot = item.thumbnailScreenshot
     ? item.thumbnailScreenshot
@@ -193,8 +182,8 @@ function Item2({ item }) {
             )}
             {/* <p>{item.email}</p> */}
           </td>
-          <td >
-            <div className="flex flex-row items-center gap-[2px] flex-grow">
+          <td>
+            <div className="flex flex-grow flex-row items-center gap-[2px]">
               {item.facebook ? (
                 <Link href={item.facebook} target="_blank" className="h-5 w-5">
                   <img
@@ -273,7 +262,7 @@ function Item2({ item }) {
             </div>
           </td>
 
-          <th onClick={clicked}>
+          <th onClick={openCRM}>
             <div className="flex h-4 w-4 items-center justify-center rounded-full p-5 hover:cursor-pointer hover:bg-gray-4">
               <FontAwesomeIcon icon={faArrowRight} />
             </div>
@@ -287,7 +276,7 @@ function Item2({ item }) {
         </div>
       )}
 
-      {openCRM && <CRM item={item} setOpenCRM={setOpenCRM} />}
+      {isCRMOpen && <CRM item={item} closeCRM={closeCRM} />}
     </>
   );
 }
