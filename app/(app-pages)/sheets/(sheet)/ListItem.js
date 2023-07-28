@@ -34,6 +34,8 @@ class ListItem {
     this.linkedin = params.linkedin || null;
     this.youtube = params.youtube || null;
     this.favorite = params.favorite || null;
+    this.template = params.template || null;
+    this.emails = params.emails || null;
 
     // CRM fields
     this.gatekeeperName = params.gatekeeperName || null;

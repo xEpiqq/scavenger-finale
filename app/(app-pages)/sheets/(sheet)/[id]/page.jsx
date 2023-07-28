@@ -2,14 +2,7 @@
 import { app, db } from "../../../../../components/initializeFirebase";
 import { getAuth, signOut } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
-import {
-  getFirestore,
-  doc,
-  getDoc,
-  updateDoc,
-  collection,
-  addDoc,
-} from "firebase/firestore";
+import {getFirestore, doc, getDoc, updateDoc, collection, addDoc, } from "firebase/firestore";
 import { useDocument } from "react-firebase-hooks/firestore";
 import { useState } from "react";
 import Item from "../Item.jsx";
@@ -19,6 +12,7 @@ import PageName from "../../../components/PageName";
 import Skeleton from "react-loading-skeleton";
 import FillList from "./FillList.jsx";
 import Link from "next/link";
+import Item2 from '../Item2.jsx'
 
 import ListItem from "../ListItem.js";
 
@@ -27,7 +21,6 @@ const auth = getAuth(app);
 function Page({ params }) {
   //////// protect this route so someone with your list id cannot just type it into the url and access your shiz
   //////// Task Complete: not yet
-  ////////
 
   const resultsPerPage = 20;
   const [currentPage, setCurrentPage] = useState(0);
@@ -70,7 +63,6 @@ function Page({ params }) {
 
   useEffect(() => {
     console.log("ERHEHREHRHERHERHREH", user.uid);
-    // need to update the user id in the list items
     setDisplayedSheets(
       displayedSheets.map((list) => {
         return new ListItem({
@@ -83,9 +75,7 @@ function Page({ params }) {
   }, [user]);
 
   async function search(searchkey) {
-    // if (!searchkey) return;
 
-    // Filter the lists by the searchkey and all the fields
     const filteredLists = sheetDataRaw?.data().lists?.filter((list) => {
       const lowerCaseSearchKey = searchkey.toLowerCase();
       const lowerCaseBizName = list.name.toLowerCase();
@@ -103,7 +93,6 @@ function Page({ params }) {
       );
     });
 
-    // Update the state to display the filtered lists
     setDisplayedSheets(filteredLists);
     setCurrentPage(0);
     setSelectedSheets([]);
@@ -117,7 +106,7 @@ function Page({ params }) {
   }
 
   async function sendToLambda() {
-    // check if niche or location is empty
+
     if (niche === "" || location === "") {
       setQueryError("Niche or Location is empty");
       return;
@@ -126,7 +115,6 @@ function Page({ params }) {
     let searchQuery = niche + " " + location;
     const query_array = searchQuery.split(" ");
     console.log(query_array);
-    // remove commas from searchquery
     searchQuery = searchQuery.replace(/,/g, "");
 
     if (searchQuery.match(/[^a-zA-Z ]/g)) {
@@ -179,86 +167,67 @@ function Page({ params }) {
     );
   }
 
+
+
+
+
+
+
+
+
+
+
+
   return (
     <>
       <div className={styles.table_wrapper}>
-        {/* <PageName name="List Page" /> */}
 
-        <div className="flex h-24 w-full bg-pbsecondbg">
-          <div className="flex h-full w-1/2 flex-row items-center gap-3 bg-pbsecondbg px-7">
+        <div className="flex h-24 w-full">
+          <div className="flex h-full w-full flex-row items-center gap-3 bg-pbsecondbg px-7">
             <Link href="/sheets">
-              <h2 className="text-lg text-pbgreytext">Lists</h2>{" "}
+              <h2 className="text-lg text-pbgreytext pl-16">Lists</h2>{" "}
             </Link>
             <h2 className="text-xl text-pbslash"> / </h2>
-            <h2 className="text-lg text-pbblack">{sheetData?.list_name}</h2>
-            {/* <img src="/gear.png" className="ml-5 h-5 w-5" />
-            <img src="/refresh.png" className="ml-5 h-5 w-5" /> */}
+            <h2 className="text-lg text-pbblack w-44">{sheetData?.list_name}</h2>
+
+            <div className="flex h-16 w-full bg-pbsecondbg justify-end items-center">
+              <input type="text" placeholder="Search" className="mx-7 h-11 w-1/4 rounded-3xl bg-pbiconhover px-7 text-lg outline-none transition duration-150 focus:bg-pbsearchselect" value={searchbar} onChange={(e) => { searchBarQuery(e); }} />
+            </div>
+
           </div>
 
-          {/* <div className="flex h-full w-1/2 flex-row items-center justify-end gap-3 bg-pbsecondbg px-7">
-            <button className="flex h-10 w-36 items-center justify-center rounded-md border-2 border-pbblack bg-transparent text-sm font-semibold text-pbblack transition duration-150 hover:bg-pbwhitebtnhover">
-              <img src="/bracket.png" className="h-7 w-7" />
-              API Preview
-            </button>
-            <button className="flex h-10 w-36 items-center justify-center rounded-md bg-pbblack text-sm font-semibold text-white transition duration-150 hover:bg-pbblackbtnhover">
-              <img src="/plus.png" className="-ml-3 h-7 w-7" />
-              New record
-            </button>
-          </div> */}
         </div>
 
-        <div className="flex h-16 w-full bg-pbsecondbg">
-          <input
-            type="text"
-            placeholder="Search"
-            className="mx-7 h-11 w-full rounded-3xl bg-pbiconhover px-7 text-lg outline-none transition
-        duration-150 focus:bg-pbsearchselect"
-            value={searchbar}
-            onChange={(e) => {
-              searchBarQuery(e);
-            }}
-          />
-        </div>
 
-        <table className="">
-          <thead className="">
-            <tr>
-              <th>
-                <p>Scrnshot</p>
-              </th>
+        <div className="overflow-x-auto">
+            <table className="table">
+                {/* head */}
+                <thead>
+                    <tr>
+                        <th>
+                            <label>
+                                <input type="checkbox" className="checkbox" />
+                            </label>
+                        </th>
+                        <th>NAME</th>
+                        <th>SSL</th>
+                        <th>TEMPLATE</th>
+                        <th>PHONE</th>
+                        <th>ADDRESS</th>
+                        <th>EMAILS</th>
+                        <th>SOCIAL</th>
+                        <th>CRM</th>
+                    </tr>
+                </thead>
 
-              <th>
-                <p>SSL</p>
-              </th>
 
-              <th>
-                <p>Business Name</p>
-              </th>
-              <th>
-                <p>Phone Number</p>
-              </th>
-              <th>
-                <p>Email / Contact</p>
-              </th>
-              <th>
-                <p>Social</p>
-              </th>
-              <th>
-                <p>Address</p>
-              </th>
-              <th className="sticky right-0 shadow-sticky">
-                <p>Actions</p>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
             {displayedSheets
-              ?.slice(
+            ?.slice(
                 currentPage * resultsPerPage,
                 (currentPage + 1) * resultsPerPage
               )
               .map((list, index) => (
-                <Item
+                <Item2
                   item={list}
                   toggleselected={() => {
                     if (selectedSheets.includes(index)) {
@@ -271,8 +240,19 @@ function Page({ params }) {
                   }}
                 />
               ))}
-          </tbody>
-        </table>
+
+            {/* <tfoot>
+                    <tr>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Job</th>
+                        <th>Favorite Color</th>
+                        <th></th>
+                    </tr>
+                </tfoot> */}
+            </table>        
+          </div>
+
         <div className="sticky bottom-0 right-0 mt-2 flex w-80 items-center justify-end px-6 py-3">
           <div className="flex w-full max-w-md flex-row justify-between">
             <button
@@ -295,31 +275,10 @@ function Page({ params }) {
           </div>
         </div>
       </div>
+
+      
     </>
   );
 }
 
 export default Page;
-
-// <PageName name="List Page" />
-// {/* need a search bar here */}
-// <div className="flex items-center justify-between">
-//   <input
-//     type="text"
-//     placeholder="Search..."
-//     value={searchbar}
-
-//     onChange={(e) => {
-//       setSearchbar(e.target.value);
-//       search(searchBar)
-//     }}
-
-//     className="border-gray-300 mx-2 my-3 flex-grow rounded-md border p-2 text-white"
-//   />
-//   <button
-//     onClick={() => search(searchbar)}
-//     className="border-gray-3 mx-2 my-3 rounded-md border p-2 hover:bg-black hover:text-white"
-//   >
-//     Search
-//   </button>
-// </div>
