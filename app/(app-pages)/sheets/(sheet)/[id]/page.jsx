@@ -231,7 +231,7 @@ function Page({ params }) {
                 <>
                   <Item2
                     openCRM={() => setOpenedCRM(index)}
-                    closeCRM={() => setOpenedCRM(-1)}
+                    closeCRM={() => {list.updateIfChanged(); setOpenedCRM(-1)}}
                     isCRMOpen={openedCRM === index}
                     item={list}
                     toggleselected={() => {
@@ -269,7 +269,7 @@ function Page({ params }) {
               <>
                 <CardItem
                     openCRM={() => setOpenedCRM(index)}
-                    closeCRM={() => setOpenedCRM(-1)}
+                    closeCRM={() => {list.updateIfChanged(); setOpenedCRM(-1)}}
                     isCRMOpen={openedCRM === index}
                   item={list}
                   toggleselected={() => {
