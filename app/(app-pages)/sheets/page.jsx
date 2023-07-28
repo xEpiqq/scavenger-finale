@@ -146,7 +146,7 @@ function Page() {
   console.log(screenWidth);
 
   return (
-    <div className="flex w-full">
+    <div className="flex h-screen w-full sm:h-full">
       <div
         className="hidden w-64 border-b-0 border-pblines border-l-transparent border-t-transparent bg-white sm:block sm:h-screen"
         style={{ borderWidth: 1 }}
@@ -192,6 +192,14 @@ function Page() {
       </div>
 
       <div className="flex w-full flex-col justify-between bg-pbsecondbg px-4 py-8">
+        <button
+          className="block sm:fixed right-20 hover:border-1 bottom-4 h-10 w-full sm:w-48 rounded-md bg-black text-white transition duration-200 hover:border hover:border-black hover:bg-white hover:text-black"
+          onClick={() => {
+            setCreateSheet(true);
+          }}
+        >
+          Create New Sheet
+        </button>
         <PageName
           name="List Overview"
           daysLeft={daysSinceCreated}
@@ -228,15 +236,6 @@ function Page() {
                 Export to CSV
               </button>
             )}
-
-            <button
-              className="right-38 hover:border-1 bottom-4 h-10 w-48 rounded-md bg-black text-white transition duration-200 hover:border hover:border-black hover:bg-white hover:text-black"
-              onClick={() => {
-                setCreateSheet(true);
-              }}
-            >
-              Create New Sheet
-            </button>
 
             {createSheet && (
               <TextPrompt
