@@ -2,7 +2,14 @@
 import { app, db } from "../../../../../components/initializeFirebase";
 import { getAuth, signOut } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
-import {getFirestore, doc, getDoc, updateDoc, collection, addDoc, } from "firebase/firestore";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  updateDoc,
+  collection,
+  addDoc,
+} from "firebase/firestore";
 import { useDocument } from "react-firebase-hooks/firestore";
 import { useState } from "react";
 import Item from "../Item.jsx";
@@ -12,7 +19,8 @@ import PageName from "../../../components/PageName";
 import Skeleton from "react-loading-skeleton";
 import FillList from "./FillList.jsx";
 import Link from "next/link";
-import Item2 from '../Item2.jsx'
+import Item2 from "../Item2.jsx";
+import CardItem from "../CardItem.jsx";
 
 import ListItem from "../ListItem.js";
 
@@ -75,7 +83,6 @@ function Page({ params }) {
   }, [user]);
 
   async function search(searchkey) {
-
     const filteredLists = sheetDataRaw?.data().lists?.filter((list) => {
       const lowerCaseSearchKey = searchkey.toLowerCase();
       const lowerCaseBizName = list.name.toLowerCase();
@@ -106,7 +113,6 @@ function Page({ params }) {
   }
 
   async function sendToLambda() {
-
     if (niche === "" || location === "") {
       setQueryError("Niche or Location is empty");
       return;
@@ -167,78 +173,74 @@ function Page({ params }) {
     );
   }
 
-
-
-
-
-
-
-
-
-
-
-
   return (
     <>
       <div className={styles.table_wrapper}>
-
-        <div className="flex h-24 w-full">
+        <div className="hidden h-24 w-full sm:flex">
           <div className="flex h-full w-full flex-row items-center gap-3 bg-pbsecondbg px-7">
             <Link href="/sheets">
-              <h2 className="text-lg text-pbgreytext pl-16">Lists</h2>{" "}
+              <h2 className="pl-16 text-lg text-pbgreytext">Lists</h2>{" "}
             </Link>
             <h2 className="text-xl text-pbslash"> / </h2>
-            <h2 className="text-lg text-pbblack w-44">{sheetData?.list_name}</h2>
+            <h2 className="w-44 text-lg text-pbblack">
+              {sheetData?.list_name}
+            </h2>
 
-            <div className="flex h-16 w-full bg-pbsecondbg justify-end items-center">
-              <input type="text" placeholder="Search" className="mx-7 h-11 w-1/4 rounded-3xl bg-pbiconhover px-7 text-lg outline-none transition duration-150 focus:bg-pbsearchselect" value={searchbar} onChange={(e) => { searchBarQuery(e); }} />
+            <div className="flex h-16 w-full items-center justify-end bg-pbsecondbg">
+              <input
+                type="text"
+                placeholder="Search"
+                className="mx-7 h-11 w-1/4 rounded-3xl bg-pbiconhover px-7 text-lg outline-none transition duration-150 focus:bg-pbsearchselect"
+                value={searchbar}
+                onChange={(e) => {
+                  searchBarQuery(e);
+                }}
+              />
             </div>
-
           </div>
-
         </div>
 
-
-        <div className="overflow-x-auto w-full">
-            <table className="table w-full">
-                {/* head */}
-                <thead>
-                    <tr>
-                        <th>
-                            <label>
-                                <input type="checkbox" className="checkbox" />
-                            </label>
-                        </th>
-                        <th>NAME</th>
-                        <th>SSL</th>
-                        <th>TEMPLATE</th>
-                        <th>PHONE</th>
-                        <th>ADDRESS</th>
-                        <th>EMAILS</th>
-                        <th>SOCIAL</th>
-                        <th>CRM</th>
-                    </tr>
-                </thead>
-
+        <div className="hidden w-full overflow-x-auto sm:block">
+          <table className="table w-full">
+            {/* head */}
+            <thead>
+              <tr>
+                <th>
+                  <label>
+                    <input type="checkbox" className="checkbox" />
+                  </label>
+                </th>
+                <th>NAME</th>
+                <th>SSL</th>
+                <th>TEMPLATE</th>
+                <th>PHONE</th>
+                <th>ADDRESS</th>
+                <th>EMAILS</th>
+                <th>SOCIAL</th>
+                <th>CRM</th>
+              </tr>
+            </thead>
 
             {displayedSheets
-            ?.slice(
+              ?.slice(
                 currentPage * resultsPerPage,
                 (currentPage + 1) * resultsPerPage
               )
               .map((list, index) => (
-                <Item2
-                  item={list}
-                  toggleselected={() => {
-                    if (selectedSheets.includes(index)) {
-                      setSelectedSheets(
-                        selectedSheets.filter((i) => i !== index)
-                      );
-                    } else {
-                      setSelectedSheets([...selectedSheets, index]);
-                    }
-                  }}
-                />
+                <>
+                  <Item2
+                    item={list}
+                    toggleselected={() => {
+                      if (selectedSheets.includes(index)) {
+                        setSelectedSheets(
+                          selectedSheets.filter((i) => i !== index)
+                        );
+                      } else {
+                        setSelectedSheets([...selectedSheets, index]);
+                      }
+                    }}
+                  />
+                </>
               ))}
 
             {/* <tfoot>
@@ -250,8 +252,32 @@ function Page({ params }) {
                         <th></th>
                     </tr>
                 </tfoot> */}
-            </table>        
-          </div>
+          </table>
+        </div>
+
+        <div className="flex w-full justify-center items-center gap-1 pt-3 flex-col sm:hidden">
+          {displayedSheets
+            ?.slice(
+              currentPage * resultsPerPage,
+              (currentPage + 1) * resultsPerPage
+            )
+            .map((list, index) => (
+              <>
+                <CardItem
+                  item={list}
+                  toggleselected={() => {
+                    if (selectedSheets.includes(index)) {
+                      setSelectedSheets(
+                        selectedSheets.filter((i) => i !== index)
+                      );
+                    } else {
+                      setSelectedSheets([...selectedSheets, index]);
+                    }
+                  }}
+                />
+              </>
+            ))}
+        </div>
 
         <div className="sticky bottom-0 right-0 mt-2 flex w-80 items-center justify-end px-6 py-3">
           <div className="flex w-full max-w-md flex-row justify-between">
@@ -275,8 +301,6 @@ function Page({ params }) {
           </div>
         </div>
       </div>
-
-      
     </>
   );
 }
