@@ -81,11 +81,11 @@ function Layout({ children }) {
   }, [userData?.subscription_status]);
 
 
-  if (userData?.subscription_status === "active" || userData?.subscription_status === "trialing") {
+  if (userData?.subscription_status === "active" || userData?.subscritrialingption_status === "") {
     return (
       <div className="flex flex-col w-full h-full text-black bg-pbsecondbg sm:flex-row">
         <Navbar />
-        <section className="overflow-x-clip bg-pbsecondbg">{children}</section>
+        <section className="w-full overflow-x-clip bg-pbsecondbg">{children}</section>
       </div>
     );
     }

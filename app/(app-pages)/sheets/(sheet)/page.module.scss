@@ -19,6 +19,8 @@
 
     border: none;
 
+    gap: 3rem;
+
     // the second th should take minimal space in the table
     th:nth-child(1),
     th:nth-child(2),
@@ -28,17 +30,6 @@
     th:nth-child(6) {
       width: 0px;
       white-space: nowrap;
-      padding-right: 3rem;
-    }
-
-    th:nth-child(8),
-    td:nth-child(8) {
-      width: 4rem;
-      min-width: 4rem;
-      background-color: inherit;
-
-      // disable shrink
-      flex-shrink: 0;
     }
 
     th:nth-child(1),

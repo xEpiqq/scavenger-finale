@@ -199,8 +199,8 @@ function Page({ params }) {
         </div>
 
 
-        <div className="overflow-x-auto">
-            <table className="table">
+        <div className="overflow-x-auto w-full">
+            <table className="table w-full">
                 {/* head */}
                 <thead>
                     <tr>
