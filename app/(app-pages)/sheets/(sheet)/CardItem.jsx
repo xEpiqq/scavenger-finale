@@ -6,7 +6,7 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CRM from "./CRM";
 
-function CardItem({ item }) {
+function CardItem({ item, openCRM, closeCRM, isCRMOpen }) {
   const [openCopy, setOpenCopy] = useState(false);
 
   const copyItem = (itemtocopy) => {
@@ -43,7 +43,7 @@ function CardItem({ item }) {
       <div className="card-body">
         <div className="card w-96 gap-2 bg-gray-7 p-6 text-black shadow-xl">
           <div className="flex items-start justify-start space-x-3">
-            <div className="flex flex-row justify-between w-full">
+            <div className="flex w-full flex-row justify-between">
               <div className="avatar">
                 <div className="mask mask-squircle h-12 w-12">
                   <img
@@ -201,8 +201,13 @@ function CardItem({ item }) {
               />
             )}
           </div>
+          <button onClick={openCRM} className="btn">
+            Open CRM
+          </button>
         </div>
       </div>
+
+      {isCRMOpen && <CRM item={item} closeCRM={closeCRM} />}
     </>
   );
 }
