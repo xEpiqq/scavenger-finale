@@ -47,7 +47,7 @@ function CardItem({ item }) {
               <div className="avatar">
                 <div className="mask mask-squircle h-12 w-12">
                   <img
-                    src="/pixelprof.png"
+                    src={`https://api.dicebear.com/6.x/avataaars/svg?seed=${item.siteLink}`}
                     alt="Avatar Tailwind CSS Component"
                   />
                 </div>
