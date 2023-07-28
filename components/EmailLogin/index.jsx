@@ -30,9 +30,9 @@ function EmailLogin(props) {
   const router = useRouter();
   const [user, loading, error] = useAuthState(auth);
 
-  if (user) {
-    router.push("/sheets");
-  }
+  // if (user) {
+  //   router.push("/sheets");
+  // }
 
   const [email, setEmail] = useState("");
   const [emailSent, setEmailSent] = useState(false);

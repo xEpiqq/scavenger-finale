@@ -238,24 +238,6 @@ function Page() {
               Create New Sheet
             </button>
 
-            {subscriptionStatus !== "active" && (
-              <div className="fixed bottom-7 left-[480px] flex h-14 w-[780px] items-center justify-center rounded-md border-[1px] bg-promobox text-sm">
-                <span className="mr-2 font-semibold">
-                  🎁 Limited Lifetime deal
-                </span>
-                Lock in at{" "}
-                <span className="ml-1">
-                  {" "}
-                  $49 /month for life before price doubles
-                </span>
-                <Link href="/specialpromo">
-                  <button className="ml-3 h-8 w-auto rounded-md bg-black px-5 py-1 text-xs text-white transition duration-150 hover:border-[1px] hover:bg-white hover:text-pbblack">
-                    Grab this lifetime deal
-                  </button>
-                </Link>
-              </div>
-            )}
-
             {createSheet && (
               <TextPrompt
                 props={{

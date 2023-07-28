@@ -4,6 +4,8 @@ module.exports = {
     "./app/**/*.{js,ts,jsx,tsx}",
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
+    "./app/freetrial/**/*.{js,ts,jsx,tsx}", // added freetrial directory
+
   ],
   theme: {
     container: {
@@ -124,4 +126,8 @@ module.exports = {
     },
   },
   plugins: [],
+  plugins: [require("daisyui")],
+  daisyui: {
+    themes: ["dark"]
+  },
 };

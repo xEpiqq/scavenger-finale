@@ -1,83 +1,32 @@
-"use client";
-import {
-  getAuth,
-  isSignInWithEmailLink,
-  signInWithEmailLink,
-} from "firebase/auth";
+"use client"
 import Link from "next/link";
-
-import { app } from "../../../components/initializeFirebase";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useSearchParams } from 'next/navigation'
+import { useEffect } from 'react'
+import { useAuthState } from "react-firebase-hooks/auth";
+import { getAuth } from "firebase/auth";
+import { app, db } from "../../../components/initializeFirebase";
 
 const auth = getAuth(app);
 
-const EmailSigninPage = () => {
-  const router = useRouter();
+const ThankYou = () => {
+  const [user, loading, user_error] = useAuthState(auth);
+  const user_id = user?.uid; 
+
+  async function stripeSubVerification() {
+    const response = await fetch ("/api/stripe_sub_verification", {
+      method: "POST",
+      body: JSON.stringify({
+        uid: user_id,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
 
   useEffect(() => {
-    if (isSignInWithEmailLink(auth, window.location.href)) {
-      // Additional state parameters can also be passed via URL.
-      // This can be used to continue the user's intended action before triggering
-      // the sign-in operation.
-      // Get the email if available. This should be available if the user completes
-      // the flow on the same device where they started it.
-      let email = window.localStorage.getItem("emailForSignIn");
-      if (!email) {
-        // User opened the link on a different device. To prevent session fixation
-        // attacks, ask the user to provide the associated email again. For example:
-        email = window.prompt("Please provide your email for confirmation");
-      }
-      // The client SDK will parse the code from the link for you.
-      signInWithEmailLink(auth, email, window.location.href)
-        .then(async (result) => {
-          // Clear email from storage.
-          window.localStorage.removeItem("emailForSignIn");
-
-          console.log(result);
-          const user = result.user;
-          console.log(user);
-          // You can access the new user via result.user
-          // Additional user info profile not available via:
-          // result.additionalUserInfo.profile == null
-          // You can check if the user is new or existing:
-          // result.additionalUserInfo.isNewUser
-
-          // check if firestore user
-          await fetch("/api/login", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              uid: user.uid,
-              displayname: user.displayName,
-              email: user.email,
-              photo: user.photoURL,
-            }),
-          });
-
-          // fetch to /api/stripecreatecustomer
-          await fetch("/api/stripecreatecustomer", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              email: user.email,
-              name: user.displayName,
-              user_id: user.uid,
-            }),
-          });
-
-          router.push("/sheets");
-        })
-        .catch((error) => {
-          // Some error occurred, you can inspect the code: error.code
-          // Common errors could be invalid email and invalid or expired OTPs.
-        });
-    }
-  }, []);
+    stripeSubVerification();
+  }, [user_id]);
 
   return (
     <>
@@ -87,10 +36,10 @@ const EmailSigninPage = () => {
             <div className="w-full px-4">
               <div className="mx-auto max-w-[500px] rounded-md bg-primary bg-opacity-5 py-10 px-6 sm:p-[60px]">
                 <h3 className="mb-3 text-center text-2xl font-bold text-white dark:text-white sm:text-3xl">
-                  Login successful!
+                  Scavenger Pro Is Active
                 </h3>
                 <p className="mb-11 text-center text-base font-medium text-body-color">
-                  You can now access your account.
+                  Every Premium Feature Is Now Yours
                 </p>
                   <Link href="/sheets" className="text-primary flex items-center justify-center">
                     <button className="bg-white text-pbblack font-bold px-4 py-2 rounded-lg hover:bg-gray-4 duration-150">GO TO DASHBOARD</button>
@@ -161,4 +110,4 @@ const EmailSigninPage = () => {
   );
 };
 
-export default EmailSigninPage;
+export default ThankYou;
