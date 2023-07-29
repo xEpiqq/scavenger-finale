@@ -128,6 +128,12 @@ module.exports = {
   plugins: [],
   plugins: [require("daisyui")],
   daisyui: {
-    themes: ["dark"]
+    themes: [
+      {
+        dark: {
+          primary: "#34B27B",
+        }
+      }
+    ]
   },
 };

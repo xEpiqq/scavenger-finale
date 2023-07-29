@@ -13,6 +13,7 @@ import {
 import { useDocument } from "react-firebase-hooks/firestore";
 import { useState } from "react";
 import Item from "../Item.jsx";
+import Item2 from "../Item2.jsx";
 import styles from "../page.module.scss";
 import { useEffect } from "react";
 import PageName from "../../../components/PageName";
@@ -20,6 +21,7 @@ import Skeleton from "react-loading-skeleton";
 import Link from "next/link";
 
 import ListItem from "../ListItem.js";
+import CardItem from "../CardItem.jsx";
 
 const auth = getAuth(app);
 
@@ -33,6 +35,7 @@ function Page() {
   const [searchbar, setSearchbar] = useState("");
   const [selectedSheets, setSelectedSheets] = useState([]);
   const [displayedSheets, setDisplayedSheets] = useState([]);
+  const [openedCRM, setOpenedCRM] = useState(-1);
 
   const [user, loading, user_error] = useAuthState(auth);
   const [sheetDataRaw, setSheetDataRaw] = useState(null);
@@ -134,61 +137,64 @@ function Page() {
             }}
           />
         </div>
+        <div className="hidden w-full overflow-x-auto sm:block">
+          <table className="table w-full">
+            {/* head */}
+            <thead>
+              <tr>
+                <th>
+                  <label>
+                    <input type="checkbox" className="checkbox" />
+                  </label>
+                </th>
+                <th>NAME</th>
+                <th>SSL</th>
+                <th>TEMPLATE</th>
+                <th>PHONE</th>
+                <th>ADDRESS</th>
+                <th>EMAILS</th>
+                <th>SOCIAL</th>
+                <th>CRM</th>
+              </tr>
+            </thead>
 
-        <table className="">
-          <thead className="">
-            <tr>
-              <th>
-                <p>Scrnshot</p>
-              </th>
-
-              <th>
-                <p>SSL</p>
-              </th>
-
-              <th>
-                <p>Business Name</p>
-              </th>
-              <th>
-                <p>Phone Number</p>
-              </th>
-              <th>
-                <p>Email / Contact</p>
-              </th>
-              <th>
-                <p>Social</p>
-              </th>
-              <th>
-                <p>Address</p>
-              </th>
-              <th className="sticky right-0 shadow-sticky">
-                <p>Actions</p>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
             {displayedSheets
               ?.slice(
                 currentPage * resultsPerPage,
                 (currentPage + 1) * resultsPerPage
               )
               .map((list, index) => (
-                <Item
-                  item={list}
-                  toggleselected={() => {
-                    if (selectedSheets.includes(index)) {
-                      setSelectedSheets(
-                        selectedSheets.filter((i) => i !== index)
-                      );
-                    } else {
-                      setSelectedSheets([...selectedSheets, index]);
-                    }
-                  }}
-                />
+                <>
+                  <Item2
+                    openCRM={() => setOpenedCRM(index)}
+                    closeCRM={() => {list.updateIfChanged(); setOpenedCRM(-1)}}
+                    isCRMOpen={openedCRM === index}
+                    item={list}
+                    toggleselected={() => {
+                      if (selectedSheets.includes(index)) {
+                        setSelectedSheets(
+                          selectedSheets.filter((i) => i !== index)
+                        );
+                      } else {
+                        setSelectedSheets([...selectedSheets, index]);
+                      }
+                    }}
+                  />
+                </>
               ))}
-          </tbody>
-        </table>
 
+            {/* <tfoot>
+                    <tr>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Job</th>
+                        <th>Favorite Color</th>
+                        <th></th>
+                    </tr>
+                </tfoot> */}
+          </table>
+        </div>
+        
         <div className="flex w-full flex-col items-center justify-center gap-1 pt-3 sm:hidden">
           {displayedSheets
             ?.slice(
@@ -198,6 +204,9 @@ function Page() {
             .map((list, index) => (
               <>
                 <CardItem
+                    openCRM={() => setOpenedCRM(index)}
+                    closeCRM={() => {list.updateIfChanged(); setOpenedCRM(-1)}}
+                    isCRMOpen={openedCRM === index}
                   item={list}
                   toggleselected={() => {
                     if (selectedSheets.includes(index)) {

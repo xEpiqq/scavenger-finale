@@ -45,6 +45,7 @@ function AccountTab({ item, closeCRM }) {
     item.favorite = favorite;
     item.changedFlag = true;
   }, [favorite]);
+  
 
   return (
     <div className="flex h-full w-full flex-col gap-8 px-9 pt-7 text-sm text-pbblack">

@@ -6,7 +6,7 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CRM from "./CRM";
 
-function CardItem({ item }) {
+function CardItem({ item, openCRM, closeCRM, isCRMOpen }) {
   const [openCopy, setOpenCopy] = useState(false);
 
   const copyItem = (itemtocopy) => {
@@ -38,12 +38,15 @@ function CardItem({ item }) {
     setOpenEmail(true);
   }
 
+  var social_media_links_style = "h-10 w-10"
+  var social_media_links_style_transparent = "h-10 w-10 opacity-30"
+
   return (
     <>
       <div className="card-body">
         <div className="card w-96 gap-2 bg-gray-7 p-6 text-black shadow-xl">
           <div className="flex items-start justify-start space-x-3">
-            <div className="flex flex-row justify-between w-full">
+            <div className="flex w-full flex-row justify-between">
               <div className="avatar">
                 <div className="mask mask-squircle h-12 w-12">
                   <img
@@ -62,7 +65,7 @@ function CardItem({ item }) {
                 )}
               </div>
             </div>
-          </div>{" "}
+          </div>
           <div>
             <div className="flex flex-row font-bold">
               <p>
@@ -87,11 +90,8 @@ function CardItem({ item }) {
           </div>
           <div
             className=" flex gap-3 px-1 py-[1px] hover:cursor-pointer hover:bg-pbsearchselect"
-            onClick={() => {
-              copyItem(item.phoneNumber);
-            }}
           >
-            <p>{item.phoneNumber}</p>
+            <a href={"tel:" + item.phoneNumber}>{item.phoneNumber}</a>
           </div>
           {!item.hasSSL && (
             <div className="flex flex-row items-center justify-center gap-5">
@@ -104,7 +104,8 @@ function CardItem({ item }) {
             </div>
           )}
           {item.template !== "none" && <p>Template: {item.template}</p>}
-          {item.emails?.map((email, index) => (
+          {
+          item.emails?.map((email, index) => (
             <>
               <div className="flex w-full justify-between gap-4">
                 <p key={index}>{email}</p>
@@ -124,20 +125,20 @@ function CardItem({ item }) {
               </div>
             </>
           ))}
-          <div className="flex flex-grow flex-row items-center gap-[2px]">
+          <div className="flex flex-grow flex-row items-center gap-2">
             {item.facebook ? (
               <Link href={item.facebook} target="_blank" className="h-5 w-5">
                 <img
                   src="/Facebook.svg"
                   alt="facebook link"
-                  className="h-5 w-5"
+                  className={social_media_links_style}
                 />
               </Link>
             ) : (
               <img
                 src="/Facebook.svg"
                 alt="facebook link"
-                className="h-5 w-5 opacity-20"
+                className={social_media_links_style_transparent}
               />
             )}
             {item.instagram ? (
@@ -145,14 +146,14 @@ function CardItem({ item }) {
                 <img
                   src="/Instagram.svg"
                   alt="facebook link"
-                  className="h-5 w-5"
+                  className={social_media_links_style}
                 />
               </Link>
             ) : (
               <img
                 src="/Instagram.svg"
                 alt="facebook link"
-                className="h-5 w-5 opacity-20"
+                className={social_media_links_style_transparent}
               />
             )}
             {item.twitter ? (
@@ -160,14 +161,14 @@ function CardItem({ item }) {
                 <img
                   src="/Twitter.svg"
                   alt="facebook link"
-                  className="h-5 w-5"
+                  className={social_media_links_style}
                 />
               </Link>
             ) : (
               <img
                 src="/Twitter.svg"
                 alt="facebook link"
-                className="h-5 w-5 opacity-20"
+                className={social_media_links_style_transparent}
               />
             )}
             {item.linkedin ? (
@@ -175,14 +176,14 @@ function CardItem({ item }) {
                 <img
                   src="/LinkedIn.svg"
                   alt="facebook link"
-                  className="h-5 w-5"
+                  className={social_media_links_style}
                 />
               </Link>
             ) : (
               <img
                 src="/LinkedIn.svg"
                 alt="facebook link"
-                className="h-5 w-5 opacity-20"
+                className={social_media_links_style_transparent}
               />
             )}
             {item.youtube ? (
@@ -190,19 +191,24 @@ function CardItem({ item }) {
                 <img
                   src="/Youtube.svg"
                   alt="facebook link"
-                  className="h-5 w-5"
+                  className={social_media_links_style}
                 />
               </Link>
             ) : (
               <img
                 src="/Youtube.svg"
                 alt="facebook link"
-                className="h-5 w-5 opacity-20"
+                className={social_media_links_style_transparent}
               />
             )}
           </div>
+          <button onClick={openCRM} className="btn">
+            Open CRM
+          </button>
         </div>
       </div>
+
+      {isCRMOpen && <CRM item={item} closeCRM={closeCRM} />}
     </>
   );
 }

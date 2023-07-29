@@ -85,7 +85,7 @@ function Layout({ children }) {
     return (
       <div className="flex flex-col w-full h-full text-black bg-pbsecondbg sm:flex-row">
         <Navbar />
-        <section className="w-full overflow-x-clip bg-pbsecondbg">{children}</section>
+        <section className="w-full h-full overflow-x-clip bg-pbsecondbg">{children}</section>
       </div>
     );
     }

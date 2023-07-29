@@ -104,10 +104,9 @@ function CRM({ item, closeCRM }) {
       ></div>
 
       <div
-        className={`fixed right-0 top-0 z-50 h-full min-w-fit bg-gray-6 shadow-md ${
+        className={`fixed right-0 top-0 z-50 h-full min-w-fit w-full sm:w-[43.75rem] bg-gray-6 shadow-md ${
           isShown ? "translate-x-150" : "translate-x-full"
         } transition-transform duration-150 `}
-        style={{ width: "43.75rem" }}
       >
         <div className="flex w-full flex-row items-center justify-between bg-pbsecondbg px-8 py-4">
           {!pencilClicked && (
