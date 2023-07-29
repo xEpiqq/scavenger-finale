@@ -17,6 +17,8 @@ function Item2({ item, openCRM, closeCRM, isCRMOpen, toggleselected, selected })
     }, 1000);
   };
 
+  const nameWithoutSpacesAndDots = item.name.replace(/\s/g, "").replace(/\./g, "");
+
   const screenshot = item.thumbnailScreenshot
     ? item.thumbnailScreenshot
     : item.desktopScreenshot;
@@ -53,7 +55,7 @@ function Item2({ item, openCRM, closeCRM, isCRMOpen, toggleselected, selected })
               <div className="avatar">
                 <div className="mask mask-squircle h-12 w-12">
                   <img
-                    src="/pixelprof.png"
+                    src={`https://api.dicebear.com/6.x/avataaars/svg?seed=${item.siteLink}`}
                     alt="Avatar Tailwind CSS Component"
                   />
                 </div>
