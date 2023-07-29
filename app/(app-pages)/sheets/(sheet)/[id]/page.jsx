@@ -201,10 +201,8 @@ function Page({ params }) {
           </div>
         </div>
         <button
-          className={`btn-error btn mx-8 my-4 transition-all duration-150 ease-in-out sm:scale-100 hidden sm:block
-          ${
-            selectedSheets.length <= 0 && "btn-disabled scale-0 sm:hidden"
-          } 
+          className={`btn-error btn mx-8 my-4 hidden transition-all duration-150 ease-in-out sm:block sm:scale-100
+          ${selectedSheets.length <= 0 && "btn-disabled scale-0 sm:hidden"} 
         `}
           onClick={async () => {
             if (selectedSheets.length <= 0) return;
@@ -239,7 +237,9 @@ function Page({ params }) {
                           console.log("yep");
                         }
                       }}
-                      checked={selectedSheets.length === displayedSheets.length}
+                      checked={
+                        selectedSheets.length === displayedSheets?.length
+                      }
                     />
                   </label>
                 </th>
@@ -316,7 +316,7 @@ function Page({ params }) {
             ))}
         </div>
 
-        <div className="sticky bottom-0 right-0 mt-2 flex w-80 items-center justify-end px-6 py-3">
+        <div className="sticky bottom-0 right-0 mt-2 flex w-full items-center justify-center px-6 py-3">
           <div className="flex w-full max-w-md flex-row justify-between">
             <button
               onClick={() => setCurrentPage(currentPage - 1)}

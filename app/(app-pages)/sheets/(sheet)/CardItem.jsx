@@ -124,7 +124,7 @@ function CardItem({ item, openCRM, closeCRM, isCRMOpen }) {
           ))}
           <div className="flex flex-grow flex-row items-center gap-2">
             {item.facebook ? (
-              <Link href={item.facebook} target="_blank" className="h-5 w-5">
+              <Link href={item.facebook} target="_blank">
                 <img
                   src="/Facebook.svg"
                   alt="facebook link"
@@ -139,7 +139,7 @@ function CardItem({ item, openCRM, closeCRM, isCRMOpen }) {
               />
             )}
             {item.instagram ? (
-              <Link href={item.instagram} target="_blank" className="h-5 w-5">
+              <Link href={item.instagram} target="_blank">
                 <img
                   src="/Instagram.svg"
                   alt="facebook link"
@@ -154,7 +154,7 @@ function CardItem({ item, openCRM, closeCRM, isCRMOpen }) {
               />
             )}
             {item.twitter ? (
-              <Link href={item.twitter} target="_blank" className="h-5 w-5">
+              <Link href={item.twitter} target="_blank">
                 <img
                   src="/Twitter.svg"
                   alt="facebook link"
@@ -169,7 +169,7 @@ function CardItem({ item, openCRM, closeCRM, isCRMOpen }) {
               />
             )}
             {item.linkedin ? (
-              <Link href={item.linkedin} target="_blank" className="h-5 w-5">
+              <Link href={item.linkedin} target="_blank">
                 <img
                   src="/LinkedIn.svg"
                   alt="facebook link"
@@ -184,7 +184,7 @@ function CardItem({ item, openCRM, closeCRM, isCRMOpen }) {
               />
             )}
             {item.youtube ? (
-              <Link href={item.youtube} target="_blank" className="">
+              <Link href={item.youtube} target="_blank">
                 <img
                   src="/Youtube.svg"
                   alt="facebook link"
