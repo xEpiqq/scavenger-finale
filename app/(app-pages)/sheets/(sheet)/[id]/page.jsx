@@ -201,10 +201,10 @@ function Page({ params }) {
           </div>
         </div>
         <button
-          className={`
+          className={`btn-error btn mx-8 my-4 transition-all duration-150 ease-in-out sm:scale-100 hidden sm:block
           ${
-            selectedSheets.length <= 0 && "btn-disabled scale-0"
-          } btn-error btn mx-8 my-4
+            selectedSheets.length <= 0 && "btn-disabled scale-0 sm:hidden"
+          } 
         `}
           onClick={async () => {
             if (selectedSheets.length <= 0) return;
@@ -213,11 +213,7 @@ function Page({ params }) {
               (index) => displayedSheets[index]
             );
 
-            console.log("selectedSheetsData", selectedSheetsData)
-
-            selectedSheetsData.forEach(async (sheet) => {
-              await sheet.delete();
-            })
+            ListItem.deleteAll(selectedSheetsData);
             // clear selected sheets
             setSelectedSheets([]);
           }}
@@ -235,6 +231,7 @@ function Page({ params }) {
                       type="checkbox"
                       className="checkbox"
                       onChange={() => {
+                        if (!displayedSheets) return;
                         if (selectedSheets.length === displayedSheets.length) {
                           setSelectedSheets([]);
                         } else {
