@@ -6,7 +6,7 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CRM from "./CRM";
 
-function Item2({ item, openCRM, closeCRM, isCRMOpen }) {
+function Item2({ item, openCRM, closeCRM, isCRMOpen, toggleselected, selected }) {
   const [openCopy, setOpenCopy] = useState(false);
 
   const copyItem = (itemtocopy) => {
@@ -45,7 +45,7 @@ function Item2({ item, openCRM, closeCRM, isCRMOpen }) {
         <tr>
           <th>
             <label>
-              <input type="checkbox" className="checkbox" />
+              <input type="checkbox" className="checkbox" onClick={toggleselected} checked={selected}/>
             </label>
           </th>
           <td>
@@ -115,14 +115,11 @@ function Item2({ item, openCRM, closeCRM, isCRMOpen }) {
 
           <td>
             <div>
-              {address == "none" ? <p>...</p> : <p>{address}</p>}
-              {city ? (
+              {address != "none" && <p>{address}</p>}
+              {city && (
                 <span className="badge badge-ghost badge-sm">
                   {city}, {state}
-                </span>
-              ) : (
-                <span className="badge badge-ghost badge-sm w-24"></span>
-              )}
+                </span>)}
               {/* <span className="badge badge-ghost badge-sm">{city}, {state}</span> */}
             </div>
           </td>
@@ -160,7 +157,7 @@ function Item2({ item, openCRM, closeCRM, isCRMOpen }) {
             )}
 
             {item.email == "none" ? (
-              <div className="flex w-full justify-center">
+              <div className="flex w-full">
                 <img
                   src="/email.svg"
                   draggable="false"
@@ -170,7 +167,7 @@ function Item2({ item, openCRM, closeCRM, isCRMOpen }) {
               </div>
             ) : (
               // <p>{item.email}</p>
-              <div className="flex w-full justify-center">
+              <div className="flex w-full">
                 <img
                   src="/email.svg"
                   draggable="false"
@@ -183,7 +180,7 @@ function Item2({ item, openCRM, closeCRM, isCRMOpen }) {
             {/* <p>{item.email}</p> */}
           </td>
           <td>
-            <div className="flex flex-grow flex-row items-center gap-[2px]">
+            <div className="flex flex-shrink-0 flex-row items-center gap-[2px] z-0">
               {item.facebook ? (
                 <Link href={item.facebook} target="_blank" className="h-5 w-5">
                   <img

@@ -231,11 +231,6 @@ function Page() {
 
           {/* <SheetTileNew /> */}
           <div className="fixed bottom-28 right-28 z-50 flex justify-center gap-6 2xl:bottom-8 2xl:right-8">
-            {screenWidth > 1680 && (
-              <button className="border-1 opac pointer-events-none bottom-4 right-4 h-10 w-36 cursor-default rounded-md border border-black bg-white text-black opacity-50">
-                Export to CSV
-              </button>
-            )}
 
             {createSheet && (
               <TextPrompt

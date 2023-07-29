@@ -162,12 +162,31 @@ class ListItem {
   }
 
   async delete() {
-    throw new Error("Not implemented");
+    // This function will delete the item from the database
+    // It will also delete the item from the sheet database
+    // It will also delete the item from the CRM database
+    const { idSheet, sheetItemId, crmItemId, userId } = this;
+    const userRef = await doc(db, "users", userId);
+    const sheetRef = await doc(db, `sheets/${idSheet}`);
+    const sheetArray = await getDoc(sheetRef).then((doc) => doc.data().lists);
+    const crmArray = await getDoc(userRef).then((doc) => doc.data().crm);
 
-    // if (targetIndex !== -1) {
-    //     listsArray.splice(targetIndex, 1); // Remove the object at targetIndex
-    //     await updateDoc(userRef, { lists: listsArray });
-    //   }
+    // Delete the item from the sheet database
+    const sheetIndex = sheetArray.findIndex(
+      (item) => item.sheetItemId === sheetItemId
+    );
+    sheetArray.splice(sheetIndex, 1);
+    await updateDoc(sheetRef, { lists: sheetArray });
+
+    // Delete the item from the CRM database
+    const crmIndex = crmArray.findIndex(
+      (item) => item.crmItemId === crmItemId
+    );
+    crmArray.splice(crmIndex, 1);
+    await updateDoc(userRef, { crm: crmArray });
+
+    // Delete the item from the database
+    await deleteDoc(doc(db, `users/${userId}/lists/${sheetItemId}`));
   }
 
   async duplicate() {

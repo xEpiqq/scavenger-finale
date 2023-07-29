@@ -56,13 +56,10 @@ function CardItem({ item, openCRM, closeCRM, isCRMOpen }) {
                 </div>
               </div>
               <div>
-                {city ? (
+                {city && (
                   <span className="badge badge-ghost badge-md">
                     {city}, {state}
-                  </span>
-                ) : (
-                  <span className="badge badge-ghost badge-md w-24"></span>
-                )}
+                  </span>)}
               </div>
             </div>
           </div>
@@ -85,7 +82,7 @@ function CardItem({ item, openCRM, closeCRM, isCRMOpen }) {
             </div>
           </div>
           <div>
-            {address == "none" ? <p>...</p> : <p>{address}</p>}
+            {address != "none" && <p>{address}</p>}
             {/* <span className="badge badge-ghost badge-sm">{city}, {state}</span> */}
           </div>
           <div
@@ -202,7 +199,7 @@ function CardItem({ item, openCRM, closeCRM, isCRMOpen }) {
               />
             )}
           </div>
-          <button onClick={openCRM} className="btn">
+          <button onClick={openCRM} className="btn mt-2">
             Open CRM
           </button>
         </div>

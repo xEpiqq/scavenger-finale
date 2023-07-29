@@ -183,28 +183,6 @@ function CRM({ item, closeCRM }) {
                 style={{ borderWidth: 1 }}
               >
                 <div
-                  className="m-1 mb-0 flex w-full items-center justify-start rounded-md p-1 transition duration-150 hover:bg-pbiconhover"
-                  onClick={duplicate}
-                >
-                  <img
-                    src="/duplicate.svg"
-                    className="ml-2 h-4 w-4"
-                    alt="Logout"
-                  />
-                  <div className="w-full">
-                    <button
-                      className="hover:bg-gray-100 px-4 py-2 text-left text-xs focus:outline-none"
-                      onClick={() => {
-                        setDeleteModal(false);
-                      }}
-                    >
-                      <div className="flex items-center">
-                        <div>Duplicate</div>
-                      </div>
-                    </button>
-                  </div>
-                </div>
-                <div
                   className="m-1 mt-0 flex w-full items-center justify-start rounded-md p-1 transition duration-150 hover:bg-pbiconhover"
                   onClick={deleteItem}
                 >

@@ -200,7 +200,30 @@ function Page({ params }) {
             </div>
           </div>
         </div>
+        <button
+          className={`
+          ${
+            selectedSheets.length <= 0 && "btn-disabled scale-0"
+          } btn-error btn mx-8 my-4
+        `}
+          onClick={async () => {
+            if (selectedSheets.length <= 0) return;
+            // need the item of all the selected sheets
+            const selectedSheetsData = selectedSheets.map(
+              (index) => displayedSheets[index]
+            );
 
+            console.log("selectedSheetsData", selectedSheetsData)
+
+            selectedSheetsData.forEach(async (sheet) => {
+              await sheet.delete();
+            })
+            // clear selected sheets
+            setSelectedSheets([]);
+          }}
+        >
+          Delete
+        </button>
         <div className="hidden w-full overflow-x-auto sm:block">
           <table className="table w-full">
             {/* head */}
@@ -208,7 +231,19 @@ function Page({ params }) {
               <tr>
                 <th>
                   <label>
-                    <input type="checkbox" className="checkbox" />
+                    <input
+                      type="checkbox"
+                      className="checkbox"
+                      onChange={() => {
+                        if (selectedSheets.length === displayedSheets.length) {
+                          setSelectedSheets([]);
+                        } else {
+                          setSelectedSheets(displayedSheets.map((_, i) => i));
+                          console.log("yep");
+                        }
+                      }}
+                      checked={selectedSheets.length === displayedSheets.length}
+                    />
                   </label>
                 </th>
                 <th>NAME</th>
@@ -231,9 +266,13 @@ function Page({ params }) {
                 <>
                   <Item2
                     openCRM={() => setOpenedCRM(index)}
-                    closeCRM={() => {list.updateIfChanged(); setOpenedCRM(-1)}}
+                    closeCRM={() => {
+                      list.updateIfChanged();
+                      setOpenedCRM(-1);
+                    }}
                     isCRMOpen={openedCRM === index}
                     item={list}
+                    selected={selectedSheets.includes(index)}
                     toggleselected={() => {
                       if (selectedSheets.includes(index)) {
                         setSelectedSheets(
@@ -246,16 +285,6 @@ function Page({ params }) {
                   />
                 </>
               ))}
-
-            {/* <tfoot>
-                    <tr>
-                        <th></th>
-                        <th>Name</th>
-                        <th>Job</th>
-                        <th>Favorite Color</th>
-                        <th></th>
-                    </tr>
-                </tfoot> */}
           </table>
         </div>
 
@@ -268,10 +297,14 @@ function Page({ params }) {
             .map((list, index) => (
               <>
                 <CardItem
-                    openCRM={() => setOpenedCRM(index)}
-                    closeCRM={() => {list.updateIfChanged(); setOpenedCRM(-1)}}
-                    isCRMOpen={openedCRM === index}
+                  openCRM={() => setOpenedCRM(index)}
+                  closeCRM={() => {
+                    list.updateIfChanged();
+                    setOpenedCRM(-1);
+                  }}
+                  isCRMOpen={openedCRM === index}
                   item={list}
+                  selected={selectedSheets.includes(index)}
                   toggleselected={() => {
                     if (selectedSheets.includes(index)) {
                       setSelectedSheets(

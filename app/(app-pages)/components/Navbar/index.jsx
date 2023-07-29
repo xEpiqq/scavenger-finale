@@ -55,7 +55,7 @@ function Navbar(props) {
   return (
     <>
       <div
-        className="sticky top-0 flex flex-row border-b-0 border-l-0 border-pblines border-t-transparent bg-white sm:h-screen sm:flex-col"
+        className="sticky z-20 top-0 flex flex-row border-b-0 border-l-0 border-pblines border-t-transparent bg-white sm:h-screen sm:flex-col"
         style={{ borderWidth: 1 }}
       >
         <div className="z-4 w-18 top-0 flex h-1/2 items-center justify-start gap-4 bg-white p-1 sm:flex-col">
