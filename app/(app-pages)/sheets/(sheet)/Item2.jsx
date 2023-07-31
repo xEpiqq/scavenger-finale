@@ -17,12 +17,6 @@ function Item2({ item, openCRM, closeCRM, isCRMOpen, toggleselected, selected })
     }, 1000);
   };
 
-  const nameWithoutSpacesAndDots = item.name.replace(/\s/g, "").replace(/\./g, "");
-
-  const screenshot = item.thumbnailScreenshot
-    ? item.thumbnailScreenshot
-    : item.desktopScreenshot;
-
   const [openEmail, setOpenEmail] = useState(false);
   const clickable_link = "http://" + item.siteLink;
   const address_split = item.address.split(",");
@@ -122,7 +116,6 @@ function Item2({ item, openCRM, closeCRM, isCRMOpen, toggleselected, selected })
                 <span className="badge badge-ghost badge-sm">
                   {city}, {state}
                 </span>)}
-              {/* <span className="badge badge-ghost badge-sm">{city}, {state}</span> */}
             </div>
           </td>
           <td>
@@ -134,7 +127,7 @@ function Item2({ item, openCRM, closeCRM, isCRMOpen, toggleselected, selected })
                 ></div>
                 <div className="absolute z-50 flex w-auto flex-col rounded-lg bg-white px-6 py-6 shadow-xl">
                   <h1 className="mb-4 font-bold">EMAILS (SCRAPED)</h1>
-                  {item.emails.map((email, index) => (
+                  {item.emails?.map((email, index) => (
                     <>
                       <div className="flex w-full justify-between gap-4">
                         <p key={index}>{email}</p>
@@ -179,7 +172,6 @@ function Item2({ item, openCRM, closeCRM, isCRMOpen, toggleselected, selected })
                 />
               </div>
             )}
-            {/* <p>{item.email}</p> */}
           </td>
           <td>
             <div className="flex flex-shrink-0 flex-row items-center gap-[2px] z-0">
