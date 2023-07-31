@@ -9,6 +9,14 @@ import CRM from "./CRM";
 function Item2({ item, openCRM, closeCRM, isCRMOpen, toggleselected, selected }) {
   const [openCopy, setOpenCopy] = useState(false);
 
+  let nameLength
+
+  if (item.name) {
+    nameLength = item.name.length;
+  } else {
+    nameLength = 0;
+  }
+
   const copyItem = (itemtocopy) => {
     navigator.clipboard.writeText(itemtocopy);
     setOpenCopy(true);
@@ -19,13 +27,21 @@ function Item2({ item, openCRM, closeCRM, isCRMOpen, toggleselected, selected })
 
   const [openEmail, setOpenEmail] = useState(false);
   const clickable_link = "http://" + item.siteLink;
-  const address_split = item.address.split(",");
-  const address = address_split[0];
-  const city = address_split[1];
-  const pre_state = address_split[2];
-  // remove the zip code from state
-  // if pre_state contains numbers
-  let state = pre_state;
+  let address_split, address, city, pre_state, state;
+
+  try{
+    address_split = item.address.split(",")
+    address = address_split[0];
+    city = address_split[1];
+    pre_state = address_split[2];
+    state = pre_state;
+  } catch {
+    address = "none";
+    city = "none";
+    state = "none";
+  }
+
+
   if (/\d/.test(pre_state)) {
     state = pre_state.replace(/[0-9]/g, "");
   }
@@ -57,9 +73,9 @@ function Item2({ item, openCRM, closeCRM, isCRMOpen, toggleselected, selected })
               <div>
                 <div className="font-bold">
                   <p>
-                    {item.name.length > 46
-                      ? item.name.slice(0, 43) + "..."
-                      : item.name}
+                    {nameLength > 46
+                    ? item.name.slice(0, 43) + "..."
+                    : item.name}
                   </p>
                 </div>
                 <div className="text-sm opacity-50">

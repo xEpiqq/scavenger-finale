@@ -4,20 +4,8 @@ import { NextResponse } from 'next/server'
 AWS.config.update({ accessKeyId: process.env.AWS_ACCESS_KEY_IDD, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEYY })
 const lambda = new AWS.Lambda({ region: 'us-west-2' });
 
-const function_urls = [
-    'https://sx69n8ae4m.execute-api.us-west-2.amazonaws.com/default/gmaps-scrape-0',
-    'https://d1v3nebiw3.execute-api.us-west-2.amazonaws.com/default/gmaps-scrape-1',
-    'https://t24k6vebvc.execute-api.us-west-2.amazonaws.com/default/gmaps-scrape-2',
-    'https://6xn95l61u9.execute-api.us-west-2.amazonaws.com/default/gmaps-scrape-3',
-    'https://a50leub0h6.execute-api.us-west-2.amazonaws.com/default/gmaps-scrape-4',
-    'https://zvzxvqo46i.execute-api.us-west-2.amazonaws.com/default/gmaps-scrape-5',
-    'https://y2qjt7xkt8.execute-api.us-west-2.amazonaws.com/default/gmaps-scrape-6',
-    'https://6mcvkxaxzg.execute-api.us-west-2.amazonaws.com/default/gmaps-scrape-7',
-    'https://4dv48nrx10.execute-api.us-west-2.amazonaws.com/default/gmaps-scrape-8',
-    'https://lf4fkdr2w0.execute-api.us-west-2.amazonaws.com/default/gmaps-scrape-9'
-  ];
-  
-  
+const function_url = "https://ygekhsxush.execute-api.us-west-2.amazonaws.com/default/gmaps-scrape-0"
+
 export async function POST(request) {    
     const body = await request.json();
     const { searchQuery, the_list_id } = body;
@@ -26,7 +14,6 @@ export async function POST(request) {
     let query_array = query.split(' ')
     let query_url = "https://www.google.com/search?tbm=lcl&q="
 
-    // iterate over the array of words and add them to the query url with a + between each word
     for (let i = 0; i < query_array.length; i++) {
         switch (i) {
             case (query_array.length - 1):
@@ -38,34 +25,22 @@ export async function POST(request) {
         }
     }
 
-    let query_ending = "#rlfi=hd:;start:"
+    let query_ending = "#rlfi=hd:;start:0"
     query_url += query_ending
-    let query_url_array = []
-    let options = ["0", "20", "40", "60", "80", "100", "120", "140", "160", "180"]
-    for (let i = 0; i < options.length; i++) {
-        query_url_array.push(query_url + options[i])
-    }
     
-    // iterate over the query urls and send them to the lambda function
-    for (let i = 0; i < query_url_array.length; i++) {
-        console.log(query_url_array[i]);
-        console.log(function_urls[i])
 
-        fetch(function_urls[i], {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                url: query_url_array[i],
-                list: the_list_id
-            })
+    fetch(function_url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            url: query_url,
+            list: the_list_id
         })
+    })
 
-        // console.log(`Query ${query_url_array} sent to lambda ${function_urls[i]}`)
-        await new Promise(r => setTimeout(r, 500));
-    }
-
+    await new Promise(r => setTimeout(r, 500));
     await updateEnvironmentVariables()
     return NextResponse.json({ success: "Lambdas Launched" }, { status: 200 });
 }
@@ -73,8 +48,7 @@ export async function POST(request) {
 
 async function updateEnvironmentVariables() {
 
-    const lambda_functions = ['gmaps-scrape-0', 'gmaps-scrape-1', 'gmaps-scrape-2', 'gmaps-scrape-3', 'gmaps-scrape-4', 'gmaps-scrape-5',
-    'gmaps-scrape-6', 'gmaps-scrape-7', 'gmaps-scrape-8', 'gmaps-scrape-9' ]
+    const lambda_functions = ['gmaps-scrape-0']
 
     for (let i = 0; i < lambda_functions.length; i++) {
         let params = {
@@ -94,5 +68,4 @@ async function updateEnvironmentVariables() {
 
         console.log(`updated environment variables for function`)
     }
-
 }
