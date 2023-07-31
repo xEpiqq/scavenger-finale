@@ -17,7 +17,7 @@ function TextPrompt({ title, description, placeholder, buttonText, callBack, cal
       <div className="fixed left-0 top-0 z-20 h-screen w-screen bg-darken-1" onClick={() => callBackClose()} />
       
       <div
-        className="fixed left-1/2 top-1/2 flex w-2/4 max-w-screen-md -translate-x-1/2 -translate-y-1/2 transform flex-col bg-white shadow-md rounded-md z-30 -mt-10" >
+        className="fixed left-0 top-0 py-16 sm:pt-0 h-full w-full sm:h-fit sm:left-1/2 sm:top-1/2 flex sm:w-2/4 max-w-screen-md sm:-translate-x-1/2 sm:-translate-y-1/2 transform flex-col bg-white shadow-md rounded-md z-30 sm:-mt-10" >
         <div className="flex flex-col justify-between gap-3 p-6">
           <h3 className="text-lg">
             <b>{title}</b>
@@ -38,7 +38,7 @@ function TextPrompt({ title, description, placeholder, buttonText, callBack, cal
             ref={inputRef}
           />
         </div>
-        <div className="flex flex-row items-center justify-between bg-pbwhitebtnhover rounded-br-md rounded-bl-md p-4">
+        <div className="flex flex-row items-center absolute bottom-0 w-full justify-between bg-pbwhitebtnhover rounded-br-md rounded-bl-md p-4">
           <p className="text-sm text-pbblack">
             Please use 32 characters at maximum.
           </p>

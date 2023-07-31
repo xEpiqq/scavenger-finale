@@ -42,7 +42,7 @@ function FillList({
 
 
 
-          <div className="flex flex-row gap-4 mt-4">
+          <div className="flex flex-col sm:flex-row gap-4 mt-4">
             <div className="w-full">
               <h3 className="mt-5 text-sm font-medium text-paymenttext opacity-50">
                 Niche or Industry

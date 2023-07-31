@@ -4,15 +4,7 @@ import { useState, useEffect, useRef } from "react";
 
 import AccountTab from "./AccountTab";
 import AuthUsersTab from "./AuthUsersTab";
-import {
-  getFirestore,
-  doc,
-  getDoc,
-  updateDoc,
-  deleteDoc,
-} from "firebase/firestore";
-import { app, db } from "../../../../../components/initializeFirebase";
-import { v4 as uuidv4 } from "uuid";
+import { useRouter } from "next/navigation";
 
 function CRM({ item, closeCRM }) {
   const OPEN_SPEED = 150;
@@ -20,7 +12,6 @@ function CRM({ item, closeCRM }) {
   const inputRef = useRef(null); // Create a ref for the input element
 
   const [name, setName] = useState(item.name);
-
 
   const [tabState, setTabState] = useState(1);
 
@@ -32,27 +23,11 @@ function CRM({ item, closeCRM }) {
 
   const [changedFlag, setChangedFlag] = useState(false);
 
-  console.log("closeCRM", closeCRM);
-
-  // const userRef = doc(db, `sheets/${id}`);
-
-  // useEffect(() => {
-  //   const fetchTargetIndex = async () => {
-  //     const userSnapshot = await getDoc(userRef);
-  //     const fetchedListsArray = userSnapshot.data().lists;
-  //     setListsArray(fetchedListsArray);
-  //     const index = fetchedListsArray.findIndex(list => list.obj === object_id);
-  //     setTargetIndex(index);
-  //   };
-  //   fetchTargetIndex();
-  // }, [id, object_id]);
-
   useEffect(() => {
     setIsShown(false);
     setTimeout(() => {
       setIsShown(true);
     }, OPEN_SPEED);
-    console.log("isShown", isShown);
   }, []);
 
   useEffect(() => {
@@ -104,7 +79,7 @@ function CRM({ item, closeCRM }) {
       ></div>
 
       <div
-        className={`fixed right-0 top-0 z-50 h-full min-w-fit w-full sm:w-[43.75rem] bg-gray-6 shadow-md ${
+        className={`fixed right-0 top-0 z-50 h-full w-full min-w-fit bg-gray-6 shadow-md sm:w-[43.75rem] ${
           isShown ? "translate-x-150" : "translate-x-full"
         } transition-transform duration-150 `}
       >
@@ -135,7 +110,9 @@ function CRM({ item, closeCRM }) {
                 onChange={(e) => {
                   setName(e.target.value);
                 }}
-                className={`bg-pbsecondbg text-lg outline-none ${pencilClicked ? "w-96" : "w-0"}`}
+                className={`bg-pbsecondbg text-lg outline-none ${
+                  pencilClicked ? "w-96" : "w-0"
+                }`}
               />
               {pencilClicked && (
                 <div
