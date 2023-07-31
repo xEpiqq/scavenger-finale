@@ -146,9 +146,9 @@ function Page() {
   console.log(screenWidth);
 
   return (
-    <div className="flex h-full w-full sm:h-screen">
+    <div className="flex h-full w-full">
       <div
-        className="hidden w-64 border-b-0 border-pblines border-l-transparent border-t-transparent bg-white sm:block sm:h-screen"
+        className="hidden sticky top-0  w-64 border-b-0 border-pblines border-l-transparent border-t-transparent bg-white sm:block sm:h-screen"
         style={{ borderWidth: 1 }}
       >
         <div
@@ -191,9 +191,9 @@ function Page() {
         </div>
       </div>
 
-      <div className="flex w-full flex-col justify-between bg-pbsecondbg px-4 py-8">
+      <div className="flex  w-full flex-col justify-between bg-pbsecondbg px-4 py-8">
         <button
-          className="block sm:fixed right-20 hover:border-1 bottom-4 h-16 sm:h-10 w-full sm:w-48 rounded-md bg-black text-white transition duration-200 hover:border hover:border-black hover:bg-white hover:text-black"
+          className="hover:border-1 bottom-4 right-20 z-50 block h-16 w-full rounded-md bg-black text-white transition duration-200 hover:border hover:border-black hover:bg-white hover:text-black sm:fixed sm:h-10 sm:w-48"
           onClick={() => {
             setCreateSheet(true);
           }}
@@ -231,7 +231,6 @@ function Page() {
 
           {/* <SheetTileNew /> */}
           <div className="fixed bottom-28 right-28 z-50 flex justify-center gap-6 2xl:bottom-8 2xl:right-8">
-
             {createSheet && (
               <TextPrompt
                 props={{
