@@ -158,6 +158,19 @@ class ListItem {
         }
         await updateDoc(userRef, { crm: crmArray });
       }
+    } else {
+      // we need to check if it was a favorite before
+      // if it was a favorite before we need to delete it from the CRM database
+      const crmArray = await getDoc(userRef).then((doc) => doc.data().crm);
+      if (crmArray) {
+        const crmIndex = crmArray.findIndex(
+          (item) => item.sheetItemId === sheetItemId
+        );
+        if (crmIndex !== -1) {
+          crmArray.splice(crmIndex, 1);
+          await updateDoc(userRef, { crm: crmArray });
+        }
+      }
     }
   }
 

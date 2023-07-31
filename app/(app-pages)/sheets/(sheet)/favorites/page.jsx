@@ -38,6 +38,9 @@ function Page() {
   const [openedCRM, setOpenedCRM] = useState(-1);
 
   const [user, loading, user_error] = useAuthState(auth);
+  const [userDataRaw, loading2, error2] = useDocument(
+    doc(db, `users/${user?.uid}`)
+  );
   const [sheetDataRaw, setSheetDataRaw] = useState(null);
 
   const page_amount =
@@ -49,13 +52,10 @@ function Page() {
 
   useEffect(() => {
     const func = async () => {
-      // we need to get the user document from the database
-      const userRef = doc(db, `users/${user?.uid}`);
-      const userDoc = await getDoc(userRef);
-
-      setSheetDataRaw(userDoc.data().crm);
-      console.log(userDoc.data().crm);
-      const sheetData = userDoc.data().crm;
+      if (!userDataRaw) return;
+      setSheetDataRaw(userDataRaw.data().crm);
+      const sheetData = userDataRaw.data().crm;
+      console.log("sheetdata", sheetDataRaw);
       setDisplayedSheets(
         sheetData?.map((list) => {
           return new ListItem({ ...list, userId: user.uid });
@@ -64,7 +64,7 @@ function Page() {
     };
 
     func();
-  }, [user]);
+  }, [userDataRaw]);
 
   async function search(searchkey) {
     // if (!searchkey) return;
@@ -221,8 +221,8 @@ function Page() {
               </>
             ))}
         </div>
-
-        <div className="sticky bottom-0 right-0 mt-2 flex w-80 items-center justify-end px-6 py-3">
+      
+        <div className="sticky bottom-0 right-0 mt-2 flex w-full items-center justify-center px-6 py-3">
           <div className="flex w-full max-w-md flex-row justify-between">
             <button
               onClick={() => setCurrentPage(currentPage - 1)}
