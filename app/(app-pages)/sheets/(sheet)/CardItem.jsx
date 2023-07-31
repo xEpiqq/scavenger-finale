@@ -9,6 +9,15 @@ import CRM from "./CRM";
 function CardItem({ item, openCRM, closeCRM, isCRMOpen }) {
   const [openCopy, setOpenCopy] = useState(false);
 
+  // see how many characters item.name is 
+  let nameLength
+
+  if (item.name) {
+    nameLength = item.name.length;
+  } else {
+    nameLength = 0;
+  }
+
   const copyItem = (itemtocopy) => {
     navigator.clipboard.writeText(itemtocopy);
     setOpenCopy(true);
@@ -23,15 +32,32 @@ function CardItem({ item, openCRM, closeCRM, isCRMOpen }) {
 
   const [openEmail, setOpenEmail] = useState(false);
   const clickable_link = "http://" + item.siteLink;
-  const address_split = item.address.split(",");
-  const address = address_split[0];
-  const city = address_split[1];
-  const pre_state = address_split[2];
+  // const address_split = item.address.split(",");
+  // const address = address_split[0];
+  // const city = address_split[1];
+  // const pre_state = address_split[2];
+
+  let address_split, address, city, pre_state, the_state;
+
+  try{
+    address_split = item.address.split(",")
+    address = address_split[0];
+    city = address_split[1];
+    pre_state = address_split[2];
+    the_state = pre_state;
+  } catch {
+    address = "none";
+    city = "none";
+    the_state = "none";
+  }
+
+
+
   // remove the zip code from state
   // if pre_state contains numbers
-  let state = pre_state;
+  the_state = pre_state;
   if (/\d/.test(pre_state)) {
-    state = pre_state.replace(/[0-9]/g, "");
+    the_state = pre_state.replace(/[0-9]/g, "");
   }
   //
   function openEmails() {
@@ -58,7 +84,7 @@ function CardItem({ item, openCRM, closeCRM, isCRMOpen }) {
               <div>
                 {city && (
                   <span className="badge badge-ghost badge-md">
-                    {city}, {state}
+                    {city}, {the_state}
                   </span>)}
               </div>
             </div>
@@ -66,7 +92,7 @@ function CardItem({ item, openCRM, closeCRM, isCRMOpen }) {
           <div>
             <div className="flex flex-row font-bold">
               <p>
-                {item.name.length > 46
+                {nameLength > 46
                   ? item.name.slice(0, 43) + "..."
                   : item.name}
               </p>
