@@ -161,13 +161,63 @@ class ListItem {
     }
   }
 
-  async delete() {
-    throw new Error("Not implemented");
+  static async deleteAll(items) {
+    // This function will delete all of the items in the array
+    // It will also delete the items from the sheet database
+    // It will also delete the items from the CRM database
+    const { idSheet, userId } = items[0];
+    const userRef = await doc(db, "users", userId);
+    const sheetRef = await doc(db, `sheets/${idSheet}`);
+    const sheetArray = await getDoc(sheetRef).then((doc) => doc.data().lists);
+    const crmArray = await getDoc(userRef).then((doc) => doc.data().crm);
+    
+    // Delete the items from the sheet database
+    for (let i = 0; i < items.length; i++) {
+      const { sheetItemId } = items[i];
+      const sheetIndex = sheetArray.findIndex(
+        (item) => item.sheetItemId === sheetItemId
+      );
+      sheetArray.splice(sheetIndex, 1);
+    }
+    await updateDoc(sheetRef, { lists: sheetArray });
 
-    // if (targetIndex !== -1) {
-    //     listsArray.splice(targetIndex, 1); // Remove the object at targetIndex
-    //     await updateDoc(userRef, { lists: listsArray });
-    //   }
+    // Delete the items from the CRM database
+    for (let i = 0; i < items.length; i++) {
+      const { sheetItemId } = items[i];
+      const crmIndex = crmArray.findIndex(
+        (item) => item.sheetItemId === sheetItemId
+      );
+      crmArray.splice(crmIndex, 1);
+    }
+    await updateDoc(userRef, { crm: crmArray });
+  }
+
+  async delete() {
+    // This function will delete the item from the database
+    // It will also delete the item from the sheet database
+    // It will also delete the item from the CRM database
+    const { idSheet, sheetItemId, crmItemId, userId } = this;
+    const userRef = await doc(db, "users", userId);
+    const sheetRef = await doc(db, `sheets/${idSheet}`);
+    const sheetArray = await getDoc(sheetRef).then((doc) => doc.data().lists);
+    const crmArray = await getDoc(userRef).then((doc) => doc.data().crm);
+
+    // Delete the item from the sheet database
+    const sheetIndex = sheetArray.findIndex(
+      (item) => item.sheetItemId === sheetItemId
+    );
+    sheetArray.splice(sheetIndex, 1);
+    await updateDoc(sheetRef, { lists: sheetArray });
+
+    // Delete the item from the CRM database
+    const crmIndex = crmArray.findIndex(
+      (item) => item.crmItemId === crmItemId
+    );
+    crmArray.splice(crmIndex, 1);
+    await updateDoc(userRef, { crm: crmArray });
+
+    // Delete the item from the database
+    await deleteDoc(doc(db, `users/${userId}/lists/${sheetItemId}`));
   }
 
   async duplicate() {

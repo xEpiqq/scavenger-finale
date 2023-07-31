@@ -183,28 +183,6 @@ function CRM({ item, closeCRM }) {
                 style={{ borderWidth: 1 }}
               >
                 <div
-                  className="m-1 mb-0 flex w-full items-center justify-start rounded-md p-1 transition duration-150 hover:bg-pbiconhover"
-                  onClick={duplicate}
-                >
-                  <img
-                    src="/duplicate.svg"
-                    className="ml-2 h-4 w-4"
-                    alt="Logout"
-                  />
-                  <div className="w-full">
-                    <button
-                      className="hover:bg-gray-100 px-4 py-2 text-left text-xs focus:outline-none"
-                      onClick={() => {
-                        setDeleteModal(false);
-                      }}
-                    >
-                      <div className="flex items-center">
-                        <div>Duplicate</div>
-                      </div>
-                    </button>
-                  </div>
-                </div>
-                <div
                   className="m-1 mt-0 flex w-full items-center justify-start rounded-md p-1 transition duration-150 hover:bg-pbiconhover"
                   onClick={deleteItem}
                 >
@@ -233,7 +211,7 @@ function CRM({ item, closeCRM }) {
                 tabState === 1
                   ? "bg-white text-black"
                   : "border-none bg-transparent text-pbcrmopen"
-              } absolute left-0 z-10 -mb-0.5 ml-8 h-12 w-80 rounded-t-md
+              } absolute left-0 z-10 -mb-0.5 ml-8 h-12 w-1/3 rounded-t-md
                 border-l border-r border-t border-pbiconhover px-6 py-2 text-sm transition-all duration-200 hover:bg-pbiconhover`}
             >
               {" "}
@@ -246,7 +224,7 @@ function CRM({ item, closeCRM }) {
                 tabState === 2
                   ? "bg-white text-black"
                   : "border-none bg-transparent text-pbcrmopen"
-              } absolute right-0 z-10 -mb-0.5 mr-8 h-12 w-80 rounded-t-md
+              } absolute right-0 z-10 -mb-0.5 mr-8 h-12 w-1/3 rounded-t-md
                 border-l border-r border-t border-pbiconhover px-6 py-2 text-sm transition-all duration-200 hover:bg-pbiconhover`}
             >
               {" "}

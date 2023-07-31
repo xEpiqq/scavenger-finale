@@ -55,7 +55,7 @@ function Navbar(props) {
   return (
     <>
       <div
-        className="sticky top-0 flex flex-row border-b-0 border-l-0 border-pblines border-t-transparent bg-white sm:h-screen sm:flex-col"
+        className="sticky z-20 top-0 flex flex-row border-b-0 border-l-0 border-pblines border-t-transparent bg-white sm:h-screen sm:flex-col"
         style={{ borderWidth: 1 }}
       >
         <div className="z-4 w-18 top-0 flex h-1/2 items-center justify-start gap-4 bg-white p-1 sm:flex-col">
@@ -137,7 +137,7 @@ function Navbar(props) {
           {/* </Link> */}
         </div>
 
-        <div className="mb:0 flex-center mr-10 flex h-1/2 w-full items-center justify-end bg-white pb-4 pr-5 pt-3 sm:mb-16 sm:mr-0 sm:items-end sm:justify-center sm:pr-0 lg:mb-0">
+        <div className="mb:0 flex-center mr-10 flex h-1/2 w-full relative items-center justify-end bg-white pb-4 pr-5 pt-3 sm:mb-16 sm:mr-0 sm:items-end sm:justify-center sm:pr-0 lg:mb-0">
           <img
             src={user?.photoURL}
             alt="Logo"
@@ -150,11 +150,11 @@ function Navbar(props) {
 
           {signoutModal && (
             <div
-              className="fixed inset-0 z-50"
+              className="absolute left-0 sm:top-48 sm:left-2 top-16 "
               onClick={() => setSignoutModal(false)}
             >
               <div
-                className="absolute bottom-16 left-4 mb-1 flex w-36 flex-col items-center overflow-hidden rounded-md border-pblines bg-white p-1 shadow-sm transition duration-300"
+                className="mb-1 flex w-36 flex-col items-center overflow-hidden rounded-md border-pblines bg-white p-1 shadow-sm transition duration-300"
                 onClick={(e) => e.stopPropagation()}
                 style={{ borderWidth: 1 }}
               >

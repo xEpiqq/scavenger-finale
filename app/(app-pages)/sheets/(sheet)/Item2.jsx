@@ -6,7 +6,7 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CRM from "./CRM";
 
-function Item2({ item, openCRM, closeCRM, isCRMOpen }) {
+function Item2({ item, openCRM, closeCRM, isCRMOpen, toggleselected, selected }) {
   const [openCopy, setOpenCopy] = useState(false);
 
   const copyItem = (itemtocopy) => {
@@ -16,12 +16,6 @@ function Item2({ item, openCRM, closeCRM, isCRMOpen }) {
       setOpenCopy(false);
     }, 1000);
   };
-
-  const nameWithoutSpacesAndDots = item.name.replace(/\s/g, "").replace(/\./g, "");
-
-  const screenshot = item.thumbnailScreenshot
-    ? item.thumbnailScreenshot
-    : item.desktopScreenshot;
 
   const [openEmail, setOpenEmail] = useState(false);
   const clickable_link = "http://" + item.siteLink;
@@ -47,7 +41,7 @@ function Item2({ item, openCRM, closeCRM, isCRMOpen }) {
         <tr>
           <th>
             <label>
-              <input type="checkbox" className="checkbox" />
+              <input type="checkbox" className="checkbox" onClick={toggleselected} checked={selected}/>
             </label>
           </th>
           <td>
@@ -117,15 +111,11 @@ function Item2({ item, openCRM, closeCRM, isCRMOpen }) {
 
           <td>
             <div>
-              {address == "none" ? <p>...</p> : <p>{address}</p>}
-              {city ? (
+              {address != "none" && <p>{address}</p>}
+              {city && (
                 <span className="badge badge-ghost badge-sm">
                   {city}, {state}
-                </span>
-              ) : (
-                <span className="badge badge-ghost badge-sm w-24"></span>
-              )}
-              {/* <span className="badge badge-ghost badge-sm">{city}, {state}</span> */}
+                </span>)}
             </div>
           </td>
           <td>
@@ -137,7 +127,7 @@ function Item2({ item, openCRM, closeCRM, isCRMOpen }) {
                 ></div>
                 <div className="absolute z-50 flex w-auto flex-col rounded-lg bg-white px-6 py-6 shadow-xl">
                   <h1 className="mb-4 font-bold">EMAILS (SCRAPED)</h1>
-                  {item.emails.map((email, index) => (
+                  {item.emails?.map((email, index) => (
                     <>
                       <div className="flex w-full justify-between gap-4">
                         <p key={index}>{email}</p>
@@ -162,7 +152,7 @@ function Item2({ item, openCRM, closeCRM, isCRMOpen }) {
             )}
 
             {item.email == "none" ? (
-              <div className="flex w-full justify-center">
+              <div className="flex w-full">
                 <img
                   src="/email.svg"
                   draggable="false"
@@ -172,7 +162,7 @@ function Item2({ item, openCRM, closeCRM, isCRMOpen }) {
               </div>
             ) : (
               // <p>{item.email}</p>
-              <div className="flex w-full justify-center">
+              <div className="flex w-full">
                 <img
                   src="/email.svg"
                   draggable="false"
@@ -182,10 +172,9 @@ function Item2({ item, openCRM, closeCRM, isCRMOpen }) {
                 />
               </div>
             )}
-            {/* <p>{item.email}</p> */}
           </td>
           <td>
-            <div className="flex flex-grow flex-row items-center gap-[2px]">
+            <div className="flex flex-shrink-0 flex-row items-center gap-[2px] z-0">
               {item.facebook ? (
                 <Link href={item.facebook} target="_blank" className="h-5 w-5">
                   <img
