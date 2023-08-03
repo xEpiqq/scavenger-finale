@@ -46,21 +46,24 @@ function AccountTab({ item, closeCRM }) {
     item.changedFlag = true;
   }, [favorite]);
 
+
   return (
     <div className="flex h-full w-full flex-col gap-8 px-9 pt-7 text-sm text-pbblack">
-      <div className="flex h-auto w-full flex-row items-center gap-3">
-        <input
-          className="checkbox-primary checkbox"
-          type="checkbox"
-          role="switch"
-          id="change-password"
-          // value={firstContact}
-          checked={favorite}
-          onChange={(e) => setFavorite(e.target.checked)}
-        />
-        <label htmlFor="favorite" className="ml-1 font-semibold text-pblines">
-          Favorite
-        </label>
+      <div className="flex w-full flex-row justify-between">
+        <div className="flex h-auto w-full flex-row items-center gap-3">
+          <input
+            className="checkbox-primary checkbox"
+            type="checkbox"
+            role="switch"
+            id="change-password"
+            // value={firstContact}
+            checked={favorite}
+            onChange={(e) => setFavorite(e.target.checked)}
+          />
+          <label htmlFor="favorite" className="ml-1 font-semibold text-pblines">
+            Favorite
+          </label>
+        </div>
       </div>
 
       <div className="flex w-full flex-col gap-2">
