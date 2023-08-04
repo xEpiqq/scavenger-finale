@@ -3,6 +3,12 @@ import { useState, useEffect } from "react";
 
 function EmailTab({ item, closeCRM }) {
   const [subject, setSubject] = useState("");
+  const [emailBody, setEmailBody] = useState(item.emailBody);
+
+  useEffect(() => {
+    item.emailBody = emailBody;
+    item.changedFlag = true;
+  }, [emailBody]);
 
   const createEmail = async () => {
     // we need to call the api to create the email
@@ -62,7 +68,8 @@ function EmailTab({ item, closeCRM }) {
             name="comment"
             id="comment"
             className="text-gray- ring-gray-300  placeholder:text-gray-400 focus:ring-indigo-600 bg-gray-100 block w-full flex-grow rounded-md border-0 bg-pbiconhover p-4 py-1.5 shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset sm:text-sm  sm:leading-6"
-            value={item.emailBody}
+            value={emailBody}
+            onChange={(e) => setEmailBody(e.target.value)}
           />
         </div>
 
@@ -79,6 +86,12 @@ function EmailTab({ item, closeCRM }) {
           >
             Draft AI Email
           </button>
+          <a
+            href={`mailto:${encodeURIComponent(item.email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`}
+            className="flex justify-center items-center h-10 p-0 w-36 rounded-md bg-pbblack text-sm font-semibold text-white transition duration-75 hover:bg-pbblackhover"
+          >
+            Send Email
+          </a>
         </div>
       </div>
     </>
