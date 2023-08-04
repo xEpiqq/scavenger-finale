@@ -6,7 +6,14 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CRM from "./CRM";
 
-function Item2({ item, openCRM, closeCRM, isCRMOpen, toggleselected, selected }) {
+function Item2({
+  item,
+  openCRM,
+  closeCRM,
+  isCRMOpen,
+  toggleselected,
+  selected,
+}) {
   const [openCopy, setOpenCopy] = useState(false);
 
   let nameLength
@@ -27,24 +34,22 @@ function Item2({ item, openCRM, closeCRM, isCRMOpen, toggleselected, selected })
 
   const [openEmail, setOpenEmail] = useState(false);
   const clickable_link = "http://" + item.siteLink;
-  let address_split, address, city, pre_state, state;
 
-  try{
-    address_split = item.address.split(",")
+  let address = "";
+  let city = "";
+  let state = "";
+
+  if (item.address != null) {
+    const address_split = item.address.split(",");
     address = address_split[0];
     city = address_split[1];
-    pre_state = address_split[2];
+    const pre_state = address_split[2];
+    // if pre_state contains numbers
     state = pre_state;
-  } catch {
-    address = "none";
-    city = "none";
-    state = "none";
-  }
-
-
-  if (/\d/.test(pre_state)) {
-    state = pre_state.replace(/[0-9]/g, "");
-  }
+    if (/\d/.test(pre_state)) {
+      state = pre_state.replace(/[0-9]/g, "");
+    }
+  } // remove the zip code from state
   //
   function openEmails() {
     setOpenEmail(true);
@@ -57,7 +62,12 @@ function Item2({ item, openCRM, closeCRM, isCRMOpen, toggleselected, selected })
         <tr>
           <th>
             <label>
-              <input type="checkbox" className="checkbox" onClick={toggleselected} checked={selected}/>
+              <input
+                type="checkbox"
+                className="checkbox"
+                onClick={toggleselected}
+                checked={selected}
+              />
             </label>
           </th>
           <td>
@@ -131,7 +141,8 @@ function Item2({ item, openCRM, closeCRM, isCRMOpen, toggleselected, selected })
               {city && (
                 <span className="badge badge-ghost badge-sm">
                   {city}, {state}
-                </span>)}
+                </span>
+              )}
             </div>
           </td>
           <td>
@@ -190,7 +201,7 @@ function Item2({ item, openCRM, closeCRM, isCRMOpen, toggleselected, selected })
             )}
           </td>
           <td>
-            <div className="flex flex-shrink-0 flex-row items-center gap-[2px] z-0">
+            <div className="z-0 flex flex-shrink-0 flex-row items-center gap-[2px]">
               {item.facebook ? (
                 <Link href={item.facebook} target="_blank" className="h-5 w-5">
                   <img

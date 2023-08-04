@@ -32,34 +32,22 @@ function CardItem({ item, openCRM, closeCRM, isCRMOpen }) {
 
   const [openEmail, setOpenEmail] = useState(false);
   const clickable_link = "http://" + item.siteLink;
-  // const address_split = item.address.split(",");
-  // const address = address_split[0];
-  // const city = address_split[1];
-  // const pre_state = address_split[2];
+  
+  let address = "";
+  let city = "";
+  let state = "";
 
-  let address_split, address, city, pre_state, the_state;
-
-  try{
-    address_split = item.address.split(",")
+  if (item.address != null) {
+    const address_split = item.address.split(",");
     address = address_split[0];
     city = address_split[1];
-    pre_state = address_split[2];
-    the_state = pre_state;
-  } catch {
-    address = "none";
-    city = "none";
-    the_state = "none";
-  }
-
-
-
-  // remove the zip code from state
-  // if pre_state contains numbers
-  the_state = pre_state;
-  if (/\d/.test(pre_state)) {
-    the_state = pre_state.replace(/[0-9]/g, "");
-  }
-  //
+    const pre_state = address_split[2];
+    // if pre_state contains numbers
+    state = pre_state;
+    if (/\d/.test(pre_state)) {
+      state = pre_state.replace(/[0-9]/g, "");
+    }
+  } // remove the zip code from state
   function openEmails() {
     setOpenEmail(true);
   }

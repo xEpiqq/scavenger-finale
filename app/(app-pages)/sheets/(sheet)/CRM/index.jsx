@@ -1,10 +1,9 @@
 "use client";
-import react from "react";
 import { useState, useEffect, useRef } from "react";
 
 import AccountTab from "./AccountTab";
 import AuthUsersTab from "./AuthUsersTab";
-import { useRouter } from "next/navigation";
+import EmailTab from "./EmailTab";
 
 function CRM({ item, closeCRM }) {
   const OPEN_SPEED = 150;
@@ -17,11 +16,7 @@ function CRM({ item, closeCRM }) {
 
   const [isShown, setIsShown] = useState(false);
   const [pencilClicked, setPencilClicked] = useState(false);
-  const [targetIndex, setTargetIndex] = useState(null);
-  const [listsArray, setListsArray] = useState([]);
   const [deleteModal, setDeleteModal] = useState(false);
-
-  const [changedFlag, setChangedFlag] = useState(false);
 
   useEffect(() => {
     setIsShown(false);
@@ -29,6 +24,25 @@ function CRM({ item, closeCRM }) {
       setIsShown(true);
     }, OPEN_SPEED);
   }, []);
+
+  useEffect(() => {
+    console.log("Here");
+
+    function handleScroll(event) {
+      if (isShown) {
+        event.preventDefault();
+      }
+    }
+
+    if (isShown) {
+      // Lock body scroll when the component is shown
+      document.body.style.overflow = 'hidden';
+    } else {
+      // Restore body scroll when the component is hidden
+      document.body.style.overflow = 'visible';
+    }
+
+  }, [isShown]);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -47,13 +61,20 @@ function CRM({ item, closeCRM }) {
     inputRef.current.focus();
   }
 
+  function smoothClose(e) {
+    if (e) e.stopPropagation();
+    setIsShown(false);
+    setTimeout(() => {
+      closeCRM();
+    }, OPEN_SPEED);
+  }
+
   async function renameSubmit() {
     setPencilClicked(false);
   }
 
   async function deleteItem() {
-    closeCRM();
-    // TODO: delete
+    smoothClose();
     item.delete();
   }
 
@@ -68,14 +89,7 @@ function CRM({ item, closeCRM }) {
         className={`fixed left-0 top-0 z-40 block h-full w-full bg-pbcrmopen max-sm:hidden ${
           isShown ? "opacity-40" : "opacity-0"
         } transition-opacity duration-500 ease-in-out`}
-        onClick={(e) => {
-          e.stopPropagation();
-          setIsShown(false);
-          // wait for animation to finish
-          setTimeout(() => {
-            closeCRM();
-          }, OPEN_SPEED);
-        }}
+        onClick={smoothClose}
       ></div>
 
       <div
@@ -205,16 +219,18 @@ function CRM({ item, closeCRM }) {
                 border-l border-r border-t border-pbiconhover px-6 py-2 text-sm transition-all duration-200 hover:bg-pbiconhover`}
             >
               {" "}
-              More Metrics
+              Email
             </button>
           </div>
 
           <div className="mt-3 flex h-full w-full flex-col border-t border-pbiconhover bg-white">
-            {tabState === 1 ? (
-              <AccountTab item={item} closeCRM={closeCRM} />
-            ) : (
-              <AuthUsersTab />
-            )}
+            <>
+              {tabState === 1 ? (
+                <AccountTab item={item} closeCRM={smoothClose} />
+              ) : (
+                <EmailTab item={item} closeCRM={smoothClose} />
+              )}
+            </>
           </div>
         </div>
         <div className="flex flex-col"></div>
