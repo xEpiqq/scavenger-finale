@@ -16,6 +16,14 @@ function Item2({
 }) {
   const [openCopy, setOpenCopy] = useState(false);
 
+  let nameLength
+
+  if (item.name) {
+    nameLength = item.name.length;
+  } else {
+    nameLength = 0;
+  }
+
   const copyItem = (itemtocopy) => {
     navigator.clipboard.writeText(itemtocopy);
     setOpenCopy(true);
@@ -75,9 +83,9 @@ function Item2({
               <div>
                 <div className="font-bold">
                   <p>
-                    {item.name.length > 46
-                      ? item.name.slice(0, 43) + "..."
-                      : item.name}
+                    {nameLength > 46
+                    ? item.name.slice(0, 43) + "..."
+                    : item.name}
                   </p>
                 </div>
                 <div className="text-sm opacity-50">

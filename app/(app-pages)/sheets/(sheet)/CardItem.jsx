@@ -9,6 +9,15 @@ import CRM from "./CRM";
 function CardItem({ item, openCRM, closeCRM, isCRMOpen }) {
   const [openCopy, setOpenCopy] = useState(false);
 
+  // see how many characters item.name is 
+  let nameLength
+
+  if (item.name) {
+    nameLength = item.name.length;
+  } else {
+    nameLength = 0;
+  }
+
   const copyItem = (itemtocopy) => {
     navigator.clipboard.writeText(itemtocopy);
     setOpenCopy(true);
@@ -23,8 +32,6 @@ function CardItem({ item, openCRM, closeCRM, isCRMOpen }) {
 
   const [openEmail, setOpenEmail] = useState(false);
   const clickable_link = "http://" + item.siteLink;
-  
-  
   
   let address = "";
   let city = "";
@@ -41,7 +48,6 @@ function CardItem({ item, openCRM, closeCRM, isCRMOpen }) {
       state = pre_state.replace(/[0-9]/g, "");
     }
   } // remove the zip code from state
-  //
   function openEmails() {
     setOpenEmail(true);
   }
@@ -66,7 +72,7 @@ function CardItem({ item, openCRM, closeCRM, isCRMOpen }) {
               <div>
                 {city && (
                   <span className="badge badge-ghost badge-md">
-                    {city}, {state}
+                    {city}, {the_state}
                   </span>)}
               </div>
             </div>
@@ -74,7 +80,7 @@ function CardItem({ item, openCRM, closeCRM, isCRMOpen }) {
           <div>
             <div className="flex flex-row font-bold">
               <p>
-                {item.name.length > 46
+                {nameLength > 46
                   ? item.name.slice(0, 43) + "..."
                   : item.name}
               </p>
