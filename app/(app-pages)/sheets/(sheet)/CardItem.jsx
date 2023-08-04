@@ -72,7 +72,7 @@ function CardItem({ item, openCRM, closeCRM, isCRMOpen }) {
               <div>
                 {city && (
                   <span className="badge badge-ghost badge-md">
-                    {city}, {the_state}
+                    {city}, {state}
                   </span>)}
               </div>
             </div>
