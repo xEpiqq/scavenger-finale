@@ -146,7 +146,7 @@ function Page() {
   console.log(screenWidth);
 
   return (
-    <div className="flex h-full w-full">
+    <div className="flex h-full w-full bg-pbsecondbg">
       <div
         className="hidden sticky top-0  w-64 border-b-0 border-pblines border-l-transparent border-t-transparent bg-white sm:block sm:h-screen"
         style={{ borderWidth: 1 }}
