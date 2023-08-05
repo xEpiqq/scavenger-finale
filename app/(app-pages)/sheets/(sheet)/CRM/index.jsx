@@ -93,7 +93,7 @@ function CRM({ item, closeCRM }) {
       ></div>
 
       <div
-        className={`fixed right-0 top-0 z-50 h-full w-full min-w-fit bg-gray-6 shadow-md sm:w-[43.75rem] ${
+        className={`fixed right-0 top-0 z-50 h-screen w-full min-w-fit flex flex-col bg-gray-6 shadow-md sm:w-[43.75rem] ${
           isShown ? "translate-x-150" : "translate-x-full"
         } transition-transform duration-150 `}
       >
@@ -223,7 +223,7 @@ function CRM({ item, closeCRM }) {
             </button>
           </div>
 
-          <div className="mt-3 flex h-full w-full flex-col border-t border-pbiconhover bg-white">
+          <div className="mt-3 flex h-full max-h-full w-full flex-col border-t border-pbiconhover bg-white">
             <>
               {tabState === 1 ? (
                 <AccountTab item={item} closeCRM={smoothClose} />

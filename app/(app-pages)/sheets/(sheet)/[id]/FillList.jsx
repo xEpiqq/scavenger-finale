@@ -27,7 +27,7 @@ function FillList({
 
   return (
     <>
-      <div className="h-screen w-screen sm:w-full sm:h-full flex justify-center items-center bg-white p-4">
+      <div className="h-screen w-screen sm:w-full sm:h-screen flex justify-center items-center bg-white p-4">
       <div className="bg-black opacity-20 pointer-events-none" />
       <div className="z-10 flex h-auto w-full max-w-120 flex-col rounded-md bg-white text-black shadow-2xl">
         <div className="h-36 w-full rounded-tl-md rounded-tr-md border-b-2 border-b-paymentborder bg-white p-8">

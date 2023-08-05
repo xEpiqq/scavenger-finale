@@ -29,7 +29,7 @@ export async function POST(request) {
     const model = "gpt-3.5-turbo";
 
     const prompt =
-      "You will create a cold outreach email for a local buisness from a freelance web developer." +
+      "You will write just the body(no subject) of a cold outreach email for a local buisness from a freelance web developer. Max 700 characters" +
       "Here is some data about the local buisness:\n" +
       "Name: " +
       item.name +
