@@ -75,7 +75,7 @@ function SheetTileOptions(props) {
   }
   
   const dropdownMenu = showSheetOptions ? (
-    <div className="absolute z-10 mt-1 w-40 rounded-md bg-white shadow-lg">
+    <div className="absolute z-10 top-full translate-y-4 mt-1 w-40 rounded-md bg-white shadow-lg transform -translate-x-1/2">
       <div className="py-1">
         <button
           className="text-gray-700 hover:bg-gray-100 hover:text-gray-900 flex w-full justify-start px-4 py-2 text-sm hover:bg-black hover:text-white"
