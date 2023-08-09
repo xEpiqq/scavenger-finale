@@ -21,6 +21,7 @@ import FillList from "./FillList.jsx";
 import Link from "next/link";
 import Item2 from "../Item2.jsx";
 import CardItem from "../CardItem.jsx";
+import PageNav from "../PageNav.jsx";
 
 import ListItem from "../ListItem.js";
 
@@ -62,7 +63,7 @@ function Page({ params }) {
   }, [searchbar]);
 
   useEffect(() => {
-    console.log("sheetDataRaw", sheetDataRaw?.data()?.lists);
+    console.log("sheetDataRaw", sheetDataRaw?.data());
     setDisplayedSheets(
       sheetDataRaw?.data()?.lists?.map((list) => {
         return new ListItem({ ...list, idSheet: list_id, userId: user.uid });
@@ -113,6 +114,26 @@ function Page({ params }) {
     });
   }
 
+  async function renameInDB(newName) {
+    console.log("newName", newName);
+    console.log("sheetDataRaw", sheetDataRaw);
+    const userRef = doc(db, `users/${user?.uid}`);
+    const userSnapshot = await getDoc(userRef);
+    const listsArray = userSnapshot.data().lists;
+    const targetIndex = listsArray.findIndex(
+      (list) => list.list_ref === list_id
+    );
+    if (targetIndex !== -1) {
+      listsArray[targetIndex].list_name = newName;
+    }
+    await updateDoc(userRef, { lists: listsArray });
+
+    const listRef = doc(db, `sheets/${list_id}`);
+    await updateDoc(listRef, {
+      list_name: newName,
+    });
+  }
+
   async function sendToLambda() {
     if (niche === "" || location === "") {
       setQueryError("Niche or Location is empty");
@@ -137,6 +158,8 @@ function Page({ params }) {
     const newSearchQuery = niche + " in " + location;
     setSearching(true);
     setQueryError("");
+
+    renameInDB(newSearchQuery);
 
     const response = await fetch("/api/lambda", {
       method: "POST",
@@ -315,29 +338,13 @@ function Page({ params }) {
               </>
             ))}
         </div>
-
-        <div className="sticky bottom-0 right-0 mt-2 flex w-full items-center justify-center px-6 py-3">
-          <div className="flex w-full max-w-md flex-row justify-between">
-            <button
-              onClick={() => setCurrentPage(currentPage - 1)}
-              disabled={currentPage === 0}
-            >
-              {" "}
-              {"< Prev"}{" "}
-            </button>
-            Current Page: {currentPage + 1} / {page_amount}
-            <button
-              onClick={() => setCurrentPage(currentPage + 1)}
-              disabled={
-                currentPage ===
-                Math.floor(sheetData?.lists?.length / resultsPerPage)
-              }
-            >
-              {"Next >"}
-            </button>
-          </div>
-        </div>
       </div>
+      <PageNav
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        resultsPerPage={resultsPerPage}
+        itemCount={displayedSheets?.length}
+      />
     </>
   );
 }

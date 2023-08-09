@@ -46,7 +46,7 @@ function Page({ props }) {
   const last_updated = moment(userData?.last_updated?.toDate()).fromNow();
 
 
-  const sheet_count_value = Math.floor(item_count / 21);
+  const sheet_count_value = Math.min( Math.floor(item_count / 21), 10);
   const sheet_link = `/sheets/${reference}`;
   
   return (

@@ -1,5 +1,4 @@
 "use client";
-import react from "react";
 import SheetTile from "./SheetTile";
 import SheetTileNew from "./SheetTileNew";
 import TextPrompt from "../components/TextPrompt";
@@ -19,45 +18,18 @@ import { useDocument } from "react-firebase-hooks/firestore";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useEffect } from "react";
-import { PieChart } from "react-minimal-pie-chart";
-import Link from "next/link";
 import dayjs from "dayjs";
 
 const auth = getAuth(app);
 
 function Page() {
-  const chart_colors = [
-    "#FCA5A5",
-    "#FDB1A5",
-    "#FFC2A5",
-    "#FFCDA5",
-    "#FFD9A5",
-    "#FFE5A5",
-    "#FFF1A5",
-    "#FFFDAA",
-    "#FFFEBC",
-    "#FFFED0",
-    "#FFFFE0",
-    "#E0FFDF",
-    "#D1FFD1",
-    "#C2FFC2",
-    "#B2FFB2",
-    "#A3FFA3",
-    "#94FF94",
-    "#85FF85",
-    "#76FF76",
-    "#67FF67",
-  ];
-
   const [user, loading, user_error] = useAuthState(auth);
   const [userDataRaw, loading2, error2] = useDocument(
     doc(db, `users/${user?.uid}`)
   );
   const userData = userDataRaw?.data();
-  const [createSheet, setCreateSheet] = useState(false);
   const total_sheets = userData?.lists?.length;
   const [totalLeads, setTotalLeads] = useState(0);
-  const subscriptionStatus = userData?.subscription_status;
 
   // how many days have elapsed
   const userCreated = userData?.created;
@@ -122,7 +94,7 @@ function Page() {
     return listRef;
   }
 
-  async function createNewSheet(listName) {
+  async function createNewSheet(listName = "New List") {
     const userRef = doc(db, `users/${user?.uid}`);
     const userSnapshot = await getDoc(userRef);
     const listsArray = userSnapshot.data().lists;
@@ -131,8 +103,8 @@ function Page() {
       list_contacted: 0,
       list_count: 0,
       list_name: listName,
-      list_ref: listRef, // Replace with your own function to generate a random string
-      object_id: uuidv4(), // Replace with your own function to generate a random object id
+      list_ref: listRef,
+      object_id: uuidv4(),
     };
     listsArray.push(newSheet);
     await updateDoc(userRef, { lists: listsArray });
@@ -148,7 +120,7 @@ function Page() {
   return (
     <div className="flex h-full w-full bg-pbsecondbg">
       <div
-        className="hidden sticky top-0  w-64 border-b-0 border-pblines border-l-transparent border-t-transparent bg-white sm:block sm:h-screen"
+        className="sticky top-0 hidden  w-64 border-b-0 border-pblines border-l-transparent border-t-transparent bg-white sm:block sm:h-screen"
         style={{ borderWidth: 1 }}
       >
         <div
@@ -165,37 +137,14 @@ function Page() {
           <h2 className="text-md mt-2">Total Leads</h2>
           <h2 className="font-bold">{totalLeads}</h2>
           <span className="w-28 bg-pblines" style={{ height: 1 }} />
-
-          {/* <h2 className="mt-6">First Contact</h2>
-          <h2 className="text-xs text-gray-3">66/{totalLeads}</h2>
-          <div className="h-28 w-full">
-            <PieChart
-              data={[
-                { title: "One", value: 10, color: "#4C9A" },
-                { title: "Two", value: totalLeads, color: "#2C2C2C" },
-              ]}
-            />
-          </div> */}
-
-          {/* <h2 className="mt-6">Second Contact</h2>
-          <h2 className="text-xs text-gray-3">33/{totalLeads}</h2>
-
-          <div className="h-28 w-full">
-            <PieChart
-              data={[
-                { title: "One", value: 10, color: "#C9A" },
-                { title: "Two", value: 20, color: "#2C2C2C" },
-              ]}
-            />
-          </div> */}
         </div>
       </div>
 
       <div className="flex  w-full flex-col justify-between bg-pbsecondbg px-4 py-8">
         <button
-          className="hover:border-1 bottom-4 right-20 z-50 block h-16 w-full rounded-md bg-black text-white transition duration-200 hover:border hover:border-black hover:bg-white hover:text-black sm:fixed sm:h-10 sm:w-48"
+          className="hover:border-1 bottom-4 right-20 z-20 block h-16 w-full rounded-md bg-black text-white transition duration-200 hover:border hover:border-black hover:bg-white hover:text-black sm:fixed sm:h-10 sm:w-48"
           onClick={() => {
-            setCreateSheet(true);
+            createNewSheet();
           }}
         >
           Create New Sheet
@@ -226,43 +175,8 @@ function Page() {
           ))}
 
           {total_sheets === 0 && (
-            <SheetTileNew onClick={() => setCreateSheet(true)} />
+            <SheetTileNew onClick={() => createNewSheet()} />
           )}
-
-          {/* <SheetTileNew /> */}
-          <div className="fixed bottom-28 right-28 z-50 flex justify-center gap-6 2xl:bottom-8 2xl:right-8">
-            {createSheet && (
-              <TextPrompt
-                props={{
-                  title: "Create New Sheet",
-                  placeholder: "Sheet Name",
-                  action: "Create",
-                  actionFunction: () => {
-                    console.log("create sheet");
-                  },
-                  closeFunction: () => {
-                    setCreateSheet(false);
-                  },
-                }}
-              />
-            )}
-
-            {createSheet && (
-              <TextPrompt
-                title="Create New Sheet"
-                description="Please enter a new name for the sheet."
-                placeholder="New Sheet Name"
-                buttonText="Create"
-                callBack={(input) => {
-                  setCreateSheet(false);
-                  createNewSheet(input);
-                }}
-                callBackClose={() => {
-                  setCreateSheet(false);
-                }}
-              />
-            )}
-          </div>
         </div>
       </div>
     </div>

@@ -13,7 +13,7 @@ function TextPrompt({ title, description, placeholder, buttonText, callBack, cal
 
   return (
     <>
-    <div className="fixed left-0 top-0 z-10 h-screen w-screen">
+    <div className="fixed left-0 top-0 z-30 h-screen w-screen">
       <div className="fixed left-0 top-0 z-20 h-screen w-screen bg-darken-1" onClick={() => callBackClose()} />
       
       <div
@@ -42,6 +42,9 @@ function TextPrompt({ title, description, placeholder, buttonText, callBack, cal
           <p className="text-sm text-pbblack">
             Please use 32 characters at maximum.
           </p>
+          <button className="rounded-md border bg-black p-2 pl-4 pr-4 text-sm text-white transition duration-200 ease-in-out hover:bg-white hover:text-black" onClick={() => callBackClose()}>
+            Cancel
+          </button>
           <button
             className="rounded-md border bg-black p-2 pl-4 pr-4 text-sm text-white transition duration-200 ease-in-out hover:bg-white hover:text-black"
             onClick={() => callBack(input)}

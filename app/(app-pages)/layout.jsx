@@ -83,10 +83,12 @@ function Layout({ children }) {
 
   if (userData?.subscription_status === "active" || userData?.subscription_status === "trialing") {
     return (
-      <div className="flex flex-col w-full h-full text-black bg-pbsecondbg sm:flex-row">
+      <body className="w-full h-full flex min-h-screen bg-pbsecondbg ">
+      <div className="flex float-left flex-col w-full text-black bg-pbsecondbg sm:flex-row">
         <Navbar />
-        <section className="w-full h-full overflow-x-clip bg-pbsecondbg">{children}</section>
+        <section className="w-full h-full inline-block overflow-x-clip bg-pbsecondbg">{children}</section>
       </div>
+      </body>
     );
     }
 }
