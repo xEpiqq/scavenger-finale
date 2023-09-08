@@ -28,7 +28,6 @@ export async function POST(request) {
     let query_ending = "#rlfi=hd:;start:0"
     query_url += query_ending
     
-
     fetch(function_url, {
         method: 'POST',
         headers: {
