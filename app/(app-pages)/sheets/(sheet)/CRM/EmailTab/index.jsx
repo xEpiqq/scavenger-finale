@@ -36,6 +36,7 @@ function EmailTab({ item, closeCRM }) {
     }
     setIsLoadingEmail(false);
   };
+  
 
   console.log(item.emailBody);
 
