@@ -64,8 +64,31 @@ function Page({ params }) {
 
   useEffect(() => {
     console.log("sheetDataRaw", sheetDataRaw?.data());
+    if (!sheetDataRaw?.data()?.lists) return;
+    // sort sheet data raw by if it has a site link or not
+    // then sort by if it has a phone number or not
+    // then sort by if it has an email or not
+    // then sort by if it has a social or not
+    // then sort by if it has an address or not
+    const sortedSheetData = sheetDataRaw?.data()?.lists?.sort((a, b) => {
+      if (a.favorite && !b.favorite) return -1;
+      if (a.siteLink && !b.siteLink) return -1;
+      if (!a.siteLink && b.siteLink) return 1;
+      if (a.phoneNumber && !b.phoneNumber) return -1;
+      if (!a.phoneNumber && b.phoneNumber) return 1;
+      if (a.email && !b.email) return -1;
+      if (!a.email && b.email) return 1;
+      if (a.social && !b.social) return -1;
+      if (!a.social && b.social) return 1;
+      if (a.address && !b.address) return -1;
+      if (!a.address && b.address) return 1;
+      return 0;
+    });
+
+    console.log("sortedSheetData", sortedSheetData);
+
     setDisplayedSheets(
-      sheetDataRaw?.data()?.lists?.map((list) => {
+      sortedSheetData.map((list) => {
         return new ListItem({ ...list, idSheet: list_id, userId: user.uid });
       }) ?? [] // if userData?.lists is undefined, set it to an empty array instead of undefined
     );

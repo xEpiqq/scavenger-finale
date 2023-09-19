@@ -16,13 +16,7 @@ function Item2({
 }) {
   const [openCopy, setOpenCopy] = useState(false);
 
-  let nameLength
-
-  if (item.name) {
-    nameLength = item.name.length;
-  } else {
-    nameLength = 0;
-  }
+  let nameLength = item.name ? item.name.length : 0;
 
   const copyItem = (itemtocopy) => {
     navigator.clipboard.writeText(itemtocopy);
