@@ -19,6 +19,7 @@ function EmailTab({ item, closeCRM }) {
 
   useEffect(() => {
     setEmailBody(item.emailBody);
+    setIsLoadingEmail(false);
   }, [item.emailBody]);
 
   const createEmail = async () => {
@@ -30,9 +31,7 @@ function EmailTab({ item, closeCRM }) {
         item: item,
       }),
     });
-    setIsLoadingEmail(false);
   };
-  
 
   console.log(item.emailBody);
 
@@ -124,11 +123,11 @@ function EmailTab({ item, closeCRM }) {
           )}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
             emailBody
           )}`}
-          className={`flex h-10 w-10 sm:w-36 items-center justify-center rounded-md bg-pbblack text-sm font-semibold text-white transition duration-75 hover:bg-pbblackhover ${
+          className={`flex h-10 w-10 items-center justify-center rounded-md bg-pbblack text-sm font-semibold text-white transition duration-75 hover:bg-pbblackhover sm:w-36 ${
             isLoadingEmail ? "cursor-not-allowed" : ""
           }`}
         >
-          <p className="hidden sm:block mx-3">Send Email</p>
+          <p className="mx-3 hidden sm:block">Send Email</p>
           <svg
             className="h-5 w-5"
             fill="#ffffff"
