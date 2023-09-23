@@ -125,15 +125,20 @@ module.exports = {
       },
     },
   },
-  plugins: [],
-  plugins: [require("daisyui")],
-  daisyui: {
-    themes: [
-      {
-        dark: {
-          primary: "#34B27B",
-        }
-      }
-    ]
-  },
+  plugins: [
+    require("daisyui"),
+    require('@tailwindcss/forms')
+  ],
+
 };
+
+//   module.exports = {
+//     // ...
+//     plugins: [
+//       // ...
+//       require('@tailwindcss/forms'),
+//     ],
+//   }
+//   ```
+// */
+

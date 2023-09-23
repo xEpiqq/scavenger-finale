@@ -1,8 +1,6 @@
 "use client";
 
-import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import ScrollToTop from "@/components/ScrollToTop";
 import "node_modules/react-modal-video/css/modal-video.css";
 import "../../styles/index.css";
 import Link from "next/link";
@@ -25,11 +23,7 @@ export default function Layout({
             Act fast!  <Link href="/specialpromo" className="underline hover:text-pbblack transition duration-150"> Lock in at $49 / month for life.</Link>
           </p>
         </div> */}
-
-        <Header />
         {children}
-        <Footer />
-        <ScrollToTop />
     </>
   );
 }

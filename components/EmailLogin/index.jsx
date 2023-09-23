@@ -100,14 +100,14 @@ function EmailLogin(props) {
         <input
           type="email"
           placeholder="email"
-          className="text-gray-700 focus:shadow-outline rounded-lg border px-3 py-2 leading-tight focus:outline-none"
+          className="text-gray-700 focus:shadow-outline rounded-lg mb-2 px-3 py-2 leading-tight focus:outline-none bg-gray-5 border-pbblack text-pbblack"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
       </div>
       <button
         type="submit"
-        className="mb-6 flex w-full items-center justify-center rounded-md bg-white p-3 text-base font-medium text-body-color shadow-one hover:text-primary"
+        className="mb-6 flex w-full items-center justify-center rounded-md bg-white p-3 text-base font-medium text-body-color shadow-one hover:text-gray-1 border border-gray-2"
       >
         <span className="mr-3">
           <svg
