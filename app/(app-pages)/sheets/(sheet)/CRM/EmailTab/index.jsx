@@ -24,16 +24,12 @@ function EmailTab({ item, closeCRM }) {
   const createEmail = async () => {
     // we need to call the api to create the email
     setIsLoadingEmail(true);
-    const resopnse = await fetch("/api/create-email", {
+    await fetch("/api/create-email", {
       method: "POST",
       body: JSON.stringify({
         item: item,
       }),
     });
-    if (resopnse.ok) {
-      const data = await resopnse.json();
-      console.log(data);
-    }
     setIsLoadingEmail(false);
   };
   
