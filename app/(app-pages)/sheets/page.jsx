@@ -147,7 +147,7 @@ function Page() {
             createNewSheet();
           }}
         >
-          Create New Sheet
+          Create New List
         </button>
         <PageName
           name="List Overview"

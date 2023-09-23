@@ -108,7 +108,7 @@ function GoogleLogin(props) {
 
     <button
       onClick={googleLogin}
-      className="mb-6 flex w-full items-center justify-center rounded-md bg-white p-3 text-base font-medium text-body-color shadow-one hover:text-primary"
+      className="mb-6 flex w-full items-center justify-center rounded-md bg-gray-1 p-3 text-base font-medium text-body-color shadow-one hover:text-white duration-150"
     >
       <span className="mr-3">
         <svg
