@@ -31,7 +31,7 @@ function SignupModal(props) {
           }}
         />
 
-        <div className="relative z-30 w-11/12 rounded-lg border border-white bg-pbblack2 p-8 py-20 pt-20 text-white shadow-lg max-w-sm">
+        <div className="relative z-30 w-11/12 rounded-lg border border-black bg-white p-8 py-20 pt-20 text-yellow shadow-lg max-w-sm">
           <div
             className="border-px absolute right-0 top-0 mr-4 mt-4 cursor-pointer rounded-md border border-yellow px-2 opacity-60 transition-all duration-150 hover:opacity-100"
             onClick={() => {
@@ -41,7 +41,7 @@ function SignupModal(props) {
             esc
           </div>
 
-          <h2 className="mb-4 text-2xl font-bold">
+          <h2 className="mb-4 text-2xl font-semibold text-gray-3">
             Signup to try Scavenger for free now!
           </h2>
           {/* <form onSubmit={handleSignup}>
@@ -92,20 +92,20 @@ function SignupModal(props) {
             </div>
 
             {googleBtn === "Signup" ? (
-              <p className="text-sm">
+              <p className="text-sm text-gray-3">
                 Already have an account?{" "}
                 <a
-                  className="cursor-pointer font-semibold text-primary"
+                  className="cursor-pointer font-semibold text-gray-3"
                   onClick={() => setGoogleBtn("Login")}
                 >
                   Log in
                 </a>
               </p>
             ) : (
-              <p className="text-sm">
+              <p className="text-sm text-gray-3">
                 Don't have an account?{" "}
                 <a
-                  className="cursor-pointer font-semibold text-primary"
+                  className="cursor-pointer font-semibold text-gray-3"
                   onClick={() => setGoogleBtn("Signup")}
                 >
                   Sign up
