@@ -1,11 +1,25 @@
 import react from "react";
 import { useState, useEffect } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  updateDoc,
+  collection,
+  addDoc,
+} from "firebase/firestore";
+import { app, db } from "../../../../../../components/initializeFirebase";
+import { getAuth, signOut } from "firebase/auth";
+
+const auth = getAuth(app);
 
 function EmailTab({ item, closeCRM }) {
   const [subject, setSubject] = useState(item.emailSubject);
   const [emailBody, setEmailBody] = useState(item.emailBody);
 
   const [isLoadingEmail, setIsLoadingEmail] = useState(false);
+  const [user, loading, user_error] = useAuthState(auth);
 
   useEffect(() => {
     item.emailBody = emailBody;
@@ -24,16 +38,33 @@ function EmailTab({ item, closeCRM }) {
 
   const createEmail = async () => {
     // we need to call the api to create the email
+    if (!user) {
+      alert("You must be logged in to create an email");
+      return;
+    }
+
+    const docRef = doc(db, "users", user.uid);
     setIsLoadingEmail(true);
+
+    const docSnap = await getDoc(docRef);
+    if (!docSnap.exists()) {
+      return;
+    }
+
     await fetch("/api/create-email", {
       method: "POST",
       body: JSON.stringify({
         item: item,
+        user: {
+          firstName: docSnap.data().firstName,
+          lastName: docSnap.data().lastName,
+          buisnessName: docSnap.data().buisnessName,
+          email: docSnap.data().email,
+          phone: docSnap.data().phone,
+        },
       }),
     });
   };
-
-  console.log(item.emailBody);
 
   return (
     <>
