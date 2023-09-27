@@ -63,7 +63,6 @@ function LoginEmailForm() {
         } catch {
           console.log("failed to get user data");
         }
-        router.push("/sheets");
         // ...
       })
       .catch((error) => {
