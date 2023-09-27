@@ -36,6 +36,28 @@ function EmailTab({ item, closeCRM }) {
     setIsLoadingEmail(false);
   }, [item.emailBody]);
 
+  const profileIsComplete = () => {
+    if (!user) {
+      return false;
+    }
+    const docRef = doc(db, "users", user.uid);
+    const docSnap = getDoc(docRef);
+    if (!docSnap.exists()) {
+      return false;
+    }
+    const data = docSnap.data();
+    if (
+      !data.firstName ||
+      !data.lastName ||
+      !data.buisnessName ||
+      !data.email ||
+      !data.phone
+    ) {
+      return false;
+    }
+    return true;
+  };
+
   const createEmail = async () => {
     // we need to call the api to create the email
     if (!user) {
@@ -70,6 +92,7 @@ function EmailTab({ item, closeCRM }) {
     <>
       <div className="flex w-full flex-grow flex-col gap-8 px-9 pb-4 pt-7 text-sm text-pbblack">
         <div className="flex w-full flex-col gap-3 sm:flex-row">
+          {!profileIsComplete() &&  (<p>Update your profile to customize your email</p>)}
           <div className="flex w-full flex-col gap-1">
             <label
               htmlFor="decision-maker"
