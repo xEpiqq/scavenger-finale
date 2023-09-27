@@ -1,3 +1,4 @@
+"use client"
 import react from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { useDocument } from "react-firebase-hooks/firestore";
@@ -16,21 +17,15 @@ const auth = getAuth(app);
 function GoogleLogin(props) {
   const router = useRouter();
   const [user, loading, error] = useAuthState(auth);
-  const [userDataRaw, loading2, error2] = useDocument(doc(db, `users/${user?.uid}`));
+  const [userDataRaw, loading2, error2] = useDocument(
+    doc(db, `users/${user?.uid}`)
+  );
   const userData = userDataRaw?.data();
-
-  const [loggingIn, setLoggingIn] = react.useState(false);
-
-  // if user and sub status is active or trialing then redirect to sheets
-  // if (user) {
-  //   router.push("/sheets");
-  // }
 
   async function googleLogin() {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
 
-    setLoggingIn(true);
 
     // check if firestore user
     await fetch("/api/login", {
@@ -42,9 +37,9 @@ function GoogleLogin(props) {
         uid: user.uid,
         displayname: user.displayName,
         email: user.email,
-        photo: user.photoURL
+        photo: user.photoURL,
       }),
-    })
+    });
 
     // fetch to /api/stripecreatecustomer
     await fetch("/api/stripecreatecustomer", {
@@ -57,32 +52,29 @@ function GoogleLogin(props) {
         name: user.displayName,
         user_id: user.uid,
       }),
-    })
+    });
 
     let userRef, userDoc, firestore_user, subscription_status;
     try {
-      userRef = doc(db, "users", user.uid)
-      userDoc = await getDoc(userRef)
-      firestore_user = userDoc.data()
-      subscription_status = firestore_user.subscription_status
+      userRef = doc(db, "users", user.uid);
+      userDoc = await getDoc(userRef);
+      firestore_user = userDoc.data();
+      subscription_status = firestore_user.subscription_status;
       if (subscription_status === "none") {
         router.push("/freetrial");
       } else {
         router.push("/sheets");
       }
-      // setLoggingIn(false); // perhaps never set it false
-
     } catch {
-      console.log("failed to get user data")
+      console.log("failed to get user data");
     }
 
     // router.push("/sheets");
   }
 
-
   return (
     <>
-    {loggingIn && (
+      {/* {loggingIn && (
       <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50 flex items-center justify-center">
         <div className="bg-white rounded-md shadow-lg p-6">
           <div className="flex items-center justify-center">
@@ -104,13 +96,12 @@ function GoogleLogin(props) {
           </div>
         </div>
       </div>
-    )}
+    )} */}
 
-    <button
-      onClick={googleLogin}
-      className="mb-6 flex w-full items-center justify-center rounded-md bg-gray-1 p-3 text-base font-medium text-body-color shadow-one hover:text-white duration-150"
-    >
-      <span className="mr-3">
+      <button
+        onClick={googleLogin}
+        className="flex w-full items-center justify-center gap-3 rounded-md bg-[#000000] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]"
+      >
         <svg
           width="20"
           height="20"
@@ -142,9 +133,8 @@ function GoogleLogin(props) {
             </clipPath>
           </defs>
         </svg>
-      </span>
-      {props.method} with Google
-    </button>
+        <span className="text-sm font-semibold leading-6">Google</span>
+      </button>
     </>
   );
 }

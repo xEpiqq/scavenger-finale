@@ -361,13 +361,14 @@ function Page({ params }) {
               </>
             ))}
         </div>
+
+        <PageNav
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          resultsPerPage={resultsPerPage}
+          itemCount={displayedSheets?.length}
+        />
       </div>
-      <PageNav
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        resultsPerPage={resultsPerPage}
-        itemCount={displayedSheets?.length}
-      />
     </>
   );
 }

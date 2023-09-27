@@ -1,11 +1,25 @@
 import react from "react";
 import { useState, useEffect } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  updateDoc,
+  collection,
+  addDoc,
+} from "firebase/firestore";
+import { app, db } from "../../../../../../components/initializeFirebase";
+import { getAuth, signOut } from "firebase/auth";
+
+const auth = getAuth(app);
 
 function EmailTab({ item, closeCRM }) {
   const [subject, setSubject] = useState(item.emailSubject);
   const [emailBody, setEmailBody] = useState(item.emailBody);
 
   const [isLoadingEmail, setIsLoadingEmail] = useState(false);
+  const [user, loading, user_error] = useAuthState(auth);
 
   useEffect(() => {
     item.emailBody = emailBody;
@@ -19,31 +33,66 @@ function EmailTab({ item, closeCRM }) {
 
   useEffect(() => {
     setEmailBody(item.emailBody);
+    setIsLoadingEmail(false);
   }, [item.emailBody]);
+
+  const profileIsComplete = () => {
+    if (!user) {
+      return false;
+    }
+    const docRef = doc(db, "users", user.uid);
+    const docSnap = getDoc(docRef);
+    if (!docSnap.exists()) {
+      return false;
+    }
+    const data = docSnap.data();
+    if (
+      !data.firstName ||
+      !data.lastName ||
+      !data.buisnessName ||
+      !data.email ||
+      !data.phone
+    ) {
+      return false;
+    }
+    return true;
+  };
 
   const createEmail = async () => {
     // we need to call the api to create the email
+    if (!user) {
+      alert("You must be logged in to create an email");
+      return;
+    }
+
+    const docRef = doc(db, "users", user.uid);
     setIsLoadingEmail(true);
-    const resopnse = await fetch("/api/create-email", {
+
+    const docSnap = await getDoc(docRef);
+    if (!docSnap.exists()) {
+      return;
+    }
+
+    await fetch("/api/create-email", {
       method: "POST",
       body: JSON.stringify({
         item: item,
+        user: {
+          firstName: docSnap.data().firstName,
+          lastName: docSnap.data().lastName,
+          buisnessName: docSnap.data().buisnessName,
+          email: docSnap.data().email,
+          phone: docSnap.data().phone,
+        },
       }),
     });
-    if (resopnse.ok) {
-      const data = await resopnse.json();
-      console.log(data);
-    }
-    setIsLoadingEmail(false);
   };
-  
-
-  console.log(item.emailBody);
 
   return (
     <>
       <div className="flex w-full flex-grow flex-col gap-8 px-9 pb-4 pt-7 text-sm text-pbblack">
         <div className="flex w-full flex-col gap-3 sm:flex-row">
+          {!profileIsComplete() &&  (<p>Update your profile to customize your email</p>)}
           <div className="flex w-full flex-col gap-1">
             <label
               htmlFor="decision-maker"
@@ -128,11 +177,11 @@ function EmailTab({ item, closeCRM }) {
           )}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
             emailBody
           )}`}
-          className={`flex h-10 w-10 sm:w-36 items-center justify-center rounded-md bg-pbblack text-sm font-semibold text-white transition duration-75 hover:bg-pbblackhover ${
+          className={`flex h-10 w-10 items-center justify-center rounded-md bg-pbblack text-sm font-semibold text-white transition duration-75 hover:bg-pbblackhover sm:w-36 ${
             isLoadingEmail ? "cursor-not-allowed" : ""
           }`}
         >
-          <p className="hidden sm:block mx-3">Send Email</p>
+          <p className="mx-3 hidden sm:block">Send Email</p>
           <svg
             className="h-5 w-5"
             fill="#ffffff"
