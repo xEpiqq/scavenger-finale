@@ -21,6 +21,7 @@ function GoogleLogin(props) {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
     let userRef, userDoc, firestore_user, subscription_status;
+    console.log("user: ", user);
     try {
       userRef = doc(db, "users", user.uid);
       userDoc = await getDoc(userRef);
@@ -33,6 +34,7 @@ function GoogleLogin(props) {
       }
     } catch {
       console.log("failed to get user data");
+      router.push("/sheets");
     }
 
     // router.push("/sheets");
