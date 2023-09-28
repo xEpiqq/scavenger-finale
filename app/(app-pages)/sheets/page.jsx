@@ -30,6 +30,7 @@ function Page() {
   const userData = userDataRaw?.data();
   const total_sheets = userData?.lists?.length;
   const [totalLeads, setTotalLeads] = useState(0);
+  const [sortedLists, setSortedLists] = useState([]);
 
   // how many days have elapsed
   const userCreated = userData?.created;
@@ -38,8 +39,7 @@ function Page() {
     ? dayjs(userCreatedDate).format("YYYY-MM-DD")
     : null;
   const today = dayjs().format("YYYY-MM-DD");
-  const daysSinceCreated = dayjs(today).diff(userCreatedFormatted, "day");
-  console.log(daysSinceCreated);
+  const [daysSinceCreated, setDaysSinceCreated] = useState(dayjs(today).diff(userCreatedFormatted, "day"));
 
   // on page load fetch /api/stripe_sub_verification
 
@@ -66,7 +66,20 @@ function Page() {
     getTotalLeads().then((result) => {
       setTotalLeads(result);
     });
-  }, [userData]);
+    if (!userData || !userData?.lists) {
+      return;
+    }
+
+    // Set sorted lists to be the lists sorted by last updated
+    const sortedLists = userData?.lists.sort((a, b) => {
+      // check if a.last_updated exists
+      if (!a.last_updated) {
+        return -10000;
+      }
+      return b.last_updated.seconds - a.last_updated.seconds;
+    });
+    setSortedLists(sortedLists);
+  }, [userData?.lists]);
 
   async function getTotalLeads() {
     let total_leads = 0;
@@ -115,8 +128,6 @@ function Page() {
     setScreenWidth(window.innerWidth);
   }, []);
 
-  console.log(screenWidth);
-
   return (
     <div className="flex h-full w-full bg-pbsecondbg">
       <div
@@ -162,7 +173,7 @@ function Page() {
             gap: "1rem",
           }}
         >
-          {userData?.lists?.map((list, index1) => (
+          {sortedLists.map((list, index1) => (
             <SheetTile
               key={index1}
               props={{
