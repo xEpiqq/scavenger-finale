@@ -16,44 +16,10 @@ const auth = getAuth(app);
 
 function GoogleLogin(props) {
   const router = useRouter();
-  const [user, loading, error] = useAuthState(auth);
-  const [userDataRaw, loading2, error2] = useDocument(
-    doc(db, `users/${user?.uid}`)
-  );
-  const userData = userDataRaw?.data();
 
   async function googleLogin() {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
-
-
-    // check if firestore user
-    await fetch("/api/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        uid: user.uid,
-        displayname: user.displayName,
-        email: user.email,
-        photo: user.photoURL,
-      }),
-    });
-
-    // fetch to /api/stripecreatecustomer
-    await fetch("/api/stripecreatecustomer", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: user.email,
-        name: user.displayName,
-        user_id: user.uid,
-      }),
-    });
-
     let userRef, userDoc, firestore_user, subscription_status;
     try {
       userRef = doc(db, "users", user.uid);
@@ -74,30 +40,6 @@ function GoogleLogin(props) {
 
   return (
     <>
-      {/* {loggingIn && (
-      <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50 flex items-center justify-center">
-        <div className="bg-white rounded-md shadow-lg p-6">
-          <div className="flex items-center justify-center">
-            <svg
-              
-              className="animate-spin -ml-1 mr-3 h-5 w-5 text-primary"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
-                  stroke-width="4">
-                </circle>
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
-            </svg>
-            <p className="text-body-color">Logging in...</p>
-          </div>
-        </div>
-      </div>
-    )} */}
-
       <button
         onClick={googleLogin}
         className="flex w-full items-center justify-center gap-3 rounded-md bg-[#000000] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]"
