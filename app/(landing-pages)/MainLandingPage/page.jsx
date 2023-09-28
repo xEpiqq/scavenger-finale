@@ -23,8 +23,8 @@ import SignupModal from "../../../components/Signupmodal/signupmodal";
 
 
 const navigation = [
-  { name: 'Pricing', href: '#' },
-  { name: 'Features', href: '#' },
+  { name: 'Pricing', href: '/pricing' },
+  // { name: 'Features', href: '#' },
   { name: 'Blog', href: '#' },
 ]
 const features = [
@@ -55,18 +55,19 @@ const features = [
 ]
 const tiers = [
   {
-    name: 'Freelancer',
-    id: 'tier-freelancer',
+    name: 'Basic',
+    id: 'tier-basic',
     href: '#',
-    priceMonthly: '$97',
+    priceMonthly: '$99',
     description: 'The essentials to provide your best work for clients.',
-    features: ['5 products', 'Up to 1,000 subscribers', 'Basic analytics', '48-hour support response time'],
+    features: ['1,000 Leads per month', 'Export to CSV', 'Basic analytics', '48-hour support response time'],
     mostPopular: false,
+    disabled: true,
   },
   {
-    name: 'Startup',
+    name: 'Freelancer',
     id: 'tier-startup',
-    href: '#',
+    href: '/signup',
     priceMonthly: '$197',
     description: 'A plan that scales with your rapidly growing business.',
     features: [
@@ -74,9 +75,9 @@ const tiers = [
       'Unlimited AI Email Drafts',
       'Fully Integrated lightweight CRM',
       '24-hour support response time',
-      'Marketing automations',
     ],
     mostPopular: true,
+    disabled: false,
   },
   {
     name: 'Enterprise',
@@ -85,21 +86,39 @@ const tiers = [
     priceMonthly: '$500',
     description: 'Dedicated support and infrastructure for your company.',
     features: [
-      'Unlimited products',
-      'Unlimited subscribers',
+      'Unlimited Leads',
       'Advanced analytics',
       '1-hour, dedicated support response time',
       'Marketing automations',
     ],
     mostPopular: false,
+    disabled: true,
   },
 ]
 const faqs = [
   {
     id: 1,
-    question: "What's the best thing about Switzerland?",
+    question: "How does your lead finder work?",
     answer:
-      "I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.",
+      "We use advanced algorithms to search Google and Facebook for relevant leads based on user-defined criteria, such as keywords and location.",
+  },
+  {
+    id: 2,
+    question: "What types of leads can Scavenger give me?",
+    answer:
+      "We can give you leads for any type of buisness in any location. Buisness owners love to work with local freelancers.",
+  },
+  {
+    id: 3,
+    question: "Can I export my leads?",
+    answer:
+      "Yes, you can export your leads to a CSV file and use them in your favorite CRM or email marketing software.",
+  },
+  {
+    id: 4,
+    question: "How long does it take to get my leads?",
+    answer:
+      "Scavenger is fast. We can get you 200 leads in under 14 seconds. No more waiting for days to get your leads.",
   },
   // More questions...
 ]
@@ -111,7 +130,7 @@ const footerNavigation = {
     { name: 'Enterprise Services', href: '#' },
   ],
   support: [
-    { name: 'Pricing', href: '#' },
+    { name: 'Pricing', href: '/pricing' },
     { name: 'Documentation', href: '#' },
     { name: 'Guides', href: '#' },
     { name: 'API Reference', href: '#' },
@@ -312,7 +331,7 @@ export default function MainLandingPage() {
                 </p>
                 <div className="mt-10 flex items-center justify-center gap-x-6">
                   <a
-                    href="#"
+                    href="/signup"
                     className="flex gap-4 rounded-md bg-gray-1 px-7 py-4 text-2xl font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   >
                     Start Your Free Trial Today <img src="/clicktrial.svg" className="w-5" />
@@ -348,7 +367,7 @@ export default function MainLandingPage() {
         </div>
 
         {/* Logo cloud */}
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        {/* <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto grid max-w-lg grid-cols-4 items-center gap-x-8 gap-y-12 sm:max-w-xl sm:grid-cols-6 sm:gap-x-10 sm:gap-y-14 lg:mx-0 lg:max-w-none lg:grid-cols-5">
             <img
               className="col-span-2 max-h-12 w-full object-contain lg:col-span-1"
@@ -397,7 +416,7 @@ export default function MainLandingPage() {
               </a>
             </p>
           </div>
-        </div>
+        </div> */}
 
         {/* Feature section */}
         <div className="mx-auto mt-32 max-w-7xl px-6 sm:mt-56 lg:px-8">
@@ -438,7 +457,7 @@ export default function MainLandingPage() {
                 </h1>
                 <div className="mt-10 flex items-center justify-center gap-x-6">
                   <a
-                    href="#"
+                    href="/signup"
                     className="flex gap-4 rounded-md bg-gray-1 px-7 py-4 text-2xl font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   >
                     Start Your Free Trial Today <img src="/clicktrial.svg" className="w-5" />
@@ -475,7 +494,7 @@ export default function MainLandingPage() {
         </div>
 
         {/* Testimonial section */}
-        <div className="mx-auto mt-32 max-w-7xl sm:mt-56 sm:px-6 lg:px-8">
+        {/* <div className="mx-auto mt-32 max-w-7xl sm:mt-56 sm:px-6 lg:px-8">
           <div className="relative overflow-hidden bg-gray-900 px-6 py-20 shadow-xl sm:rounded-3xl sm:px-10 sm:py-24 md:px-12 lg:px-20">
             <img
               className="absolute inset-0 h-full w-full object-cover brightness-150 saturate-0"
@@ -521,7 +540,7 @@ export default function MainLandingPage() {
               </figure>
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* Pricing section */}
         <div className="py-24 sm:pt-48">
@@ -544,7 +563,8 @@ export default function MainLandingPage() {
                     tier.mostPopular ? 'lg:z-10 lg:rounded-b-none' : 'lg:mt-8',
                     tierIdx === 0 ? 'lg:rounded-r-none' : '',
                     tierIdx === tiers.length - 1 ? 'lg:rounded-l-none' : '',
-                    'flex flex-col justify-between rounded-3xl bg-white p-8 ring-1 ring-gray-200 xl:p-10'
+                    'flex flex-col justify-between rounded-3xl bg-white p-8 ring-1 ring-gray-200 xl:p-10',
+                    tier.disabled ? 'opacity-50 pointer-events-none' : 'hover:ring-indigo-500 hover:ring-4'
                   )}
                 >
                   <div>
@@ -627,24 +647,23 @@ export default function MainLandingPage() {
           </div>
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-              Boost your productivity.
+              Boost your Buisness.
               <br />
-              Start using our app today.
+              Generate 10,000 Leads Right Now.
             </h2>
             <p className="mx-auto mt-6 max-w-xl text-lg leading-8 text-gray-600">
-              Incididunt sint fugiat pariatur cupidatat consectetur sit cillum anim id veniam aliqua proident excepteur
-              commodo do ea.
+              Take your business to the next level with our automated lead generation system.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <a
-                href="#"
+                href="/signup"
                 className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Get started
               </a>
-              <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+              {/* <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
                 Learn more <span aria-hidden="true">→</span>
-              </a>
+              </a> */}
             </div>
           </div>
           <div
@@ -668,7 +687,7 @@ export default function MainLandingPage() {
           aria-labelledby="footer-heading"
           className="relative border-t border-gray-900/10 py-24 sm:mt-56 sm:py-32"
         >
-          <h2 id="footer-heading" className="sr-only">
+          {/* <h2 id="footer-heading" className="sr-only">
             Footer
           </h2>
           <div className="xl:grid xl:grid-cols-3 xl:gap-8">
@@ -731,7 +750,7 @@ export default function MainLandingPage() {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </footer>
       </div>
     </div>

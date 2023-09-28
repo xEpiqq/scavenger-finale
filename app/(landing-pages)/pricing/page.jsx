@@ -2,29 +2,29 @@ import { CheckIcon } from '@heroicons/react/20/solid'
 
 const tiers = [
   {
-    name: 'Personal',
-    id: 'tier-personal',
-    href: '#',
-    priceMonthly: '$39',
-    description: "The perfect plan if you're just getting started with our product.",
-    features: [
-      '25 products',
-      'Up to 10,000 subscribers',
-      'Audience segmentation',
-      'Advanced analytics',
-      'Email support',
-      'Marketing automations',
-    ],
-    featured: true,
-  },
-  {
-    name: 'Team',
-    id: 'tier-team',
+    name: 'Basic',
+    id: 'tier-basic',
     href: '#',
     priceMonthly: '$99',
+    description: 'The essentials to provide your best work for clients.',
+    features: ['1,000 Leads per month', 'Export to CSV', 'Basic analytics', '48-hour support response time'],
+    mostPopular: false,
+    disabled: true,
+  },
+  {
+    name: 'Freelancer',
+    id: 'tier-startup',
+    href: '/signup',
+    priceMonthly: '$197',
     description: 'A plan that scales with your rapidly growing business.',
-    features: ['Priority support', 'Single sign-on', 'Enterprise integrations', 'Custom reporting tools'],
-    featured: false,
+    features: [
+      '10,000 Leads per month',
+      'Unlimited AI Email Drafts',
+      'Fully Integrated lightweight CRM',
+      '24-hour support response time',
+    ],
+    mostPopular: true,
+    disabled: false,
   },
 ]
 
@@ -65,7 +65,8 @@ export default function Example() {
                 : tierIdx === 0
                 ? 'rounded-t-3xl sm:rounded-b-none lg:rounded-tr-none lg:rounded-bl-3xl'
                 : 'sm:rounded-t-none lg:rounded-tr-3xl lg:rounded-bl-none',
-              'rounded-3xl p-8 ring-1 ring-gray-900/10 sm:p-10'
+              'rounded-3xl p-8 ring-1 ring-gray-900/10 sm:p-10',
+              tier.disabled ? 'opacity-50 pointer-events-none' : ''
             )}
           >
             <h3 id={tier.id} className="text-base font-semibold leading-7 text-indigo-600">
