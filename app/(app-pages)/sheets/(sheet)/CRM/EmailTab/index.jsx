@@ -19,29 +19,15 @@ function EmailTab({ item, closeCRM }) {
   const [emailBody, setEmailBody] = useState(item.emailBody);
 
   const [isLoadingEmail, setIsLoadingEmail] = useState(false);
+  const [profileIsComplete, setProfileIsComplete] = useState(false);
   const [user, loading, user_error] = useAuthState(auth);
 
-  useEffect(() => {
-    item.emailBody = emailBody;
-    item.changedFlag = true;
-  }, [emailBody]);
-
-  useEffect(() => {
-    item.subject = subject;
-    item.changedFlag = true;
-  }, [subject]);
-
-  useEffect(() => {
-    setEmailBody(item.emailBody);
-    setIsLoadingEmail(false);
-  }, [item.emailBody]);
-
-  const profileIsComplete = () => {
+  const isProfileComplete = async () => {
     if (!user) {
-      return false;
+      return true;
     }
     const docRef = doc(db, "users", user.uid);
-    const docSnap = getDoc(docRef);
+    const docSnap = await getDoc(docRef);
     if (!docSnap.exists()) {
       return false;
     }
@@ -49,7 +35,7 @@ function EmailTab({ item, closeCRM }) {
     if (
       !data.firstName ||
       !data.lastName ||
-      !data.buisnessName ||
+      !data.company ||
       !data.email ||
       !data.phone
     ) {
@@ -88,11 +74,41 @@ function EmailTab({ item, closeCRM }) {
     });
   };
 
+  useEffect(() => {
+    item.emailBody = emailBody;
+    item.changedFlag = true;
+  }, [emailBody]);
+
+  useEffect(() => {
+    item.subject = subject;
+    item.changedFlag = true;
+  }, [subject]);
+
+  useEffect(() => {
+    setEmailBody(item.emailBody);
+    setIsLoadingEmail(false);
+  }, [item.emailBody]);
+
+  useEffect(() => {
+    isProfileComplete().then((isComplete) => {
+      setProfileIsComplete(isComplete);
+    });
+  }, [user]);
+
   return (
     <>
       <div className="flex w-full flex-grow flex-col gap-8 px-9 pb-4 pt-7 text-sm text-pbblack">
+        {!profileIsComplete && (
+          <div>
+            <a
+              href="/profile"
+              className="font-semibold text-pbblack hover:underline"
+            >
+              Click here to update your profile for a more customized email
+            </a>
+          </div>
+        )}
         <div className="flex w-full flex-col gap-3 sm:flex-row">
-          {!profileIsComplete() &&  (<p>Update your profile to customize your email</p>)}
           <div className="flex w-full flex-col gap-1">
             <label
               htmlFor="decision-maker"
