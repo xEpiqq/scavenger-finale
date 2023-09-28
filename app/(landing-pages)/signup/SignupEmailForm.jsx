@@ -5,9 +5,10 @@ import { useState } from "react";
 
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/navigation";
+import { app, db } from "../../../components/initializeFirebase";
 
 function SignupEmailForm() {
-  const auth = getAuth();
+  const auth = getAuth(app);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

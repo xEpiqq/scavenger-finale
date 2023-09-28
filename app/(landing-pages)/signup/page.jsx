@@ -45,10 +45,10 @@ export default function Example() {
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <img
             className="mx-auto h-10 w-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+            src="crow.webp"
             alt="Your Company"
           />
-          <h2 className="text-gray-900 mt-6 text-center text-2xl font-bold leading-9 tracking-tight">
+          <h2 className="text-gray-100 mt-6 text-center text-2xl font-bold leading-9 tracking-tight">
             Create your account
           </h2>
         </div>
@@ -94,7 +94,7 @@ export default function Example() {
             </div>
           </div>
 
-          <p className="text-gray-500 mt-10 text-center text-sm">
+          <p className="text-gray-200 mt-10 text-center text-sm">
             Already have an account?{" "}
             <a
               href="/login"

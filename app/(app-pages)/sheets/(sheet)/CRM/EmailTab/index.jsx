@@ -11,6 +11,13 @@ import {
 } from "firebase/firestore";
 import { app, db } from "../../../../../../components/initializeFirebase";
 import { getAuth, signOut } from "firebase/auth";
+import { Fragment } from 'react'
+import { Menu, Transition } from '@headlessui/react'
+import { ChevronDownIcon } from '@heroicons/react/20/solid'
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ')
+}
 
 const auth = getAuth(app);
 
@@ -21,6 +28,7 @@ function EmailTab({ item, closeCRM }) {
   const [isLoadingEmail, setIsLoadingEmail] = useState(false);
   const [profileIsComplete, setProfileIsComplete] = useState(false);
   const [user, loading, user_error] = useAuthState(auth);
+  const [currentEmail, setCurrentEmail] = useState("");
 
   const isProfileComplete = async () => {
     if (!user) {
@@ -116,13 +124,61 @@ function EmailTab({ item, closeCRM }) {
             >
               Email Address
             </label>
-            <input
-              type="text"
-              id="decision-maker"
-              placeholder="Email Address"
-              className="hover:pblines h-10 w-full rounded-md bg-pbiconhover px-4 py-2 outline-none transition-all duration-200 focus:bg-pblines"
-              value={item.email}
-            />
+            {item.emails ? (
+              <Menu as="div" className="relative inline-block text-left">
+                <div>
+                  <Menu.Button className="text-gray-900 ring-gray-300 hover:bg-gray-50 inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset">
+                    {currentEmail ? currentEmail : "Select Email"}
+                    <ChevronDownIcon
+                      className="text-gray-400 -mr-1 h-5 w-5"
+                      aria-hidden="true"
+                    />
+                  </Menu.Button>
+                </div>
+
+                <Transition
+                  as={Fragment}
+                  enter="transition ease-out duration-100"
+                  enterFrom="transform opacity-0 scale-95"
+                  enterTo="transform opacity-100 scale-100"
+                  leave="transition ease-in duration-75"
+                  leaveFrom="transform opacity-100 scale-100"
+                  leaveTo="transform opacity-0 scale-95"
+                >
+                  <Menu.Items className="absolute right-0 z-10 mt-2 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <div className="py-1">
+                      {item.emails.map((email) => (
+                        <Menu.Item>
+                          {({ active }) => (
+                            <button
+                              className={classNames(
+                                active
+                                  ? "bg-gray-100 text-gray-900 hover:text-gray-700"
+                                  : "text-gray-700",
+                                "block px-4 py-2 text-sm"
+                              )}
+                              onClick={() => {
+                                setCurrentEmail(email);
+                              }}
+                            >
+                              {email}
+                            </button>
+                          )}
+                        </Menu.Item>
+                      ))}
+                    </div>
+                  </Menu.Items>
+                </Transition>
+              </Menu>
+            ) : (
+              <input
+                type="text"
+                id="decision-maker"
+                placeholder="Email Address"
+                className="hover:pblines h-10 w-full rounded-md bg-pbiconhover px-4 py-2 outline-none transition-all duration-200 focus:bg-pblines"
+                value={item.email}
+              />
+            )}
           </div>
           <div className="flex w-full flex-col gap-1">
             <label
@@ -189,7 +245,7 @@ function EmailTab({ item, closeCRM }) {
         </button>
         <a
           href={`mailto:${encodeURIComponent(
-            item.email
+            currentEmail ? currentEmail : item.email
           )}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
             emailBody
           )}`}
