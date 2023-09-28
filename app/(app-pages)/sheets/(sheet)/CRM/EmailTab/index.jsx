@@ -202,7 +202,7 @@ function EmailTab({ item, closeCRM }) {
             rows={4}
             name="comment"
             id="comment"
-            className="text-gray- ring-gray-300  placeholder:text-gray-400 focus:ring-indigo-600 bg-gray-100 block w-full flex-grow rounded-md border-0 bg-pbiconhover p-4 py-1.5 shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset sm:text-sm  sm:leading-6"
+            className="text-gray- ring-gray-300  placeholder:text-gray-400 focus:ring-indigo-600block w-full flex-grow rounded-md border-0 bg-pbiconhover p-4 py-1.5 shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset sm:text-sm  sm:leading-6"
             value={emailBody}
             onChange={(e) => setEmailBody(e.target.value)}
           />
