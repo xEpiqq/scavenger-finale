@@ -18,7 +18,7 @@ import { useDocument } from "react-firebase-hooks/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { app, db } from "../../../components/initializeFirebase";
 import GoogleLogin from "@/components/GoogleLogin";
-import LoginEmailForm from "./LoginEmailForm";
+import SignupEmailForm from "./SignupEmailForm";
 import {
   getAuth,
   signInWithPopup,
@@ -29,57 +29,7 @@ import { useRouter } from "next/navigation";
 const provider = new GoogleAuthProvider();
 
 export default function Example() {
-  async function googleLogin() {
-    const result = await signInWithPopup(auth, provider);
-    const user = result.user;
-
-    setLoggingIn(true);
-
-    // check if firestore user
-    await fetch("/api/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        uid: user.uid,
-        displayname: user.displayName,
-        email: user.email,
-        photo: user.photoURL,
-      }),
-    });
-
-    // fetch to /api/stripecreatecustomer
-    await fetch("/api/stripecreatecustomer", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: user.email,
-        name: user.displayName,
-        user_id: user.uid,
-      }),
-    });
-
-    let userRef, userDoc, firestore_user, subscription_status;
-    try {
-      userRef = doc(db, "users", user.uid);
-      userDoc = await getDoc(userRef);
-      firestore_user = userDoc.data();
-      subscription_status = firestore_user.subscription_status;
-      if (subscription_status === "none") {
-        router.push("/freetrial");
-      } else {
-        router.push("/sheets");
-      }
-      // setLoggingIn(false); // perhaps never set it false
-    } catch {
-      console.log("failed to get user data");
-    }
-
-    // router.push("/sheets");
-  }
+  
 
   return (
     <>
@@ -99,13 +49,13 @@ export default function Example() {
             alt="Your Company"
           />
           <h2 className="text-gray-900 mt-6 text-center text-2xl font-bold leading-9 tracking-tight">
-            Sign in to your account
+            Create your account
           </h2>
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
           <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
-            <LoginEmailForm />
+            <SignupEmailForm />
 
             <div>
               <div className="relative mt-10">
@@ -145,12 +95,12 @@ export default function Example() {
           </div>
 
           <p className="text-gray-500 mt-10 text-center text-sm">
-            Don't have an account?{" "}
+            Already have an account?{" "}
             <a
-              href="/signup"
+              href="/login"
               className="text-indigo-600 hover:text-indigo-500 font-semibold leading-6"
             >
-              Start a 14 day free trial
+              Sign in
             </a>
           </p>
         </div>

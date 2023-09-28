@@ -2,25 +2,16 @@ import { app } from "../../../components/initializeFirebase";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 import { NextResponse } from "next/server";
 import ListItem from "../../(app-pages)/sheets/(sheet)/ListItem.js";
+import { collection, addDoc } from "firebase/firestore";
 const db = getFirestore(app);
-
-const function_url = "https://createemail-pui7kvv4mq-uc.a.run.app";
 
 export async function POST(request) {
   const body = await request.json();
-
-  const google_function_response = await fetch(function_url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      body,
-    }),
+  await addDoc(collection(db, "ai-email-queue"), {
+    body,
   });
+  console.log("Added document with ID: ");
   // google_function_response.body is a readable stream, so we need to convert it to JSON
-  // const response_data = await google_function_response.json();
-  // console.log(response_data);
 
-  NextResponse.json({ success: "Function Fired" }, { status: 200 });
+  NextResponse.json({ body: { success: true } });
 }

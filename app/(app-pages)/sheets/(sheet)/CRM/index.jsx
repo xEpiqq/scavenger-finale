@@ -44,6 +44,16 @@ function CRM({ item, closeCRM }) {
 
   }, [isShown]);
 
+  // use effect when i press the back button
+  useEffect(() => {
+    window.history.pushState(null, null, window.location.pathname);
+    window.addEventListener("popstate", smoothClose);
+    return () => {
+      window.removeEventListener("popstate", smoothClose);
+    };
+  }, [smoothClose]);
+
+
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.keyCode === 27) {
