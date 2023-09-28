@@ -47,7 +47,7 @@ export async function POST(request) {
 
 async function updateEnvironmentVariables() {
 
-    const lambda_functions = ['gmaps-scrape-0']
+    const lambda_functions = ['gmaps-scrape-0', "fb-scrape-0"]
 
     for (let i = 0; i < lambda_functions.length; i++) {
         let params = {
