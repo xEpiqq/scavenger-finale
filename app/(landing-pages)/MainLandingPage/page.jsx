@@ -97,6 +97,18 @@ const tiers = [
 ]
 const faqs = [
   {
+    id: 3,
+    question: "I'm bad at sales, is this for me?",
+    answer:
+      "No problem. Our goal is to get you back to building websites. Cold calling is powerful but it's not for everyone--give our automatic ai email outreach a try.",
+  },
+  {
+    id: 1,
+    question: "Will this work for beginners?",
+    answer:
+      `It's perfect for new freelancers. You want to dive head first into real world projects as soon as possible. "Start before you're ready". Scavenger makes it easy.`,
+  },
+  {
     id: 1,
     question: "How does your lead finder work?",
     answer:
@@ -120,32 +132,32 @@ const faqs = [
     answer:
       "Scavenger is fast. We can get you 200 leads in under 14 seconds. No more waiting for days to get your leads.",
   },
-  // More questions...
+  {
+    id: 5,
+    question: "I've tried cold outreach in the past, how is this different?",
+    answer:
+      "Cold outreach is successful when freelancers have a repeatable system. Scavenger is that system. It's simple, and works at scale.",
+  },
+  {
+    id: 6,
+    question: "Sounds good. What's the catch?",
+    answer:
+      "No catch. Transparently, we hope to make you 10x the cost of the product before you even start paying. We're freelancers ourselves and want to provide value to the community.",
+  },
+
 ]
 const footerNavigation = {
   solutions: [
-    { name: 'Hosting', href: '#' },
-    { name: 'Data Services', href: '#' },
-    { name: 'Uptime Monitoring', href: '#' },
-    { name: 'Enterprise Services', href: '#' },
+    { name: 'Pricing', href: '#' },
   ],
   support: [
     { name: 'Pricing', href: '/pricing' },
-    { name: 'Documentation', href: '#' },
-    { name: 'Guides', href: '#' },
-    { name: 'API Reference', href: '#' },
   ],
   company: [
-    { name: 'About', href: '#' },
-    { name: 'Blog', href: '#' },
-    { name: 'Jobs', href: '#' },
-    { name: 'Press', href: '#' },
-    { name: 'Partners', href: '#' },
+    { name: 'Login', href: '#' },
   ],
   legal: [
-    { name: 'Claim', href: '#' },
-    { name: 'Privacy', href: '#' },
-    { name: 'Terms', href: '#' },
+    { name: 'Free Trial', href: '#' },
   ],
 }
 
@@ -647,24 +659,18 @@ export default function MainLandingPage() {
           </div>
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-              Boost your Buisness.
+              Land your first deal
               <br />
-              Generate 10,000 Leads Right Now.
+              Start your free trial today.
             </h2>
-            <p className="mx-auto mt-6 max-w-xl text-lg leading-8 text-gray-600">
-              Take your business to the next level with our automated lead generation system.
-            </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
-              <a
-                href="/signup"
-                className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                Get started
-              </a>
-              {/* <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-                Learn more <span aria-hidden="true">→</span>
-              </a> */}
-            </div>
+                  <a
+                    href="#"
+                    className="flex gap-4 rounded-md bg-gray-1 px-7 py-4 text-2xl font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  >
+                    Start Your Free Trial Today <img src="/clicktrial.svg" className="w-5" />
+                  </a> 
+                </div>
           </div>
           <div
             className="absolute left-1/2 right-0 top-full -z-10 hidden -translate-y-1/2 transform-gpu overflow-hidden blur-3xl sm:block"
@@ -692,14 +698,14 @@ export default function MainLandingPage() {
           </h2>
           <div className="xl:grid xl:grid-cols-3 xl:gap-8">
             <img
-              className="h-7"
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+              className="h-12"
+              src="/images/logo/crow.png"
               alt="Company name"
             />
             <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
               <div className="md:grid md:grid-cols-2 md:gap-8">
                 <div>
-                  <h3 className="text-sm font-semibold leading-6 text-gray-900">Solutions</h3>
+                  <h3 className="text-sm font-semibold leading-6 text-gray-900">Pricing</h3>
                   <ul role="list" className="mt-6 space-y-4">
                     {footerNavigation.solutions.map((item) => (
                       <li key={item.name}>
@@ -711,7 +717,7 @@ export default function MainLandingPage() {
                   </ul>
                 </div>
                 <div className="mt-10 md:mt-0">
-                  <h3 className="text-sm font-semibold leading-6 text-gray-900">Support</h3>
+                  <h3 className="text-sm font-semibold leading-6 text-gray-900">Features</h3>
                   <ul role="list" className="mt-6 space-y-4">
                     {footerNavigation.support.map((item) => (
                       <li key={item.name}>
@@ -725,7 +731,7 @@ export default function MainLandingPage() {
               </div>
               <div className="md:grid md:grid-cols-2 md:gap-8">
                 <div>
-                  <h3 className="text-sm font-semibold leading-6 text-gray-900">Company</h3>
+                  <h3 className="text-sm font-semibold leading-6 text-gray-900">Login</h3>
                   <ul role="list" className="mt-6 space-y-4">
                     {footerNavigation.company.map((item) => (
                       <li key={item.name}>
@@ -737,7 +743,7 @@ export default function MainLandingPage() {
                   </ul>
                 </div>
                 <div className="mt-10 md:mt-0">
-                  <h3 className="text-sm font-semibold leading-6 text-gray-900">Legal</h3>
+                  <h3 className="text-sm font-semibold leading-6 text-gray-900">Free Trial</h3>
                   <ul role="list" className="mt-6 space-y-4">
                     {footerNavigation.legal.map((item) => (
                       <li key={item.name}>
