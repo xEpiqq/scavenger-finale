@@ -21,29 +21,6 @@ function LoginEmailForm() {
       .then(async (userCredential) => {
         // Signed in
         const user = userCredential.user;
-        await fetch("/api/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            uid: user.uid,
-            displayname: user.displayName,
-            email: user.email,
-            photo: user.photoURL,
-          }),
-        });
-        await fetch("/api/stripecreatecustomer", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: user.email,
-            name: user.displayName,
-            user_id: user.uid,
-          }),
-        });
         let userRef, firestore_user, subscription_status;
         try {
           userRef = doc(db, "users", user.uid);

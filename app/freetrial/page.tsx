@@ -14,7 +14,17 @@ const FreeTrial = () => {
   const [user, loading, user_error] = useAuthState(auth);
   const [userDataRaw, loading2, error2] = useDocument(doc(db, `users/${user?.uid}`));
   const userData = userDataRaw?.data();
-  const user_id = user?.uid; 
+  const user_id = user?.uid;
+
+  useEffect(() => {
+    if (!userDataRaw) return;
+    const userData = userDataRaw?.data();
+    if (!userData?.stripe_customer_id) return;
+    if (userData.stripe_customer_id === "none") return;
+    if (userData?.subscription_status !== "none") return;
+    console.log(userData.stripe_customer_id)
+    stripeCheckoutTrial();
+  }, [userDataRaw]);
 
   async function stripeCheckoutTrial() {
     const response = await fetch ("/api/stripecheckout_trial", {
@@ -30,12 +40,6 @@ const FreeTrial = () => {
     const url = json.url;    
     window.location.href = url;    
   }
-
-  useEffect(() => {
-    if (userData?.stripe_customer_id !== "none") {
-      stripeCheckoutTrial();
-    }
-  }, [userData?.subscription_status === "none"]);
 
   return (
     <div className="w-full h-screen bg-pbblack font-bold items-center justify-center flex">
