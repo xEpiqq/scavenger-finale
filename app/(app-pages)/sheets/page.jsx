@@ -39,39 +39,37 @@ function Page() {
     ? dayjs(userCreatedDate).format("YYYY-MM-DD")
     : null;
   const today = dayjs().format("YYYY-MM-DD");
-  const [daysSinceCreated, setDaysSinceCreated] = useState(dayjs(today).diff(userCreatedFormatted, "day"));
+  const [daysSinceCreated, setDaysSinceCreated] = useState(
+    dayjs(today).diff(userCreatedFormatted, "day")
+  );
 
   // on page load fetch /api/stripe_sub_verification
 
   useEffect(() => {
-    if (user) {
-      console.log("Use effect ran, post sent");
-      fetch("/api/stripe_sub_verification", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          uid: user?.uid,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-        });
-    }
+    if (!user) return;
+    console.log("Use effect ran, post sent");
+    fetch("/api/stripe_sub_verification", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        uid: user?.uid,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      });
   }, [user]);
 
   useEffect(() => {
-    getTotalLeads().then((result) => {
-      setTotalLeads(result);
-    });
     if (!userData || !userData?.lists) {
       return;
     }
-
     // Set sorted lists to be the lists sorted by last updated
-    const sortedLists = userData?.lists.sort((a, b) => {
+    const userDataCopy = { ...userData };
+    const sortedLists = userDataCopy?.lists.sort((a, b) => {
       // check if a.last_updated exists
       if (!a.last_updated) {
         return -10000;
@@ -79,6 +77,12 @@ function Page() {
       return b.last_updated.seconds - a.last_updated.seconds;
     });
     setSortedLists(sortedLists);
+  }, [userDataRaw]);
+
+  useEffect(() => {
+    getTotalLeads().then((result) => {
+      setTotalLeads(result);
+    });
   }, [userData?.lists]);
 
   async function getTotalLeads() {
