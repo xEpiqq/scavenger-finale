@@ -440,7 +440,7 @@ function ProfilePage() {
             </button>
             <button
               type="submit"
-              className="bg-indigo-600 hover:bg-indigo-500 focus-visible:outline-indigo-600 rounded-md bg-gray-1 px-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+              className="hover:bg-indigo-500 focus-visible:outline-indigo-600 rounded-md bg-gray-1 px-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
             >
               Save
             </button>
