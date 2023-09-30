@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
 import { getLinkPreview, getPreviewFromContent } from "link-preview-js";
@@ -5,6 +7,14 @@ import { useState, useEffect } from "react";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CRM from "./CRM";
+
+import { Fragment } from "react";
+import { Menu, Transition } from "@headlessui/react";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
 
 function Item2({
   item,
@@ -27,6 +37,7 @@ function Item2({
   };
 
   const [openEmail, setOpenEmail] = useState(false);
+  const [fbEmail, setFbEmail] = useState(item.fbEmail);
   const clickable_link = "http://" + item.siteLink;
 
   let address = "";
@@ -78,8 +89,8 @@ function Item2({
                 <div className="font-bold">
                   <p>
                     {nameLength > 46
-                    ? item.name.slice(0, 43) + "..."
-                    : item.name}
+                      ? item.name.slice(0, 43) + "..."
+                      : item.name}
                   </p>
                 </div>
                 <div className="text-sm opacity-50">
@@ -140,57 +151,86 @@ function Item2({
             </div>
           </td>
           <td>
-            {openEmail && (
-              <>
-                <div
-                  className="fixed left-0 top-0 z-40 h-screen w-screen bg-black opacity-10"
-                  onClick={() => setOpenEmail(false)}
-                ></div>
-                <div className="absolute z-50 flex w-auto flex-col rounded-lg bg-white px-6 py-6 shadow-xl">
-                  <h1 className="mb-4 font-bold">EMAILS (SCRAPED)</h1>
-                  {item.emails?.map((email, index) => (
-                    <>
-                      <div className="flex w-full justify-between gap-4">
-                        <p key={index}>{email}</p>
-                        <div
-                          className="flex flex-row items-center gap-[2px]"
-                          onClick={() => {
-                            copyItem(email);
-                          }}
-                        >
-                          <img
-                            src="/copy.svg"
-                            draggable="false"
-                            className="h-4 w-4 opacity-20 duration-75 hover:cursor-pointer hover:opacity-100"
-                            alt="Screenshot of site"
-                          />
-                        </div>
-                      </div>
-                    </>
-                  ))}
+            <div className="flex flex-row gap-1 items-center">
+              <img
+                src="/email.svg"
+                draggable="false"
+                className="h-4 w-4 hover:cursor-pointer"
+                alt="Screenshot of site"
+                onClick={openEmails}
+              />
+              <Menu as="div" className="relative inline-block text-left">
+                <div>
+                  <Menu.Button className="hover:bg-gray-50 inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300">
+                    {item.email == "none" ? (
+                      <p className="opacity-20">Emails</p>
+                    ) : (
+                      <p>{item.email}</p>
+                    )}
+                    <ChevronDownIcon
+                      className="-mr-1 h-5 w-5 text-gray-400"
+                      aria-hidden="true"
+                    />
+                  </Menu.Button>
                 </div>
-              </>
-            )}
 
-            {item.email == "none" ? (
-              <div className="flex w-full">
-                <img
-                  src="/email.svg"
-                  draggable="false"
-                  className="h-4 w-4 opacity-20"
-                  alt="Screenshot of site"
-                />
-              </div>
-            ) : (
-              // <p>{item.email}</p>
-              <div className="flex w-full">
-                <img
-                  src="/email.svg"
-                  draggable="false"
-                  className="h-4 w-4 hover:cursor-pointer"
-                  alt="Screenshot of site"
-                  onClick={openEmails}
-                />
+                <Transition
+                  as={Fragment}
+                  enter="transition ease-out duration-100"
+                  enterFrom="transform opacity-0 scale-95"
+                  enterTo="transform opacity-100 scale-100"
+                  leave="transition ease-in duration-75"
+                  leaveFrom="transform opacity-100 scale-100"
+                  leaveTo="transform opacity-0 scale-95"
+                >
+                  <Menu.Items className="absolute right-0 z-10 mt-2 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <div className="py-1">
+                      {item.emails && item.emails.map((email, index) => (
+                        <Menu.Item key={index}>
+                          {({ active }) => (
+                            <a
+                              href="#"
+                              className={classNames(
+                                active
+                                  ? "bg-gray-100 text-gray-900"
+                                  : "text-gray-700",
+                                "block px-4 py-2 text-sm"
+                              )}
+                              onClick={() => {
+                                copyItem(email);
+                              }}
+                            >
+                              {email}
+                            </a>
+                          )}
+                        </Menu.Item>
+                      ))}
+                      {/* <Menu.Item>
+                      {({ active }) => (
+                        <a
+                          href="#"
+                          className={classNames(
+                            active
+                              ? "bg-gray-100 text-gray-900"
+                              : "text-gray-700",
+                            "block px-4 py-2 text-sm"
+                          )}
+                        >
+                          Account settings
+                        </a>
+                      )}
+                    </Menu.Item> */}
+                    </div>
+                  </Menu.Items>
+                </Transition>
+              </Menu>
+            </div>
+            {fbEmail && (
+              <div className="flex w-full flex-row gap-2">
+                {/* need facebook logo here */}
+                <img src="/facebook_logo.svg" className="h-4" />
+
+                <p>{fbEmail}</p>
               </div>
             )}
           </td>
