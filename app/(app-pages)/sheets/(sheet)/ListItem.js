@@ -37,6 +37,7 @@ class ListItem {
     this.template = params.template || null;
     this.emails = params.emails || null;
     this.emailBody = params.emailBody || null;
+    this.fbEmail = params.fbEmail || null;
     this.emailSubject = params.emailSubject || "Boost Your Business with a Professional Website";
 
     // CRM fields
