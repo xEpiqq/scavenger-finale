@@ -1,16 +1,7 @@
 import { CheckIcon } from '@heroicons/react/20/solid'
 
 const tiers = [
-  {
-    name: 'Basic',
-    id: 'tier-basic',
-    href: '#',
-    priceMonthly: '$99',
-    description: 'The essentials to provide your best work for clients.',
-    features: ['1,000 Leads per month', 'Export to CSV', 'Basic analytics', '48-hour support response time'],
-    mostPopular: false,
-    disabled: true,
-  },
+  
   {
     name: 'Freelancer',
     id: 'tier-startup',
@@ -25,6 +16,16 @@ const tiers = [
     ],
     mostPopular: true,
     disabled: false,
+  },
+  {
+    name: 'Enterpise',
+    id: 'tier-enterpise',
+    href: '#',
+    priceMonthly: '$500',
+    description: 'All the bells and whistles to provide your best work for clients.',
+    features: ['Unlimited Leads', 'Export to CSV', 'Advanced analytics', 'Immediate support response time'],
+    mostPopular: false,
+    disabled: true,
   },
 ]
 
