@@ -6,6 +6,7 @@ import { app, db } from "../../components/initializeFirebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { getAuth } from "firebase/auth";
 import { doc } from "firebase/firestore";
+import { getDoc } from "firebase/firestore";
 import { useDocument } from "react-firebase-hooks/firestore";
 
 const auth = getAuth(app);
@@ -25,6 +26,32 @@ const FreeTrial = () => {
     console.log(userData.stripe_customer_id)
     stripeCheckoutTrial();
   }, [userDataRaw]);
+
+  const reloadUser = () => {
+    const userRef = doc(db, `users/${user?.uid}`);
+    const userSnap = getDoc(userRef);
+    if (!userSnap) queueReload();
+    if (userSnap) {
+      let shouldReload = false;
+      if (userSnap.data()?.stripe_customer_id === "none") shouldReload = true;
+      if (userSnap.data()?.subscription_status !== "none") shouldReload = true;
+      if (shouldReload) {
+        queueReload();
+        return;
+      }
+      stripeCheckoutTrial();
+    }
+  }
+
+  const queueReload = () => {
+    setTimeout(() => {
+      reloadUser();
+    }, 500);
+  }
+
+  if (error2) {
+    queueReload();
+  }
 
   async function stripeCheckoutTrial() {
     const response = await fetch ("/api/stripecheckout_trial", {
