@@ -27,10 +27,10 @@ function GoogleLogin(props) {
       userDoc = await getDoc(userRef);
       firestore_user = userDoc.data();
       subscription_status = firestore_user.subscription_status;
-      if (subscription_status === "none") {
-        router.push("/freetrial");
-      } else {
+      if (subscription_status === "active") {
         router.push("/sheets");
+      } else {
+        router.push("/freetrial");
       }
     } catch {
       console.log("failed to get user data");
