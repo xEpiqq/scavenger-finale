@@ -70,7 +70,7 @@ function LoginEmailForm() {
       <div>
         <label
           htmlFor="email"
-          className="text-gray-900 block text-sm font-medium leading-6"
+          className="text-gray-300 block text-sm font-medium leading-6"
         >
           Email address
         </label>
@@ -91,7 +91,7 @@ function LoginEmailForm() {
       <div>
         <label
           htmlFor="password"
-          className="text-gray-900 block text-sm font-medium leading-6"
+          className="text-gray-300 block text-sm font-medium leading-6"
         >
           Password
         </label>
@@ -138,7 +138,7 @@ function LoginEmailForm() {
       <div>
         <button
           type="submit"
-          className="hover:bg-indigo-500 focus-visible:outline-indigo-600 flex w-full justify-center rounded-md bg-gray-1 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+          className="hover:bg-gray-900 duration-150 hover:text-white flex w-full justify-center rounded-md bg-white border-gray-900 border px-3 py-1.5 text-sm font-semibold leading-6 text-gray-900 shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
         >
           Sign in
         </button>

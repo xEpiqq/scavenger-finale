@@ -91,14 +91,9 @@ export default function Example() {
         <body class="h-full">
         ```
       */}
-      <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8 mt-10">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <img
-            className="mx-auto h-10 w-auto"
-            src="crow.webp"
-            alt="Scavenger"
-          />
-          <h2 className="text-gray-100 mt-6 text-center text-2xl font-bold leading-9 tracking-tight">
+          <h2 className="text-gray-300 mt-6 text-center text-2xl leading-9 tracking-tight">
             Sign in to your account
           </h2>
         </div>
