@@ -1,4 +1,0 @@
-User-Agent: *
-Allow: /
-Allow: /blog
-Allow: /blog/first-client
