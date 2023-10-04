@@ -27,7 +27,7 @@ function GoogleLogin(props) {
       userDoc = await getDoc(userRef);
       firestore_user = userDoc.data();
       subscription_status = firestore_user.subscription_status;
-      if (subscription_status === "active") {
+      if (subscription_status === "active" || subscription_status === "trialing") {
         router.push("/sheets");
       } else {
         router.push("/freetrial");
