@@ -8,28 +8,20 @@ import { app, db } from "../../components/initializeFirebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { getAuth } from "firebase/auth";
 import { doc } from "firebase/firestore";
-import { useDocument } from "react-firebase-hooks/firestore";
+import { getDoc } from "firebase/firestore";
+
 import { useEffect } from "react";
 import dayjs from "dayjs";
 const auth = getAuth(app);
 
 function Layout({ children }) {
   const [user, loading, user_error] = useAuthState(auth);
-  const [userDataRaw, loading2, error2] = useDocument(doc(db, `users/${user?.uid}`));
-  const userData = userDataRaw?.data();
-  const userCreated = userData?.created
-  const userCreatedDate = userCreated ? userCreated.toDate() : null;
-  const userCreatedFormatted = userCreatedDate ? dayjs(userCreatedDate).format("YYYY-MM-DD") : null;
-  const today = dayjs().format("YYYY-MM-DD");
-  const daysSinceCreated = dayjs(today).diff(userCreatedFormatted, "day");
-  
-  const user_id = user?.uid; 
 
   async function stripeSubVerification() {
-    const response = await fetch ("/api/stripe_sub_verification", {
+    const response = await fetch("/api/stripe_sub_verification", {
       method: "POST",
       body: JSON.stringify({
-        uid: user_id,
+        uid: user.uid,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -38,59 +30,74 @@ function Layout({ children }) {
   }
 
   async function stripeCheckoutTrial() {
-    const response = await fetch ("/api/stripecheckout_trial", {
+    console.log("trialing");
+    const response = await fetch("/api/stripecheckout_trial", {
       method: "POST",
       body: JSON.stringify({
-        user_id: user_id,
+        user_id: user,
       }),
       headers: {
         "Content-Type": "application/json",
       },
     });
     const json = await response.json();
-    const url = json.url;    
-    window.location.href = url;    
+    const url = json.url;
+    window.location.href = url;
   }
-
 
   async function stripeCheckoutPremium() {
-    const response = await fetch ("/api/stripecheckout", {
+    const response = await fetch("/api/stripecheckout", {
       method: "POST",
       body: JSON.stringify({
-        user_id: user_id,
+        user_id: user.uid,
       }),
       headers: {
         "Content-Type": "application/json",
       },
     });
     const json = await response.json();
-    const url = json.url;    
-    window.location.href = url;    
+    const url = json.url;
+    window.location.href = url;
   }
 
-  useEffect(() => {
-    // stripeSubVerification(); FOR NOW NOT INCLUDED JUST IN CASE IT SLOWS THINGS DOWN
-    // IDEALLY WEBHOOKS WILL JUST WORK 100% WITHOUT FAIL
+  if (loading) return <div>loading...</div>;
+  if (user_error) return <div>error: {user_error}</div>;
+  if (!user) return <div>not logged in</div>;
 
-    if (userData?.subscription_status === "none") {
+  const checkUser = async () => {
+    const userRef = doc(db, `users/${user?.uid}`);
+    const userSnap = getDoc(userRef);
+    if (!userSnap) queueReload();
+    if (!user) return false;
+    const userDoc = doc(db, `users/${user?.uid}`);
+    if (!userDoc) return false;
+    const userData = await getDoc(userDoc);
+    if (!userData) return false;
+    if (userData?.data().subscription_status === "none") {
       stripeCheckoutTrial();
+      return false;
     }
-    if (userData?.subscription_status === "canceled") {
+    if (userData?.data().subscription_status === "canceled") {
       stripeCheckoutPremium();
+      return false;
     }
-  }, [userData?.subscription_status]);
+    return true;
+  };
 
+  if (user) {
+    checkUser();
+  }
 
-  if (userData?.subscription_status === "active" || userData?.subscription_status === "trialing") {
-    return (
-      <body className="w-full h-full flex min-h-screen bg-pbsecondbg ">
-      <div className="flex float-left flex-col w-full text-black bg-pbsecondbg sm:flex-row">
+  return (
+    <body className="flex h-full min-h-screen w-full bg-pbsecondbg ">
+      <div className="float-left flex w-full flex-col bg-pbsecondbg text-black sm:flex-row">
         <Navbar />
-        <section className="w-full h-full inline-block overflow-x-clip bg-pbsecondbg">{children}</section>
+        <section className="inline-block h-full w-full overflow-x-clip bg-pbsecondbg">
+          {children}
+        </section>
       </div>
-      </body>
-    );
-    }
+    </body>
+  );
 }
 
 export default Layout;
