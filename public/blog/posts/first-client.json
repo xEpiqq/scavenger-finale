@@ -1,0 +1,19 @@
+{
+    "id": 1,
+    "title": "Your first client. What they don't tell you.",
+    "href": "/first-client",
+    "description": "Jayden's journey to acquire his first paying user, emphasizing the trials and triumphs of entrepreneurship, with a reminder that success often hinges on that pivotal first customer.",
+    "imageUrl": "https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3603&q=80",
+    "date": "Mar 16, 2020",
+    "datetime": "2020-03-16",
+    "category": {
+        "title": "Best First Read",
+        "href": "#"
+    },
+    "author": {
+        "name": "Jayden Crowther",
+        "role": "Co-Founder / CEO",
+        "href": "#",
+        "imageUrl": "/images/testimonials/jayden-crowther.png"
+    }
+}
