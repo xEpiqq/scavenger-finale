@@ -33,28 +33,23 @@ function Page() {
 
   return (
     <>
-      <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8 mt-24">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <img
-            className="mx-auto h-10 w-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-            alt="Your Company"
-          />
-          <h2 className="text-gray-900 mt-6 text-center text-2xl font-bold leading-9 tracking-tight">
-            Sign in to your account
+          <h2 className="text-gray-300 mt-6 text-center text-2xl leading-9 tracking-tight">
+            Reset your password
           </h2>
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
           <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
             <form className="space-y-6" onSubmit={handleSubmit}>
-              <h2 className="text-gray-900 mt-6 text-center text-2xl font-bold leading-9 tracking-tight">
-                Type in your email address to reset your password
+              <h2 className="text-gray-400 mt-6 text-center text-2xl leading-9 tracking-tight">
+                Enter your email address
               </h2>
               <div>
                 <label
                   htmlFor="email"
-                  className="text-gray-900 block text-sm font-medium leading-6"
+                  className="text-gray-300 block text-sm font-medium leading-6"
                 >
                   Email address
                 </label>
@@ -67,14 +62,14 @@ function Page() {
                     type="email"
                     autoComplete="email"
                     required
-                    className="text-gray-900 ring-gray-300 placeholder:text-gray-400 focus:ring-indigo-600 block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
+                    className="text-gray-900 placeholder:text-gray-300 border block w-full rounded-md py-1.5 shadow-sm sm:text-sm sm:leading-6 bg-white"
                   />
                 </div>
               </div>
               <div>
                 <button
                   type="submit"
-                  className="bg-indigo-600 hover:bg-indigo-500 focus-visible:outline-indigo-600 flex w-full justify-center rounded-md bg-gray-1 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                  className=" hover:bg-gray-800 duration-150 flex w-full justify-center rounded-md bg-gray-900 px-3 py-2 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 mt-2"
                 >
                   Send password reset email
                 </button>

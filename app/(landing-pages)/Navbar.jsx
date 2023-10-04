@@ -72,7 +72,7 @@ function Navbar() {
               href="/sheets"
               className="text-sm font-semibold leading-6 text-gray-900"
             >
-              Dashboard <span aria-hidden="true">&rarr;</span>
+              <button className="px-6 py-1 rounded-md hover:bg-gray-900 hover:text-white duration-150 border border-gray-900">Dashboard <span aria-hidden="true">&rarr;</span></button>
             </Link>
           </div>
         ) : (

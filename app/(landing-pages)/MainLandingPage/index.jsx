@@ -443,7 +443,7 @@ export default function MainLandingPage() {
           </div>
         </div> */}
 
-        {/* Pricing section */}
+        {/* Pricing section
         <div className="py-24 sm:pt-48">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-4xl text-center">
@@ -515,7 +515,7 @@ export default function MainLandingPage() {
               ))}
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* FAQs */}
         <div className="mx-auto max-w-2xl divide-y divide-gray-900/10 px-6 pb-8 sm:pb-24 sm:pt-12 lg:max-w-7xl lg:px-8 lg:pb-32">
