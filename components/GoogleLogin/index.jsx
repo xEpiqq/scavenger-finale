@@ -34,7 +34,7 @@ function GoogleLogin(props) {
       }
     } catch {
       console.log("failed to get user data");
-      router.push("/sheets");
+      router.push("/freetrial");
     }
 
     // router.push("/sheets");
