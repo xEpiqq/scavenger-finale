@@ -21,8 +21,8 @@ export default async function handler(req, res) {
           },
         ],
         mode: 'subscription',
-        success_url: `${req.headers.origin}/thankyou/?success=true`,
-        cancel_url: `${req.headers.origin}/?canceled=true`,
+        success_url: `${req.headers.origin}`,
+        cancel_url: `${req.headers.origin}`,
         customer: firestore_user.stripe_customer_id,
         // automatic_tax: {enabled: true},
         // customer_update: {
