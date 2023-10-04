@@ -2,7 +2,6 @@
 
 import React from "react";
 import Link from "next/link";
-import { getLinkPreview, getPreviewFromContent } from "link-preview-js";
 import { useState, useEffect } from "react";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -36,7 +35,6 @@ function Item2({
     }, 1000);
   };
 
-  const [openEmail, setOpenEmail] = useState(false);
   const [fbEmail, setFbEmail] = useState(item.fbEmail);
   const clickable_link = "http://" + item.siteLink;
 

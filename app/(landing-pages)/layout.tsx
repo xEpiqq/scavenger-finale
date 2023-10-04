@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import "node_modules/react-modal-video/css/modal-video.css";
 import "../../styles/index.css";
 import Link from "next/link";
+import Navbar from "./Navbar";
 
 export default function Layout({
   children,
@@ -23,6 +24,7 @@ export default function Layout({
             Act fast!  <Link href="/specialpromo" className="underline hover:text-pbblack transition duration-150"> Lock in at $49 / month for life.</Link>
           </p>
         </div> */}
+        <Navbar />
         {children}
     </>
   );
