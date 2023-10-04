@@ -57,7 +57,7 @@ const FreeTrial = () => {
     const response = await fetch ("/api/stripecheckout_trial", {
       method: "POST",
       body: JSON.stringify({
-        user_id: user_id,
+        user_id: user.uid,
       }),
       headers: {
         "Content-Type": "application/json",
