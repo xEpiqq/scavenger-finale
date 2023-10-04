@@ -1,5 +1,18 @@
 import react from "react";
 
+export const metadata = {
+    id: "first-client",
+    title: "Your first client. What they don't tell you.",
+    description:
+        "Jayden's journey to acquire his first paying user, emphasizing the trials and triumphs of entrepreneurship, with a reminder that success often hinges on that pivotal first customer.",
+    imageUrl:
+        "https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3603&q=80",
+    date: "Mar 16, 2020",
+    datetime: "2020-03-16",
+    keywords: ["first client", "first paying user", "entrepreneurship", "web dev", "free lance", "freelance", "freelancing", "freelancer", "freelance web developer", "freelance web dev", "freelance web development", "freelance web designer", "freelance web design", "freelance web development", "freelance web developer portfolio", "freelance web developer website", "freelance web developer"],
+    category: { title: "Best First Read", href: "#" },
+}
+
 function BlogPost({ params }) {
   return (
     <div className="relative isolate bg-white px-6 py-24">

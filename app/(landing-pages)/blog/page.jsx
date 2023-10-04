@@ -4,7 +4,7 @@ const posts = [
   {
     id: 1,
     title: "Your first client. What they don't tell you.",
-    href: "/first-client",
+    href: "/blog/first-client",
     description:
       "Jayden's journey to acquire his first paying user, emphasizing the trials and triumphs of entrepreneurship, with a reminder that success often hinges on that pivotal first customer.",
     imageUrl:
@@ -22,6 +22,19 @@ const posts = [
   },
   // More posts...
 ];
+
+export const metadata = {
+    id: "blog",
+    title: "Blog",
+    description:
+        "Learn how to grow your business with our expert advice.",
+    imageUrl:
+        "/images/landing-pages/blog/hero.jpg",
+    date: "Mar 16, 2020",
+    datetime: "2020-03-16",
+    keywords: ["blog", "entrepreneurship", "web dev", "free lance", "freelance", "freelancing", "freelancer", "freelance web developer", "freelance web dev", "freelance web development", "freelance web designer", "freelance web design", "freelance web development", "freelance web developer portfolio", "freelance web developer website", "freelance web developer"],
+    category: { title: "Blog", href: "#" },
+}
 
 export default function BlogPage() {
   return (
