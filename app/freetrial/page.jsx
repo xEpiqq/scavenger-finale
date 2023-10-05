@@ -69,20 +69,45 @@ const FreeTrial = () => {
   }
 
   return (
-    <div className="w-full h-screen bg-pbblack font-bold items-center justify-center flex">
 
-      <div className="flex flex-col h-[600px] -mt-32 items-center px-16 py-10">
-        <h1 className="text-white text-[30px] xs:text-[35px] font-black text-center spacing sm:text-[40px]">Preparing Your 14-Day Free Trial Now...</h1>
-        <h2 className='text-white text-center mt-1'>No risk, no contracts, and no long-term commitment. <span className='text-primary'>Cancel anytime</span>, hassle-free.</h2>
+
+<div className="relative isolate overflow-hidden bg-white">
+
+  
+      <svg
+        className="absolute inset-0 -z-10 h-full w-full stroke-gray-200 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]"
+        aria-hidden="true"
+      >
+
         
-        <div className="mt-10 inline-block h-16 w-16 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"role="status">
-          <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-          </span>
-        </div>
+        <defs>
+          <pattern
+            id="0787a7c5-978c-4f66-83c7-11c213f99cb7"
+            width={200}
+            height={200}
+            x="50%"
+            y={-1}
+            patternUnits="userSpaceOnUse"
+          >
+            <path d="M.5 200V.5H200" fill="none" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" strokeWidth={0} fill="url(#0787a7c5-978c-4f66-83c7-11c213f99cb7)" />
+      </svg>
 
+      <div className="flex flex-col h-[600px] mt-44 items-center px-16 py-10">
+      <h1 className="text-gray-900 text-[30px] xs:text-[35px] font-bold text-center spacing sm:text-[40px]">Preparing Your 14-Day Free Trial Now...</h1>
+      <h2 className='text-gray-400 font-semibold text-center mt-1'>No risk, no contracts, and no long-term commitment. <span className='font-bold text-primary'>Cancel anytime</span>, hassle-free.</h2>
+      
+      <div className="mt-10 inline-block h-16 w-16 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"role="status">
+        <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+        </span>
       </div>
 
     </div>
+
+</div>
+
   )
 }
 
