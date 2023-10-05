@@ -40,7 +40,8 @@ function Navbar() {
             <img className="h-12 w-auto" src="/images/logo/crow.png" alt="" />
           </a>
         </div>
-        <div className="flex lg:hidden">
+
+        <div className={`flex lg:hidden absolute right-10 ${mobileMenuOpen ? 'hidden' : ''}`}>
           <button
             type="button"
             className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
@@ -98,8 +99,8 @@ function Navbar() {
             <a href="#" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
               <img
-                className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                className="h-12 w-auto"
+                src="/images/logo/crow.png"
                 alt=""
               />
             </a>
@@ -127,12 +128,22 @@ function Navbar() {
               </div>
 
               <div className="py-6">
-                <Link
-                  href="/login"
-                  className="text-sm font-semibold leading-6 text-gray-900"
-                >
-                  Log In<span aria-hidden="true">&rarr;</span>
-                </Link>
+                {user ? (
+                  <Link
+                    href="/sheets"
+                    className="text-sm font-semibold leading-6 text-gray-900"
+                  >
+                    Dashboard <span aria-hidden="true">&rarr;</span>
+                  </Link>
+                ) : (
+                  <Link
+                    href="/login"
+                    className="text-sm font-semibold leading-6 text-gray-900"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Log In<span aria-hidden="true">&rarr;</span>
+                  </Link>
+                )}
               </div>
             </div>
           </div>

@@ -157,7 +157,7 @@ function Page() {
 
       <div className="flex  w-full flex-col justify-between bg-pbsecondbg px-4 py-8">
         <button
-          className="hover:border-1 bottom-4 right-20 z-20 block h-16 w-full rounded-md bg-black text-white transition duration-200 hover:border hover:border-black hover:bg-white hover:text-black sm:fixed sm:h-10 sm:w-48"
+          className="hover:border-1 bottom-10 right-14 z-20 block h-16 w-full rounded-md bg-black text-white transition duration-200 hover:border hover:border-black hover:bg-white hover:text-black sm:fixed sm:h-10 sm:w-48"
           onClick={() => {
             createNewSheet();
           }}
