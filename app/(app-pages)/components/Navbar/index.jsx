@@ -149,12 +149,13 @@ function Navbar(props) {
           />
 
           {signoutModal && (
+            <>
             <div
-              className="absolute left-0 sm:top-48 sm:left-2 top-16 "
+              className="absolute sm:top-48 lg:top-56 2xl:top-64 sm:left-2 top-12 right-32"
               onClick={() => setSignoutModal(false)}
             >
               <div
-                className="mb-1 flex w-36 flex-col items-center overflow-hidden rounded-md border-pblines bg-white p-1 shadow-sm transition duration-300"
+                className="mb-1 flex w-36 flex-col items-center overflow-hidden rounded-md border-pblines bg-white p-1 shadow-sm transition duration-300 z-10 absolute"
                 onClick={(e) => e.stopPropagation()}
                 style={{ borderWidth: 1 }}
               >
@@ -222,7 +223,9 @@ function Navbar(props) {
                 </div>
               </div>
             </div>
-          )}
+            
+              <div className="w-screen h-screen fixed top-0 left-0 z-0" onClick={() => setSignoutModal(false)} />
+            </>)}
         </div>
       </div>
     </>
