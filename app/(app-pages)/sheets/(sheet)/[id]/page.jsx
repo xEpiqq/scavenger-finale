@@ -265,70 +265,7 @@ function Page({ params }) {
           Delete
         </button>
         <div className="hidden w-full overflow-x-auto sm:block">
-          <table className="table w-full">
-            {/* head */}
-            <thead>
-              <tr>
-                <th>
-                  <label>
-                    <input
-                      type="checkbox"
-                      className="checkbox"
-                      onChange={() => {
-                        if (!displayedSheets) return;
-                        if (selectedSheets.length === displayedSheets.length) {
-                          setSelectedSheets([]);
-                        } else {
-                          setSelectedSheets(displayedSheets.map((_, i) => i));
-                          console.log("yep");
-                        }
-                      }}
-                      checked={
-                        selectedSheets.length === displayedSheets?.length
-                      }
-                    />
-                  </label>
-                </th>
-                <th>NAME</th>
-                <th>SSL</th>
-                <th>TEMPLATE</th>
-                <th>PHONE</th>
-                <th>ADDRESS</th>
-                <th>EMAILS</th>
-                <th>SOCIAL</th>
-                <th>CRM</th>
-              </tr>
-            </thead>
-
-            {displayedSheets
-              ?.slice(
-                currentPage * resultsPerPage,
-                (currentPage + 1) * resultsPerPage
-              )
-              .map((list, index) => (
-                <>
-                  <Item2
-                    openCRM={() => setOpenedCRM(index)}
-                    closeCRM={() => {
-                      list.updateIfChanged();
-                      setOpenedCRM(-1);
-                    }}
-                    isCRMOpen={openedCRM === index}
-                    item={list}
-                    selected={selectedSheets.includes(index)}
-                    toggleselected={() => {
-                      if (selectedSheets.includes(index)) {
-                        setSelectedSheets(
-                          selectedSheets.filter((i) => i !== index)
-                        );
-                      } else {
-                        setSelectedSheets([...selectedSheets, index]);
-                      }
-                    }}
-                  />
-                </>
-              ))}
-          </table>
+          {ListTable(displayedSheets, selectedSheets, setSelectedSheets, currentPage, resultsPerPage, setOpenedCRM, openedCRM)}
         </div>
 
         <div className="flex w-full flex-col items-center justify-center gap-1 pt-3 sm:hidden">
@@ -340,6 +277,7 @@ function Page({ params }) {
             .map((list, index) => (
               <>
                 <CardItem
+                  key={index}
                   openCRM={() => setOpenedCRM(index)}
                   closeCRM={() => {
                     list.updateIfChanged();
@@ -374,3 +312,66 @@ function Page({ params }) {
 }
 
 export default Page;
+function ListTable(displayedSheets, selectedSheets, setSelectedSheets, currentPage, resultsPerPage, setOpenedCRM, openedCRM) {
+  return <table className="table w-full">
+    {/* head */}
+    <thead>
+      <tr>
+        <th>
+          <label>
+            <input
+              type="checkbox"
+              className="checkbox"
+              onChange={() => {
+                if (!displayedSheets) return;
+                if (selectedSheets.length === displayedSheets.length) {
+                  setSelectedSheets([]);
+                } else {
+                  setSelectedSheets(displayedSheets.map((_, i) => i));
+                  console.log("yep");
+                }
+              } }
+              checked={selectedSheets.length === displayedSheets?.length} />
+          </label>
+        </th>
+        <th>NAME</th>
+        <th>SSL</th>
+        <th>TEMPLATE</th>
+        <th>PHONE</th>
+        <th>ADDRESS</th>
+        <th>EMAILS</th>
+        <th>SOCIAL</th>
+        <th>CRM</th>
+      </tr>
+    </thead>
+
+    {displayedSheets
+      ?.slice(
+        currentPage * resultsPerPage,
+        (currentPage + 1) * resultsPerPage
+      )
+      .map((list, index) => (
+        <>
+          <Item2
+            openCRM={() => setOpenedCRM(index)}
+            closeCRM={() => {
+              list.updateIfChanged();
+              setOpenedCRM(-1);
+            } }
+            isCRMOpen={openedCRM === index}
+            item={list}
+            selected={selectedSheets.includes(index)}
+            toggleselected={() => {
+              if (selectedSheets.includes(index)) {
+                setSelectedSheets(
+                  selectedSheets.filter((i) => i !== index)
+                );
+              } else {
+                setSelectedSheets([...selectedSheets, index]);
+              }
+            } } />
+        </>
+      ))}
+  </table>;
+}
+

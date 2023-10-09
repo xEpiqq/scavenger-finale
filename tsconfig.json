@@ -35,7 +35,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-, "components/Header/index.jsx"  ],
+, "components/Header/index.jsx", "app/freetrial/page.jsx"  ],
   "exclude": [
     "node_modules"
   ]

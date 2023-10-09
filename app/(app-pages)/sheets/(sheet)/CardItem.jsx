@@ -6,7 +6,7 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CRM from "./CRM";
 
-function CardItem({ item, openCRM, closeCRM, isCRMOpen }) {
+function CardItem({ key, item, openCRM, closeCRM, isCRMOpen }) {
   const [openCopy, setOpenCopy] = useState(false);
 
   // see how many characters item.name is 
@@ -57,7 +57,7 @@ function CardItem({ item, openCRM, closeCRM, isCRMOpen }) {
 
   return (
     <>
-      <div className="card-body p-0 py-4">
+      <div className="card-body p-0 py-4" key={key}>
         <div className="card w-96 gap-2 bg-gray-7 p-6 text-black shadow-xl">
           <div className="flex items-start justify-start space-x-3">
             <div className="flex w-full flex-row justify-between">
