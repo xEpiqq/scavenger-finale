@@ -49,6 +49,10 @@ function Navbar(props) {
       setCurrentPage("sub");
     }
 
+    if (pathname === "/profile") {
+      setCurrentPage("profile");
+    }
+
     console.log(currentPage);
   }, [pathname]);
 
@@ -105,6 +109,27 @@ function Navbar(props) {
               <div className="mt-1 flex h-11 w-11 items-center justify-center rounded-xl transition duration-150 hover:bg-pbiconhover">
                 <img
                   src="/favoritesicon.svg"
+                  alt="Logo"
+                  className="w-5"
+                  draggable={false}
+                />
+              </div>
+            )}
+          </Link>
+          <Link href="/profile" className="p-0">
+            {currentPage === "profile" ? (
+              <div className="mt-1 flex h-11 w-11 items-center justify-center rounded-xl border-2 border-pbblack transition duration-150">
+                <img
+                  src="/profile_icon.svg"
+                  alt="Logo"
+                  className="w-5"
+                  draggable={false}
+                />
+              </div>
+            ) : (
+              <div className="mt-1 flex h-11 w-11 items-center justify-center rounded-xl transition duration-150 hover:bg-pbiconhover">
+                <img
+                  src="/profile_icon.svg"
                   alt="Logo"
                   className="w-5"
                   draggable={false}
