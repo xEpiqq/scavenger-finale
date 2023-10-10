@@ -203,6 +203,30 @@ function Navbar(props) {
 
                     </div>
                   </div>
+
+                  <Link
+                  href="/affiliate"
+                  className="w-full"
+                  onClick={() => {
+                    setSignoutModal(false);
+                  }}
+                >
+                  <div className="mt-0 mb-1 flex w-full items-center justify-start rounded-md p-1 transition duration-150 hover:bg-pbiconhover">
+                    <img
+                      src="/affiliate.svg"
+                      className="ml-2 h-4 w-4"
+                      alt="Affiliate"
+                    />
+                    <div className="w-full">
+                      <button className="hover:bg-gray-100 px-4 py-2 text-left text-xs focus:outline-none">
+                        <div className="flex items-center">
+                          <div>Affiliate</div>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                </Link>
+
                 <Link
                   href="/"
                   className="w-full"
