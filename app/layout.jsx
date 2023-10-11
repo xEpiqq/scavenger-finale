@@ -1,13 +1,17 @@
+'use client'
 import react from "react";
 import { Analytics } from "@vercel/analytics/react";
 import { Providers } from "./providers";
-import Hotjar from "@hotjar/browser";
+import { hotjar } from "react-hotjar";
+import { useEffect } from "react";
 
 function Layout({ children }) {
   const siteId = 3690067;
   const hotjarVersion = 6;
 
-  Hotjar.init(siteId, hotjarVersion);
+  useEffect(() => {
+    hotjar.initialize(siteId, hotjarVersion);
+  }, []);
 
   return (
     <html suppressHydrationWarning lang="en" className="bg-white">
