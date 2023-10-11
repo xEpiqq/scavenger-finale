@@ -1,8 +1,14 @@
 import react from "react";
-import { Analytics } from '@vercel/analytics/react';
+import { Analytics } from "@vercel/analytics/react";
 import { Providers } from "./providers";
+import Hotjar from "@hotjar/browser";
 
 function Layout({ children }) {
+  const siteId = 3690067;
+  const hotjarVersion = 6;
+
+  Hotjar.init(siteId, hotjarVersion);
+
   return (
     <html suppressHydrationWarning lang="en" className="bg-white">
       {/*

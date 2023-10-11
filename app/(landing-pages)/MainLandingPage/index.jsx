@@ -19,6 +19,7 @@ import { useDocument } from "react-firebase-hooks/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { getFirestore, doc } from "firebase/firestore";
 import SignupModal from "../../../components/Signupmodal/signupmodal";
+import { useSearchParams } from 'next/navigation'
 
 
 const features = [
@@ -195,6 +196,19 @@ export default function MainLandingPage() {
       setOpenIndex(index);
     }
   };
+
+  
+  const searchParams = useSearchParams()
+  const affilate = searchParams.get('affilate')
+  console.log(affilate)
+
+  // we need to save the affilate id as a cookie
+  
+  useEffect(() => {
+    if (affilate) {
+      document.cookie = `affilate=${affilate};max-age=2592000;path=/`
+    }
+  }, [affilate])
 
 
   return (
