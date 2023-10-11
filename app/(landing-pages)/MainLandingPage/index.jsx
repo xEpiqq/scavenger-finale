@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import {
   ArrowPathIcon,
   Bars3Icon,
@@ -6,12 +6,12 @@ import {
   FingerPrintIcon,
   LockClosedIcon,
   XMarkIcon,
-} from '@heroicons/react/24/outline'
-import { CheckIcon } from '@heroicons/react/20/solid'
+} from "@heroicons/react/24/outline";
+import { CheckIcon } from "@heroicons/react/20/solid";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import ThemeToggler from '../../../components/Header/ThemeToggler'
+import ThemeToggler from "../../../components/Header/ThemeToggler";
 import menuData from "../../../components/Header/menuData";
 import { getAuth } from "firebase/auth";
 import { app } from "../../../components/initializeFirebase";
@@ -19,77 +19,83 @@ import { useDocument } from "react-firebase-hooks/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { getFirestore, doc } from "firebase/firestore";
 import SignupModal from "../../../components/Signupmodal/signupmodal";
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams } from "next/navigation";
 
+import YouTube from "react-youtube";
 
 const features = [
   {
-    name: 'Lead finder',
+    name: "Lead finder",
     description:
       "Scavenger gets you quality leads in 14 seconds... scraped on the spot, with a ton of the businesses' website-data.",
     icon: CloudArrowUpIcon,
   },
   {
-    name: 'CRM Functionality',
+    name: "CRM Functionality",
     description:
       "Our built-in CRM lets you track the journey from contact #1 -> deal landed. It's like a mini Hubspot.",
     icon: LockClosedIcon,
   },
   {
-    name: 'AI-powered email',
+    name: "AI-powered email",
     description:
       "Land deals entirely from our AI email assist. We feed the lead's website data to an LLM, and it writes the outreach email for you.",
     icon: ArrowPathIcon,
   },
   {
-    name: 'Favorites',
+    name: "Favorites",
     description:
-      'Save your favorite leads to a separate list--so you can keep your most promising people on lockdown.',
+      "Save your favorite leads to a separate list--so you can keep your most promising people on lockdown.",
     icon: FingerPrintIcon,
   },
-]
+];
 const tiers = [
   {
-    name: 'Basic',
-    id: 'tier-basic',
-    href: '#',
-    priceMonthly: '$99',
-    description: 'The essentials to provide your best work for clients.',
-    features: ['1,000 Leads per month', 'Export to CSV', 'Basic analytics', '48-hour support response time'],
+    name: "Basic",
+    id: "tier-basic",
+    href: "#",
+    priceMonthly: "$99",
+    description: "The essentials to provide your best work for clients.",
+    features: [
+      "1,000 Leads per month",
+      "Export to CSV",
+      "Basic analytics",
+      "48-hour support response time",
+    ],
     mostPopular: false,
     disabled: true,
   },
   {
-    name: 'Freelancer',
-    id: 'tier-startup',
-    href: '/signup',
-    priceMonthly: '$197',
-    description: 'A plan that scales with your rapidly growing business.',
+    name: "Freelancer",
+    id: "tier-startup",
+    href: "/signup",
+    priceMonthly: "$197",
+    description: "A plan that scales with your rapidly growing business.",
     features: [
-      '10,000 Leads per month',
-      'Unlimited AI Email Drafts',
-      'Fully Integrated lightweight CRM',
-      '24-hour support response time',
+      "10,000 Leads per month",
+      "Unlimited AI Email Drafts",
+      "Fully Integrated lightweight CRM",
+      "24-hour support response time",
     ],
     mostPopular: true,
     disabled: false,
   },
   {
-    name: 'Enterprise',
-    id: 'tier-enterprise',
-    href: '#',
-    priceMonthly: '$500',
-    description: 'Dedicated support and infrastructure for your company.',
+    name: "Enterprise",
+    id: "tier-enterprise",
+    href: "#",
+    priceMonthly: "$500",
+    description: "Dedicated support and infrastructure for your company.",
     features: [
-      'Unlimited Leads',
-      'Advanced analytics',
-      '1-hour, dedicated support response time',
-      'Marketing automations',
+      "Unlimited Leads",
+      "Advanced analytics",
+      "1-hour, dedicated support response time",
+      "Marketing automations",
     ],
     mostPopular: false,
     disabled: true,
   },
-]
+];
 const faqs = [
   {
     id: 3,
@@ -100,8 +106,7 @@ const faqs = [
   {
     id: 1,
     question: "Will this work for beginners?",
-    answer:
-      `It's perfect for new freelancers. You want to dive head first into real world projects as soon as possible. "Start before you're ready". Scavenger makes it easy.`,
+    answer: `It's perfect for new freelancers. You want to dive head first into real world projects as soon as possible. "Start before you're ready". Scavenger makes it easy.`,
   },
   {
     id: 1,
@@ -139,25 +144,16 @@ const faqs = [
     answer:
       "No catch. Transparently, we hope to make you 10x the cost of the product before you even start paying. We're freelancers ourselves and want to provide value to the community.",
   },
-
-]
+];
 const footerNavigation = {
-  solutions: [
-    { name: 'Pricing', href: '#' },
-  ],
-  support: [
-    { name: 'Pricing', href: '/pricing' },
-  ],
-  company: [
-    { name: 'Login', href: '#' },
-  ],
-  legal: [
-    { name: 'Free Trial', href: '#' },
-  ],
-}
+  solutions: [{ name: "Pricing", href: "#" }],
+  support: [{ name: "Pricing", href: "/pricing" }],
+  company: [{ name: "Login", href: "#" }],
+  legal: [{ name: "Free Trial", href: "#" }],
+};
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(" ");
 }
 
 const auth = getAuth(app);
@@ -197,25 +193,32 @@ export default function MainLandingPage() {
     }
   };
 
-  
-  const searchParams = useSearchParams()
-  const affilate = searchParams.get('affilate')
-  console.log(affilate)
+  const searchParams = useSearchParams();
+  const affilate = searchParams.get("affilate");
+  console.log(affilate);
 
   // we need to save the affilate id as a cookie
-  
+
   useEffect(() => {
     if (affilate) {
-      document.cookie = `affilate=${affilate};max-age=2592000;path=/`
+      document.cookie = `affilate=${affilate};max-age=2592000;path=/`;
     }
-  }, [affilate])
+  }, [affilate]);
 
+  const opts = { 
+    playerVars: { 
+      autoplay: 1, 
+    }, 
+    classNames: {
+      iframe: "w-full h-full",
+    },
+    className: "w-full h-full",
+  }; 
 
   return (
     <div className="bg-white">
       {/* Header */}
       {signup && <SignupModal setSignup={setSignup} />}
-      
 
       <main className="isolate">
         {/* Hero section */}
@@ -228,40 +231,44 @@ export default function MainLandingPage() {
               className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
               style={{
                 clipPath:
-                  'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
+                  "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
               }}
             />
           </div>
           <div className="py-24 sm:py-32">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
               <div className="mx-auto max-w-2xl text-center">
-              <h1 className="text-4xl font-bold tracking-tight text-gray-700 sm:text-4xl">
+                <h1 className="text-4xl font-bold tracking-tight text-gray-700 sm:text-4xl">
                   Freelance Web Devs,
                 </h1>
                 <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
                   Just Get Back To Coding
                 </h1>
                 <p className="mt-6 text-lg leading-8 text-gray-600">
-                  Our Automated “Freelance Machine” cuts out 73% of the sales process so freelance web developers can focus on what they do best: coding.
+                  Our Automated “Freelance Machine” cuts out 73% of the sales
+                  process so freelance web developers can focus on what they do
+                  best: coding.
                 </p>
                 <div className="mt-10 flex items-center justify-center gap-x-6">
                   <a
                     href="/signup"
                     className="flex gap-4 rounded-md bg-gray-1 px-7 py-4 text-2xl font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   >
-                    Start Your Free Trial Today <img src="/clicktrial.svg" className="w-5" />
-                  </a> 
+                    Start Your Free Trial Today{" "}
+                    <img src="/clicktrial.svg" className="w-5" />
+                  </a>
                 </div>
-                <p className='mt-3 text-gray-2'>No Contracts • Cancel Anytime</p>
+                <p className="mt-3 text-gray-2">
+                  No Contracts • Cancel Anytime
+                </p>
               </div>
               <div className="mt-16 flow-root sm:mt-24">
-                <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
-                  <img
-                    src="/Leads.png"
-                    alt="App screenshot"
-                    width={2432}
-                    height={1442}
-                    className="rounded-md shadow-2xl ring-1 ring-gray-900/10"
+                <div className="relative -m-2 aspect-video rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
+                  <YouTube
+                    videoId="1_8XDaVmhOo"
+                    iframeClassName="w-full h-full"
+                    className="w-full h-full"
+                    opts={opts}
                   />
                 </div>
               </div>
@@ -275,7 +282,7 @@ export default function MainLandingPage() {
               className="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
               style={{
                 clipPath:
-                  'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
+                  "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
               }}
             />
           </div>
@@ -336,15 +343,19 @@ export default function MainLandingPage() {
         {/* Feature section */}
         <div className="mx-auto mt-32 max-w-7xl px-6 sm:mt-56 lg:px-8">
           <div className="mx-auto max-w-2xl lg:text-center">
-            <h2 className="text-base font-semibold leading-7 text-indigo-600">Freelancing made easy</h2>
+            <h2 className="text-base font-semibold leading-7 text-indigo-600">
+              Freelancing made easy
+            </h2>
             <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
               Everything you need to land deals:)
             </p>
             <p className="mt-6 text-lg leading-8 text-gray-600">
               {/* Quis tellus eget adipiscing convallis sit sit eget aliquet quis. Suspendisse eget egestas a elementum
               pulvinar et feugiat blandit at. In mi viverra elit nunc. */}
-
-              The reason we started freelancing was <span className='font-bold'>freedom</span>. Land deals without the pain of 'content marketing', 'networking', or platforms where you have to bid against 100 other devs.
+              The reason we started freelancing was{" "}
+              <span className="font-bold">freedom</span>. Land deals without the
+              pain of 'content marketing', 'networking', or platforms where you
+              have to bid against 100 other devs.
             </p>
           </div>
           <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
@@ -353,57 +364,68 @@ export default function MainLandingPage() {
                 <div key={feature.name} className="relative pl-16">
                   <dt className="text-base font-semibold leading-7 text-gray-900">
                     <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
-                      <feature.icon className="h-6 w-6 text-white" aria-hidden="true" />
+                      <feature.icon
+                        className="h-6 w-6 text-white"
+                        aria-hidden="true"
+                      />
                     </div>
                     {feature.name}
                   </dt>
-                  <dd className="mt-2 text-base leading-7 text-gray-600">{feature.description}</dd>
+                  <dd className="mt-2 text-base leading-7 text-gray-600">
+                    {feature.description}
+                  </dd>
                 </div>
               ))}
             </dl>
           </div>
         </div>
 
-        <div className="py-24 sm:py-32 mt-16">
-            <div className="mx-auto max-w-7xl px-6 lg:px-8">
-              <div className="mx-auto max-w-2xl text-center">
-                <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-                  Create your first list
-                </h1>
-                <div className="mt-10 flex items-center justify-center gap-x-6">
-                  <a
-                    href="/signup"
-                    className="flex gap-4 rounded-md bg-gray-1 px-7 py-4 text-2xl font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  >
-                    Start Your Free Trial Today <img src="/clicktrial.svg" className="w-5" />
-                  </a> 
-                </div>
-                <p className='mt-3 text-gray-2'>No Contracts • Cancel Anytime</p>
+        <div className="mt-16 py-24 sm:py-32">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="mx-auto max-w-2xl text-center">
+              <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+                Create your first list
+              </h1>
+              <div className="mt-10 flex items-center justify-center gap-x-6">
+                <a
+                  href="/signup"
+                  className="flex gap-4 rounded-md bg-gray-1 px-7 py-4 text-2xl font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+                  Start Your Free Trial Today{" "}
+                  <img src="/clicktrial.svg" className="w-5" />
+                </a>
               </div>
-              <div className="mt-16 flow-root sm:mt-24">
-                <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
-                  <img
-                    src="/Newlist.png"
-                    alt="App screenshot"
-                    width={2432}
-                    height={1442}
-                    className="rounded-md shadow-2xl ring-1 ring-gray-900/10"
-                  />
-                </div>
+              <p className="mt-3 text-gray-2">No Contracts • Cancel Anytime</p>
+            </div>
+            <div className="mt-16 flow-root sm:mt-24">
+              <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
+                <img
+                  src="/Newlist.png"
+                  alt="App screenshot"
+                  width={2432}
+                  height={1442}
+                  className="rounded-md shadow-2xl ring-1 ring-gray-900/10"
+                />
               </div>
             </div>
           </div>
+        </div>
 
         <div className="mx-auto mt-32 max-w-7xl px-6 sm:mt-56 lg:px-8">
           <div className="mx-auto max-w-2xl lg:text-center">
-            <h2 className="text-base font-semibold leading-7 text-indigo-600">Freelancing made easy</h2>
+            <h2 className="text-base font-semibold leading-7 text-indigo-600">
+              Freelancing made easy
+            </h2>
             <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
               Everything you need to land deals:)
             </p>
             <p className="mt-6 text-lg leading-8 text-gray-600">
               {/* Quis tellus eget adipiscing convallis sit sit eget aliquet quis. Suspendisse eget egestas a elementum
               pulvinar et feugiat blandit at. In mi viverra elit nunc. */}
-              The reason we started freelancing was <span className='font-bold'>freedom</span>. Land deals without the pain of 'content marketing', 'networking', or platforms where you have to bid against 100 other devs.
+              The reason we started freelancing was{" "}
+              <span className="font-bold">freedom</span>. Land deals without the
+              pain of 'content marketing', 'networking', or platforms where you
+              have to bid against 100 other devs.
             </p>
           </div>
         </div>
@@ -533,13 +555,22 @@ export default function MainLandingPage() {
 
         {/* FAQs */}
         <div className="mx-auto max-w-2xl divide-y divide-gray-900/10 px-6 pb-8 sm:pb-24 sm:pt-12 lg:max-w-7xl lg:px-8 lg:pb-32">
-          <h2 className="text-2xl font-bold leading-10 tracking-tight text-gray-900">Frequently asked questions</h2>
+          <h2 className="text-2xl font-bold leading-10 tracking-tight text-gray-900">
+            Frequently asked questions
+          </h2>
           <dl className="mt-10 space-y-8 divide-y divide-gray-900/10">
             {faqs.map((faq) => (
-              <div key={faq.id} className="pt-8 lg:grid lg:grid-cols-12 lg:gap-8">
-                <dt className="text-base font-semibold leading-7 text-gray-900 lg:col-span-5">{faq.question}</dt>
+              <div
+                key={faq.id}
+                className="pt-8 lg:grid lg:grid-cols-12 lg:gap-8"
+              >
+                <dt className="text-base font-semibold leading-7 text-gray-900 lg:col-span-5">
+                  {faq.question}
+                </dt>
                 <dd className="mt-4 lg:col-span-7 lg:mt-0">
-                  <p className="text-base leading-7 text-gray-600">{faq.answer}</p>
+                  <p className="text-base leading-7 text-gray-600">
+                    {faq.answer}
+                  </p>
                 </dd>
               </div>
             ))}
@@ -556,7 +587,7 @@ export default function MainLandingPage() {
               className="aspect-[1108/632] w-[69.25rem] flex-none bg-gradient-to-r from-[#ff80b5] to-[#9089fc] opacity-25"
               style={{
                 clipPath:
-                  'polygon(73.6% 48.6%, 91.7% 88.5%, 100% 53.9%, 97.4% 18.1%, 92.5% 15.4%, 75.7% 36.3%, 55.3% 52.8%, 46.5% 50.9%, 45% 37.4%, 50.3% 13.1%, 21.3% 36.2%, 0.1% 0.1%, 5.4% 49.1%, 21.4% 36.4%, 58.9% 100%, 73.6% 48.6%)',
+                  "polygon(73.6% 48.6%, 91.7% 88.5%, 100% 53.9%, 97.4% 18.1%, 92.5% 15.4%, 75.7% 36.3%, 55.3% 52.8%, 46.5% 50.9%, 45% 37.4%, 50.3% 13.1%, 21.3% 36.2%, 0.1% 0.1%, 5.4% 49.1%, 21.4% 36.4%, 58.9% 100%, 73.6% 48.6%)",
               }}
             />
           </div>
@@ -567,13 +598,14 @@ export default function MainLandingPage() {
               Start your free trial today.
             </h2>
             <div className="mt-10 flex items-center justify-center gap-x-6">
-                  <a
-                    href="#"
-                    className="flex gap-4 rounded-md bg-gray-1 px-7 py-4 text-2xl font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  >
-                    Start Your Free Trial Today <img src="/clicktrial.svg" className="w-5" />
-                  </a> 
-                </div>
+              <a
+                href="#"
+                className="flex gap-4 rounded-md bg-gray-1 px-7 py-4 text-2xl font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >
+                Start Your Free Trial Today{" "}
+                <img src="/clicktrial.svg" className="w-5" />
+              </a>
+            </div>
           </div>
           <div
             className="absolute left-1/2 right-0 top-full -z-10 hidden -translate-y-1/2 transform-gpu overflow-hidden blur-3xl sm:block"
@@ -583,7 +615,7 @@ export default function MainLandingPage() {
               className="aspect-[1155/678] w-[72.1875rem] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30"
               style={{
                 clipPath:
-                  'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
+                  "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
               }}
             />
           </div>
@@ -663,9 +695,8 @@ export default function MainLandingPage() {
         </footer>
       </div>
     </div>
-  )
+  );
 }
-
 
 // <button className="rounded-lg border  border-primary bg-black px-5 py-3 text-sm font-semibold text-primary transition
 // duration-150 hover:bg-white hover:text-black"
