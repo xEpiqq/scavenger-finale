@@ -23,12 +23,6 @@ import { useSearchParams } from "next/navigation";
 
 import YouTube from "react-youtube";
 
-export const meta = {
-  "twitter:card": "summary_large_image",
-  "twitter:site": "@scavengerleads",
-  "twitter:creator": "@DavidWi11527517",
-};
-
 const features = [
   {
     name: "Lead finder",
@@ -107,12 +101,7 @@ const faqs = [
     id: 3,
     question: "I'm bad at sales, is this for me?",
     answer:
-      "No problem. Our goal is to get you back to building websites. Cold calling is powerful but it's not for everyone--give our automatic ai email outreach a try.",
-  },
-  {
-    id: 1,
-    question: "Will this work for beginners?",
-    answer: `It's perfect for new freelancers. You want to dive head first into real world projects as soon as possible. "Start before you're ready". Scavenger makes it easy.`,
+      "No problem. Cold calling is powerful but it's not for everyone--give our automatic ai email outreach a try.",
   },
   {
     id: 1,
@@ -235,15 +224,15 @@ export default function MainLandingPage() {
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
               <div className="mx-auto max-w-2xl text-center">
                 <h1 className="text-4xl font-bold tracking-tight text-gray-700 sm:text-4xl">
-                  Freelance Web Devs,
+                  Small Buisness Owners,
                 </h1>
                 <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-                  Just Get Back To Coding
+                  Lets expand your reach.
                 </h1>
                 <p className="mt-6 text-lg leading-8 text-gray-600">
-                  Our Automated “Freelance Machine” cuts out 73% of the sales
-                  process so freelance web developers can focus on what they do
-                  best: coding.
+                  Our Automated “Email Marketing Machine” cuts out 73% of the sales
+                  process so you can focus on what you do
+                  best: building.
                 </p>
                 <div className="mt-10 flex items-center justify-center gap-x-6">
                   <a
@@ -339,18 +328,16 @@ export default function MainLandingPage() {
         <div className="mx-auto mt-32 max-w-7xl px-6 sm:mt-56 lg:px-8">
           <div className="mx-auto max-w-2xl lg:text-center">
             <h2 className="text-base font-semibold leading-7 text-indigo-600">
-              Freelancing made easy
+              Cold outreach made easy
             </h2>
             <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-              Everything you need to land deals:)
+              {"Everything you need to land deals:)"}
             </p>
             <p className="mt-6 text-lg leading-8 text-gray-600">
               {/* Quis tellus eget adipiscing convallis sit sit eget aliquet quis. Suspendisse eget egestas a elementum
               pulvinar et feugiat blandit at. In mi viverra elit nunc. */}
-              The reason we started freelancing was{" "}
-              <span className="font-bold">freedom</span>. Land deals without the
-              pain of 'content marketing', 'networking', or platforms where you
-              have to bid against 100 other devs.
+              The reason we started our buisness was{" "}
+              <span className="font-bold">freedom</span>. Lets get you your first deal. And the next one. And the next one.
             </p>
           </div>
           <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
@@ -379,7 +366,7 @@ export default function MainLandingPage() {
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-2xl text-center">
               <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-                Create your first list
+                Send your first email in 14 seconds.
               </h1>
               <div className="mt-10 flex items-center justify-center gap-x-6">
                 <a
