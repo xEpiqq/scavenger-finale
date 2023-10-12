@@ -22,12 +22,6 @@ import SignupModal from "../../../components/Signupmodal/signupmodal";
 import { useSearchParams } from "next/navigation";
 import YouTube from "react-youtube";
 
-export const meta = {
-  "twitter:card": "summary_large_image",
-  "twitter:site": "@scavengerleads",
-  "twitter:creator": "@DavidWi11527517",
-};
-
 const features = [
   {
     name: "Lead finder",
