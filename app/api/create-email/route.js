@@ -11,7 +11,6 @@ export async function POST(request) {
     body,
   });
   console.log("Added document with ID: ");
-  // google_function_response.body is a readable stream, so we need to convert it to JSON
 
   NextResponse.json({ body: { success: true } });
 }
