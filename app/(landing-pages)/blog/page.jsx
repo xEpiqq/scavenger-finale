@@ -19,6 +19,24 @@ const posts = [
       imageUrl:
         "/images/testimonials/jayden-crowther.png",
     },
+  },{
+    id: 2,
+    title: "From That First Phone Call to a Thriving Partnership",
+    href: "/blog/search-local",
+    description:
+      "This blog post shares a personal journey of breaking into freelance web design, from the challenges of cold calling to the importance of nurturing relationships with local business owners. It offers practical insights for newcomers, emphasizing the value of local connections, trust-building, and delivering exceptional service to succeed in the field.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80",
+    date: "Mar 16, 2020",
+    datetime: "2020-03-16",
+    category: { title: "Best First Read", href: "#" },
+    author: {
+      name: "David Wing",
+      role: "Co-Founder / Lead Programmer",
+      href: "#",
+      imageUrl:
+        "/images/testimonials/author-01.png",
+    },
   },
   // More posts...
 ];
