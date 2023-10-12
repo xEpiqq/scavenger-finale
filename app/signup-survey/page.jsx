@@ -3,12 +3,13 @@
 import React from 'react'
 import SurveyRadialCard from './SurveyRadialCard.jsx'
 import SurveyRadialCardSm from './SurveyRadialCardSm.jsx'
+import '../../styles/index.css'
 
 import { useState } from 'react'
 
 import { getAuth } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { app } from '../../../components/initializeFirebase.jsx'
+import { app } from '../../components/initializeFirebase.jsx'
 
 const auth = getAuth(app);
 
@@ -16,9 +17,9 @@ function Page() {
     const [user, loading, error] = useAuthState(auth)
 
     const preferredMethodOptions = [
-        { id: 1, title: 'Phone', description: 'Direct outreach through phone calls', users: '' },
-        { id: 2, title: 'Social Media', description: 'Outreach through socials', users: '' },
-        { id: 3, title: 'Email', description: 'Outreach through emailing', users: '' },
+        { id: 1, title: 'Phone', description: 'Getting clients by cold calling', users: '' },
+        { id: 2, title: 'Social Media', description: 'Getting clients through social media', users: '' },
+        { id: 3, title: 'Email', description: 'Getting clients through cold email', users: '' },
     ]
 
     const clientsPerWeekOptions = [
@@ -93,7 +94,7 @@ function Page() {
                     }
                 />
                 <SurveyRadialCardSm
-                    title="How many clients do you want to sell per week?"
+                    title="How many clients do you want to get per week?"
                     value={clientsPerWeek}
                     onChange={setClientsPerWeek}
                     options={
