@@ -30,11 +30,11 @@ function GoogleLogin(props) {
       if (subscription_status === "active" || subscription_status === "trialing") {
         router.push("/sheets");
       } else {
-        router.push("/freetrial");
+        router.push("/signup-survey");
       }
     } catch {
       console.log("failed to get user data");
-      router.push("/freetrial");
+      router.push("/signup-survey");
     }
 
     // router.push("/sheets");
