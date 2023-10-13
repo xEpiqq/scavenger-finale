@@ -202,7 +202,6 @@ export default function MainLandingPage() {
 
   const searchParams = useSearchParams();
   const affilate = searchParams.get("affilate");
-  console.log(affilate);
 
   // we need to save the affilate id as a cookie
 
