@@ -1,6 +1,6 @@
 import List from "@/components/List";
 
-function Page() {
+function DummyList() {
   const resultsPerPage = 20;
 
   const sheetData = [
@@ -29,13 +29,14 @@ function Page() {
   ];
 
   return (
-    <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8 mt-10">
+    <div className="flex min-h-full flex-1 flex-col justify-center py-4 sm:px-6 lg:px-8">
     <List
         sheetData={sheetData}
         resultsPerPage={resultsPerPage}
+        disableSearch={true}
     />
     </div>
   );
 }
 
-export default Page;
+export default DummyList;
