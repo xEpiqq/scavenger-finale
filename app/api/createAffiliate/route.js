@@ -1,7 +1,6 @@
 import { app } from "../../../components/initializeFirebase";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 import { NextResponse } from "next/server";
-import ListItem from "../../(app-pages)/sheets/(sheet)/ListItem.js";
 import { collection, addDoc } from "firebase/firestore";
 import Stripe from "stripe";
 // import { getFirestore, collection, addDoc, setDoc, doc, getDoc, updateDoc } from "firebase/firestore";
