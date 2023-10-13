@@ -15,13 +15,14 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-function Item2({
+function Item({
   item,
   openCRM,
   closeCRM,
   isCRMOpen,
   toggleselected,
   selected,
+  key,
 }) {
   const [openCopy, setOpenCopy] = useState(false);
 
@@ -62,7 +63,7 @@ function Item2({
 
   return (
     <>
-      <tbody className="w-full">
+      <tbody className="w-full" key={key}>
         {/* row 1 */}
         <tr>
           <th>
@@ -189,6 +190,7 @@ function Item2({
                         <Menu.Item key={index}>
                           {({ active }) => (
                             <a
+                              key={index}
                               href="#"
                               className={classNames(
                                 active
@@ -333,4 +335,4 @@ function Item2({
   );
 }
 
-export default Item2;
+export default Item;

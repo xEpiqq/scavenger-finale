@@ -297,6 +297,7 @@ function ListTable(
         .map((list, index) => (
           <>
             <Item
+              key={index}
               openCRM={() => setOpenedCRM(index)}
               closeCRM={() => {
                 list.updateIfChanged();

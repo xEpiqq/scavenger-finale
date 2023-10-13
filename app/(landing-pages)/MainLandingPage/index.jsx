@@ -105,48 +105,48 @@ const tiers = [
 ];
 const faqs = [
   {
-    id: 3,
+    id: 1,
     question: "I'm bad at sales, is this for me?",
     answer:
       "No problem. Our goal is to get you back to building websites. Cold calling is powerful but it's not for everyone--give our automatic ai email outreach a try.",
   },
   {
-    id: 1,
+    id: 2,
     question: "Will this work for beginners?",
     answer: `It's perfect for new freelancers. You want to dive head first into real world projects as soon as possible. "Start before you're ready". Scavenger makes it easy.`,
   },
   {
-    id: 1,
+    id: 3,
     question: "How does your lead finder work?",
     answer:
       "We use advanced algorithms to search Google and Facebook for relevant leads based on user-defined criteria, such as keywords and location.",
   },
   {
-    id: 2,
+    id: 4,
     question: "What types of leads can Scavenger give me?",
     answer:
       "We can give you leads for any type of buisness in any location. Buisness owners love to work with local freelancers.",
   },
   {
-    id: 3,
+    id: 5,
     question: "Can I export my leads?",
     answer:
       "Yes, you can export your leads to a CSV file and use them in your favorite CRM or email marketing software.",
   },
   {
-    id: 4,
+    id: 6,
     question: "How long does it take to get my leads?",
     answer:
       "Scavenger is fast. We can get you 200 leads in under 14 seconds. No more waiting for days to get your leads.",
   },
   {
-    id: 5,
+    id: 7,
     question: "I've tried cold outreach in the past, how is this different?",
     answer:
       "Cold outreach is successful when freelancers have a repeatable system. Scavenger is that system. It's simple, and works at scale.",
   },
   {
-    id: 6,
+    id: 8,
     question: "Sounds good. What's the catch?",
     answer:
       "No catch. Transparently, we hope to make you 10x the cost of the product before you even start paying. We're freelancers ourselves and want to provide value to the community.",
