@@ -32,31 +32,7 @@ function Page({ params }) {
   const [sheetDataRaw, loading2, error2] = useDocument(
     doc(db, `sheets/${list_id}`)
   );
-  const sheetData = [
-    {
-      id: 1,
-      name: "John Doe",
-      ssl: true,
-      template: "Wordpress",
-      phoneNumber: "(123) 456-7890",
-      address: "8685 W Sahara Ave STE 200, Las Vegas, NV",
-      email: ["john@example.com"],
-      social: "Twitter",
-      crm: "CRM 1",
-    },
-    {
-      id: 2,
-      name: "Jane Smith",
-      ssl: false,
-      template: "Weebly",
-      phoneNumber: "(987) 654-3210",
-      address: "8685 W Sahara Ave STE 200, Las Vegas, NV",
-      email: ["jane@example.com"],
-      social: "Facebook",
-      crm: "CRM 2",
-    },
-  ];
-
+  
   async function renameInDB(newName) {
     console.log("newName", newName);
     console.log("sheetDataRaw", sheetDataRaw);

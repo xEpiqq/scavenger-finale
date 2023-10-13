@@ -19,11 +19,6 @@ function Page() {
   ////////
 
   const resultsPerPage = 20;
-  const [currentPage, setCurrentPage] = useState(0);
-  const [searchbar, setSearchbar] = useState("");
-  const [selectedSheets, setSelectedSheets] = useState([]);
-  const [displayedSheets, setDisplayedSheets] = useState([]);
-  const [openedCRM, setOpenedCRM] = useState(-1);
 
   const [user, loading, user_error] = useAuthState(auth);
   const [userDataRaw, loading2, error2] = useDocument(
