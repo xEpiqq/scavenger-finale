@@ -15,46 +15,35 @@ export async function POST(request) {
     const user_id = body.user_id;
     const stripe_customer_id = body.stripe_customer_id;
     const affiliate_id = body.affiliate_id;
+    const affiliate_onboarded = body.affiliate_onboarded;
+
     console.log(affiliate_id)
+    console.log(stripe_customer_id)
+    console.log(affiliate_onboarded)
 
-    return new Response(JSON.stringify({ "YEAH": "DONE" }));
-    
-
-
-    let docRef
-    try {
-        docRef = doc(db, "users", user_id);
-    } catch (error) {
-        console.log("No such document!");
-        return new Response(JSON.stringify({ "error": "failed" }));
-    }
-
-    const docSnap = await getDoc(docRef);
-    const docData = docSnap.data();
     let account, accountLink;
+    let accountId = affiliate_id;
 
-    
-    if (docData.affiliate_id === undefined) {
+    if (affiliate_id === undefined) {
         account = await stripe.accounts.create({
             type: 'express',
         });
+        accountId = account.id;
         console.log(`New Express Account Created: ${account.id}`)
         await updateDoc(doc(db, "users", user_id), {
-            affiliate_id: account.id,
+            affiliate_id: accountId,
         });
     }
 
-    if (docData.affiliate_onboarded === undefined) {
+    if (affiliate_onboarded === undefined) {
         accountLink = await stripe.accountLinks.create({
-            account: account.id,
-            refresh_url: `${req.headers.origin}/sheets`,
-            return_url: `${req.headers.origin}/affiliate`,
+            account: accountId,
+            refresh_url: `${request.headers.origin}/sheets`,
+            return_url: `${request.headers.origin}/affiliate`,
             type: 'account_onboarding',
         });
         console.log(`Onboarding link: ${accountLink.url}`)
-        // return new Response(JSON.stringify({ "url": accountLink.url }));
-    return new Response(JSON.stringify({ "url": "https://google.com" }));
-
+        return new Response(JSON.stringify({ "url": accountLink.url }));
 
     }
 
