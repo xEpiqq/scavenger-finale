@@ -1,0 +1,80 @@
+.page {
+  width: calc(100% - 6rem);
+  height: 100%;
+  position: relative;
+}
+
+.table_wrapper {
+
+  table {
+    width: 100%;
+    background-color: #F8F9FA;
+    // no border
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-style: none;
+
+    border: none;
+
+    gap: 3rem;
+
+    // the second th should take minimal space in the table
+    th:nth-child(1),
+    th:nth-child(2),
+    th:nth-child(3),
+    th:nth-child(4),
+    th:nth-child(5),
+    th:nth-child(6) {
+      width: 0px;
+      white-space: nowrap;
+    }
+
+    th:nth-child(1),
+    td:nth-child(1) {
+      padding-left: 16px;
+    }
+
+    th,
+    td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+      height: 3rem;
+    }
+
+    th {
+      p {
+        bottom: 0;
+        padding-bottom: 0.7rem;
+        width: 100%;
+        padding-top: 0.5rem;
+        // hover
+        &:hover {
+          cursor: pointer;
+          background-color: #E4E9EC;
+          border-top-left-radius: 5px;
+          border-top-right-radius: 5px;
+        }
+      }
+    }
+    tbody {
+      background-color: inherit;
+    }
+
+    tr {
+      background-color: inherit;
+      width: 100%;
+      transition-property: all;
+      transition-duration: 0.1s;
+    }
+
+    td {
+      white-space: nowrap;
+    }
+    tbody {
+      tr:hover {
+        background-color: #E4E9EC;
+      }
+    }
+  }
+}
