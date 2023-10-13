@@ -24,7 +24,7 @@ export async function POST(request) {
     let account, accountLink;
     let accountId = affiliate_id;
 
-    if (affiliate_id === undefined) {
+    if (affiliate_id === "" || affiliate_id === undefined) {
         account = await stripe.accounts.create({
             type: 'express',
         });
@@ -38,13 +38,11 @@ export async function POST(request) {
     if (affiliate_onboarded === undefined) {
         accountLink = await stripe.accountLinks.create({
             account: accountId,
-            refresh_url: `${request.headers.origin}/sheets`,
-            return_url: `${request.headers.origin}/affiliate`,
+            refresh_url: `https://scavng.com/sheets`,
+            return_url: `https://scavng.com/affiliate`,
             type: 'account_onboarding',
         });
-        console.log(`Onboarding link: ${accountLink.url}`)
         return new Response(JSON.stringify({ "url": accountLink.url }));
-
     }
 
     return new Response(JSON.stringify({ "url": "https://google.com" }));
