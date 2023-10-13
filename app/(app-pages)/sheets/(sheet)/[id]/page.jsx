@@ -32,7 +32,7 @@ function Page({ params }) {
   const [sheetDataRaw, loading2, error2] = useDocument(
     doc(db, `sheets/${list_id}`)
   );
-  
+
   async function renameInDB(newName) {
     console.log("newName", newName);
     console.log("sheetDataRaw", sheetDataRaw);
@@ -102,7 +102,7 @@ function Page({ params }) {
   if (loading2) return <h1>Loading...</h1>;
   if (error2) return <h1>Error: {error2}</h1>;
 
-  if (sheetData?.lists == 0) {
+  if (sheetDataRaw?.data()?.lists == 0) {
     return (
       <FillList
         sendToLambda={sendToLambda}
