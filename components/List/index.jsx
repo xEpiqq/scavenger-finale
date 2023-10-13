@@ -7,7 +7,7 @@ import {
   collection,
   addDoc,
 } from "firebase/firestore";
-import { db } from "@/components/initializeFirebase"
+import { db } from "@/components/initializeFirebase";
 import { useDocument } from "react-firebase-hooks/firestore";
 import { useState } from "react";
 import styles from "./page.module.scss";
@@ -31,7 +31,13 @@ export default function List(params) {
   const [displayedSheets, setDisplayedSheets] = useState([]);
   const [openedCRM, setOpenedCRM] = useState(-1);
 
-  let { sheetData, resultsPerPage = 20, list_id, user } = params;
+  let {
+    sheetData,
+    resultsPerPage = 20,
+    list_id,
+    user,
+    disableSearch = false,
+  } = params;
 
   const canConnectToDB = () => {
     return list_id && user;
@@ -97,7 +103,7 @@ export default function List(params) {
 
   if (!sheetData) {
     return (
-      <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8 mt-10">
+      <div className="mt-10 flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center justify-center">
           <Skeleton width={200} height={30} />
           <Skeleton width={200} height={30} />
@@ -147,22 +153,24 @@ export default function List(params) {
   return (
     <>
       <div className="relative h-full w-full overflow-auto">
-        <div className="bg-inherit flex h-16 w-full items-center justify-start px-5">
-          <div>
-            <label htmlFor="search" className="sr-only">
-              Search
-            </label>
-            <input
-              type="text"
-              name="search"
-              id="search"
-              className="block w-full min-w-1/4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-xl sm:leading-6"
-              placeholder="Search"
-              value={searchbar}
-              onChange={(e) => setSearchbar(e.target.value)}
-            />
+        {!disableSearch && (
+          <div className="bg-inherit flex h-16 w-full items-center justify-start px-5">
+            <div>
+              <label htmlFor="search" className="sr-only">
+                Search
+              </label>
+              <input
+                type="text"
+                name="search"
+                id="search"
+                className="min-w-1/4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-xl sm:leading-6"
+                placeholder="Search"
+                value={searchbar}
+                onChange={(e) => setSearchbar(e.target.value)}
+              />
+            </div>
           </div>
-        </div>
+        )}
         <button
           className={`btn-error btn mx-8 my-4 hidden transition-all duration-150 ease-in-out sm:block sm:scale-100
           ${selectedSheets.length <= 0 && "btn-disabled scale-0 sm:hidden"} 
