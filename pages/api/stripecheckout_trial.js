@@ -24,6 +24,8 @@ export default async function handler(req, res) {
         success_url: `${req.headers.origin}/thankyou`,
         cancel_url: `${req.headers.origin}`,
         customer: firestore_user.stripe_customer_id,
+        // Disable prepaid card usage
+        payment_method_types: ['card', 'googlepay', 'applepay'],
         // automatic_tax: {enabled: true},
         // customer_update: {
         //   address: 'auto',
