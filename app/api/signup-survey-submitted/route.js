@@ -6,8 +6,8 @@ const db = getFirestore(app);
 
 export async function POST(request) {
   const body = await request.json();
-  await addDoc(collection(db, "signup-surveys"), {
+  addDoc(collection(db, "signup-surveys"), {
     body,
   });
-  NextResponse.json({ body: { success: true } });
+  return NextResponse.json({ body: { success: true } });
 }
