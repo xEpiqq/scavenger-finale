@@ -1,3 +1,4 @@
+"use client";
 import List from "@/components/List";
 
 function DummyList() {
