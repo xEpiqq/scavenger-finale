@@ -1,16 +1,26 @@
+"use client";
 import {
   ArrowPathIcon,
+  Bars3Icon,
   CloudArrowUpIcon,
   FingerPrintIcon,
   LockClosedIcon,
+  XMarkIcon,
 } from "@heroicons/react/24/outline";
-import DemoVideo from "./DemoVideo";
-
-export const meta = {
-  "twitter:card": "summary_large_image",
-  "twitter:site": "@scavengerleads",
-  "twitter:creator": "@DavidWi11527517",
-};
+import { CheckIcon } from "@heroicons/react/20/solid";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import ThemeToggler from "../../../components/Header/ThemeToggler";
+import menuData from "../../../components/Header/menuData";
+import { getAuth } from "firebase/auth";
+import { app } from "../../../components/initializeFirebase";
+import { useDocument } from "react-firebase-hooks/firestore";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { getFirestore, doc } from "firebase/firestore";
+import SignupModal from "../../../components/Signupmodal/signupmodal";
+import { useSearchParams } from "next/navigation";
+import YouTube from "react-youtube";
 
 const features = [
   {
@@ -145,22 +155,60 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function MainLandingPage() {
-  // const searchParams = useSearchParams();
-  // const affilate = searchParams.get("affilate");
-  // console.log(affilate);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+export default function Splitter() {
+  const [signup, setSignup] = useState(false);
+  const [user, loading, error] = useAuthState(auth);
+  const [userDataRaw, loading2, error2] = useDocument(
+    doc(db, `users/${user?.uid}`)
+  );
+  const userData = userDataRaw?.data();
+  // Navbar toggle
+  const [navbarOpen, setNavbarOpen] = useState(false);
+  const navbarToggleHandler = () => {
+    setNavbarOpen(!navbarOpen);
+  };
+  // Sticky Navbar
+  const [sticky, setSticky] = useState(false);
+  const handleStickyNavbar = () => {
+    if (window.scrollY >= 80) {
+      setSticky(true);
+    } else {
+      setSticky(false);
+    }
+  };
+  useEffect(() => {
+    window.addEventListener("scroll", handleStickyNavbar);
+  });
+  // submenu handler
+  const [openIndex, setOpenIndex] = useState(-1);
+  const handleSubmenu = (index) => {
+    if (openIndex === index) {
+      setOpenIndex(-1);
+    } else {
+      setOpenIndex(index);
+    }
+  };
+
+  const searchParams = useSearchParams();
+  const affilate = searchParams.get("affilate");
+  console.log(affilate);
 
   // we need to save the affilate id as a cookie
 
-  // useEffect(() => {
-  //   if (affilate) {
-  //     document.cookie = `affilate=${affilate};max-age=2592000;path=/`;
-  //   }
-  // }, [affilate]);
+  useEffect(() => {
+    if (affilate) {
+      document.cookie = `affilate=${affilate};max-age=2592000;path=/`;
+    }
+  }, [affilate]);
 
   return (
     <div className="bg-white">
       {/* Header */}
+      {signup && <SignupModal setSignup={setSignup} />}
+
       <main className="isolate">
         {/* Hero section */}
         <div className="relative pt-14">
@@ -179,16 +227,15 @@ export default function MainLandingPage() {
           <div className="py-24 sm:py-32">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
               <div className="mx-auto max-w-2xl text-center">
-                <h1 className="text-4xl font-bold tracking-tight text-gray-700 sm:text-4xl">
+                <h1 className="text-4xl font-bold tracking-tight text-gray-400 sm:text-4xl">
                   Freelance Web Devs,
                 </h1>
                 <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-                  Just Get Back To Coding
+                  Get Your First Client
                 </h1>
-                <p className="mt-6 text-lg leading-8 text-gray-600">
-                  Our Automated “Freelance Machine” cuts out 73% of the sales
-                  process so freelance web developers can focus on what they do
-                  best: coding.
+                <p className="mt-6 text-lg sm:text-xl md:text-2xl leading-8 text-gray-600 ">
+                  Join 300+ early access users and get your first high-paying client 
+
                 </p>
                 <div className="mt-10 flex items-center justify-center gap-x-6">
                   <a
@@ -203,7 +250,15 @@ export default function MainLandingPage() {
                   No Contracts • Cancel Anytime
                 </p>
               </div>
-              <DemoVideo />
+              <div className="mt-16 flow-root sm:mt-24">
+                <div className="relative -m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
+                  {/* <YouTube
+                    videoId="1_8XDaVmhOo"
+                    iframeClassName="w-full h-full"
+                    className="w-full h-full aspect-video "
+                  /> */}
+                </div>
+              </div>
             </div>
           </div>
           <div
@@ -279,13 +334,13 @@ export default function MainLandingPage() {
               Freelancing made easy
             </h2>
             <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-              Everything you need to land deals:)
+              Everything you need to get clients:)
             </p>
             <p className="mt-6 text-lg leading-8 text-gray-600">
               {/* Quis tellus eget adipiscing convallis sit sit eget aliquet quis. Suspendisse eget egestas a elementum
               pulvinar et feugiat blandit at. In mi viverra elit nunc. */}
               The reason we started freelancing was{" "}
-              <span className="font-bold">freedom</span>. Land deals without the
+              <span className="font-bold">freedom</span>. Get clients without the
               pain of 'content marketing', 'networking', or platforms where you
               have to bid against 100 other devs.
             </p>
@@ -313,14 +368,11 @@ export default function MainLandingPage() {
         </div>
 
         <div className="mt-16 py-24 sm:py-32">
-          <div className="mx-auto max-w-7xl px-6 lg:px-8 text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-              Create your first list
-            </h1>
-            <div className="shadow-xl rounded-lg mt-10">
-            <DummyList />
-            </div>
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-2xl text-center">
+              <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+                Create your first list
+              </h1>
               <div className="mt-10 flex items-center justify-center gap-x-6">
                 <a
                   href="/signup"
@@ -332,7 +384,7 @@ export default function MainLandingPage() {
               </div>
               <p className="mt-3 text-gray-2">No Contracts • Cancel Anytime</p>
             </div>
-            {/* <div className="mt-16 flow-root sm:mt-24">
+            <div className="mt-16 flow-root sm:mt-24">
               <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
                 <img
                   src="/Newlist.png"
@@ -342,7 +394,7 @@ export default function MainLandingPage() {
                   className="rounded-md shadow-2xl ring-1 ring-gray-900/10"
                 />
               </div>
-            </div> */}
+            </div>
           </div>
         </div>
 

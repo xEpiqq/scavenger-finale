@@ -7,7 +7,7 @@ function PageNav({ setCurrentPage, currentPage, itemCount, resultsPerPage }) {
   const page_amount = Math.ceil(itemCount / resultsPerPage);
 
   return (
-    <div className="sticky bottom-0 right-0 flex w-full bg-pbsecondbg items-center justify-center lg:justify-center px-6 py-3 ">
+    <div className="sticky bottom-0 right-0 flex w-full bg-inherit items-center justify-center lg:justify-center px-6 py-3 ">
       <div className={`flex w-full max-w-md items-center flex-row gap-8 sm:justify-center lg:justify-center justify-center mx-20`}>
 
       { currentPage === 0 ? (

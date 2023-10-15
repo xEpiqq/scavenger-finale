@@ -58,6 +58,8 @@ function Item2({
     setOpenEmail(true);
   }
 
+  const td_styles = "px-6 py-4 whitespace-nowrap text-sm text-gray-500";
+
   return (
     <>
       <tbody className="w-full">
@@ -73,7 +75,7 @@ function Item2({
               />
             </label>
           </th>
-          <td>
+          <td className={td_styles}>
             <div className="flex items-center space-x-3">
               <div className="avatar">
                 <div className="mask mask-squircle h-12 w-12">
@@ -103,7 +105,7 @@ function Item2({
               </div>
             </div>
           </td>
-          <td>
+          <td className={td_styles}>
             {item.hasSSL ? (
               <img
                 src="/securedtrue.svg"
@@ -118,8 +120,8 @@ function Item2({
               />
             )}
           </td>
-          <td>{item.template}</td>
-          <td>
+          <td className={td_styles}>{item.template}</td>
+          <td className={td_styles}>
             <div
               className=" flex w-36 gap-3 rounded-lg border border-black bg-white px-1 py-[1px] text-pbblack hover:cursor-pointer hover:bg-pbsearchselect"
               onClick={() => {
@@ -138,7 +140,7 @@ function Item2({
             </div>
           </td>
 
-          <td>
+          <td className={td_styles}>
             <div>
               {address != "none" && <p>{address}</p>}
               {city && (
@@ -148,7 +150,7 @@ function Item2({
               )}
             </div>
           </td>
-          <td>
+          <td className={td_styles}>
             <div className="flex flex-row gap-1 items-center">
               <img
                 src="/email.svg"
@@ -232,7 +234,7 @@ function Item2({
               </div>
             )}
           </td>
-          <td>
+          <td className={td_styles}>
             <div className="z-0 flex flex-shrink-0 flex-row items-center gap-[2px]">
               {item.facebook ? (
                 <Link href={item.facebook} target="_blank" className="h-5 w-5">

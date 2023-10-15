@@ -13,7 +13,7 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 
-import { app, db } from "../../../../components/initializeFirebase";
+import { app, db } from "@/components/initializeFirebase";
 
 class ListItem {
   constructor(params) {

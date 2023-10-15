@@ -9,7 +9,7 @@ import {
   collection,
   addDoc,
 } from "firebase/firestore";
-import { app, db } from "../../../../../../components/initializeFirebase";
+import { app, db } from "@/components/initializeFirebase";
 import { getAuth, signOut } from "firebase/auth";
 import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
