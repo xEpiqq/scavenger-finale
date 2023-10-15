@@ -16,17 +16,21 @@ function ProfilePage() {
   async function createAffiliate() {
 
     const stripe_customer_id = userDataRaw.data().stripe_customer_id;
+    const affiliate_id = userDataRaw.data().affiliate_id;
+    const affiliate_onboarded = userDataRaw.data().affiliate_onboarded;
+
     const response = await fetch("/api/createAffiliate", {
       method: "POST",
       body: JSON.stringify({
         stripe_customer_id: stripe_customer_id,
+        user_id: user?.uid,
+        affiliate_id: affiliate_id,
+        affiliate_onboarded: affiliate_onboarded,
       }),
     });
 
     const json = await response.json();
-    const url = json.url;    
-    window.location.href = url; 
-     
+    window.location.href = json.url; 
     }
   
 

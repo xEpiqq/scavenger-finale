@@ -43,14 +43,12 @@ export default function List(params) {
     return list_id && user;
   };
 
-  console.log("sheetData", sheetData);
 
   useEffect(() => {
     updateLastUpdated();
   }, []);
 
   useEffect(() => {
-    console.log("searchbar", searchbar);
     search(searchbar);
   }, [searchbar]);
 
@@ -76,14 +74,12 @@ export default function List(params) {
       return 0;
     });
 
-    console.log("sortedSheetData", sortedSheetData);
 
     setDisplayedSheets(
       sortedSheetData.map((list) => {
         return new ListItem({ ...list, idSheet: list_id, userId: user?.uid });
       }) ?? [] // if userData?.lists is undefined, set it to an empty array instead of undefined
     );
-    console.log("displayedSheets", displayedSheets);
     // run when sheetData changes and when user changes and at the beginning
   }, [sheetData]);
 
@@ -126,7 +122,6 @@ export default function List(params) {
       ).toLowerCase();
 
       const lowerCaseAddress = (list.address || "").toLowerCase();
-      console.log("here");
 
       return (
         lowerCaseBizName.includes(lowerCaseSearchKey) ||
@@ -271,7 +266,6 @@ function ListTable(
                     setSelectedSheets([]);
                   } else {
                     setSelectedSheets(displayedSheets.map((_, i) => i));
-                    console.log("yep");
                   }
                 }}
                 checked={selectedSheets.length === displayedSheets?.length}
@@ -297,6 +291,7 @@ function ListTable(
         .map((list, index) => (
           <>
             <Item
+              key={index}
               openCRM={() => setOpenedCRM(index)}
               closeCRM={() => {
                 list.updateIfChanged();
