@@ -35,8 +35,9 @@ function Navbar() {
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
-          <a href="/" className="-m-1.5 p-1.5">
-            <span className="sr-only">Your Company</span>
+          <a alt="Scavenger Home Page"
+           href="/" className="-m-1.5 p-1.5">
+            <span className="sr-only">Scavenger</span>
             <img className="h-12 w-auto" src="/images/logo/crow.png" alt="" />
           </a>
         </div>
