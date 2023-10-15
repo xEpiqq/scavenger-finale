@@ -7,11 +7,6 @@ import {
 import DemoVideo from "./DemoVideo";
 import DummyList from "@/components/DummyList";
 
-export const meta = {
-  "twitter:card": "summary_large_image",
-  "twitter:site": "@scavengerleads",
-  "twitter:creator": "@DavidWi11527517",
-};
 
 const features = [
   {
@@ -37,53 +32,6 @@ const features = [
     description:
       "Save your favorite leads to a separate list--so you can keep your most promising people on lockdown.",
     icon: FingerPrintIcon,
-  },
-];
-const tiers = [
-  {
-    name: "Basic",
-    id: "tier-basic",
-    href: "#",
-    priceMonthly: "$99",
-    description: "The essentials to provide your best work for clients.",
-    features: [
-      "1,000 Leads per month",
-      "Export to CSV",
-      "Basic analytics",
-      "48-hour support response time",
-    ],
-    mostPopular: false,
-    disabled: true,
-  },
-  {
-    name: "Freelancer",
-    id: "tier-startup",
-    href: "/signup",
-    priceMonthly: "$197",
-    description: "A plan that scales with your rapidly growing business.",
-    features: [
-      "10,000 Leads per month",
-      "Unlimited AI Email Drafts",
-      "Fully Integrated lightweight CRM",
-      "24-hour support response time",
-    ],
-    mostPopular: true,
-    disabled: false,
-  },
-  {
-    name: "Enterprise",
-    id: "tier-enterprise",
-    href: "#",
-    priceMonthly: "$500",
-    description: "Dedicated support and infrastructure for your company.",
-    features: [
-      "Unlimited Leads",
-      "Advanced analytics",
-      "1-hour, dedicated support response time",
-      "Marketing automations",
-    ],
-    mostPopular: false,
-    disabled: true,
   },
 ];
 const faqs = [
@@ -195,10 +143,11 @@ export default function MainLandingPage() {
                 <div className="mt-10 flex items-center justify-center gap-x-6">
                   <a
                     href="/signup"
+                    alt="Sign up for Scavenger"
                     className="flex gap-4 rounded-md bg-gray-1 px-7 py-4 text-2xl font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   >
                     Start Your Free Trial Today{" "}
-                    <img src="/clicktrial.svg" className="w-5" alt="Start Your Free Trial" />
+                    <img src="/clicktrial.svg" className="w-5" role="presentation" />
                   </a>
                 </div>
                 <p className="mt-3 text-gray-2">
@@ -326,10 +275,11 @@ export default function MainLandingPage() {
               <div className="mt-10 flex items-center justify-center gap-x-6">
                 <a
                   href="/signup"
+                  alt="Sign up for Scavenger"
                   className="flex gap-4 rounded-md bg-gray-1 px-7 py-4 text-2xl font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
                   Start Your Free Trial Today{" "}
-                  <img src="/clicktrial.svg" className="w-5" />
+                  <img src="/clicktrial.svg" className="w-5" role="presentation" />
                 </a>
               </div>
               <p className="mt-3 text-gray-2">No Contracts • Cancel Anytime</p>
@@ -536,11 +486,12 @@ export default function MainLandingPage() {
             </h2>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <a
-                href="#"
+                alt="Sign up for Scavenger"
+                href="/signup"
                 className="flex gap-4 rounded-md bg-gray-1 px-7 py-4 text-2xl font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Start Your Free Trial Today{" "}
-                <img src="/clicktrial.svg" className="w-5" />
+                <img src="/clicktrial.svg" className="w-5" role="presentation" />
               </a>
             </div>
           </div>
