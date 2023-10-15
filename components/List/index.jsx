@@ -1,25 +1,19 @@
 "use client";
 import {
-  getFirestore,
   doc,
-  getDoc,
   updateDoc,
-  collection,
-  addDoc,
 } from "firebase/firestore";
 import { db } from "@/components/initializeFirebase";
-import { useDocument } from "react-firebase-hooks/firestore";
 import { useState } from "react";
-import styles from "./page.module.scss";
 import { useEffect } from "react";
-import PageName from "@/components/PageName";
 import Skeleton from "react-loading-skeleton";
-import Link from "next/link";
 import Item from "./Item.jsx";
 import CardItem from "./CardItem.jsx";
 import PageNav from "./PageNav.jsx";
 
 import ListItem from "@/utils/ListItem.js";
+
+import CRM from "./CRM";
 
 export default function List(params) {
   //////// protect this route so someone with your list id cannot just type it into the url and access your shiz
@@ -28,7 +22,7 @@ export default function List(params) {
   const [currentPage, setCurrentPage] = useState(0);
   const [searchbar, setSearchbar] = useState("");
   const [selectedSheets, setSelectedSheets] = useState([]);
-  const [displayedSheets, setDisplayedSheets] = useState([]);
+  const [displayedSheets, setDisplayedSheets] = useState();
   const [openedCRM, setOpenedCRM] = useState(-1);
 
   let {
@@ -43,16 +37,7 @@ export default function List(params) {
     return list_id && user;
   };
 
-
-  useEffect(() => {
-    updateLastUpdated();
-  }, []);
-
-  useEffect(() => {
-    search(searchbar);
-  }, [searchbar]);
-
-  useEffect(() => {
+  const updateDisplayedSheets = () => {
     if (!sheetData) return;
     // sort sheet data raw by if it has a site link or not
     // then sort by if it has a phone number or not
@@ -80,6 +65,24 @@ export default function List(params) {
         return new ListItem({ ...list, idSheet: list_id, userId: user?.uid });
       }) ?? [] // if userData?.lists is undefined, set it to an empty array instead of undefined
     );
+  };
+
+
+  useEffect(() => {
+    updateLastUpdated();
+  }, []);
+
+  useEffect(() => {
+    search(searchbar);
+  }, [searchbar]);
+
+  useEffect(() => {
+    updateDisplayedSheets();
+  }, []);
+
+
+  useEffect(() => {
+    updateDisplayedSheets();
     // run when sheetData changes and when user changes and at the beginning
   }, [sheetData]);
 
@@ -97,7 +100,7 @@ export default function List(params) {
     );
   }, [user]);
 
-  if (!sheetData) {
+  if (!sheetData || !displayedSheets) {
     return (
       <div className="mt-10 flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center justify-center">
@@ -203,28 +206,20 @@ export default function List(params) {
               (currentPage + 1) * resultsPerPage
             )
             .map((list, index) => (
-              <>
-                <CardItem
-                  key={index}
-                  openCRM={() => setOpenedCRM(index)}
-                  closeCRM={() => {
-                    list.updateIfChanged();
-                    setOpenedCRM(-1);
-                  }}
-                  isCRMOpen={openedCRM === index}
-                  item={list}
-                  selected={selectedSheets.includes(index)}
-                  toggleselected={() => {
-                    if (selectedSheets.includes(index)) {
-                      setSelectedSheets(
-                        selectedSheets.filter((i) => i !== index)
-                      );
-                    } else {
-                      setSelectedSheets([...selectedSheets, index]);
-                    }
-                  }}
-                />
-              </>
+              <CardItem
+                openCRM={() => setOpenedCRM(index)}
+                item={list}
+                selected={selectedSheets.includes(index)}
+                toggleselected={() => {
+                  if (selectedSheets.includes(index)) {
+                    setSelectedSheets(
+                      selectedSheets.filter((i) => i !== index)
+                    );
+                  } else {
+                    setSelectedSheets([...selectedSheets, index]);
+                  }
+                }}
+              />
             ))}
         </div>
 
@@ -234,6 +229,15 @@ export default function List(params) {
           resultsPerPage={resultsPerPage}
           itemCount={displayedSheets?.length}
         />
+        {openedCRM >= 0 && (
+          <CRM
+            closeCRM={() => {
+              displayedSheets[openedCRM].updateIfChanged();
+              setOpenedCRM(-1);
+            }}
+            item={displayedSheets[openedCRM]}
+          />
+        )}
       </div>
     </>
   );
@@ -246,7 +250,6 @@ function ListTable(
   currentPage,
   resultsPerPage,
   setOpenedCRM,
-  openedCRM
 ) {
   const th_styles =
     "px-6 py-3 text-left text-xs h-18 whitespace-no-wrap font-medium text-gray-500 uppercase tracking-wider";
@@ -289,26 +292,18 @@ function ListTable(
           (currentPage + 1) * resultsPerPage
         )
         .map((list, index) => (
-          <>
-            <Item
-              key={index}
-              openCRM={() => setOpenedCRM(index)}
-              closeCRM={() => {
-                list.updateIfChanged();
-                setOpenedCRM(-1);
-              }}
-              isCRMOpen={openedCRM === index}
-              item={list}
-              selected={selectedSheets.includes(index)}
-              toggleselected={() => {
-                if (selectedSheets.includes(index)) {
-                  setSelectedSheets(selectedSheets.filter((i) => i !== index));
-                } else {
-                  setSelectedSheets([...selectedSheets, index]);
-                }
-              }}
-            />
-          </>
+          <Item
+            openCRM={() => setOpenedCRM(index)}
+            item={list}
+            selected={selectedSheets.includes(index)}
+            toggleselected={() => {
+              if (selectedSheets.includes(index)) {
+                setSelectedSheets(selectedSheets.filter((i) => i !== index));
+              } else {
+                setSelectedSheets([...selectedSheets, index]);
+              }
+            }}
+          />
         ))}
     </table>
   );

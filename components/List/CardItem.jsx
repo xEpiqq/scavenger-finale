@@ -6,7 +6,7 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CRM from "./CRM";
 
-function CardItem({ key, item, openCRM, closeCRM, isCRMOpen }) {
+function CardItem({ item, openCRM}) {
   const [openCopy, setOpenCopy] = useState(false);
 
   // see how many characters item.name is 
@@ -32,7 +32,7 @@ function CardItem({ key, item, openCRM, closeCRM, isCRMOpen }) {
 
   const [openEmail, setOpenEmail] = useState(false);
   const clickable_link = "http://" + item.siteLink;
-  
+
   let address = "";
   let city = "";
   let state = "";
@@ -56,66 +56,65 @@ function CardItem({ key, item, openCRM, closeCRM, isCRMOpen }) {
   var social_media_links_style_transparent = "h-10 w-10 opacity-30"
 
   return (
-    <>
-      <div className="card-body p-0 py-4" key={key}>
-        <div className="card w-96 gap-2 bg-gray-7 p-6 text-black shadow-xl">
-          <div className="flex items-start justify-start space-x-3">
-            <div className="flex w-full flex-row justify-between">
-              <div className="avatar">
-                <div className="mask mask-squircle h-12 w-12">
-                  <img
-                    src={`https://api.dicebear.com/6.x/avataaars/svg?seed=${item.siteLink}`}
-                    alt="Avatar Tailwind CSS Component"
-                  />
-                </div>
-              </div>
-              <div>
-                {city && (
-                  <span className="badge badge-ghost badge-md">
-                    {city}, {state}
-                  </span>)}
+    <div className="card-body p-0 py-4" key={"card" + item.id}>
+      <div className="card w-96 gap-2 bg-gray-7 p-6 text-black shadow-xl">
+        <div className="flex items-start justify-start space-x-3">
+          <div className="flex w-full flex-row justify-between">
+            <div className="avatar">
+              <div className="mask mask-squircle h-12 w-12">
+                <img
+                  src={`https://api.dicebear.com/6.x/avataaars/svg?seed=${item.siteLink}`}
+                  alt="Avatar Tailwind CSS Component"
+                />
               </div>
             </div>
-          </div>
-          <div>
-            <div className="flex flex-row font-bold">
-              <p>
-                {nameLength > 46
-                  ? item.name.slice(0, 43) + "..."
-                  : item.name}
-              </p>
-            </div>
-            <div className="text-sm opacity-50">
-              {item.siteLink !== "none" ? (
-                <Link href={clickable_link} target="_blank">
-                  <p className={`hover:underline`}>{item.siteLink}</p>
-                </Link>
-              ) : (
-                <p>{item.siteLink}</p>
-              )}
+            <div>
+              {city && (
+                <span className="badge badge-ghost badge-md">
+                  {city}, {state}
+                </span>)}
             </div>
           </div>
-          <div>
-            {address != "none" && <p>{address}</p>}
-            {/* <span className="badge badge-ghost badge-sm">{city}, {state}</span> */}
+        </div>
+        <div>
+          <div className="flex flex-row font-bold">
+            <p>
+              {nameLength > 46
+                ? item.name.slice(0, 43) + "..."
+                : item.name}
+            </p>
           </div>
-          <div
-            className=" flex gap-3 px-1 py-[1px] hover:cursor-pointer hover:bg-pbsearchselect"
-          >
-            <a href={"tel:" + item.phoneNumber}>{item.phoneNumber}</a>
+          <div className="text-sm opacity-50">
+            {item.siteLink !== "none" ? (
+              <Link href={clickable_link} target="_blank">
+                <p className={`hover:underline`}>{item.siteLink}</p>
+              </Link>
+            ) : (
+              <p>{item.siteLink}</p>
+            )}
           </div>
-          {!item.hasSSL && (
-            <div className="flex flex-row items-center justify-center gap-5">
-              <img
-                src="/securedfalse.svg"
-                className="h-4 w-4"
-                alt="Screenshot of site"
-              />
-              <p className="text-redpill">No SSL</p>
-            </div>
-          )}
-          {item.template !== "none" && <p>Template: {item.template}</p>}
-          {
+        </div>
+        <div>
+          {address != "none" && <p>{address}</p>}
+          {/* <span className="badge badge-ghost badge-sm">{city}, {state}</span> */}
+        </div>
+        <div
+          className=" flex gap-3 px-1 py-[1px] hover:cursor-pointer hover:bg-pbsearchselect"
+        >
+          <a href={"tel:" + item.phoneNumber}>{item.phoneNumber}</a>
+        </div>
+        {!item.hasSSL && (
+          <div className="flex flex-row items-center justify-center gap-5">
+            <img
+              src="/securedfalse.svg"
+              className="h-4 w-4"
+              alt="Screenshot of site"
+            />
+            <p className="text-redpill">No SSL</p>
+          </div>
+        )}
+        {item.template !== "none" && <p>Template: {item.template}</p>}
+        {
           item.emails?.map((email, index) => (
             <>
               <div className="flex w-full justify-between gap-4">
@@ -136,91 +135,88 @@ function CardItem({ key, item, openCRM, closeCRM, isCRMOpen }) {
               </div>
             </>
           ))}
-          <div className="flex flex-grow flex-row items-center gap-2">
-            {item.facebook ? (
-              <Link href={item.facebook} target="_blank">
-                <img
-                  src="/Facebook.svg"
-                  alt="facebook link"
-                  className={social_media_links_style}
-                />
-              </Link>
-            ) : (
+        <div className="flex flex-grow flex-row items-center gap-2">
+          {item.facebook ? (
+            <Link href={item.facebook} target="_blank">
               <img
                 src="/Facebook.svg"
                 alt="facebook link"
-                className={social_media_links_style_transparent}
+                className={social_media_links_style}
               />
-            )}
-            {item.instagram ? (
-              <Link href={item.instagram} target="_blank">
-                <img
-                  src="/Instagram.svg"
-                  alt="facebook link"
-                  className={social_media_links_style}
-                />
-              </Link>
-            ) : (
+            </Link>
+          ) : (
+            <img
+              src="/Facebook.svg"
+              alt="facebook link"
+              className={social_media_links_style_transparent}
+            />
+          )}
+          {item.instagram ? (
+            <Link href={item.instagram} target="_blank">
               <img
                 src="/Instagram.svg"
                 alt="facebook link"
-                className={social_media_links_style_transparent}
+                className={social_media_links_style}
               />
-            )}
-            {item.twitter ? (
-              <Link href={item.twitter} target="_blank">
-                <img
-                  src="/Twitter.svg"
-                  alt="facebook link"
-                  className={social_media_links_style}
-                />
-              </Link>
-            ) : (
+            </Link>
+          ) : (
+            <img
+              src="/Instagram.svg"
+              alt="facebook link"
+              className={social_media_links_style_transparent}
+            />
+          )}
+          {item.twitter ? (
+            <Link href={item.twitter} target="_blank">
               <img
                 src="/Twitter.svg"
                 alt="facebook link"
-                className={social_media_links_style_transparent}
+                className={social_media_links_style}
               />
-            )}
-            {item.linkedin ? (
-              <Link href={item.linkedin} target="_blank">
-                <img
-                  src="/LinkedIn.svg"
-                  alt="facebook link"
-                  className={social_media_links_style}
-                />
-              </Link>
-            ) : (
+            </Link>
+          ) : (
+            <img
+              src="/Twitter.svg"
+              alt="facebook link"
+              className={social_media_links_style_transparent}
+            />
+          )}
+          {item.linkedin ? (
+            <Link href={item.linkedin} target="_blank">
               <img
                 src="/LinkedIn.svg"
                 alt="facebook link"
-                className={social_media_links_style_transparent}
+                className={social_media_links_style}
               />
-            )}
-            {item.youtube ? (
-              <Link href={item.youtube} target="_blank">
-                <img
-                  src="/Youtube.svg"
-                  alt="facebook link"
-                  className={social_media_links_style}
-                />
-              </Link>
-            ) : (
+            </Link>
+          ) : (
+            <img
+              src="/LinkedIn.svg"
+              alt="facebook link"
+              className={social_media_links_style_transparent}
+            />
+          )}
+          {item.youtube ? (
+            <Link href={item.youtube} target="_blank">
               <img
                 src="/Youtube.svg"
                 alt="facebook link"
-                className={social_media_links_style_transparent}
+                className={social_media_links_style}
               />
-            )}
-          </div>
-          <button onClick={openCRM} className="btn mt-2">
-            Open CRM
-          </button>
+            </Link>
+          ) : (
+            <img
+              src="/Youtube.svg"
+              alt="facebook link"
+              className={social_media_links_style_transparent}
+            />
+          )}
         </div>
+        <button onClick={openCRM} className="btn mt-2">
+          Open CRM
+        </button>
       </div>
-
-      {isCRMOpen && <CRM item={item} closeCRM={closeCRM} />}
-    </>
+    </div>
   );
 }
 
