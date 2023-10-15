@@ -5,6 +5,7 @@ import {
   LockClosedIcon,
 } from "@heroicons/react/24/outline";
 import DemoVideo from "./DemoVideo";
+import DummyList from "@/components/DummyList";
 
 export const meta = {
   "twitter:card": "summary_large_image",
@@ -196,7 +197,7 @@ export default function MainLandingPage() {
                     className="flex gap-4 rounded-md bg-gray-1 px-7 py-4 text-2xl font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   >
                     Start Your Free Trial Today{" "}
-                    <img src="/clicktrial.svg" className="w-5" />
+                    <img src="/clicktrial.svg" className="w-5" alt="Start Your Free Trial" />
                   </a>
                 </div>
                 <p className="mt-3 text-gray-2">
