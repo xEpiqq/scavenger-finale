@@ -1,27 +1,10 @@
-"use client";
 import {
   ArrowPathIcon,
-  Bars3Icon,
   CloudArrowUpIcon,
   FingerPrintIcon,
   LockClosedIcon,
-  XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { CheckIcon } from "@heroicons/react/20/solid";
-import Image from "next/image";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import ThemeToggler from "../../../components/Header/ThemeToggler";
-import menuData from "../../../components/Header/menuData";
-import { getAuth } from "firebase/auth";
-import { app } from "../../../components/initializeFirebase";
-import { useDocument } from "react-firebase-hooks/firestore";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { getFirestore, doc } from "firebase/firestore";
-import SignupModal from "../../../components/Signupmodal/signupmodal";
-import { useSearchParams } from "next/navigation";
-
-import YouTube from "react-youtube";
+import DemoVideo from "./DemoVideo";
 
 export const meta = {
   "twitter:card": "summary_large_image",
@@ -162,60 +145,22 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const auth = getAuth(app);
-const db = getFirestore(app);
-
 export default function MainLandingPage() {
-  const [signup, setSignup] = useState(false);
-  const [user, loading, error] = useAuthState(auth);
-  const [userDataRaw, loading2, error2] = useDocument(
-    doc(db, `users/${user?.uid}`)
-  );
-  const userData = userDataRaw?.data();
-  // Navbar toggle
-  const [navbarOpen, setNavbarOpen] = useState(false);
-  const navbarToggleHandler = () => {
-    setNavbarOpen(!navbarOpen);
-  };
-  // Sticky Navbar
-  const [sticky, setSticky] = useState(false);
-  const handleStickyNavbar = () => {
-    if (window.scrollY >= 80) {
-      setSticky(true);
-    } else {
-      setSticky(false);
-    }
-  };
-  useEffect(() => {
-    window.addEventListener("scroll", handleStickyNavbar);
-  });
-  // submenu handler
-  const [openIndex, setOpenIndex] = useState(-1);
-  const handleSubmenu = (index) => {
-    if (openIndex === index) {
-      setOpenIndex(-1);
-    } else {
-      setOpenIndex(index);
-    }
-  };
-
-  const searchParams = useSearchParams();
-  const affilate = searchParams.get("affilate");
-  console.log(affilate);
+  // const searchParams = useSearchParams();
+  // const affilate = searchParams.get("affilate");
+  // console.log(affilate);
 
   // we need to save the affilate id as a cookie
 
-  useEffect(() => {
-    if (affilate) {
-      document.cookie = `affilate=${affilate};max-age=2592000;path=/`;
-    }
-  }, [affilate]);
+  // useEffect(() => {
+  //   if (affilate) {
+  //     document.cookie = `affilate=${affilate};max-age=2592000;path=/`;
+  //   }
+  // }, [affilate]);
 
   return (
     <div className="bg-white">
       {/* Header */}
-      {signup && <SignupModal setSignup={setSignup} />}
-
       <main className="isolate">
         {/* Hero section */}
         <div className="relative pt-14">
@@ -258,15 +203,7 @@ export default function MainLandingPage() {
                   No Contracts • Cancel Anytime
                 </p>
               </div>
-              <div className="mt-16 flow-root sm:mt-24">
-                <div className="relative -m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
-                  <YouTube
-                    videoId="1_8XDaVmhOo"
-                    iframeClassName="w-full h-full"
-                    className="w-full h-full aspect-video "
-                  />
-                </div>
-              </div>
+              <DemoVideo />
             </div>
           </div>
           <div
