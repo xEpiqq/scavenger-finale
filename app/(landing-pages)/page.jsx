@@ -1,9 +1,4 @@
-import { Inter } from "next/font/google";
-
 import MainLandingPage from './MainLandingPage'
-
-const inter = Inter({ subsets: ["latin"] });
-
 
 export const metadata = {
   "title": "Scavenger | Freelance Web Devs, Just Get Back To Coding",

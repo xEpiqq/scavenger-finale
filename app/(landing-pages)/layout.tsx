@@ -20,7 +20,9 @@ export default function Layout({
             Act fast!  <Link href="/specialpromo" className="underline hover:text-pbblack transition duration-150"> Lock in at $49 / month for life.</Link>
           </p>
         </div> */}
-      <Navbar />
+      <header>
+        <Navbar />
+      </header>
       <body>
         {children}
       </body>

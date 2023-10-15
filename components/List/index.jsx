@@ -207,6 +207,7 @@ export default function List(params) {
             )
             .map((list, index) => (
               <CardItem
+                key={list.sheetItemId}
                 openCRM={() => setOpenedCRM(index)}
                 item={list}
                 selected={selectedSheets.includes(index)}
@@ -293,6 +294,7 @@ function ListTable(
         )
         .map((list, index) => (
           <Item
+            key={list.sheetItemId}
             openCRM={() => setOpenedCRM(index)}
             item={list}
             selected={selectedSheets.includes(index)}

@@ -59,7 +59,7 @@ function Item({
   const td_styles = "px-6 py-4 whitespace-nowrap text-sm text-gray-500";
 
   return (
-    <tbody className="w-full" key={item.id}>
+    <tbody className="w-full" key={item.sheetItemId}>
       {/* row 1 */}
       <tr>
         <th>

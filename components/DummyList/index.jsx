@@ -1,3 +1,4 @@
+"use client";
 import List from "@/components/List";
 
 function DummyList() {
@@ -5,7 +6,7 @@ function DummyList() {
 
   const sheetData = [
     {
-      id: 1,
+      sheetItemId: 1,
       name: "John Doe",
       ssl: true,
       template: "Wordpress",
@@ -16,7 +17,7 @@ function DummyList() {
       crm: "CRM 1",
     },
     {
-      id: 2,
+      sheetItemId: 2,
       name: "Jane Smith",
       ssl: false,
       template: "Weebly",
