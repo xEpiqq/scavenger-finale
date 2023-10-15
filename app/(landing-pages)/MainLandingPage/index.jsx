@@ -39,53 +39,6 @@ const features = [
     icon: FingerPrintIcon,
   },
 ];
-const tiers = [
-  {
-    name: "Basic",
-    id: "tier-basic",
-    href: "#",
-    priceMonthly: "$99",
-    description: "The essentials to provide your best work for clients.",
-    features: [
-      "1,000 Leads per month",
-      "Export to CSV",
-      "Basic analytics",
-      "48-hour support response time",
-    ],
-    mostPopular: false,
-    disabled: true,
-  },
-  {
-    name: "Freelancer",
-    id: "tier-startup",
-    href: "/signup",
-    priceMonthly: "$197",
-    description: "A plan that scales with your rapidly growing business.",
-    features: [
-      "10,000 Leads per month",
-      "Unlimited AI Email Drafts",
-      "Fully Integrated lightweight CRM",
-      "24-hour support response time",
-    ],
-    mostPopular: true,
-    disabled: false,
-  },
-  {
-    name: "Enterprise",
-    id: "tier-enterprise",
-    href: "#",
-    priceMonthly: "$500",
-    description: "Dedicated support and infrastructure for your company.",
-    features: [
-      "Unlimited Leads",
-      "Advanced analytics",
-      "1-hour, dedicated support response time",
-      "Marketing automations",
-    ],
-    mostPopular: false,
-    disabled: true,
-  },
-];
 const faqs = [
   {
     id: 1,
