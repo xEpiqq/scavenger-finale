@@ -298,25 +298,6 @@ export default function MainLandingPage() {
           </div>
         </div>
 
-        <div className="mx-auto mt-32 max-w-7xl px-6 sm:mt-56 lg:px-8">
-          <div className="mx-auto max-w-2xl lg:text-center">
-            <h2 className="text-base font-semibold leading-7 text-indigo-600">
-              Freelancing made easy
-            </h2>
-            <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-              Everything you need to land deals:)
-            </p>
-            <p className="mt-6 text-lg leading-8 text-gray-600">
-              {/* Quis tellus eget adipiscing convallis sit sit eget aliquet quis. Suspendisse eget egestas a elementum
-              pulvinar et feugiat blandit at. In mi viverra elit nunc. */}
-              The reason we started freelancing was{" "}
-              <span className="font-bold">freedom</span>. Land deals without the
-              pain of 'content marketing', 'networking', or platforms where you
-              have to bid against 100 other devs.
-            </p>
-          </div>
-        </div>
-
         {/* Testimonial section */}
         {/* <div className="mx-auto mt-32 max-w-7xl sm:mt-56 sm:px-6 lg:px-8">
           <div className="relative overflow-hidden bg-gray-900 px-6 py-20 shadow-xl sm:rounded-3xl sm:px-10 sm:py-24 md:px-12 lg:px-20">
