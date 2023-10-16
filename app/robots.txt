@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /freetrial
+Disallow: /signup-survey
+Disallow: /ColdEmailLandingPage
+Disallow: /reset-password
