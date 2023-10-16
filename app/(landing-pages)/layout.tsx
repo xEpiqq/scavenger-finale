@@ -1,6 +1,7 @@
 import "node_modules/react-modal-video/css/modal-video.css";
 import "../../styles/index.css";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 export default function Layout({
   children,
@@ -26,6 +27,9 @@ export default function Layout({
       <body>
         {children}
       </body>
+      <footer className="bg-pbblack text-white">
+        <Footer />
+      </footer>
     </>
   );
 }

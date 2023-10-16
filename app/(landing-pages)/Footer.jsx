@@ -1,27 +1,27 @@
 const navigation = {
     solutions: [
-      { name: 'Marketing', href: '#' },
-      { name: 'Analytics', href: '#' },
-      { name: 'Commerce', href: '#' },
-      { name: 'Insights', href: '#' },
+      // { name: 'Marketing', href: '#' },
+      // { name: 'Analytics', href: '#' },
+      // { name: 'Commerce', href: '#' },
+      // { name: 'Insights', href: '#' },
     ],
     support: [
       { name: 'Pricing', href: '#' },
-      { name: 'Documentation', href: '#' },
-      { name: 'Guides', href: '#' },
-      { name: 'API Status', href: '#' },
+      // { name: 'Documentation', href: '#' },
+      // { name: 'Guides', href: '#' },
+      // { name: 'API Status', href: '#' },
     ],
     company: [
-      { name: 'About', href: '#' },
-      { name: 'Blog', href: '#' },
-      { name: 'Jobs', href: '#' },
-      { name: 'Press', href: '#' },
-      { name: 'Partners', href: '#' },
+      { name: 'About', href: '/' },
+      { name: 'Blog', href: '/blog' },
+      // { name: 'Jobs', href: '#' },
+      // { name: 'Press', href: '#' },
+      // { name: 'Partners', href: '#' },
     ],
     legal: [
-      { name: 'Claim', href: '#' },
-      { name: 'Privacy', href: '#' },
-      { name: 'Terms', href: '#' },
+      // { name: 'Claim', href: '#' },
+      // { name: 'Privacy', href: '#' },
+      // { name: 'Terms', href: '#' },
     ],
     social: [
       {
@@ -116,7 +116,7 @@ const navigation = {
             </div>
             <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
               <div className="md:grid md:grid-cols-2 md:gap-8">
-                <div>
+                {/* <div>
                   <h3 className="text-sm font-semibold leading-6 text-gray-900">Solutions</h3>
                   <ul role="list" className="mt-6 space-y-4">
                     {navigation.solutions.map((item) => (
@@ -127,7 +127,7 @@ const navigation = {
                       </li>
                     ))}
                   </ul>
-                </div>
+                </div> */}
                 <div className="mt-10 md:mt-0">
                   <h3 className="text-sm font-semibold leading-6 text-gray-900">Support</h3>
                   <ul role="list" className="mt-6 space-y-4">
@@ -154,7 +154,7 @@ const navigation = {
                     ))}
                   </ul>
                 </div>
-                <div className="mt-10 md:mt-0">
+                {/* <div className="mt-10 md:mt-0">
                   <h3 className="text-sm font-semibold leading-6 text-gray-900">Legal</h3>
                   <ul role="list" className="mt-6 space-y-4">
                     {navigation.legal.map((item) => (
@@ -165,7 +165,7 @@ const navigation = {
                       </li>
                     ))}
                   </ul>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
