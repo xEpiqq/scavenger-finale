@@ -22,7 +22,7 @@ export default function List(params) {
   const [currentPage, setCurrentPage] = useState(0);
   const [searchbar, setSearchbar] = useState("");
   const [selectedSheets, setSelectedSheets] = useState([]);
-  const [displayedSheets, setDisplayedSheets] = useState();
+  const [displayedSheets, setDisplayedSheets] = useState([]);
   const [openedCRM, setOpenedCRM] = useState(-1);
 
   let {
