@@ -68,6 +68,9 @@ class ListItem {
   }
 
   static async updateItem(item) {
+    if (!item) return;
+    if (!item.sheetItemId) return;
+    if (!item.idSheet) return;
     const {
       name,
       siteLink,
@@ -179,6 +182,7 @@ class ListItem {
 
   // This function will not check if the data needs to be updated then update it in the database
   async updateSheet() {
+    
     const {
       name,
       siteLink,
@@ -206,6 +210,10 @@ class ListItem {
       userId,
       emailBody,
     } = this;
+
+    
+    if (!sheetItemId) return;
+    if (!idSheet) return;
 
     const data = {
       idSheet,
@@ -293,6 +301,7 @@ class ListItem {
     // It will also delete the items from the sheet database
     // It will also delete the items from the CRM database
     const { idSheet, userId } = items[0];
+    if (!idSheet) return;
     const userRef = await doc(db, "users", userId);
     const sheetRef = await doc(db, `sheets/${idSheet}`);
     const sheetArray = await getDoc(sheetRef).then((doc) => doc.data().lists);
@@ -320,6 +329,7 @@ class ListItem {
   }
 
   async delete() {
+    if (!this.sheetItemId) return;
     // This function will delete the item from the database
     // It will also delete the item from the sheet database
     // It will also delete the item from the CRM database

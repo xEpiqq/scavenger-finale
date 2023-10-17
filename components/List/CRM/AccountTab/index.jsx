@@ -8,6 +8,7 @@ import {
   updateDoc,
   deleteDoc,
 } from "firebase/firestore";
+import SafeAreaBottomPadding from "@/components/SafeAreaBottomPadding";
 
 function AccountTab({ item, closeCRM }) {
   const [isActive, setIsActive] = useState(false);
@@ -15,11 +16,11 @@ function AccountTab({ item, closeCRM }) {
     setIsActive(!isActive);
   };
 
-  const [followUpDate, setFollowUpDate] = useState(item.followUpDate);
-  const [gatekeeper, setGatekeeper] = useState(item.gatekeeperName);
-  const [decisionMaker, setDecisionMaker] = useState(item.ownerName);
-  const [notes, setNotes] = useState(item.notes);
-  const [favorite, setFavorite] = useState(item.favorite);
+  const [followUpDate, setFollowUpDate] = useState(item.followUpDate || "");
+  const [gatekeeper, setGatekeeper] = useState(item.gatekeeperName || "");
+  const [decisionMaker, setDecisionMaker] = useState(item.ownerName || "");
+  const [notes, setNotes] = useState(item.notes || "");
+  const [favorite, setFavorite] = useState(item.favorite || false);
 
   useEffect(() => {
     item.followUpDate = followUpDate;
@@ -153,6 +154,7 @@ function AccountTab({ item, closeCRM }) {
           Save and Close
         </button>
       </div>
+      <SafeAreaBottomPadding />
     </>
   );
 }

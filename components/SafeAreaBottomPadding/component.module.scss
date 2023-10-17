@@ -1,0 +1,26 @@
+.safe_area_bottom {
+  background: red;
+  color: white;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+@supports (-webkit-touch-callout: none) {
+    .on-footer {
+        position: absolute;
+        bottom: 0;
+        transition: padding 226ms ease-out;
+        padding-bottom: calc(100vh - var(--webkit-footer-gap) + 2%);
+    }
+
+    .webkit_gap {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+
+        display: block;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+    }
+}
