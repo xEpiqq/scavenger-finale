@@ -24,6 +24,9 @@ function GoogleLogin(props) {
     console.log("user: ", user);
     try {
       userRef = doc(db, "users", user.uid);
+      if (!userRef || !userRef.exists()) {
+        router.push("/signup-survey");
+      }
       userDoc = await getDoc(userRef);
       firestore_user = userDoc.data();
       subscription_status = firestore_user.subscription_status;
@@ -33,7 +36,6 @@ function GoogleLogin(props) {
         router.push("/signup-survey");
       }
     } catch {
-      console.log("failed to get user data");
       router.push("/signup-survey");
     }
 
