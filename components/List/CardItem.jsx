@@ -7,11 +7,11 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CRM from "./CRM";
 
-function CardItem({ item, openCRM}) {
+function CardItem({ item, openCRM }) {
   const [openCopy, setOpenCopy] = useState(false);
 
-  // see how many characters item.name is 
-  let nameLength
+  // see how many characters item.name is
+  let nameLength;
 
   if (item.name) {
     nameLength = item.name.length;
@@ -53,11 +53,11 @@ function CardItem({ item, openCRM}) {
     setOpenEmail(true);
   }
 
-  var social_media_links_style = "h-10 w-10"
-  var social_media_links_style_transparent = "h-10 w-10 opacity-30"
+  var social_media_links_style = "h-10 w-10";
+  var social_media_links_style_transparent = "h-10 w-10 opacity-30";
 
   return (
-    <div className="card-body p-0 py-4" key={"card" + item.sheetItemId}>
+    <div className="card-body p-0 py-4" key={item.sheetItemId}>
       <div className="card w-96 gap-2 bg-gray-7 p-6 text-black shadow-xl">
         <div className="flex items-start justify-start space-x-3">
           <div className="flex w-full flex-row justify-between">
@@ -73,16 +73,15 @@ function CardItem({ item, openCRM}) {
               {city && (
                 <span className="badge badge-ghost badge-md">
                   {city}, {state}
-                </span>)}
+                </span>
+              )}
             </div>
           </div>
         </div>
         <div>
           <div className="flex flex-row font-bold">
             <p>
-              {nameLength > 46
-                ? item.name.slice(0, 43) + "..."
-                : item.name}
+              {nameLength > 46 ? item.name.slice(0, 43) + "..." : item.name}
             </p>
           </div>
           <div className="text-sm opacity-50">
@@ -99,9 +98,7 @@ function CardItem({ item, openCRM}) {
           {address != "none" && <p>{address}</p>}
           {/* <span className="badge badge-ghost badge-sm">{city}, {state}</span> */}
         </div>
-        <div
-          className=" flex gap-3 px-1 py-[1px] hover:cursor-pointer hover:bg-pbsearchselect"
-        >
+        <div className=" flex gap-3 px-1 py-[1px] hover:cursor-pointer hover:bg-pbsearchselect">
           <a href={"tel:" + item.phoneNumber}>{item.phoneNumber}</a>
         </div>
         {!item.hasSSL && (
@@ -115,27 +112,24 @@ function CardItem({ item, openCRM}) {
           </div>
         )}
         {item.template !== "none" && <p>Template: {item.template}</p>}
-        {
-          item.emails?.map((email, index) => (
-            <>
-              <div className="flex w-full justify-between gap-4">
-                <p key={index}>{email}</p>
-                <div
-                  className="flex flex-row items-center gap-[2px]"
-                  onClick={() => {
-                    copyItem(email);
-                  }}
-                >
-                  <img
-                    src="/copy.svg"
-                    draggable="false"
-                    className="h-4 w-4 opacity-20 duration-75 hover:cursor-pointer hover:opacity-100"
-                    alt="Screenshot of site"
-                  />
-                </div>
-              </div>
-            </>
-          ))}
+        {item.emails?.map((email, index) => (
+          <div className="flex w-full justify-between gap-4" key={email}>
+            <p key={index}>{email}</p>
+            <div
+              className="flex flex-row items-center gap-[2px]"
+              onClick={() => {
+                copyItem(email);
+              }}
+            >
+              <img
+                src="/copy.svg"
+                draggable="false"
+                className="h-4 w-4 opacity-20 duration-75 hover:cursor-pointer hover:opacity-100"
+                alt="Screenshot of site"
+              />
+            </div>
+          </div>
+        ))}
         <div className="flex flex-grow flex-row items-center gap-2">
           {item.facebook ? (
             <Link href={item.facebook} target="_blank">

@@ -13,6 +13,11 @@ import { app } from "../../components/initializeFirebase.jsx";
 
 const auth = getAuth(app);
 
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ');
+}
+
 function Page() {
   const [user, loading, error] = useAuthState(auth);
   const [submitLoading, setSubmitLoading] = useState(false);
@@ -150,10 +155,6 @@ function Page() {
       </div>
     </div>
   );
-}
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
 }
 
 export default Page;

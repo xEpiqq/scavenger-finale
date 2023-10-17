@@ -1,8 +1,5 @@
 "use client";
-import {
-  doc,
-  updateDoc,
-} from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import { db } from "@/components/initializeFirebase";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -14,6 +11,10 @@ import PageNav from "./PageNav.jsx";
 import ListItem from "@/utils/ListItem.js";
 
 import CRM from "./CRM";
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
 
 export default function List(params) {
   //////// protect this route so someone with your list id cannot just type it into the url and access your shiz
@@ -59,14 +60,12 @@ export default function List(params) {
       return 0;
     });
 
-
     setDisplayedSheets(
       sortedSheetData.map((list) => {
         return new ListItem({ ...list, idSheet: list_id, userId: user?.uid });
       }) ?? [] // if userData?.lists is undefined, set it to an empty array instead of undefined
     );
   };
-
 
   useEffect(() => {
     updateLastUpdated();
@@ -79,7 +78,6 @@ export default function List(params) {
   useEffect(() => {
     updateDisplayedSheets();
   }, []);
-
 
   useEffect(() => {
     updateDisplayedSheets();
@@ -250,12 +248,12 @@ function ListTable(
   setSelectedSheets,
   currentPage,
   resultsPerPage,
-  setOpenedCRM,
+  setOpenedCRM
 ) {
   const th_styles =
     "px-6 py-3 text-left text-xs h-18 whitespace-no-wrap font-medium text-gray-500 uppercase tracking-wider";
   return (
-    <table className="w-full">
+    <table className="w-full overflow-a">
       {/* head */}
       <thead>
         <tr>
@@ -282,31 +280,32 @@ function ListTable(
           <th className={th_styles}>PHONE</th>
           <th className={th_styles}>ADDRESS</th>
           <th className={th_styles}>EMAILS</th>
-          <th className={th_styles}>SOCIAL</th>
+          <th className={th_styles + "bg-terquoise-400 "}>SOCIAL</th>
           <th className={th_styles}>CRM</th>
         </tr>
       </thead>
-
-      {displayedSheets
-        ?.slice(
-          currentPage * resultsPerPage,
-          (currentPage + 1) * resultsPerPage
-        )
-        .map((list, index) => (
-          <Item
-            key={list.sheetItemId}
-            openCRM={() => setOpenedCRM(index)}
-            item={list}
-            selected={selectedSheets.includes(index)}
-            toggleselected={() => {
-              if (selectedSheets.includes(index)) {
-                setSelectedSheets(selectedSheets.filter((i) => i !== index));
-              } else {
-                setSelectedSheets([...selectedSheets, index]);
-              }
-            }}
-          />
-        ))}
+      <tbody className="divide-y divide-gray-200 bg-white">
+        {displayedSheets
+          ?.slice(
+            currentPage * resultsPerPage,
+            (currentPage + 1) * resultsPerPage
+          )
+          .map((list, index) => (
+            <Item
+              key={list.sheetItemId}
+              openCRM={() => setOpenedCRM(index)}
+              item={list}
+              selected={selectedSheets.includes(index)}
+              toggleselected={() => {
+                if (selectedSheets.includes(index)) {
+                  setSelectedSheets(selectedSheets.filter((i) => i !== index));
+                } else {
+                  setSelectedSheets([...selectedSheets, index]);
+                }
+              }}
+            />
+          ))}
+      </tbody>
     </table>
   );
 }
