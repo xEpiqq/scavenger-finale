@@ -268,7 +268,7 @@ export default function MainLandingPage() {
             <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
               Create your first list
             </h1>
-            <div className="shadow-xl rounded-lg mt-10">
+            <div className="sm:shadow-xl sm:rounded-lg mt-10">
             <DummyList />
             </div>
             <div className="mx-auto max-w-2xl text-center">

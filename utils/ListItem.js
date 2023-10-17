@@ -23,9 +23,6 @@ class ListItem {
     this.phoneNumber = params.phoneNumber || null;
     this.email = params.email || null;
     this.address = params.address || null;
-    this.desktopScreenshot = params.desktopScreenshot || null;
-    this.mobileScreenshot = params.mobileScreenshot || null;
-    this.thumbnailScreenshot = params.thumbnailScreenshot || null;
     this.hasSSL = params.hasSSL || null;
     this.contactUs = params.contactUs || null;
     this.facebook = params.facebook || null;
@@ -77,9 +74,7 @@ class ListItem {
       phoneNumber,
       email,
       address,
-      desktopScreenshot,
-      mobileScreenshot,
-      thumbnailScreenshot,
+      template,
       hasSSL,
       contactUs,
       facebook,
@@ -97,6 +92,7 @@ class ListItem {
       followUpDate,
       userId,
       emailBody,
+      emails,
     } = item;
 
     const data = {
@@ -106,9 +102,7 @@ class ListItem {
       phoneNumber,
       email,
       address,
-      desktopScreenshot,
-      mobileScreenshot,
-      thumbnailScreenshot,
+      template,
       hasSSL,
       contactUs,
       facebook,
@@ -124,6 +118,7 @@ class ListItem {
       notes,
       followUpDate,
       emailBody,
+      emails,
     };
     const userRef = await doc(db, "users", userId);
     const sheetRef = await doc(db, `sheets/${idSheet}`);
@@ -189,12 +184,10 @@ class ListItem {
       phoneNumber,
       email,
       address,
-      desktopScreenshot,
-      mobileScreenshot,
-      thumbnailScreenshot,
       hasSSL,
       contactUs,
       facebook,
+      template,
       instagram,
       twitter,
       linkedin,
@@ -209,6 +202,7 @@ class ListItem {
       followUpDate,
       userId,
       emailBody,
+      emails,
     } = this;
 
     
@@ -222,10 +216,8 @@ class ListItem {
       phoneNumber,
       email,
       address,
-      desktopScreenshot,
-      mobileScreenshot,
-      thumbnailScreenshot,
       hasSSL,
+      template,
       contactUs,
       facebook,
       instagram,
@@ -240,6 +232,7 @@ class ListItem {
       notes,
       followUpDate,
       emailBody,
+      emails,
     };
     const userRef = await doc(db, "users", userId);
     const sheetRef = await doc(db, `sheets/${idSheet}`);
