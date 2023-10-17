@@ -11,7 +11,7 @@ function DummyList() {
       siteLink: "johndoeexample.com",
       ssl: true,
       template: "Wordpress",
-      phoneNumber: "(123) 456-7890",
+      phoneNumber: "1234567890",
       address: "8685 W Sahara Ave STE 200, Las Vegas, NV",
       emails: ["john@example.com", "john1331@gmail.com"],
       social: "Twitter",

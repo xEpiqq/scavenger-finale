@@ -56,11 +56,20 @@ function CardItem({ item, openCRM }) {
   var social_media_links_style = "h-10 w-10";
   var social_media_links_style_transparent = "h-10 w-10 opacity-30";
 
+  const formatPhoneNumber = (phoneNumberString) => {
+    const cleaned = ("" + phoneNumberString).replace(/\D/g, "");
+    const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+    if (match) {
+      return match[1] + "-" + match[2] + "-" + match[3];
+    }
+    return null;
+  }
+
   return (
-    <div className="card-body p-0 py-4" key={item.sheetItemId}>
-      <div className="card w-96 gap-2 bg-gray-7 p-6 text-black shadow-xl">
-        <div className="flex items-start justify-start space-x-3">
-          <div className="flex w-full flex-row justify-between">
+    <div className="p-0 py-4" key={item.sheetItemId}>
+      <div className="rounded-md gap-2 bg-gray-7 p-6 text-black shadow-xl text-start">
+        <div className="">
+          <div className="flex w-full flex-row justify-between items-center">
             <div className="avatar">
               <div className="mask mask-squircle h-12 w-12">
                 <img
@@ -86,7 +95,7 @@ function CardItem({ item, openCRM }) {
           </div>
           <div className="text-sm opacity-50">
             {item.siteLink !== "none" ? (
-              <Link href={clickable_link} target="_blank">
+              <Link href={clickable_link} target="_blank" className="">
                 <p className={`hover:underline`}>{item.siteLink}</p>
               </Link>
             ) : (
@@ -98,10 +107,10 @@ function CardItem({ item, openCRM }) {
           {address != "none" && <p>{address}</p>}
           {/* <span className="badge badge-ghost badge-sm">{city}, {state}</span> */}
         </div>
-        <div className=" flex gap-3 px-1 py-[1px] hover:cursor-pointer hover:bg-pbsearchselect">
-          <a href={"tel:" + item.phoneNumber}>{item.phoneNumber}</a>
+        <div className=" flex hover:cursor-pointer hover:bg-pbsearchselect">
+          <a href={"tel:" + item.phoneNumber}>{formatPhoneNumber(item.phoneNumber)}</a>
         </div>
-        {!item.hasSSL && (
+        {/* {!item.hasSSL && (
           <div className="flex flex-row items-center justify-center gap-5">
             <img
               src="/securedfalse.svg"
@@ -110,7 +119,7 @@ function CardItem({ item, openCRM }) {
             />
             <p className="text-redpill">No SSL</p>
           </div>
-        )}
+        )} */}
         {item.template !== "none" && <p>Template: {item.template}</p>}
         {item.emails?.map((email, index) => (
           <div className="flex w-full justify-between gap-4" key={email}>
