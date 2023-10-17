@@ -6,7 +6,7 @@ import {
 } from "@heroicons/react/24/outline";
 import DemoVideo from "./DemoVideo";
 import DummyList from "@/components/DummyList";
-
+import StartTrialButton from "../../../components/StartTrial/starttrialbutton";
 
 const features = [
   {
@@ -95,6 +95,9 @@ function classNames(...classes) {
 }
 
 export default function MainLandingPage() {
+
+
+
   // const searchParams = useSearchParams();
   // const affilate = searchParams.get("affilate");
   // console.log(affilate);
@@ -140,7 +143,7 @@ export default function MainLandingPage() {
                   process so freelance web developers can focus on what they do
                   best: coding.
                 </p>
-                <div className="mt-10 flex items-center justify-center gap-x-6">
+                {/* <div className="mt-10 flex items-center justify-center gap-x-6">
                   <a
                     href="/signup"
                     alt="Sign up for Scavenger"
@@ -149,7 +152,8 @@ export default function MainLandingPage() {
                     Start Your Free Trial Today{" "}
                     <img src="/clicktrial.svg" className="w-5" role="presentation" />
                   </a>
-                </div>
+                </div> */}
+                <StartTrialButton />
                 <p className="mt-3 text-gray-2">
                   No Contracts • Cancel Anytime
                 </p>
@@ -272,7 +276,7 @@ export default function MainLandingPage() {
             <DummyList />
             </div>
             <div className="mx-auto max-w-2xl text-center">
-              <div className="mt-10 flex items-center justify-center gap-x-6">
+              {/* <div className="mt-10 flex items-center justify-center gap-x-6">
                 <a
                   href="/signup"
                   alt="Sign up for Scavenger"
@@ -281,7 +285,8 @@ export default function MainLandingPage() {
                   Start Your Free Trial Today{" "}
                   <img src="/clicktrial.svg" className="w-5" role="presentation" />
                 </a>
-              </div>
+              </div> */}
+              <StartTrialButton />
               <p className="mt-3 text-gray-2">No Contracts • Cancel Anytime</p>
             </div>
             {/* <div className="mt-16 flow-root sm:mt-24">
@@ -465,16 +470,18 @@ export default function MainLandingPage() {
               <br />
               Start your free trial today.
             </h2>
-            <div className="mt-10 flex items-center justify-center gap-x-6">
+            {/* <div className="mt-10 flex items-center justify-center gap-x-6">
               <a
                 alt="Sign up for Scavenger"
                 href="/signup"
                 className="flex gap-4 rounded-md bg-gray-1 px-7 py-4 text-2xl font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            
               >
                 Start Your Free Trial Today{" "}
                 <img src="/clicktrial.svg" className="w-5" role="presentation" />
               </a>
-            </div>
+            </div> */}
+            <StartTrialButton />
           </div>
           <div
             className="absolute left-1/2 right-0 top-full -z-10 hidden -translate-y-1/2 transform-gpu overflow-hidden blur-3xl sm:block"

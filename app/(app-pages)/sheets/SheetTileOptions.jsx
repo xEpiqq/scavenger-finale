@@ -67,6 +67,9 @@ function SheetTileOptions(props) {
     await updateDoc(userRef, { lists: listsArray });
   }
 
+
+  
+
   async function exportAsCSV() {
     console.log("exporting as csv");
     const sheetRef = doc(db, `sheets/${props.reference}`);
@@ -79,28 +82,20 @@ function SheetTileOptions(props) {
     // Define the custom order for columns in the CSV
     const customColumnOrder = [
       "name",
+      "siteLink",
       "phoneNumber",
       "address",
+      "email",
+      "fbEmail",
+      "template",
+      "facebook",
+      "instagram",
+      "linkedin",
+      "twitter",
+      "youtube",
+      "tiktok",
       // Add more column names here in the desired order
     ];
-  
-    // Generate the CSV content
-    const header = Object.keys(sheetData.lists[0]);
-    // Define the columns to omit
-    const columnsToOmit = ["sheetItemId", "emailBody"];
-  
-    // Filter and sort the header based on the custom order
-    const filteredHeader = customColumnOrder
-      .filter((columnName) => !columnsToOmit.includes(columnName))
-      .concat(header.filter((item) => !customColumnOrder.includes(item)));
-  
-    // Create a CSV content by mapping each list item to a comma-separated string
-    const csvContent = sheetData.lists
-      .map((item) => {
-        const rowValues = filteredHeader.map((key) => item[key]);
-        return rowValues.join(",");
-      })
-      .join("\n");
   
     // Get the list name
     const listName = sheetData.list_name || "default"; // Use "default" if list_name is not defined
@@ -108,8 +103,22 @@ function SheetTileOptions(props) {
     // Create a data URI with a custom filename
     const filename = `${listName}.csv`;
   
+    // Generate the CSV content
+    const csvContent = [customColumnOrder.join(",")]; // Header row
+
+    sheetData.lists.forEach(item => {
+      const rowValues = customColumnOrder.map(key => {
+        if (key === "address") {
+          return `"${item[key] || ""}"`; // Wrap address in double quotes
+        } else {
+          return item[key] || ""; // Use an empty string for missing values
+        }
+      });
+      csvContent.push(rowValues.join(","));
+    });
+  
     // Encode the CSV content
-    const encodedCSVContent = encodeURIComponent(csvContent);
+    const encodedCSVContent = encodeURIComponent(csvContent.join("\n"));
   
     // Create a data URI
     const dataUri = `data:text/csv;charset=utf-8,${encodedCSVContent}`;
@@ -122,10 +131,9 @@ function SheetTileOptions(props) {
     link.click();
     document.body.removeChild(link);
   }
-  
-  
-  
 
+  
+  
   async function deleteFromDB() {
     await deleteDoc(doc(db, "sheets", props.reference));
     const userRef = doc(db, `users/${user?.uid}`);
