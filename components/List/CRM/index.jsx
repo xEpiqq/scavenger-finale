@@ -103,7 +103,7 @@ function CRM({ item, closeCRM }) {
       ></div>
 
       <div
-        className={`fixed right-0 top-0 z-50 h-screen w-full min-w-fit flex flex-col bg-gray-6 shadow-md sm:w-[43.75rem] ${
+        className={`fixed right-0 top-0 z-50 h-full w-full min-w-fit flex flex-col bg-gray-6 shadow-md sm:w-[43.75rem] ${
           isShown ? "translate-x-150" : "translate-x-full"
         } transition-transform duration-150 `}
       >

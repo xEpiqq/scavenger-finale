@@ -136,7 +136,7 @@ function AccountTab({ item, closeCRM }) {
         </div>
       </div>
 
-      <div className="sticky flex w-full flex-shrink-0 items-center justify-end gap-4 border-t border-pblines bg-pbsecondbg p-4 px-7">
+      <div className="sticky bottom-0 flex w-full flex-shrink-0 items-center justify-end gap-4 border-t border-pblines bg-pbsecondbg p-4 px-7">
         <button
           className="h-10 w-24 rounded-md bg-white text-sm font-semibold text-pbblack transition duration-75 hover:bg-pbiconhover"
           onClick={() => {

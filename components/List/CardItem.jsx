@@ -66,7 +66,7 @@ function CardItem({ item, openCRM }) {
   }
 
   return (
-    <div className="p-0 py-4" key={item.sheetItemId}>
+    <div className="p-0 py-4 w-[95%]" key={item.sheetItemId}>
       <div className="rounded-md gap-2 bg-gray-7 p-6 text-black shadow-xl text-start">
         <div className="">
           <div className="flex w-full flex-row justify-between items-center">
@@ -122,10 +122,11 @@ function CardItem({ item, openCRM }) {
         )} */}
         {item.template !== "none" && <p>Template: {item.template}</p>}
         {item.emails?.map((email, index) => (
-          <div className="flex w-full justify-between gap-4" key={email}>
-            <p key={index}>{email}</p>
+          <div className="flex w-full justify-between gap-4 overflow-hidden " key={email}>
+            <p className="text-ellipsis" key={index}>{email}</p>
             <div
               className="flex flex-row items-center gap-[2px]"
+              
               onClick={() => {
                 copyItem(email);
               }}
