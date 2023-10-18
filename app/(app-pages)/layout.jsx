@@ -89,14 +89,12 @@ function Layout({ children }) {
   }
 
   return (
-    <body className="flex h-full min-h-screen w-full bg-pbsecondbg ">
       <div className="float-left flex w-full flex-col bg-pbsecondbg text-black sm:flex-row">
         <Navbar />
         <section className="inline-block h-full w-full overflow-x-clip bg-pbsecondbg">
           {children}
         </section>
       </div>
-    </body>
   );
 }
 
