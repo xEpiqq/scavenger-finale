@@ -9,7 +9,7 @@ import { useState } from "react";
 
 import { getAuth } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { app } from "../../components/initializeFirebase.jsx";
+import { app, db } from "../../components/initializeFirebase.jsx";
 import { doc, getDoc } from "firebase/firestore";
 
 const auth = getAuth(app);
