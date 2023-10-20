@@ -11,7 +11,13 @@ export default function DemoVideo() {
                 <YouTube
                     videoId="1_8XDaVmhOo"
                     iframeClassName="w-full h-full"
+                    onReady={(event) => {
+                        // autoplay video
+                        event.target.playVideo();
+
+                    }}
                     className="w-full h-full aspect-video "
+                    autoplay={true}
                 />
             </div>
         </div>
