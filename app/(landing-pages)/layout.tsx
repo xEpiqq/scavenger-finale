@@ -16,15 +16,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             Act fast!  <Link href="/specialpromo" className="underline hover:text-pbblack transition duration-150"> Lock in at $49 / month for life.</Link>
           </p>
         </div> */}
-      <body>
-        <header>
-          <Navbar />
-        </header>
-        {children}
-        {/* <footer className="bg-pbblack text-white">
+      <header>
+        <Navbar />
+      </header>
+      {children}
+      {/* <footer className="bg-pbblack text-white">
           <Footer />
         </footer> */}
-      </body>
     </>
   );
 }
