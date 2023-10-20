@@ -24,7 +24,7 @@ function GoogleLogin(props) {
     console.log("user: ", user);
     try {
       userRef = doc(db, "users", user.uid);
-      if (!userRef || !userRef.exists()) {
+      if (!userRef || !userRef?.exists()) {
         router.push("/signup-survey");
       }
       userDoc = await getDoc(userRef);
