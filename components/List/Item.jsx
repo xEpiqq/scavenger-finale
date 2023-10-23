@@ -18,7 +18,7 @@ function classNames(...classes) {
 function Item({ item, openCRM, toggleselected, selected }) {
   const [openCopy, setOpenCopy] = useState(false);
   const [selectedEmail, setSelectedEmail] = useState(
-    item.email || (item.emails[0] ? item.emails[0] : "none")
+    item.email || (item?.emails[0] ? item?.emails[0] : "none")
   );
 
   let nameLength = item.name ? item.name.length : 0;

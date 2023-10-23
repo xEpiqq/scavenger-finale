@@ -34,7 +34,7 @@ function Layout({ children }) {
     const response = await fetch("/api/stripecheckout_trial", {
       method: "POST",
       body: JSON.stringify({
-        user_id: user,
+        user_id: user.uid,
       }),
       headers: {
         "Content-Type": "application/json",

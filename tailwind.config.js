@@ -5,7 +5,6 @@ module.exports = {
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
     "./app/freetrial/**/*.{js,ts,jsx,tsx}", // added freetrial directory
-
   ],
   theme: {
     container: {
@@ -107,7 +106,7 @@ module.exports = {
       deleteicon: "#E34562",
       sYellow: "#F5D76E",
       sOrange: "#FFA500",
-      sRed: "#FF0000"
+      sRed: "#FF0000",
     },
     screens: {
       xs: "450px",
@@ -135,10 +134,10 @@ module.exports = {
         sticky: "inset 0 -1px 0 0 rgba(0, 0, 0, 0.1)",
       },
       maxWidth: {
-        '120': '550px',
+        120: "550px",
       },
       maxHeight: {
-        '120': '600px',
+        120: "600px",
       },
       colors: {
         "sheet-count-value": {
@@ -156,11 +155,12 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    require("daisyui"),
-    require('@tailwindcss/forms')
-  ],
-
+  plugins: [require("daisyui"), require("@tailwindcss/forms")],
+  variants: {
+    extend: {
+      display: ["group-hover"],
+    },
+  },
 };
 
 //   module.exports = {
@@ -172,4 +172,3 @@ module.exports = {
 //   }
 //   ```
 // */
-
