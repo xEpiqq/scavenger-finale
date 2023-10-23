@@ -19,7 +19,7 @@ import { app } from "../../components/initializeFirebase";
 
 const navigation = [
   { name: "Pricing", href: "/pricing" },
-  // { name: 'Features', href: '#' },
+  // { name: 'About', href: '/about' },
   { name: "Blog", href: "/blog" },
 ];
 

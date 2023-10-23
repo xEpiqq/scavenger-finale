@@ -14,9 +14,8 @@ export default function DemoVideo() {
                     onReady={(event) => {
                         // autoplay video
                         event.target.playVideo();
-
                     }}
-                    className="w-full h-full aspect-video "
+                    className="w-full h-full aspect-video"
                     autoplay={true}
                 />
             </div>
