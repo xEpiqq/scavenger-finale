@@ -2,11 +2,7 @@
 import { Fragment, useState } from "react";
 
 import {
-  ArrowPathIcon,
   Bars3Icon,
-  CloudArrowUpIcon,
-  FingerPrintIcon,
-  LockClosedIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
