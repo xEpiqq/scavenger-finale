@@ -18,9 +18,6 @@ function classNames(...classes) {
 }
 
 export default function List(params) {
-  //////// protect this route so someone with your list id cannot just type it into the url and access your shiz
-  //////// Task Complete: not yet
-
   const [currentPage, setCurrentPage] = useState(0);
   const [searchbar, setSearchbar] = useState("");
   const [selectedSheets, setSelectedSheets] = useState([]);
@@ -316,10 +313,10 @@ function ListTable({
               </p>
             </div>
           </th>
-          <th className={th_styles} onClick={() => handleSort("ssh")}>
+          <th className={th_styles} onClick={() => handleSort("hasSSL")}>
             <div className="flex w-full flex-row items-center ">
-              SSH{" "}
-              <p className={sortConfig.key === "ssh" ? "" : "invisible"}>
+              SSL{" "}
+              <p className={sortConfig.key === "hasSSL" ? "" : "invisible"}>
                 {sortConfig.direction === "asc" ? "▲" : "▼"}
               </p>
             </div>
