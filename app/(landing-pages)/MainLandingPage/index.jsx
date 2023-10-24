@@ -6,7 +6,7 @@ import {
 } from "@heroicons/react/24/outline";
 import DemoVideo from "./DemoVideo";
 import DummyList from "@/components/DummyList";
-
+import dynamic from "next/dynamic";
 
 const features = [
   {

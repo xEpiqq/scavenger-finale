@@ -7,6 +7,7 @@ import Skeleton from "react-loading-skeleton";
 import Item from "./Item.jsx";
 import CardItem from "./CardItem.jsx";
 import PageNav from "./PageNav.jsx";
+import { useMemo } from "react";
 
 import ListItem from "@/utils/ListItem.js";
 
@@ -40,28 +41,9 @@ export default function List(params) {
 
   const updateDisplayedSheets = () => {
     if (!sheetData) return;
-    // sort sheet data raw by if it has a site link or not
-    // then sort by if it has a phone number or not
-    // then sort by if it has an email or not
-    // then sort by if it has a social or not
-    // then sort by if it has an address or not
-    const sortedSheetData = sheetData?.sort((a, b) => {
-      if (a.favorite && !b.favorite) return -1;
-      if (a.siteLink && !b.siteLink) return -1;
-      if (!a.siteLink && b.siteLink) return 1;
-      if (a.phoneNumber && !b.phoneNumber) return -1;
-      if (!a.phoneNumber && b.phoneNumber) return 1;
-      if (a.email && !b.email) return -1;
-      if (!a.email && b.email) return 1;
-      if (a.social && !b.social) return -1;
-      if (!a.social && b.social) return 1;
-      if (a.address && !b.address) return -1;
-      if (!a.address && b.address) return 1;
-      return 0;
-    });
 
     setDisplayedSheets(
-      sortedSheetData.map((list) => {
+      sheetData.map((list) => {
         return new ListItem({ ...list, idSheet: list_id, userId: user?.uid });
       }) ?? [] // if userData?.lists is undefined, set it to an empty array instead of undefined
     );
@@ -186,15 +168,25 @@ export default function List(params) {
           Delete
         </button>
         <div className="hidden w-full overflow-x-auto sm:block">
-          {ListTable(
+          {/* {ListTable(
             displayedSheets,
             selectedSheets,
             setSelectedSheets,
             currentPage,
             resultsPerPage,
             setOpenedCRM,
-            openedCRM
-          )}
+            openedCRM,
+            handleSort,
+            sortConfig,
+          )} */}
+          <ListTable
+            displayedSheets={displayedSheets}
+            selectedSheets={selectedSheets}
+            setSelectedSheets={setSelectedSheets}
+            currentPage={currentPage}
+            resultsPerPage={resultsPerPage}
+            setOpenedCRM={setOpenedCRM}
+          />
         </div>
 
         <div className="flex w-full flex-col items-center justify-center gap-1 pt-3 sm:hidden">
@@ -242,18 +234,60 @@ export default function List(params) {
   );
 }
 
-function ListTable(
+function ListTable({
   displayedSheets,
   selectedSheets,
   setSelectedSheets,
   currentPage,
   resultsPerPage,
-  setOpenedCRM
-) {
+  setOpenedCRM,
+}) {
+  const [sortConfig, setSortConfig] = useState({ key: "name", direction: "asc" });
+
+  const handleSort = (key) => {
+    let direction = "asc";
+    if (sortConfig.key === key && sortConfig.direction === "asc") {
+      direction = "desc";
+    }
+    setSortConfig({ key, direction });
+  };
+
+  const sortedSheets = useMemo(() => {
+    let sortableSheets = [...displayedSheets];
+    sortableSheets.sort((a, b) => {
+      // favorite sheets first
+      if (a.favorite && !b.favorite) {
+        return -1;
+      }
+      if (!a.favorite && b.favorite) {
+        return 1;
+      }
+      let aVal = a[sortConfig.key];
+      let bVal = b[sortConfig.key];
+      // check if it is a string
+      if (aVal && typeof aVal === "string") {
+        aVal = aVal.toLowerCase();
+      }
+      if (bVal && typeof bVal === "string") {
+        bVal = bVal.toLowerCase();
+      }
+      if (aVal < bVal) {
+        return sortConfig.direction === "asc" ? -1 : 1;
+      }
+      if (aVal > bVal) {
+        return sortConfig.direction === "asc" ? 1 : -1;
+      }
+      return 0;
+    });
+    return sortableSheets;
+  }, [displayedSheets, sortConfig]);
+
+  console.log(sortConfig)
+
   const th_styles =
-    "px-6 py-3 text-left text-xs h-18 whitespace-no-wrap font-medium text-gray-500 uppercase tracking-wider";
+    "px-6 py-3 text-left text-xs h-18 whitespace-no-wrap font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:text-gray-900 hover:bg-gray-100 rounded-md";
   return (
-    <table className="w-full overflow-a">
+    <table className="overflow-a w-full">
       {/* head */}
       <thead>
         <tr>
@@ -274,18 +308,61 @@ function ListTable(
               />
             </label>
           </th>
-          <th className={th_styles}>NAME</th>
-          <th className={th_styles}>SSL</th>
-          <th className={th_styles}>TEMPLATE</th>
-          <th className={th_styles}>PHONE</th>
-          <th className={th_styles}>ADDRESS</th>
-          <th className={th_styles}>EMAILS</th>
+          <th className={th_styles} onClick={() => handleSort("name")}>
+            <div className="flex w-full flex-row items-center ">
+              NAME{" "}
+              <p className={sortConfig.key === "name" ? "" : "invisible"}>
+                {sortConfig.direction === "asc" ? "▲" : "▼"}
+              </p>
+            </div>
+          </th>
+          <th className={th_styles} onClick={() => handleSort("ssh")}>
+            <div className="flex w-full flex-row items-center ">
+              SSH{" "}
+              <p className={sortConfig.key === "ssh" ? "" : "invisible"}>
+                {sortConfig.direction === "asc" ? "▲" : "▼"}
+              </p>
+            </div>
+          </th>
+          <th className={th_styles} onClick={() => handleSort("template")}>
+            <div className="g-4 flex w-full flex-row items-center ">
+              TEMPLATE{" "}
+              <p className={sortConfig.key === "template" ? "" : "invisible"}>
+                {sortConfig.direction === "asc" ? "▲" : "▼"}
+              </p>
+            </div>
+          </th>
+          <th className={th_styles} onClick={() => handleSort("phoneNumber")}>
+            <div className="g-4 flex w-full flex-row items-center ">
+              PHONE{" "}
+              <p className={sortConfig.key === "phoneNumber" ? "" : "invisible"}>
+                {sortConfig.direction === "asc" ? "▲" : "▼"}
+              </p>
+            </div>
+          </th>
+          <th className={th_styles} onClick={() => handleSort("address")}>
+            <div className="g-4 flex w-full flex-row items-center ">
+              ADDRESS{" "}
+              <p className={sortConfig.key === "address" ? "" : "invisible"}>
+                {sortConfig.direction === "asc" ? "▲" : "▼"}
+              </p>
+            </div>
+          </th>
+          <th className={th_styles} onClick={() => handleSort("emails")}>
+            <div className="g-4 flex w-full flex-row items-center ">
+              EMAILS{" "}
+              <p className={sortConfig.key === "emails" ? "" : "invisible"}>
+                {sortConfig.direction === "asc" ? "▲" : "▼"}
+              </p>
+            </div>
+          </th>
+
           <th className={th_styles + "bg-terquoise-400 "}>SOCIAL</th>
           <th className={th_styles}>CRM</th>
         </tr>
       </thead>
       <tbody className="divide-y divide-gray-200 bg-white">
-        {displayedSheets
+        {sortedSheets
           ?.slice(
             currentPage * resultsPerPage,
             (currentPage + 1) * resultsPerPage

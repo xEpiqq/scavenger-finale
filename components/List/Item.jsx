@@ -18,7 +18,7 @@ function classNames(...classes) {
 function Item({ item, openCRM, toggleselected, selected }) {
   const [openCopy, setOpenCopy] = useState(false);
   const [selectedEmail, setSelectedEmail] = useState(
-    item.email || (item?.emails[0] ? item?.emails[0] : "none")
+    item.email || (item?.emails ? item?.emails[0] : "none")
   );
 
   let nameLength = item.name ? item.name.length : 0;
@@ -70,20 +70,20 @@ function Item({ item, openCRM, toggleselected, selected }) {
       </th>
       <td className={td_styles}>
         <div className="relative flex items-center ">
-          <div className="relative avatar">
+          <div className="avatar relative">
             <div className="mask mask-squircle relative h-12 w-12">
               <img
                 src={`https://api.dicebear.com/6.x/avataaars/svg?seed=${item.siteLink}`}
                 alt="Avatar Tailwind CSS Component"
               />
             </div>
-            
-          </div>{item.favorite && (
-              <img
-                src="/favoritesicon-green.svg"
-                className="absolute w-4 h-4 left-0 top-0"
-              />
-            )}
+          </div>
+          {item.favorite && (
+            <img
+              src="/favoritesicon-green.svg"
+              className="absolute left-0 top-0 h-4 w-4"
+            />
+          )}
           <div className="ml-2">
             <div className="font-bold">
               <p>
@@ -153,67 +153,68 @@ function Item({ item, openCRM, toggleselected, selected }) {
         </div>
       </td>
       <td className={td_styles}>
-        <div className="flex flex-row items-center gap-1">
-          <img
-            src="/email.svg"
-            draggable="false"
-            className="h-4 w-4 hover:cursor-pointer"
-            alt="Screenshot of site"
-            onClick={openEmails}
-          />
-          <Menu as="div" className="relative inline-block text-left">
-            <div>
-              <Menu.Button className="hover:bg-gray-50 inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300">
-                {item.email == "none" ? (
-                  <p className="opacity-20">Emails</p>
-                ) : (
-                  <p>{selectedEmail}</p>
-                )}
-                <ChevronDownIcon
-                  className="-mr-1 h-5 w-5 text-gray-400"
-                  aria-hidden="true"
-                />
-              </Menu.Button>
-            </div>
+        {item.email !==  "none" && item.emails != null && item.emails?.length > 0 ? (
+          <div className="flex flex-row items-center gap-1">
+            <img
+              src="/email.svg"
+              draggable="false"
+              className="h-4 w-4 hover:cursor-pointer"
+              alt="Screenshot of site"
+              onClick={openEmails}
+            />
+            <Menu as="div" className="relative inline-block text-left">
+              <div>
+                <Menu.Button className="hover:bg-gray-50 inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300">
+                  {item.email == "none" ? (
+                    <p className="opacity-20">Emails</p>
+                  ) : (
+                    <p>{selectedEmail}</p>
+                  )}
+                  <ChevronDownIcon
+                    className="-mr-1 h-5 w-5 text-gray-400"
+                    aria-hidden="true"
+                  />
+                </Menu.Button>
+              </div>
 
-            <Transition
-              as={Fragment}
-              enter="transition ease-out duration-100"
-              enterFrom="transform opacity-0 scale-95"
-              enterTo="transform opacity-100 scale-100"
-              leave="transition ease-in duration-75"
-              leaveFrom="transform opacity-100 scale-100"
-              leaveTo="transform opacity-0 scale-95"
-            >
-              <Menu.Items className="absolute right-0 z-10 mt-2 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                <div className="py-1">
-                  {item.emails &&
-                    item.emails.map((email, index) => (
-                      <Menu.Item key={index}>
-                        {({ active }) => (
-                          <a
-                            key={"email" + index}
-                            href="#"
-                            className={classNames(
-                              active
-                                ? "bg-gray-100 text-gray-900"
-                                : "text-gray-700",
-                              "block px-4 py-2 text-sm"
-                            )}
-                            onClick={(e) => {
-                              e.preventDefault();
-                              // close the modal
+              <Transition
+                as={Fragment}
+                enter="transition ease-out duration-100"
+                enterFrom="transform opacity-0 scale-95"
+                enterTo="transform opacity-100 scale-100"
+                leave="transition ease-in duration-75"
+                leaveFrom="transform opacity-100 scale-100"
+                leaveTo="transform opacity-0 scale-95"
+              >
+                <Menu.Items className="absolute right-0 z-10 mt-2 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <div className="py-1">
+                    {item.emails &&
+                      item.emails.map((email, index) => (
+                        <Menu.Item key={index}>
+                          {({ active }) => (
+                            <a
+                              key={"email" + index}
+                              href="#"
+                              className={classNames(
+                                active
+                                  ? "bg-gray-100 text-gray-900"
+                                  : "text-gray-700",
+                                "block px-4 py-2 text-sm"
+                              )}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                // close the modal
 
-                              copyItem(email);
-                              setSelectedEmail(email);
-                            }}
-                          >
-                            {email}
-                          </a>
-                        )}
-                      </Menu.Item>
-                    ))}
-                  {/* <Menu.Item>
+                                copyItem(email);
+                                setSelectedEmail(email);
+                              }}
+                            >
+                              {email}
+                            </a>
+                          )}
+                        </Menu.Item>
+                      ))}
+                    {/* <Menu.Item>
                       {({ active }) => (
                         <a
                           href="#"
@@ -228,11 +229,12 @@ function Item({ item, openCRM, toggleselected, selected }) {
                         </a>
                       )}
                     </Menu.Item> */}
-                </div>
-              </Menu.Items>
-            </Transition>
-          </Menu>
-        </div>
+                  </div>
+                </Menu.Items>
+              </Transition>
+            </Menu>
+          </div>
+        ) : null}
         {fbEmail && (
           <div className="flex w-full flex-row gap-2">
             {/* need facebook logo here */}
