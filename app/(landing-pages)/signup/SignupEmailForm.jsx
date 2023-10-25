@@ -33,7 +33,7 @@ function SignupEmailForm() {
       .then(async (userCredential) => {
         // Signed in
         const user = userCredential.user;
-        router.push("/sheets");
+        router.push("/thankyou");
         // router.push("/signup-survey");
         // ...
       })
