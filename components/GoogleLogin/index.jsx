@@ -31,12 +31,16 @@ function GoogleLogin(props) {
       firestore_user = userDoc.data();
       subscription_status = firestore_user.subscription_status;
       if (subscription_status === "active" || subscription_status === "trialing") {
+        
+        // TEMPORARY
         router.push("/sheets");
       } else {
-        router.push("/signup-survey");
+        router.push("/sheets")
+        // router.push("/signup-survey");
       }
     } catch {
-      router.push("/signup-survey");
+      router.push("/sheets")
+      // router.push("/signup-survey");
     }
 
     // router.push("/sheets");

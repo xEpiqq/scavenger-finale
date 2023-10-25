@@ -65,6 +65,7 @@ function Layout({ children }) {
   if (!user) return <div>not logged in</div>;
 
   const checkUser = async () => {
+    return true;
     const userRef = doc(db, `users/${user?.uid}`);
     const userSnap = getDoc(userRef);
     if (!userSnap) queueReload();
