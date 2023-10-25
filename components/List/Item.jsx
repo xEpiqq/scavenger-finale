@@ -60,7 +60,7 @@ function Item({ item, openCRM, toggleselected, selected }) {
     setOpenEmail(true);
   }
 
-  const td_styles = "px-6 py-4 whitespace-nowrap text-sm text-gray-500";
+  const td_styles = "px-4 py-4 whitespace-nowrap text-sm text-gray-500";
 
   return (
     <tr>
@@ -74,8 +74,8 @@ function Item({ item, openCRM, toggleselected, selected }) {
           />
         </label>
       </th>
-      <td className={td_styles}>
-        <div className="relative flex items-center ">
+      <td className={td_styles + "overflow-hidden px-2"}>
+        <div className="relative flex items-center">
           <div className="avatar relative">
             <div className="mask mask-squircle relative h-12 w-12">
               <img
@@ -87,19 +87,24 @@ function Item({ item, openCRM, toggleselected, selected }) {
           {item.favorite && (
             <img
               src="/favoritesicon-green.svg"
-              className="absolute left-0 top-0 h-4 w-4"
+              className="absolute left-0 top-0 h-4 w-4 opacity-100 pointer-events-none"
+              role="presentation"
             />
           )}
-          <div className="ml-2">
+          <div className="">
             <div className="font-bold">
-              <p>
-                {nameLength > 33 ? item.name.slice(0, 30) + "..." : item.name}
+              <p className="overflow: inline-block overflow-hidden w-[200px] overflow-ellipsis whitespace-nowrap hover:underline">
+                {item.name}
               </p>
             </div>
             <div className="text-sm opacity-50">
               {item.siteLink !== "none" ? (
                 <Link href={clickable_link} target="_blank">
-                  <p className={`hover:underline`}>{item.siteLink}</p>
+                  <p
+                    className={`overflow: inline-block overflow-hidden w-[200px] overflow-ellipsis whitespace-nowrap hover:underline`}
+                  >
+                    {item.siteLink}
+                  </p>
                 </Link>
               ) : (
                 <p>{item.siteLink}</p>
@@ -159,7 +164,9 @@ function Item({ item, openCRM, toggleselected, selected }) {
         </div>
       </td>
       <td className={td_styles}>
-        {item.email !==  "none" && item.emails != null && item.emails?.length > 0 ? (
+        {item.email !== "none" &&
+        item.emails != null &&
+        item.emails?.length > 0 ? (
           <div className="flex flex-row items-center gap-1">
             <img
               src="/email.svg"
