@@ -15,7 +15,7 @@ export default function PageNav({
     // scroll to the bottom of the page div
     const element = document.getElementById("page-bottom");
     if (!element) return;
-    element.scrollIntoView({ behavior: "smooth" });
+    //element.scrollIntoView({ behavior: "smooth" });
   }, [currentPage]);
 
   const generatePageNumbers = () => {
