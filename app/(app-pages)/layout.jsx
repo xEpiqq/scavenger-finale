@@ -90,7 +90,7 @@ function Layout({ children }) {
   }
 
   return (
-    <div className="float-left flex w-full flex-col bg-pbsecondbg text-black sm:flex-row">
+    <div className="float-left flex h-full min-h-screen w-full flex-col bg-pbsecondbg text-black sm:flex-row">
       <Navbar />
       <section className="inline-block h-full w-full overflow-x-clip bg-pbsecondbg">
         {children}

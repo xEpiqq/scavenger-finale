@@ -51,7 +51,7 @@ function FillList({
   }
 
   return (
-    <div className="flex w-full h-full justify-center items-center bg-white">
+    <div className="flex w-full h-screen justify-center items-center bg-white">
     <div className="px-8">
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
