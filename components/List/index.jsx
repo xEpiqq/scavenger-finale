@@ -244,6 +244,8 @@ export default function List(params) {
           resultsPerPage={resultsPerPage}
           itemCount={displayedSheets?.length}
         />
+        <a id="page-bottom" />
+
         {openedCRM >= 0 && (
           <CRM
             closeCRM={() => {
