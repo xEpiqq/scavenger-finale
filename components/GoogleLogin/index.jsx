@@ -35,11 +35,11 @@ function GoogleLogin(props) {
         // TEMPORARY
         router.push("/sheets");
       } else {
-        router.push("/sheets")
+        router.push("/thankyou")
         // router.push("/signup-survey");
       }
     } catch {
-      router.push("/sheets")
+      router.push("/thankyou")
       // router.push("/signup-survey");
     }
 
