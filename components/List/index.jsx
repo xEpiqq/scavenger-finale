@@ -129,7 +129,7 @@ export default function List(params) {
     <>
       <div className="relative h-full w-full overflow-auto">
         {!disableSearch && (
-          <div className="bg-inherit flex h-16 w-full items-center justify-start px-5">
+          <div className="bg-inherit flex h-16 w-full items-center justify-start gap-10 px-5">
             <div>
               <label htmlFor="search" className="sr-only">
                 Search
@@ -144,26 +144,53 @@ export default function List(params) {
                 onChange={(e) => setSearchbar(e.target.value)}
               />
             </div>
+            <button
+              className={`visible hidden rounded-full bg-redpill px-5 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-200 ease-in-out
+               hover:bg-sRed sm:block
+          ${selectedSheets.length <= 0 && "scale-0"}
+        `}
+              onClick={async () => {
+                if (selectedSheets.length <= 0) return;
+                // need the item of all the selected sheets
+                const selectedSheetsData = selectedSheets.map(
+                  (index) => displayedSheets[index]
+                );
+
+                ListItem.deleteAll(selectedSheetsData);
+                // clear selected sheets
+                setSelectedSheets([]);
+              }}
+            >
+              Delete{" ("}
+              <span className="hidden font-mono sm:inline">
+                {selectedSheets.length > 0 && `${selectedSheets.length}`}
+              </span>
+              {")"}
+            </button>
+            <button
+              className={`hidden rounded-full bg-terquoise-400 px-5 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-200 ease-in-out  hover:bg-terquoise-600 sm:block
+             ${selectedSheets.length <= 0 && "scale-0"} `}
+              onClick={async () => {
+                if (selectedSheets.length <= 0) return;
+                // need the item of all the selected sheets
+                const selectedSheetsData = selectedSheets.map(
+                  (index) => displayedSheets[index]
+                );
+
+                ListItem.favoriteAll(selectedSheetsData);
+                // clear selected sheets
+                setSelectedSheets([]);
+              }}
+            >
+              Favorite{" ("}
+              <span className="hidden font-mono sm:inline">
+                {selectedSheets.length > 0 && `${selectedSheets.length}`}
+              </span>
+              {")"}
+            </button>
           </div>
         )}
-        <button
-          className={`btn-error btn mx-8 my-4 hidden transition-all duration-150 ease-in-out sm:block sm:scale-100
-          ${selectedSheets.length <= 0 && "btn-disabled scale-0 sm:hidden"} 
-        `}
-          onClick={async () => {
-            if (selectedSheets.length <= 0) return;
-            // need the item of all the selected sheets
-            const selectedSheetsData = selectedSheets.map(
-              (index) => displayedSheets[index]
-            );
 
-            ListItem.deleteAll(selectedSheetsData);
-            // clear selected sheets
-            setSelectedSheets([]);
-          }}
-        >
-          Delete
-        </button>
         <div className="hidden w-full overflow-x-auto sm:block">
           {/* {ListTable(
             displayedSheets,
@@ -239,7 +266,10 @@ function ListTable({
   resultsPerPage,
   setOpenedCRM,
 }) {
-  const [sortConfig, setSortConfig] = useState({ key: "name", direction: "asc" });
+  const [sortConfig, setSortConfig] = useState({
+    key: "name",
+    direction: "asc",
+  });
 
   const handleSort = (key) => {
     let direction = "asc";
@@ -247,6 +277,7 @@ function ListTable({
       direction = "desc";
     }
     setSortConfig({ key, direction });
+    setSelectedSheets([]);
   };
 
   const sortedSheets = useMemo(() => {
@@ -279,7 +310,7 @@ function ListTable({
     return sortableSheets;
   }, [displayedSheets, sortConfig]);
 
-  console.log(sortConfig)
+  console.log(sortConfig);
 
   const th_styles =
     "px-6 py-3 text-left text-xs h-18 whitespace-no-wrap font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:text-gray-900 hover:bg-gray-100 rounded-md";
@@ -332,7 +363,9 @@ function ListTable({
           <th className={th_styles} onClick={() => handleSort("phoneNumber")}>
             <div className="g-4 flex w-full flex-row items-center ">
               PHONE{" "}
-              <p className={sortConfig.key === "phoneNumber" ? "" : "invisible"}>
+              <p
+                className={sortConfig.key === "phoneNumber" ? "" : "invisible"}
+              >
                 {sortConfig.direction === "asc" ? "▲" : "▼"}
               </p>
             </div>
