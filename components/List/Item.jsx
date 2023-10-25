@@ -32,6 +32,12 @@ function Item({ item, openCRM, toggleselected, selected }) {
   };
 
   const [fbEmail, setFbEmail] = useState(item.fbEmail);
+
+  useEffect(() => {
+    setSelectedEmail(item.email || (item?.emails ? item?.emails[0] : "none"));
+    setFbEmail(item.fbEmail);
+  }, [item]);
+
   const clickable_link = "http://" + item.siteLink;
 
   let address = "";
@@ -186,7 +192,7 @@ function Item({ item, openCRM, toggleselected, selected }) {
                 leaveFrom="transform opacity-100 scale-100"
                 leaveTo="transform opacity-0 scale-95"
               >
-                <Menu.Items className="absolute right-0 z-10 mt-2 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <Menu.Items className="absolute left-0 z-10 mt-2 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                   <div className="py-1">
                     {item.emails &&
                       item.emails.map((email, index) => (

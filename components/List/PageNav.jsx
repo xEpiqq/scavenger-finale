@@ -12,19 +12,21 @@ export default function PageNav({
   const totalPages = Math.ceil(itemCount /resultsPerPage) - 1;
 
   useEffect(() => {
-    // scroll to the bottom of the page
-    window.scrollTo(0,document.body.scrollHeight);
+    // scroll to the bottom of the page div
+    const element = document.getElementById("page-bottom");
+    if (!element) return;
+    element.scrollIntoView({ behavior: "smooth" });
   }, [currentPage]);
 
   const generatePageNumbers = () => {
     const pageNumbers = [];
     const limit = 5;
-    let start = Math.max(1, currentPage - Math.floor(limit / 2));
+    let start = Math.max(0, currentPage - Math.floor(limit / 2));
     let end = Math.min(totalPages, start + limit - 1);
 
     // Adjust the 'end' value to stay within the total pages
     if (end - start + 1 < limit) {
-      start = Math.max(1, end - limit + 1);
+      start = Math.max(0, end - limit + 1);
     }
 
     for (let i = start; i <= end; i++) {
@@ -40,14 +42,12 @@ export default function PageNav({
     <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
       <div className="flex flex-1 justify-between sm:hidden">
         <button
-          href="#page-bottom"
           onClick={() => setCurrentPage(currentPage - 1)}
           className="hover:bg-gray-50 relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700"
         >
           Previous
         </button>
         <button
-          href="#page-bottom"
           onClick={() => setCurrentPage(currentPage + 1)}
           className="hover:bg-gray-50 relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700"
         >
@@ -77,9 +77,8 @@ export default function PageNav({
           >
             <button
               onClick={() =>
-                setCurrentPage((prevPage) => (prevPage > 1 ? prevPage - 1 : 1))
+                setCurrentPage((prevPage) => (prevPage > 0 ? prevPage - 1 : 0))
               }
-              href="#page-bottom"
               className="hover:bg-gray-50 relative inline-flex items-center rounded-l-md px-4 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 focus:z-20 focus:outline-offset-0"
             >
               <span className="sr-only">Previous</span>
@@ -89,18 +88,16 @@ export default function PageNav({
               <button
                 key={pageNumber}
                 onClick={() => setCurrentPage(pageNumber)}
-                href="#page-bottom"
                 className={`${
                   currentPage === pageNumber
                     ? "relative bg-indigo-600 text-white"
                     : "hover:bg-gray-50"
                 } inline-flex items-center px-4 py-2 font-mono text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 focus:z-20 focus:outline-offset-0`}
               >
-                {pageNumber}
+                {pageNumber + 1}
               </button>
             ))}
             <button
-              href="#page-bottom"
               onClick={() =>
                 setCurrentPage((prevPage) =>
                   prevPage < totalPages ? prevPage + 1 : totalPages
@@ -111,7 +108,6 @@ export default function PageNav({
               <span className="sr-only">Next</span>
               <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
             </button>
-            <a id="page-bottom"/>
           </nav>
         </div>
       </div>

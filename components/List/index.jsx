@@ -24,6 +24,41 @@ export default function List(params) {
   const [displayedSheets, setDisplayedSheets] = useState([]);
   const [openedCRM, setOpenedCRM] = useState(-1);
 
+  const [sortConfig, setSortConfig] = useState({
+    key: "name",
+    direction: "asc",
+  });
+
+  const sortedSheets = useMemo(() => {
+    let sortableSheets = [...displayedSheets];
+    sortableSheets.sort((a, b) => {
+      // favorite sheets first
+      if (a.favorite && !b.favorite) {
+        return -1;
+      }
+      if (!a.favorite && b.favorite) {
+        return 1;
+      }
+      let aVal = a[sortConfig.key];
+      let bVal = b[sortConfig.key];
+      // check if it is a string
+      if (aVal && typeof aVal === "string") {
+        aVal = aVal.toLowerCase();
+      }
+      if (bVal && typeof bVal === "string") {
+        bVal = bVal.toLowerCase();
+      }
+      if (aVal < bVal) {
+        return sortConfig.direction === "asc" ? -1 : 1;
+      }
+      if (aVal > bVal) {
+        return sortConfig.direction === "asc" ? 1 : -1;
+      }
+      return 0;
+    });
+    return sortableSheets;
+  }, [displayedSheets, sortConfig]);
+
   let {
     sheetData,
     resultsPerPage = 20,
@@ -153,10 +188,10 @@ export default function List(params) {
                 if (selectedSheets.length <= 0) return;
                 // need the item of all the selected sheets
                 const selectedSheetsData = selectedSheets.map(
-                  (index) => displayedSheets[index]
+                  (index) => sortedSheets[index]
                 );
 
-                ListItem.deleteAll(selectedSheetsData);
+                ListItem.deleteAll([...selectedSheetsData]);
                 // clear selected sheets
                 setSelectedSheets([]);
               }}
@@ -174,7 +209,7 @@ export default function List(params) {
                 if (selectedSheets.length <= 0) return;
                 // need the item of all the selected sheets
                 const selectedSheetsData = selectedSheets.map(
-                  (index) => displayedSheets[index]
+                  (index) => sortedSheets[index]
                 );
 
                 ListItem.favoriteAll(selectedSheetsData);
@@ -210,6 +245,9 @@ export default function List(params) {
             currentPage={currentPage}
             resultsPerPage={resultsPerPage}
             setOpenedCRM={setOpenedCRM}
+            sortConfig={sortConfig}
+            setSortConfig={setSortConfig}
+            sortedSheets={sortedSheets}
           />
         </div>
 
@@ -224,16 +262,6 @@ export default function List(params) {
                 key={list.sheetItemId}
                 openCRM={() => setOpenedCRM(index)}
                 item={list}
-                selected={selectedSheets.includes(index)}
-                toggleselected={() => {
-                  if (selectedSheets.includes(index)) {
-                    setSelectedSheets(
-                      selectedSheets.filter((i) => i !== index)
-                    );
-                  } else {
-                    setSelectedSheets([...selectedSheets, index]);
-                  }
-                }}
               />
             ))}
         </div>
@@ -244,6 +272,8 @@ export default function List(params) {
           resultsPerPage={resultsPerPage}
           itemCount={displayedSheets?.length}
         />
+        <a id="page-bottom" />
+
         {openedCRM >= 0 && (
           <CRM
             closeCRM={() => {
@@ -265,12 +295,10 @@ function ListTable({
   currentPage,
   resultsPerPage,
   setOpenedCRM,
+  sortConfig,
+  setSortConfig,
+  sortedSheets,
 }) {
-  const [sortConfig, setSortConfig] = useState({
-    key: "name",
-    direction: "asc",
-  });
-
   const handleSort = (key) => {
     let direction = "asc";
     if (sortConfig.key === key && sortConfig.direction === "asc") {
@@ -280,35 +308,7 @@ function ListTable({
     setSelectedSheets([]);
   };
 
-  const sortedSheets = useMemo(() => {
-    let sortableSheets = [...displayedSheets];
-    sortableSheets.sort((a, b) => {
-      // favorite sheets first
-      if (a.favorite && !b.favorite) {
-        return -1;
-      }
-      if (!a.favorite && b.favorite) {
-        return 1;
-      }
-      let aVal = a[sortConfig.key];
-      let bVal = b[sortConfig.key];
-      // check if it is a string
-      if (aVal && typeof aVal === "string") {
-        aVal = aVal.toLowerCase();
-      }
-      if (bVal && typeof bVal === "string") {
-        bVal = bVal.toLowerCase();
-      }
-      if (aVal < bVal) {
-        return sortConfig.direction === "asc" ? -1 : 1;
-      }
-      if (aVal > bVal) {
-        return sortConfig.direction === "asc" ? 1 : -1;
-      }
-      return 0;
-    });
-    return sortableSheets;
-  }, [displayedSheets, sortConfig]);
+  
 
   console.log(sortConfig);
 

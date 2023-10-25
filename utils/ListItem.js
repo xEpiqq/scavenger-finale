@@ -35,7 +35,8 @@ class ListItem {
     this.emails = params.emails || null;
     this.emailBody = params.emailBody || null;
     this.fbEmail = params.fbEmail || null;
-    this.emailSubject = params.emailSubject || "Boost Your Business with a Professional Website";
+    this.emailSubject =
+      params.emailSubject || "Boost Your Business with a Professional Website";
 
     // CRM fields
     this.gatekeeperName = params.gatekeeperName || null;
@@ -177,7 +178,6 @@ class ListItem {
 
   // This function will not check if the data needs to be updated then update it in the database
   async updateSheet() {
-    
     const {
       name,
       siteLink,
@@ -205,7 +205,6 @@ class ListItem {
       emails,
     } = this;
 
-    
     if (!sheetItemId) return;
     if (!idSheet) return;
 
@@ -289,6 +288,39 @@ class ListItem {
     }
   }
 
+  static async favoriteAll(items) {
+    // This function will favorite all of the items in the array
+    // It will also favorite the items in the sheet database
+    // It will also favorite the items in the CRM database
+    const { idSheet, userId } = items[0];
+    if (!idSheet) return;
+    const userRef = await doc(db, "users", userId);
+    const sheetRef = await doc(db, `sheets/${idSheet}`);
+    const sheetArray = await getDoc(sheetRef).then((doc) => doc.data().lists);
+    const crmArray = await getDoc(userRef).then((doc) => doc.data().crm);
+
+    // Favorite the items in the sheet database
+    for (let i = 0; i < items.length; i++) {
+      const { sheetItemId } = items[i];
+      const sheetIndex = sheetArray.findIndex(
+        (item) => item.sheetItemId === sheetItemId
+      );
+      sheetArray[sheetIndex].favorite = true;
+    }
+    await updateDoc(sheetRef, { lists: sheetArray });
+
+    // Favorite the items in the CRM database
+    for (let i = 0; i < items.length; i++) {
+      const { sheetItemId } = items[i];
+      const crmIndex = crmArray.findIndex(
+        (item) => item.sheetItemId === sheetItemId
+      );
+      if (crmArray[crmIndex]) crmArray[crmIndex].favorite = true;
+    }
+
+    await updateDoc(userRef, { crm: crmArray });
+  }
+
   static async deleteAll(items) {
     // This function will delete all of the items in the array
     // It will also delete the items from the sheet database
@@ -299,13 +331,15 @@ class ListItem {
     const sheetRef = await doc(db, `sheets/${idSheet}`);
     const sheetArray = await getDoc(sheetRef).then((doc) => doc.data().lists);
     const crmArray = await getDoc(userRef).then((doc) => doc.data().crm);
-    
+
     // Delete the items from the sheet database
     for (let i = 0; i < items.length; i++) {
       const { sheetItemId } = items[i];
+      console.log(sheetArray.length)
       const sheetIndex = sheetArray.findIndex(
         (item) => item.sheetItemId === sheetItemId
       );
+      console.log(sheetArray.length)
       sheetArray.splice(sheetIndex, 1);
     }
     await updateDoc(sheetRef, { lists: sheetArray });
@@ -340,9 +374,7 @@ class ListItem {
     await updateDoc(sheetRef, { lists: sheetArray });
 
     // Delete the item from the CRM database
-    const crmIndex = crmArray.findIndex(
-      (item) => item.crmItemId === crmItemId
-    );
+    const crmIndex = crmArray.findIndex((item) => item.crmItemId === crmItemId);
     crmArray.splice(crmIndex, 1);
     await updateDoc(userRef, { crm: crmArray });
 
