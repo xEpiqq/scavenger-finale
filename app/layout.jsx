@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import  FacebookPixel from '../components/FacebookPixel/FacebookPixel'
 
 function Layout({ children }) {
-  const siteId = 3690067;
+  const siteId = 3710333;
   const hotjarVersion = 6;
 
   useEffect(() => {
